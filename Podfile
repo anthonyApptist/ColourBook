@@ -7,4 +7,7 @@ target 'ColourBook' do
 
   # Pods for ColourBook
 
+pod 'Firebase/Core'
+
+
 end
