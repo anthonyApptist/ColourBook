@@ -68,7 +68,7 @@ extension UIButton {
     
     func setBorderWidth() {
         
-        self.layer.borderWidth = 4
+        self.layer.borderWidth = 2
         self.layer.borderColor = UIColor.white.cgColor
         
     }

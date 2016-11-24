@@ -64,32 +64,9 @@
                             </label>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8sr-VN-fY1">
                                 <rect key="frame" x="0.0" y="113" width="375" height="316"/>
-                                <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bhw-2N-Y3S">
-                                        <rect key="frame" x="123" y="67" width="129" height="183"/>
-                                        <subviews>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="goldCBlogo.png" translatesAutoresizingMaskIntoConstraints="NO" id="h3t-B0-2jb">
-                                                <rect key="frame" x="0.0" y="0.0" width="129" height="183"/>
-                                            </imageView>
-                                        </subviews>
-                                        <color key="backgroundColor" red="0.82352941176470584" green="0.77254901960784317" blue="0.67843137254901964" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <constraints>
-                                            <constraint firstAttribute="bottom" secondItem="h3t-B0-2jb" secondAttribute="bottom" id="Oq2-SK-Q1A"/>
-                                            <constraint firstAttribute="trailing" secondItem="h3t-B0-2jb" secondAttribute="trailing" id="WDv-UE-mhC"/>
-                                            <constraint firstItem="h3t-B0-2jb" firstAttribute="leading" secondItem="bhw-2N-Y3S" secondAttribute="leading" id="dJA-gj-VE3"/>
-                                            <constraint firstItem="h3t-B0-2jb" firstAttribute="top" secondItem="bhw-2N-Y3S" secondAttribute="top" id="hjr-Wb-Ogh"/>
-                                        </constraints>
-                                    </view>
-                                </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="bhw-2N-Y3S" secondAttribute="bottom" constant="66" id="74c-Vy-DWb"/>
                                     <constraint firstAttribute="height" constant="316" id="AqU-ty-XzB"/>
-                                    <constraint firstItem="bhw-2N-Y3S" firstAttribute="top" secondItem="8sr-VN-fY1" secondAttribute="top" constant="67" id="Hyi-ag-zqK"/>
-                                    <constraint firstAttribute="trailing" secondItem="bhw-2N-Y3S" secondAttribute="trailing" constant="123" id="Ufm-Wn-Enu"/>
-                                    <constraint firstItem="bhw-2N-Y3S" firstAttribute="centerX" secondItem="8sr-VN-fY1" secondAttribute="centerX" id="Vam-22-U8g"/>
-                                    <constraint firstItem="bhw-2N-Y3S" firstAttribute="leading" secondItem="8sr-VN-fY1" secondAttribute="leading" constant="123" id="aXu-aE-0I8"/>
                                     <constraint firstAttribute="width" constant="375" id="ayZ-3k-Fzb"/>
-                                    <constraint firstItem="bhw-2N-Y3S" firstAttribute="centerY" secondItem="8sr-VN-fY1" secondAttribute="centerY" id="iTJ-wb-jy3"/>
                                 </constraints>
                                 <connections>
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="Jkq-ej-icz"/>
@@ -134,7 +111,6 @@
                     </view>
                     <connections>
                         <outlet property="bottomView" destination="obR-lY-v4d" id="EVd-Td-Qvo"/>
-                        <outlet property="iconView" destination="bhw-2N-Y3S" id="NYS-i1-FRB"/>
                         <outlet property="pageCtrl" destination="Et6-29-4hv" id="eau-et-jip"/>
                         <outlet property="scanLbl" destination="p1j-Px-xQc" id="u19-4U-BIE"/>
                         <outlet property="scrollView" destination="8sr-VN-fY1" id="ttJ-wO-Flh"/>
@@ -382,6 +358,5 @@
     </scenes>
     <resources>
         <image name="effects.png" width="375" height="629"/>
-        <image name="goldCBlogo.png" width="92" height="144"/>
     </resources>
 </document>
