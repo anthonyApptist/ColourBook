@@ -35,6 +35,8 @@
 		663646AB1DE4921F00E6D719 /* purpleCBlogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 663646991DE4921F00E6D719 /* purpleCBlogo.png */; };
 		663646AC1DE4921F00E6D719 /* purpleCBlogo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6636469A1DE4921F00E6D719 /* purpleCBlogo@2x.png */; };
 		663646AD1DE4921F00E6D719 /* purpleCBlogo@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6636469B1DE4921F00E6D719 /* purpleCBlogo@3x.png */; };
+		9231AE971DE69EB50087F6A1 /* benjamin moore product list - edited.csv in Resources */ = {isa = PBXBuildFile; fileRef = 9231AE961DE69EB50087F6A1 /* benjamin moore product list - edited.csv */; };
+		9231AE991DE69EBF0087F6A1 /* Paint Data.csv in Resources */ = {isa = PBXBuildFile; fileRef = 9231AE981DE69EBF0087F6A1 /* Paint Data.csv */; };
 		92FD3EAB1DE52A71009341C9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 92FD3EAA1DE52A71009341C9 /* GoogleService-Info.plist */; };
 		92FD3EAF1DE52D26009341C9 /* BarcodeScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92FD3EAE1DE52D26009341C9 /* BarcodeScanner.swift */; };
 		F800C68BEBC98076422569AE /* Pods_ColourBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C899EA646F9D6392D10F289 /* Pods_ColourBook.framework */; };
@@ -73,6 +75,8 @@
 		663646991DE4921F00E6D719 /* purpleCBlogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = purpleCBlogo.png; sourceTree = "<group>"; };
 		6636469A1DE4921F00E6D719 /* purpleCBlogo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "purpleCBlogo@2x.png"; sourceTree = "<group>"; };
 		6636469B1DE4921F00E6D719 /* purpleCBlogo@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "purpleCBlogo@3x.png"; sourceTree = "<group>"; };
+		9231AE961DE69EB50087F6A1 /* benjamin moore product list - edited.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "benjamin moore product list - edited.csv"; sourceTree = "<group>"; };
+		9231AE981DE69EBF0087F6A1 /* Paint Data.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Paint Data.csv"; sourceTree = "<group>"; };
 		92FD3EAA1DE52A71009341C9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		92FD3EAE1DE52D26009341C9 /* BarcodeScanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarcodeScanner.swift; sourceTree = "<group>"; };
 		D218658870BE7C0C8667A861 /* Pods-ColourBook.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ColourBook.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ColourBook/Pods-ColourBook.debug.xcconfig"; sourceTree = "<group>"; };
@@ -116,6 +120,8 @@
 				6636465B1DE0C3EA00E6D719 /* TutorialVC.swift */,
 				6636465D1DE0C3EA00E6D719 /* Main.storyboard */,
 				92FD3EAE1DE52D26009341C9 /* BarcodeScanner.swift */,
+				9231AE981DE69EBF0087F6A1 /* Paint Data.csv */,
+				9231AE961DE69EB50087F6A1 /* benjamin moore product list - edited.csv */,
 				663646601DE0C3EA00E6D719 /* Assets.xcassets */,
 				663646621DE0C3EA00E6D719 /* LaunchScreen.storyboard */,
 				92FD3EAA1DE52A71009341C9 /* GoogleService-Info.plist */,
@@ -245,6 +251,7 @@
 				6636469E1DE4921F00E6D719 /* facebookImg@3x.png in Resources */,
 				663646AB1DE4921F00E6D719 /* purpleCBlogo.png in Resources */,
 				92FD3EAB1DE52A71009341C9 /* GoogleService-Info.plist in Resources */,
+				9231AE991DE69EBF0087F6A1 /* Paint Data.csv in Resources */,
 				6636469C1DE4921F00E6D719 /* facebookImg.png in Resources */,
 				663646A31DE4921F00E6D719 /* googleImg@2x.png in Resources */,
 				663646A41DE4921F00E6D719 /* googleImg@3x.png in Resources */,
@@ -255,6 +262,7 @@
 				6636466F1DE16A4300E6D719 /* effects.png in Resources */,
 				663646A01DE4921F00E6D719 /* goldCBlogo@2x.png in Resources */,
 				663646AA1DE4921F00E6D719 /* pinkCBLogo@3x.png in Resources */,
+				9231AE971DE69EB50087F6A1 /* benjamin moore product list - edited.csv in Resources */,
 				6636469D1DE4921F00E6D719 /* facebookImg@2x.png in Resources */,
 				663646A71DE4921F00E6D719 /* greenCBlogo@3x.png in Resources */,
 				6636465F1DE0C3EA00E6D719 /* Main.storyboard in Resources */,
