@@ -1,0 +1,6 @@
+framework module Pods_ColourBook {
+  umbrella header "Pods-ColourBook-umbrella.h"
+
+  export *
+  module * { export * }
+}

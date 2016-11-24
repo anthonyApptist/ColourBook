@@ -37,9 +37,14 @@
 		663646AD1DE4921F00E6D719 /* purpleCBlogo@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6636469B1DE4921F00E6D719 /* purpleCBlogo@3x.png */; };
 		665E636E1DE6B55C002BA868 /* IconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665E636D1DE6B55C002BA868 /* IconView.swift */; };
 		665E63701DE6B573002BA868 /* Colours.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665E636F1DE6B573002BA868 /* Colours.swift */; };
+		92FD3EAB1DE52A71009341C9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 92FD3EAA1DE52A71009341C9 /* GoogleService-Info.plist */; };
+		92FD3EAF1DE52D26009341C9 /* BarcodeScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92FD3EAE1DE52D26009341C9 /* BarcodeScanner.swift */; };
+		F800C68BEBC98076422569AE /* Pods_ColourBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C899EA646F9D6392D10F289 /* Pods_ColourBook.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0C899EA646F9D6392D10F289 /* Pods_ColourBook.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ColourBook.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		582541D0C63B9F68DF683CF9 /* Pods-ColourBook.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ColourBook.release.xcconfig"; path = "Pods/Target Support Files/Pods-ColourBook/Pods-ColourBook.release.xcconfig"; sourceTree = "<group>"; };
 		663646561DE0C3EA00E6D719 /* ColourBook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ColourBook.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		663646591DE0C3EA00E6D719 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6636465B1DE0C3EA00E6D719 /* TutorialVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialVC.swift; sourceTree = "<group>"; };
@@ -72,6 +77,9 @@
 		6636469B1DE4921F00E6D719 /* purpleCBlogo@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "purpleCBlogo@3x.png"; sourceTree = "<group>"; };
 		665E636D1DE6B55C002BA868 /* IconView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IconView.swift; sourceTree = "<group>"; };
 		665E636F1DE6B573002BA868 /* Colours.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colours.swift; sourceTree = "<group>"; };
+		92FD3EAA1DE52A71009341C9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		92FD3EAE1DE52D26009341C9 /* BarcodeScanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarcodeScanner.swift; sourceTree = "<group>"; };
+		D218658870BE7C0C8667A861 /* Pods-ColourBook.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ColourBook.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ColourBook/Pods-ColourBook.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +87,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F800C68BEBC98076422569AE /* Pods_ColourBook.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -91,6 +100,8 @@
 				6636466B1DE16A4300E6D719 /* images */,
 				663646581DE0C3EA00E6D719 /* ColourBook */,
 				663646571DE0C3EA00E6D719 /* Products */,
+				F29FF469050AE8777EE69F42 /* Pods */,
+				6A7BBA4F7F409D1AFC39E3AC /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -108,8 +119,10 @@
 				663646591DE0C3EA00E6D719 /* AppDelegate.swift */,
 				6636465B1DE0C3EA00E6D719 /* TutorialVC.swift */,
 				6636465D1DE0C3EA00E6D719 /* Main.storyboard */,
+				92FD3EAE1DE52D26009341C9 /* BarcodeScanner.swift */,
 				663646601DE0C3EA00E6D719 /* Assets.xcassets */,
 				663646621DE0C3EA00E6D719 /* LaunchScreen.storyboard */,
+				92FD3EAA1DE52A71009341C9 /* GoogleService-Info.plist */,
 				663646651DE0C3EA00E6D719 /* Info.plist */,
 				663646721DE16C6800E6D719 /* UIExtensions.swift */,
 				663646881DE3E93A00E6D719 /* LogInViewController.swift */,
@@ -147,6 +160,23 @@
 			path = images;
 			sourceTree = "<group>";
 		};
+		6A7BBA4F7F409D1AFC39E3AC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				0C899EA646F9D6392D10F289 /* Pods_ColourBook.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F29FF469050AE8777EE69F42 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				D218658870BE7C0C8667A861 /* Pods-ColourBook.debug.xcconfig */,
+				582541D0C63B9F68DF683CF9 /* Pods-ColourBook.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -154,9 +184,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 663646681DE0C3EA00E6D719 /* Build configuration list for PBXNativeTarget "ColourBook" */;
 			buildPhases = (
+				677BAD4648C22CDE0B6558E6 /* [CP] Check Pods Manifest.lock */,
 				663646521DE0C3EA00E6D719 /* Sources */,
 				663646531DE0C3EA00E6D719 /* Frameworks */,
 				663646541DE0C3EA00E6D719 /* Resources */,
+				1A2366A976A357EEDA692004 /* [CP] Embed Pods Frameworks */,
+				8246B89A5B4E25C52369D218 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -179,6 +212,7 @@
 				TargetAttributes = {
 					663646551DE0C3EA00E6D719 = {
 						CreatedOnToolsVersion = 8.1;
+						DevelopmentTeam = P486JETJ9C;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -216,6 +250,7 @@
 				663646AD1DE4921F00E6D719 /* purpleCBlogo@3x.png in Resources */,
 				6636469E1DE4921F00E6D719 /* facebookImg@3x.png in Resources */,
 				663646AB1DE4921F00E6D719 /* purpleCBlogo.png in Resources */,
+				92FD3EAB1DE52A71009341C9 /* GoogleService-Info.plist in Resources */,
 				6636469C1DE4921F00E6D719 /* facebookImg.png in Resources */,
 				663646A31DE4921F00E6D719 /* googleImg@2x.png in Resources */,
 				663646A41DE4921F00E6D719 /* googleImg@3x.png in Resources */,
@@ -235,6 +270,54 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		1A2366A976A357EEDA692004 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ColourBook/Pods-ColourBook-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		677BAD4648C22CDE0B6558E6 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		8246B89A5B4E25C52369D218 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ColourBook/Pods-ColourBook-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		663646521DE0C3EA00E6D719 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -244,6 +327,7 @@
 				665E63701DE6B573002BA868 /* Colours.swift in Sources */,
 				663646891DE3E93A00E6D719 /* LogInViewController.swift in Sources */,
 				663646731DE16C6800E6D719 /* UIExtensions.swift in Sources */,
+				92FD3EAF1DE52D26009341C9 /* BarcodeScanner.swift in Sources */,
 				6636465C1DE0C3EA00E6D719 /* TutorialVC.swift in Sources */,
 				6636465A1DE0C3EA00E6D719 /* AppDelegate.swift in Sources */,
 			);
@@ -366,11 +450,13 @@
 		};
 		663646691DE0C3EA00E6D719 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D218658870BE7C0C8667A861 /* Pods-ColourBook.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = P486JETJ9C;
 				INFOPLIST_FILE = ColourBook/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "Mark-Meritt.ColourBook";
+				PRODUCT_BUNDLE_IDENTIFIER = Apptist.ColourBook;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -378,11 +464,13 @@
 		};
 		6636466A1DE0C3EA00E6D719 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 582541D0C63B9F68DF683CF9 /* Pods-ColourBook.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = P486JETJ9C;
 				INFOPLIST_FILE = ColourBook/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "Mark-Meritt.ColourBook";
+				PRODUCT_BUNDLE_IDENTIFIER = Apptist.ColourBook;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
