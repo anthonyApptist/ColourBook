@@ -1,24 +1,24 @@
 //
-//  LogInViewController.swift
+//  SignUpViewController.swift
 //  ColourBook
 //
-//  Created by Mark Meritt on 2016-11-21.
+//  Created by Mark Meritt on 2016-11-25.
 //  Copyright © 2016 Apptist. All rights reserved.
 //
 
 import UIKit
 
-class LogInViewController : UIViewController {
+class SignUpViewController: UIViewController {
     
     @IBOutlet weak var topBar: UIView!
     
     @IBOutlet weak var titleLbl: UILabel!
     
-    @IBOutlet weak var logInBtn: UIButton!
-    
     @IBOutlet weak var usernameTxtField: UITextField!
     
     @IBOutlet weak var passwordTxtField: UITextField!
+    
+    @IBOutlet weak var facebookBtn: UIButton!
     
     @IBOutlet weak var signUpBtn: UIButton!
     
@@ -26,13 +26,15 @@ class LogInViewController : UIViewController {
         
     }
     
-    @IBAction func logInBtnPressed() {
+    @IBAction func facebookBtnPressed() {
         
     }
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         
     }
+    
 }

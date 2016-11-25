@@ -20,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         FIRApp.configure()
         
-        FIRConfiguration.persis
+ //       FIRConfiguration.persis
         
         return true
     }
