@@ -131,6 +131,8 @@ class BarcodeScanner: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
             
             barcodeFrame.frame = readableObject.bounds
             
+            view.layer.addSublayer(barcodeFrame.layer)
+            
             print(code!)
             
             barcodeScanned(code: code!)
