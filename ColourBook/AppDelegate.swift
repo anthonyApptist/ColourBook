@@ -20,9 +20,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         FIRApp.configure()
         
-<<<<<<< HEAD
- //       FIRConfiguration.persis
-=======
+//        FIRConfiguration.persis
+/*
         window = UIWindow.init(frame: UIScreen.main.bounds)
         
         let initialView = BarcodeScanner()
@@ -30,8 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.rootViewController = initialView
         
         window?.makeKeyAndVisible()
->>>>>>> 4bfd4b6b516e79ad046ef0e565d9720df2b3513c
-        
+*/
         return true
     }
 
