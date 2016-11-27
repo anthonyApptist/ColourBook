@@ -19,17 +19,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
         FIRApp.configure()
-        
-//        FIRConfiguration.persis
-/*
+
         window = UIWindow.init(frame: UIScreen.main.bounds)
         
-        let initialView = BarcodeScanner()
+        let initialView = CSVViewController()
         
         window?.rootViewController = initialView
         
         window?.makeKeyAndVisible()
-*/
+        
         return true
     }
 
