@@ -10,7 +10,7 @@ import UIKit
 
 struct Colour {
 
-    var manID: String
+    var manufactuerID: String
 
     var productCode: String
     

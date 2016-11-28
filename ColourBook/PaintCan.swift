@@ -10,16 +10,16 @@ import Foundation
 
 struct PaintCan {
     
-    var manufactuer: String?
+    var manufactuer: String
     
-    var productName: String?
+    var productName: String
     
-    var category: String?
+    var category: String
     
-    var code: String?
+    var code: String
     
-    var upcCode: String?
+    var upcCode: String
     
-    var image: String?
+    var image: String
     
 }
