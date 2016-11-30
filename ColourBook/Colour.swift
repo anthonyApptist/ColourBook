@@ -16,7 +16,5 @@ struct Colour {
     
     var colourName: String
     
-    var colourImage: String
-    
     var colourHexCode: String
 }

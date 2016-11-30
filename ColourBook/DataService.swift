@@ -50,7 +50,7 @@ class DataService {
         let profile: Dictionary<String, AnyObject> = ["email": email as AnyObject, "name": name as AnyObject]
     }
     
-    func savePaintData(manufactuerID: String, productCode: String, colourName: String, colourImage: String, colourHexCode: String) {
+    func savePaintData(manufactuerID: String, productCode: String, colourName: String, colourHexCode: String) {
         
         let paintProfile: Dictionary<String, AnyObject> = ["manufactuerID" : manufactuerID as AnyObject, colourName : productCode as AnyObject]
         
