@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		66242AD51DF0EDAE000B651F /* ItemListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66242AD41DF0EDAE000B651F /* ItemListVC.swift */; };
+		66242AD71DF0F0F4000B651F /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66242AD61DF0F0F4000B651F /* MessageView.swift */; };
+		66242ADB1DF0F302000B651F /* barcode.png in Resources */ = {isa = PBXBuildFile; fileRef = 66242AD81DF0F302000B651F /* barcode.png */; };
+		66242ADC1DF0F302000B651F /* barcode@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66242AD91DF0F302000B651F /* barcode@2x.png */; };
+		66242ADD1DF0F302000B651F /* barcode@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66242ADA1DF0F302000B651F /* barcode@3x.png */; };
 		6636465A1DE0C3EA00E6D719 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663646591DE0C3EA00E6D719 /* AppDelegate.swift */; };
 		6636465C1DE0C3EA00E6D719 /* TutorialVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6636465B1DE0C3EA00E6D719 /* TutorialVC.swift */; };
 		6636465F1DE0C3EA00E6D719 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6636465D1DE0C3EA00E6D719 /* Main.storyboard */; };
@@ -36,7 +41,7 @@
 		663646AC1DE4921F00E6D719 /* purpleCBlogo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6636469A1DE4921F00E6D719 /* purpleCBlogo@2x.png */; };
 		663646AD1DE4921F00E6D719 /* purpleCBlogo@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6636469B1DE4921F00E6D719 /* purpleCBlogo@3x.png */; };
 		665E636E1DE6B55C002BA868 /* IconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665E636D1DE6B55C002BA868 /* IconView.swift */; };
-		665E63701DE6B573002BA868 /* Colours.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665E636F1DE6B573002BA868 /* Colours.swift */; };
+		665E63701DE6B573002BA868 /* UIColours.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665E636F1DE6B573002BA868 /* UIColours.swift */; };
 		665E63741DE82833002BA868 /* iconFacebook.png in Resources */ = {isa = PBXBuildFile; fileRef = 665E63711DE82833002BA868 /* iconFacebook.png */; };
 		665E63751DE82833002BA868 /* iconFacebook@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 665E63721DE82833002BA868 /* iconFacebook@2x.png */; };
 		665E63761DE82833002BA868 /* iconFacebook@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 665E63731DE82833002BA868 /* iconFacebook@3x.png */; };
@@ -73,6 +78,11 @@
 /* Begin PBXFileReference section */
 		0C899EA646F9D6392D10F289 /* Pods_ColourBook.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ColourBook.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		582541D0C63B9F68DF683CF9 /* Pods-ColourBook.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ColourBook.release.xcconfig"; path = "Pods/Target Support Files/Pods-ColourBook/Pods-ColourBook.release.xcconfig"; sourceTree = "<group>"; };
+		66242AD41DF0EDAE000B651F /* ItemListVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemListVC.swift; sourceTree = "<group>"; };
+		66242AD61DF0F0F4000B651F /* MessageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
+		66242AD81DF0F302000B651F /* barcode.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = barcode.png; sourceTree = "<group>"; };
+		66242AD91DF0F302000B651F /* barcode@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "barcode@2x.png"; sourceTree = "<group>"; };
+		66242ADA1DF0F302000B651F /* barcode@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "barcode@3x.png"; sourceTree = "<group>"; };
 		663646561DE0C3EA00E6D719 /* ColourBook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ColourBook.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		663646591DE0C3EA00E6D719 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6636465B1DE0C3EA00E6D719 /* TutorialVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialVC.swift; sourceTree = "<group>"; };
@@ -104,7 +114,7 @@
 		6636469A1DE4921F00E6D719 /* purpleCBlogo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "purpleCBlogo@2x.png"; sourceTree = "<group>"; };
 		6636469B1DE4921F00E6D719 /* purpleCBlogo@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "purpleCBlogo@3x.png"; sourceTree = "<group>"; };
 		665E636D1DE6B55C002BA868 /* IconView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IconView.swift; sourceTree = "<group>"; };
-		665E636F1DE6B573002BA868 /* Colours.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colours.swift; sourceTree = "<group>"; };
+		665E636F1DE6B573002BA868 /* UIColours.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColours.swift; sourceTree = "<group>"; };
 		665E63711DE82833002BA868 /* iconFacebook.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iconFacebook.png; sourceTree = "<group>"; };
 		665E63721DE82833002BA868 /* iconFacebook@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iconFacebook@2x.png"; sourceTree = "<group>"; };
 		665E63731DE82833002BA868 /* iconFacebook@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iconFacebook@3x.png"; sourceTree = "<group>"; };
@@ -150,6 +160,55 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		66242AD01DEF751A000B651F /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				92B4A6341DEBB8A100F35DED /* DataService.swift */,
+				92B4A6361DEBB8B400F35DED /* AuthService.swift */,
+				92B4A6381DEBB8E500F35DED /* User.swift */,
+				92B4A61C1DEA5B1C00F35DED /* Colour.swift */,
+				92B4A61E1DEA94D300F35DED /* PaintCan.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		66242AD11DEF7520000B651F /* View */ = {
+			isa = PBXGroup;
+			children = (
+				665E636D1DE6B55C002BA868 /* IconView.swift */,
+				665E636F1DE6B573002BA868 /* UIColours.swift */,
+				663646721DE16C6800E6D719 /* UIExtensions.swift */,
+				663646621DE0C3EA00E6D719 /* LaunchScreen.storyboard */,
+				6636465D1DE0C3EA00E6D719 /* Main.storyboard */,
+				66242AD61DF0F0F4000B651F /* MessageView.swift */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		66242AD21DEF7524000B651F /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				6636465B1DE0C3EA00E6D719 /* TutorialVC.swift */,
+				92FD3EAE1DE52D26009341C9 /* BarcodeScanner.swift */,
+				663646881DE3E93A00E6D719 /* LogInViewController.swift */,
+				665E63771DE8293A002BA868 /* SignUpViewController.swift */,
+				92B4A61A1DE8FD9300F35DED /* CSVViewController.swift */,
+				66C7713F1DE8331700E4810A /* MyDashboardVC.swift */,
+				66242AD41DF0EDAE000B651F /* ItemListVC.swift */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		66242AD31DEF78AF000B651F /* Other */ = {
+			isa = PBXGroup;
+			children = (
+				663646591DE0C3EA00E6D719 /* AppDelegate.swift */,
+				92B4A6321DEB9E0100F35DED /* benjamin moore product list - edited.csv */,
+				92B4A63A1DECB59100F35DED /* Paint Data.csv */,
+			);
+			name = Other;
+			sourceTree = "<group>";
+		};
 		6636464D1DE0C3EA00E6D719 = {
 			isa = PBXGroup;
 			children = (
@@ -172,28 +231,13 @@
 		663646581DE0C3EA00E6D719 /* ColourBook */ = {
 			isa = PBXGroup;
 			children = (
-				663646591DE0C3EA00E6D719 /* AppDelegate.swift */,
-				6636465B1DE0C3EA00E6D719 /* TutorialVC.swift */,
-				6636465D1DE0C3EA00E6D719 /* Main.storyboard */,
-				92FD3EAE1DE52D26009341C9 /* BarcodeScanner.swift */,
-				92B4A61A1DE8FD9300F35DED /* CSVViewController.swift */,
-				92B4A6341DEBB8A100F35DED /* DataService.swift */,
-				92B4A6361DEBB8B400F35DED /* AuthService.swift */,
-				92B4A6381DEBB8E500F35DED /* User.swift */,
-				92B4A61C1DEA5B1C00F35DED /* Colour.swift */,
-				92B4A61E1DEA94D300F35DED /* PaintCan.swift */,
-				92B4A6321DEB9E0100F35DED /* benjamin moore product list - edited.csv */,
-				92B4A63A1DECB59100F35DED /* Paint Data.csv */,
 				663646601DE0C3EA00E6D719 /* Assets.xcassets */,
-				663646621DE0C3EA00E6D719 /* LaunchScreen.storyboard */,
 				92FD3EAA1DE52A71009341C9 /* GoogleService-Info.plist */,
 				663646651DE0C3EA00E6D719 /* Info.plist */,
-				663646721DE16C6800E6D719 /* UIExtensions.swift */,
-				663646881DE3E93A00E6D719 /* LogInViewController.swift */,
-				665E636D1DE6B55C002BA868 /* IconView.swift */,
-				665E636F1DE6B573002BA868 /* Colours.swift */,
-				665E63771DE8293A002BA868 /* SignUpViewController.swift */,
-				66C7713F1DE8331700E4810A /* MyDashboardVC.swift */,
+				66242AD31DEF78AF000B651F /* Other */,
+				66242AD21DEF7524000B651F /* Controller */,
+				66242AD11DEF7520000B651F /* View */,
+				66242AD01DEF751A000B651F /* Model */,
 			);
 			path = ColourBook;
 			sourceTree = "<group>";
@@ -201,6 +245,9 @@
 		6636466B1DE16A4300E6D719 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				66242AD81DF0F302000B651F /* barcode.png */,
+				66242AD91DF0F302000B651F /* barcode@2x.png */,
+				66242ADA1DF0F302000B651F /* barcode@3x.png */,
 				66C771531DE83EEF00E4810A /* settingsIcon.png */,
 				66C771541DE83EEF00E4810A /* settingsIcon@2x.png */,
 				66C771551DE83EEF00E4810A /* settingsIcon@3x.png */,
@@ -296,7 +343,7 @@
 				TargetAttributes = {
 					663646551DE0C3EA00E6D719 = {
 						CreatedOnToolsVersion = 8.1;
-						DevelopmentTeam = 2PK72MH92Y;
+						DevelopmentTeam = 9Z8KVAFKJA;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -344,6 +391,7 @@
 				6636469E1DE4921F00E6D719 /* facebookImg@3x.png in Resources */,
 				663646AB1DE4921F00E6D719 /* purpleCBlogo.png in Resources */,
 				92FD3EAB1DE52A71009341C9 /* GoogleService-Info.plist in Resources */,
+				66242ADB1DF0F302000B651F /* barcode.png in Resources */,
 				6636469C1DE4921F00E6D719 /* facebookImg.png in Resources */,
 				663646A31DE4921F00E6D719 /* googleImg@2x.png in Resources */,
 				663646A41DE4921F00E6D719 /* googleImg@3x.png in Resources */,
@@ -353,6 +401,7 @@
 				663646A11DE4921F00E6D719 /* goldCBlogo@3x.png in Resources */,
 				663646A21DE4921F00E6D719 /* googleImg.png in Resources */,
 				66C771561DE83EEF00E4810A /* settingsIcon.png in Resources */,
+				66242ADC1DF0F302000B651F /* barcode@2x.png in Resources */,
 				92B4A63B1DECB59100F35DED /* Paint Data.csv in Resources */,
 				66C7714A1DE83EB300E4810A /* homeIcon.png in Resources */,
 				665E637D1DE82F99002BA868 /* arrowBack@2x.png in Resources */,
@@ -366,6 +415,7 @@
 				66C771511DE83EB300E4810A /* personalIcon@2x.png in Resources */,
 				6636469D1DE4921F00E6D719 /* facebookImg@2x.png in Resources */,
 				663646A71DE4921F00E6D719 /* greenCBlogo@3x.png in Resources */,
+				66242ADD1DF0F302000B651F /* barcode@3x.png in Resources */,
 				6636465F1DE0C3EA00E6D719 /* Main.storyboard in Resources */,
 				663646A61DE4921F00E6D719 /* greenCBlogo@2x.png in Resources */,
 				66C7714D1DE83EB300E4810A /* moneyIcon.png in Resources */,
@@ -429,9 +479,10 @@
 			files = (
 				665E636E1DE6B55C002BA868 /* IconView.swift in Sources */,
 				92B4A6351DEBB8A100F35DED /* DataService.swift in Sources */,
-				665E63701DE6B573002BA868 /* Colours.swift in Sources */,
+				665E63701DE6B573002BA868 /* UIColours.swift in Sources */,
 				665E63781DE8293A002BA868 /* SignUpViewController.swift in Sources */,
 				663646891DE3E93A00E6D719 /* LogInViewController.swift in Sources */,
+				66242AD71DF0F0F4000B651F /* MessageView.swift in Sources */,
 				663646731DE16C6800E6D719 /* UIExtensions.swift in Sources */,
 				92FD3EAF1DE52D26009341C9 /* BarcodeScanner.swift in Sources */,
 				66C771401DE8331700E4810A /* MyDashboardVC.swift in Sources */,
@@ -442,6 +493,7 @@
 				6636465A1DE0C3EA00E6D719 /* AppDelegate.swift in Sources */,
 				92B4A61B1DE8FD9300F35DED /* CSVViewController.swift in Sources */,
 				92B4A6371DEBB8B400F35DED /* AuthService.swift in Sources */,
+				66242AD51DF0EDAE000B651F /* ItemListVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -565,10 +617,10 @@
 			baseConfigurationReference = D218658870BE7C0C8667A861 /* Pods-ColourBook.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 2PK72MH92Y;
+				DEVELOPMENT_TEAM = 9Z8KVAFKJA;
 				INFOPLIST_FILE = ColourBook/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = Apptist.ColourBook;
+				PRODUCT_BUNDLE_IDENTIFIER = colourBook;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -579,10 +631,10 @@
 			baseConfigurationReference = 582541D0C63B9F68DF683CF9 /* Pods-ColourBook.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 2PK72MH92Y;
+				DEVELOPMENT_TEAM = 9Z8KVAFKJA;
 				INFOPLIST_FILE = ColourBook/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = Apptist.ColourBook;
+				PRODUCT_BUNDLE_IDENTIFIER = colourBook;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};

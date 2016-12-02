@@ -7,10 +7,11 @@
 //
 
 import UIKit
+import MapKit
 
-class MyDashboardVC: UIViewController, UIScrollViewDelegate {
+class MyDashboardVC: UIViewController, UIScrollViewDelegate, MKMapViewDelegate {
     
-    let colours = Colours()
+    let colours = UIColours()
     
     @IBOutlet weak var titleLbl: UILabel!
     
@@ -31,6 +32,8 @@ class MyDashboardVC: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var scanLbl: UILabel!
     
     @IBOutlet weak var pageCtrl: UIPageControl!
+    
+    let locationManager = CLLocationManager()
     
     @IBAction func viewBtnPressed() {
         
@@ -65,7 +68,7 @@ class MyDashboardVC: UIViewController, UIScrollViewDelegate {
         pageTwo.imageView = UIImageView(frame: CGRect(x: 26, y: 33, width: 77, height: 126))
         pageTwo.backgroundColor = colours.pinkColour()
         pageTwo.addSubview(pageTwo.imageView!)
-        pageTwo.imageView?.image = UIImage(named: "moneyicon")
+        pageTwo.imageView?.image = UIImage(named: "moneyIcon")
         self.scrollView.addSubview(pageTwo)
         
         let pageThree = IconView(frame: CGRect(x: 0, y: 0, width: 129, height: 183))
@@ -73,7 +76,7 @@ class MyDashboardVC: UIViewController, UIScrollViewDelegate {
         pageThree.imageView = UIImageView(frame: CGRect(x: 33, y: 48, width: 66, height: 94))
         pageThree.backgroundColor = colours.purpleColour()
         pageThree.addSubview(pageThree.imageView!)
-        pageThree.imageView?.image = UIImage(named: "homeicon")
+        pageThree.imageView?.image = UIImage(named: "homeIcon")
         self.scrollView.addSubview(pageThree)
         
         let pageFour = IconView(frame: CGRect(x: 0, y: 0, width: 129, height: 183))
@@ -96,6 +99,19 @@ class MyDashboardVC: UIViewController, UIScrollViewDelegate {
         self.scanBtn.center = scanLbl.center
         
         
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(false)
+        locationAuthStatus()
+    }
+    
+    func locationAuthStatus() {
+        if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
+            
+        } else {
+            locationManager.requestWhenInUseAuthorization()
+        }
     }
     
     func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {

@@ -19,7 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
         FIRApp.configure()
-
+/*
         window = UIWindow.init(frame: UIScreen.main.bounds)
         
         let initialView = CSVViewController()
@@ -27,7 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.rootViewController = initialView
         
         window?.makeKeyAndVisible()
-        
+ */
         return true
     }
 

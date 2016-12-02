@@ -8,7 +8,7 @@
 
 import UIKit
 
-struct Colours {
+struct UIColours {
     
     func goldColour() -> UIColor {
         return UIColor.init(red: 210/255, green: 197/255, blue: 173/255, alpha: 1.0)
