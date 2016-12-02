@@ -23,11 +23,11 @@ class LogInViewController : UIViewController {
     @IBOutlet weak var signUpBtn: UIButton!
     
     @IBAction func signUpBtnPressed() {
-        
+        AuthService.instance.login(email: usernameTxtField.text!, password: passwordTxtField.text!, onComplete: nil)
     }
     
     @IBAction func logInBtnPressed() {
-        
+        AuthService.instance.login(email: usernameTxtField.text!, password: passwordTxtField.text!, onComplete: nil)
     }
     
     override func viewDidLoad() {
