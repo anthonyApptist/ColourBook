@@ -10,25 +10,30 @@ import UIKit
 
 class ItemListVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
+    @IBOutlet weak var tableView: UITableView?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        tableView?.delegate = self
+        tableView?.dataSource = self
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        <#code#>
+        return 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        <#code#>
+        return 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        <#code#>
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ItemCell", for: indexPath) as! ItemCell
+        
+        return cell
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        <#code#>
-    }
+   
     
     
     

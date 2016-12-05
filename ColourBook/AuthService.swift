@@ -8,11 +8,14 @@
 
 import Foundation
 import FirebaseAuth
+import UIKit
 
 typealias Completion = (_ errorMessage: String?, _ data: AnyObject?) -> Void
 
 class AuthService {
     private static let _instance = AuthService()
+    
+    let app = UIApplication.shared.delegate as! AppDelegate
     
     static var instance: AuthService {
         return _instance
@@ -106,6 +109,8 @@ class AuthService {
     
     func performSignOut() {
         try! FIRAuth.auth()!.signOut()
+        self.app.userDefaults.set(false, forKey: "userLoggedIn")
+
     }
     
     func passwordReset() {

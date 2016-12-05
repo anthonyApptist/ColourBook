@@ -1,3 +1,4 @@
+
 //
 //  MyDashboardVC.swift
 //  ColourBook
@@ -25,21 +26,38 @@ class MyDashboardVC: UIViewController, UIScrollViewDelegate, MKMapViewDelegate {
     
     @IBOutlet weak var viewBtn: UIButton!
     
-    @IBOutlet weak var viewLbl: UILabel!
     
     @IBOutlet weak var scanBtn: UIButton!
     
-    @IBOutlet weak var scanLbl: UILabel!
     
     @IBOutlet weak var pageCtrl: UIPageControl!
     
     let locationManager = CLLocationManager()
     
+    let app = UIApplication.shared.delegate as! AppDelegate
+    
     @IBAction func viewBtnPressed() {
+        
+        
         
     }
     
     @IBAction func scanBtnPressed() {
+        
+        let scanView = storyboard?.instantiateViewController(withIdentifier: "BarcodeVC")
+        
+        present(scanView!, animated: false, completion: nil)
+        
+    }
+    
+    @IBAction func logOut() {
+        
+        AuthService.instance.performSignOut()
+                
+        let scanView = storyboard?.instantiateViewController(withIdentifier: "LogInVC")
+        
+        present(scanView!, animated: false, completion: nil)
+        
         
     }
     
@@ -47,6 +65,8 @@ class MyDashboardVC: UIViewController, UIScrollViewDelegate, MKMapViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+        self.scanBtn.addTarget(self, action: #selector(MyDashboardVC.scanBtnPressed), for: .touchUpInside)
         
         let scrollViewWidth: CGFloat = self.scrollView.frame.width
         let scrollViewHeight: CGFloat = self.scrollView.frame.height
@@ -92,11 +112,9 @@ class MyDashboardVC: UIViewController, UIScrollViewDelegate, MKMapViewDelegate {
         self.scrollView.delegate = self
         self.pageCtrl.currentPage = 0
         
-        self.scanBtn.setBorderWidth()
-        self.titleLbl.setSpacing(space: 6.0)
-        self.viewLbl.setSpacing(space: 4.0)
-        self.scanLbl.setSpacing(space: 4.0)
-        self.scanBtn.center = scanLbl.center
+        self.titleLbl.setSpacing(space: 4.0)
+        self.viewBtn.setSpacing(space: 4.0)
+        self.scanBtn.setSpacing(space: 4.0)
         
         
     }
@@ -121,13 +139,13 @@ class MyDashboardVC: UIViewController, UIScrollViewDelegate, MKMapViewDelegate {
         self.pageCtrl.currentPage = Int(currentPage)
         
         if Int(currentPage) == 0 {
-            self.descLbl.text = "Personal"
+            self.descLbl.text = "personal"
         } else if Int(currentPage) == 1 {
-            self.descLbl.text = "Business"
+            self.descLbl.text = "business"
         } else if Int(currentPage) == 2 {
-            self.descLbl.text = "Home Address"
+            self.descLbl.text = "my homes"
         } else if Int(currentPage) == 3 {
-            self.descLbl.text = "Settings"
+            self.descLbl.text = "my account"
         }
     }
     
@@ -141,26 +159,54 @@ class MyDashboardVC: UIViewController, UIScrollViewDelegate, MKMapViewDelegate {
         self.pageCtrl.currentPage = page;
         
         if Int(page) == 0 {
-            self.topView.backgroundColor = colours.goldColour()
-            self.bottomView.backgroundColor = colours.goldColour()
-            self.descLbl.text = "Personal"
+            self.descLbl.text = "personal"
+            self.scanBtn.backgroundColor = colours.goldColour()
+            self.viewBtn.backgroundColor = colours.goldColour()
+            self.scanBtn.setTitle("scan", for: .normal)
+            UIView.animate(withDuration: 1.0) {
+                self.viewBtn.alpha = 1.0
+            }
+            
+            self.scanBtn.removeTarget(self, action: #selector(MyDashboardVC.logOut), for: .touchUpInside)
+            self.scanBtn.addTarget(self, action: #selector(MyDashboardVC.scanBtnPressed), for: .touchUpInside)
+            
             
         } else if Int(page) == 1 {
-            self.topView.backgroundColor = colours.pinkColour()
-            self.bottomView.backgroundColor = colours.pinkColour()
-            self.descLbl.text = "Business"
+            self.descLbl.text = "business"
+            self.viewBtn.backgroundColor = colours.pinkColour()
+            self.scanBtn.backgroundColor = colours.pinkColour()
+            self.scanBtn.setTitle("scan", for: .normal)
+            UIView.animate(withDuration: 1.0) {
+                self.viewBtn.alpha = 1.0
+            }
+            
+            self.scanBtn.removeTarget(self, action: #selector(MyDashboardVC.logOut), for: .touchUpInside)
+            self.scanBtn.addTarget(self, action: #selector(MyDashboardVC.scanBtnPressed), for: .touchUpInside)
             
         } else if Int(page) == 2 {
-            self.topView.backgroundColor = colours.purpleColour()
-            self.bottomView.backgroundColor = colours.purpleColour()
-            self.descLbl.text = "Home Address"
+            self.descLbl.text = "my homes"
+            self.viewBtn.backgroundColor = colours.purpleColour()
+            self.scanBtn.backgroundColor = colours.purpleColour()
+            self.scanBtn.setTitle("scan", for: .normal)
+            UIView.animate(withDuration: 1.0) {
+                self.viewBtn.alpha = 1.0
+            }
             
+            self.scanBtn.removeTarget(self, action: #selector(MyDashboardVC.logOut), for: .touchUpInside)
+            self.scanBtn.addTarget(self, action: #selector(MyDashboardVC.scanBtnPressed), for: .touchUpInside)
+
         } else if Int(page) == 3 {
-            self.topView.backgroundColor = colours.greenColour()
-            self.bottomView.backgroundColor = colours.greenColour()
-            self.descLbl.text = "Settings"
+            self.descLbl.text = "my account"
+            self.scanBtn.backgroundColor = colours.greenColour()
+            self.scanBtn.setTitle("log out", for: .normal)
+            self.viewBtn.superview?.backgroundColor = UIColor.white
+            UIView.animate(withDuration: 1.0) {
+                self.viewBtn.alpha = 0.0
+            }
             
-            
+            self.scanBtn.removeTarget(self, action: #selector(MyDashboardVC.scanBtnPressed), for: .touchUpInside)
+            self.scanBtn.addTarget(self, action: #selector(MyDashboardVC.logOut), for: .touchUpInside)
+
         }
         
     }

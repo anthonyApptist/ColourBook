@@ -13,22 +13,66 @@ import Firebase
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    
+    let userDefaults = UserDefaults.standard
+    
+    let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
         FIRApp.configure()
-/*
-        window = UIWindow.init(frame: UIScreen.main.bounds)
         
-        let initialView = CSVViewController()
+        window = UIWindow.init(frame: UIScreen.main.bounds)
+                
+        if userDefaults.bool(forKey: "skipTutorial") == false {
+        
+        let initialView = storyboard.instantiateViewController(withIdentifier: "TutorialVC")
         
         window?.rootViewController = initialView
-        
         window?.makeKeyAndVisible()
- */
+
+            
+        }
+        if userDefaults.bool(forKey: "skipTutorial") == true {
+            
+            if userDefaults.bool(forKey: "userJoined") == false {
+                
+                let initialView = storyboard.instantiateViewController(withIdentifier: "SignUpVC")
+                
+                window?.rootViewController = initialView
+                window?.makeKeyAndVisible()
+                
+            }
+            
+            if userDefaults.bool(forKey: "userJoined") == true  {
+                
+                let initialView = storyboard.instantiateViewController(withIdentifier: "LogInVC")
+                
+                window?.rootViewController = initialView
+                window?.makeKeyAndVisible()
+                
+                if userDefaults.bool(forKey: "userLoggedIn") == true {
+                    
+                    let initialView = storyboard.instantiateViewController(withIdentifier: "MyDashboardVC")
+                    
+                    window?.rootViewController = initialView
+                    window?.makeKeyAndVisible()
+                }
+                
+                if userDefaults.bool(forKey: "userLoggedIn") == false {
+                    
+                    let initialView = storyboard.instantiateViewController(withIdentifier: "LogInVC")
+                    
+                    window?.rootViewController = initialView
+                    window?.makeKeyAndVisible()
+                }
+            }
+    
+        }
+   
         return true
+
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
