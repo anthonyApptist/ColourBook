@@ -28,14 +28,6 @@ class DataService {
         return mainRef.child("users")
     }
     
-    var usersPersonalDashboardRef: FIRDatabaseReference {
-        return mainRef.child("users").child("personalDashboard")
-    }
-    
-    var usersBusinessDashboardRef: FIRDatabaseReference {
-        return mainRef.child("users").child("businessDashboard")
-    }
-    
     // paint data reference
     var paintDataRef: FIRDatabaseReference {
         return mainRef.child("paintData")
@@ -68,6 +60,14 @@ class DataService {
         paintCanRef.child(upcCode).child("profile").setValue(paintCanProfile)
         
         paintCanRef.child("image").setValue(image)
+        
+    }
+    
+    func createNewUser(uid: String, email: String) {
+        
+        let dashboards: Dictionary<String, AnyObject> = ["addressDashboard": "" as AnyObject, "businessDashboard": "" as AnyObject, "personalDashboard": "" as AnyObject]
+        
+        usersRef.child(uid).setValue(dashboards)
         
     }
     

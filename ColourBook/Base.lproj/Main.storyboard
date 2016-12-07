@@ -225,7 +225,7 @@
                                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="BHQ-3w-4Cn" id="M3a-QN-wXD">
-                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TWo-lO-oo0">
@@ -2588,6 +2588,14 @@
         <segue reference="JcE-5l-xeJ"/>
         <segue reference="AmU-Tx-6nY"/>
         <segue reference="3lr-Bj-ITI"/>
+        <segue reference="YvQ-k5-Oki"/>
+        <segue reference="ohn-gz-J0U"/>
+        <segue reference="JcE-5l-xeJ"/>
+        <segue reference="JBk-rD-7PC"/>
+        <segue reference="PAq-5m-KVW"/>
+        <segue reference="VBU-Eg-ehi"/>
+        <segue reference="pW4-3l-wOV"/>
+        <segue reference="N4L-tY-cc2"/>
         <segue reference="wbT-XK-359"/>
     </inferredMetricsTieBreakers>
 </document>

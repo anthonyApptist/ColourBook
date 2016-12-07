@@ -37,7 +37,7 @@ class AuthService {
                                 if user?.uid != nil {
                     
                                     // save user uid to database
-                                    DataService.instance.saveRegisterUser(uid: user!.uid, email: user!.email!, name: "")
+                                    DataService.instance.createNewUser(uid: user!.uid, email: email)
                                     
                                     FIRAuth.auth()!.signIn(withEmail: email, password: password, completion: { (user, error) in
                                         
