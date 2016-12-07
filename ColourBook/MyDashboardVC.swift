@@ -12,7 +12,11 @@ import MapKit
 
 class MyDashboardVC: UIViewController, UIScrollViewDelegate, MKMapViewDelegate {
     
-    let colours = UIColours()
+    let colours = UIColours(col: UIColor.clear)
+    
+    var btnPressed: Bool = false
+    
+    var currentPage: Int = 0
     
     @IBOutlet weak var titleLbl: UILabel!
     
@@ -23,6 +27,8 @@ class MyDashboardVC: UIViewController, UIScrollViewDelegate, MKMapViewDelegate {
     @IBOutlet weak var scrollView: UIScrollView!
     
     @IBOutlet weak var descLbl: UILabel!
+    
+    var descString: String! = "personal"
     
     @IBOutlet weak var viewBtn: UIButton!
     
@@ -36,17 +42,34 @@ class MyDashboardVC: UIViewController, UIScrollViewDelegate, MKMapViewDelegate {
     
     let app = UIApplication.shared.delegate as! AppDelegate
     
-    @IBAction func viewBtnPressed() {
+    @IBAction func viewBtnPressed(_ sender: AnyObject?) {
         
+        self.btnPressed = true
         
+        if self.descLbl.text == "personal" {
+
+                performSegue(withIdentifier: "ConnectToPersonal", sender: self)
+            
+        }
         
+        if self.descLbl.text == "business" {
+            
+            performSegue(withIdentifier: "ConnectToBusiness", sender: self)
+        }
+        
+        if self.descLbl.text == "my homes" {
+            
+            performSegue(withIdentifier: "ConnectToAddresses", sender: self)
+        }
+        
+      
     }
     
-    @IBAction func scanBtnPressed() {
+    @IBAction func scanBtnPressed(_ sender: AnyObject?) {
         
         let scanView = storyboard?.instantiateViewController(withIdentifier: "BarcodeVC")
         
-        present(scanView!, animated: false, completion: nil)
+        present(scanView!, animated: true, completion: nil)
         
     }
     
@@ -61,12 +84,27 @@ class MyDashboardVC: UIViewController, UIScrollViewDelegate, MKMapViewDelegate {
         
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+            if self.btnPressed {
+                
+                if let personalItemVC = segue.destination as? ItemListVC {
+                personalItemVC.titleString = self.descString
+                personalItemVC.colour = self.scanBtn.backgroundColor!
+               
+                }
+            
+        }
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         
         self.scanBtn.addTarget(self, action: #selector(MyDashboardVC.scanBtnPressed), for: .touchUpInside)
+        
+        self.viewBtn.addTarget(self, action: #selector(MyDashboardVC.viewBtnPressed), for: .touchUpInside)
         
         let scrollViewWidth: CGFloat = self.scrollView.frame.width
         let scrollViewHeight: CGFloat = self.scrollView.frame.height
@@ -139,13 +177,17 @@ class MyDashboardVC: UIViewController, UIScrollViewDelegate, MKMapViewDelegate {
         self.pageCtrl.currentPage = Int(currentPage)
         
         if Int(currentPage) == 0 {
-            self.descLbl.text = "personal"
+            self.descString = "persoal"
+            self.descLbl.text = self.descString
         } else if Int(currentPage) == 1 {
-            self.descLbl.text = "business"
+            self.descString = "business"
+            self.descLbl.text = self.descString
         } else if Int(currentPage) == 2 {
-            self.descLbl.text = "my homes"
+            self.descString = "my homes"
+            self.descLbl.text = self.descString
         } else if Int(currentPage) == 3 {
-            self.descLbl.text = "my account"
+            self.descString = "my account"
+            self.descLbl.text = self.descString
         }
     }
     
@@ -159,7 +201,8 @@ class MyDashboardVC: UIViewController, UIScrollViewDelegate, MKMapViewDelegate {
         self.pageCtrl.currentPage = page;
         
         if Int(page) == 0 {
-            self.descLbl.text = "personal"
+            self.descString = "personal"
+            self.descLbl.text = self.descString
             self.scanBtn.backgroundColor = colours.goldColour()
             self.viewBtn.backgroundColor = colours.goldColour()
             self.scanBtn.setTitle("scan", for: .normal)
@@ -172,7 +215,8 @@ class MyDashboardVC: UIViewController, UIScrollViewDelegate, MKMapViewDelegate {
             
             
         } else if Int(page) == 1 {
-            self.descLbl.text = "business"
+            self.descString = "business"
+            self.descLbl.text = self.descString
             self.viewBtn.backgroundColor = colours.pinkColour()
             self.scanBtn.backgroundColor = colours.pinkColour()
             self.scanBtn.setTitle("scan", for: .normal)
@@ -184,7 +228,8 @@ class MyDashboardVC: UIViewController, UIScrollViewDelegate, MKMapViewDelegate {
             self.scanBtn.addTarget(self, action: #selector(MyDashboardVC.scanBtnPressed), for: .touchUpInside)
             
         } else if Int(page) == 2 {
-            self.descLbl.text = "my homes"
+            self.descString = "my homes"
+            self.descLbl.text = self.descString
             self.viewBtn.backgroundColor = colours.purpleColour()
             self.scanBtn.backgroundColor = colours.purpleColour()
             self.scanBtn.setTitle("scan", for: .normal)
@@ -196,7 +241,8 @@ class MyDashboardVC: UIViewController, UIScrollViewDelegate, MKMapViewDelegate {
             self.scanBtn.addTarget(self, action: #selector(MyDashboardVC.scanBtnPressed), for: .touchUpInside)
 
         } else if Int(page) == 3 {
-            self.descLbl.text = "my account"
+            self.descString = "my account"
+            self.descLbl.text = self.descString
             self.scanBtn.backgroundColor = colours.greenColour()
             self.scanBtn.setTitle("log out", for: .normal)
             self.viewBtn.superview?.backgroundColor = UIColor.white

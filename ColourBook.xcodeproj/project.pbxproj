@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		661A47F61DF6A95700B56028 /* AddEditVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661A47F51DF6A95700B56028 /* AddEditVC.swift */; };
+		661A47F81DF6A97700B56028 /* ItemListDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661A47F71DF6A97700B56028 /* ItemListDetailVC.swift */; };
+		661A47FA1DF6A9B400B56028 /* AddEditAddressVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661A47F91DF6A9B400B56028 /* AddEditAddressVC.swift */; };
+		661A47FC1DF6A9FE00B56028 /* MyNameLogoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661A47FB1DF6A9FE00B56028 /* MyNameLogoVC.swift */; };
+		661A47FE1DF6AA0E00B56028 /* MyAddressVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661A47FD1DF6AA0E00B56028 /* MyAddressVC.swift */; };
+		661A48001DF6AA3800B56028 /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661A47FF1DF6AA3800B56028 /* SettingsVC.swift */; };
+		661A48021DF6AB8B00B56028 /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661A48011DF6AB8B00B56028 /* Address.swift */; };
+		661A48041DF6ABB000B56028 /* Business.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661A48031DF6ABB000B56028 /* Business.swift */; };
 		66242AD51DF0EDAE000B651F /* ItemListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66242AD41DF0EDAE000B651F /* ItemListVC.swift */; };
 		66242AD71DF0F0F4000B651F /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66242AD61DF0F0F4000B651F /* MessageView.swift */; };
 		66242ADB1DF0F302000B651F /* barcode.png in Resources */ = {isa = PBXBuildFile; fileRef = 66242AD81DF0F302000B651F /* barcode.png */; };
@@ -88,6 +96,14 @@
 /* Begin PBXFileReference section */
 		0C899EA646F9D6392D10F289 /* Pods_ColourBook.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ColourBook.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		582541D0C63B9F68DF683CF9 /* Pods-ColourBook.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ColourBook.release.xcconfig"; path = "Pods/Target Support Files/Pods-ColourBook/Pods-ColourBook.release.xcconfig"; sourceTree = "<group>"; };
+		661A47F51DF6A95700B56028 /* AddEditVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddEditVC.swift; sourceTree = "<group>"; };
+		661A47F71DF6A97700B56028 /* ItemListDetailVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemListDetailVC.swift; sourceTree = "<group>"; };
+		661A47F91DF6A9B400B56028 /* AddEditAddressVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddEditAddressVC.swift; sourceTree = "<group>"; };
+		661A47FB1DF6A9FE00B56028 /* MyNameLogoVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyNameLogoVC.swift; sourceTree = "<group>"; };
+		661A47FD1DF6AA0E00B56028 /* MyAddressVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyAddressVC.swift; sourceTree = "<group>"; };
+		661A47FF1DF6AA3800B56028 /* SettingsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
+		661A48011DF6AB8B00B56028 /* Address.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
+		661A48031DF6ABB000B56028 /* Business.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Business.swift; sourceTree = "<group>"; };
 		66242AD41DF0EDAE000B651F /* ItemListVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemListVC.swift; sourceTree = "<group>"; };
 		66242AD61DF0F0F4000B651F /* MessageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
 		66242AD81DF0F302000B651F /* barcode.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = barcode.png; sourceTree = "<group>"; };
@@ -188,6 +204,8 @@
 				92B4A6381DEBB8E500F35DED /* User.swift */,
 				92B4A61C1DEA5B1C00F35DED /* Colour.swift */,
 				92B4A61E1DEA94D300F35DED /* PaintCan.swift */,
+				661A48011DF6AB8B00B56028 /* Address.swift */,
+				661A48031DF6ABB000B56028 /* Business.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -219,6 +237,12 @@
 				92B4A61A1DE8FD9300F35DED /* CSVViewController.swift */,
 				66C7713F1DE8331700E4810A /* MyDashboardVC.swift */,
 				66242AD41DF0EDAE000B651F /* ItemListVC.swift */,
+				661A47F71DF6A97700B56028 /* ItemListDetailVC.swift */,
+				661A47F51DF6A95700B56028 /* AddEditVC.swift */,
+				661A47F91DF6A9B400B56028 /* AddEditAddressVC.swift */,
+				661A47FB1DF6A9FE00B56028 /* MyNameLogoVC.swift */,
+				661A47FD1DF6AA0E00B56028 /* MyAddressVC.swift */,
+				661A47FF1DF6AA3800B56028 /* SettingsVC.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -521,11 +545,15 @@
 			files = (
 				665E636E1DE6B55C002BA868 /* IconView.swift in Sources */,
 				92B4A6351DEBB8A100F35DED /* DataService.swift in Sources */,
+				661A47F61DF6A95700B56028 /* AddEditVC.swift in Sources */,
+				661A48041DF6ABB000B56028 /* Business.swift in Sources */,
 				66D7834B1DF4DD2100BACC2C /* CustomAnimatedButton.swift in Sources */,
+				661A47FC1DF6A9FE00B56028 /* MyNameLogoVC.swift in Sources */,
 				66242ADF1DF1123E000B651F /* ItemCell.swift in Sources */,
 				66242AE61DF46DD1000B651F /* CustomTextFieldContainer.swift in Sources */,
 				665E63701DE6B573002BA868 /* UIColours.swift in Sources */,
 				665E63781DE8293A002BA868 /* SignUpViewController.swift in Sources */,
+				661A47FE1DF6AA0E00B56028 /* MyAddressVC.swift in Sources */,
 				663646891DE3E93A00E6D719 /* LogInViewController.swift in Sources */,
 				66242AD71DF0F0F4000B651F /* MessageView.swift in Sources */,
 				663646731DE16C6800E6D719 /* UIExtensions.swift in Sources */,
@@ -539,7 +567,11 @@
 				6636465C1DE0C3EA00E6D719 /* TutorialVC.swift in Sources */,
 				6636465A1DE0C3EA00E6D719 /* AppDelegate.swift in Sources */,
 				92B4A61B1DE8FD9300F35DED /* CSVViewController.swift in Sources */,
+				661A47F81DF6A97700B56028 /* ItemListDetailVC.swift in Sources */,
+				661A48021DF6AB8B00B56028 /* Address.swift in Sources */,
 				66242AE41DF24FE4000B651F /* ErrorHandler.swift in Sources */,
+				661A47FA1DF6A9B400B56028 /* AddEditAddressVC.swift in Sources */,
+				661A48001DF6AA3800B56028 /* SettingsVC.swift in Sources */,
 				92B4A6371DEBB8B400F35DED /* AuthService.swift in Sources */,
 				66242AD51DF0EDAE000B651F /* ItemListVC.swift in Sources */,
 			);

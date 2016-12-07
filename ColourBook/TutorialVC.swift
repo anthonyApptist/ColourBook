@@ -21,8 +21,6 @@ class TutorialVC: UIViewController, UIScrollViewDelegate  {
     
     @IBOutlet weak var scrollView: UIScrollView!
     
-    let colours = UIColours()
-    
     let app = UIApplication.shared.delegate as! AppDelegate
     
     @IBAction func skipBtnPressed() {
@@ -51,7 +49,6 @@ class TutorialVC: UIViewController, UIScrollViewDelegate  {
         let pageOne = IconView(frame: CGRect(x: 0, y: 0, width: 129, height: 183))
         pageOne.frame.origin = CGPoint(x: scrollView.bounds.size.width/2 - pageOne.frame.width/2, y: scrollView.bounds.size.height/2 - pageOne.frame.height/2)
         pageOne.imageView = UIImageView(frame: CGRect(x: 14, y: 7, width: 108, height: 172))
-        pageOne.backgroundColor = colours.goldColour()
         pageOne.addSubview(pageOne.imageView!)
         pageOne.imageView?.image = UIImage(named: "goldCBlogo")
         self.scrollView.addSubview(pageOne)
@@ -59,7 +56,6 @@ class TutorialVC: UIViewController, UIScrollViewDelegate  {
         let pageTwo = IconView(frame: CGRect(x: 0, y: 0, width: 129, height: 183))
         pageTwo.frame.origin = CGPoint(x: pageOne.frame.origin.x + scrollViewWidth, y: scrollView.bounds.size.height/2 - pageTwo.frame.height/2)
         pageTwo.imageView = UIImageView(frame: CGRect(x: 14, y: 7, width: 108, height: 172))
-        pageTwo.backgroundColor = colours.pinkColour()
         pageTwo.addSubview(pageTwo.imageView!)
         pageTwo.imageView?.image = UIImage(named: "pinkCBLogo")
         self.scrollView.addSubview(pageTwo)
@@ -67,7 +63,6 @@ class TutorialVC: UIViewController, UIScrollViewDelegate  {
         let pageThree = IconView(frame: CGRect(x: 0, y: 0, width: 129, height: 183))
         pageThree.frame.origin = CGPoint(x: pageTwo.frame.origin.x + scrollViewWidth, y: scrollView.bounds.size.height/2 - pageThree.frame.height/2)
         pageThree.imageView = UIImageView(frame: CGRect(x: 14, y: 7, width: 108, height: 172))
-        pageThree.backgroundColor = colours.purpleColour()
         pageThree.addSubview(pageThree.imageView!)
         pageThree.imageView?.image = UIImage(named: "pinkCBLogo")
         self.scrollView.addSubview(pageThree)
@@ -75,7 +70,6 @@ class TutorialVC: UIViewController, UIScrollViewDelegate  {
         let pageFour = IconView(frame: CGRect(x: 0, y: 0, width: 129, height: 183))
         pageFour.frame.origin = CGPoint(x: pageThree.frame.origin.x + scrollViewWidth, y: scrollView.bounds.size.height/2 - pageFour.frame.height/2)
         pageFour.imageView = UIImageView(frame: CGRect(x: 14, y: 7, width: 108, height: 172))
-        pageFour.backgroundColor = colours.greenColour()
         pageFour.addSubview(pageFour.imageView!)
         pageFour.imageView?.image = UIImage(named: "pinkCBLogo")
         self.scrollView.addSubview(pageFour)
@@ -114,24 +108,16 @@ class TutorialVC: UIViewController, UIScrollViewDelegate  {
         self.pageCtrl.currentPage = page;
         
         if Int(page) == 0 {
-            self.topView.backgroundColor = colours.goldColour()
-            self.bottomView.backgroundColor = colours.goldColour()
             self.scanLbl.text = "Scan your product"
             
         } else if Int(page) == 1 {
-            self.topView.backgroundColor = colours.pinkColour()
-            self.bottomView.backgroundColor = colours.pinkColour()
             self.scanLbl.text = "View your product"
             
         } else if Int(page) == 2 {
-            self.topView.backgroundColor = colours.purpleColour()
-            self.bottomView.backgroundColor = colours.purpleColour()
             self.scanLbl.text = "Add your product to your Personal Bucket List"
             self.scanLbl.numberOfLines = 3
             
         } else if Int(page) == 3 {
-            self.topView.backgroundColor = colours.greenColour()
-            self.bottomView.backgroundColor = colours.greenColour()
             self.scanLbl.text = "Add your product to your home"
             
             app.userDefaults.set(true, forKey: "skipTutorial")

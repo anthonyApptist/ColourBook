@@ -8,7 +8,22 @@
 
 import UIKit
 
-struct UIColours {
+class UIColours {
+    
+    var colour: UIColor
+    
+    init(col: UIColor) {
+        self.colour = col
+    }
+    
+    func getColour() -> UIColor {
+        return colour
+    }
+    
+    func setColour(colour: UIColor) -> UIColor {
+            let newColour = colour
+            return newColour
+    }
     
     func goldColour() -> UIColor {
         return UIColor.init(red: 210/255, green: 197/255, blue: 173/255, alpha: 1.0)
