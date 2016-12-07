@@ -25,8 +25,14 @@ class BarcodeScanner: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
     
     var barcodeFrame: UIView!
     
+    var exitCameraGesture: UISwipeGestureRecognizer!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        exitCameraGesture = UISwipeGestureRecognizer.init(target: self, action: #selector(swipeDownGestureFunction))
+        
+        exitCameraGesture.direction = UISwipeGestureRecognizerDirection.down
         
         barcodeFrame = UIView()
         
@@ -37,6 +43,8 @@ class BarcodeScanner: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
         view.addSubview(barcodeFrame)
         
         view.bringSubview(toFront: barcodeFrame)
+        
+        view.addGestureRecognizer(exitCameraGesture)
         
         setupCamera()
         
@@ -119,7 +127,7 @@ class BarcodeScanner: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
     // MARK: delegate function
     
     func captureOutput(_ captureOutput: AVCaptureOutput!, didOutputMetadataObjects metadataObjects: [Any]!, from connection: AVCaptureConnection!) {
-       
+        
         // This is the delegate'smethod that is called when a code is read
         for metadata in metadataObjects {
             
@@ -160,9 +168,9 @@ class BarcodeScanner: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
             
             present(alert, animated: true, completion: nil)
         }
-        
+            
         else {
-        
+            
             let alert = UIAlertController(title: "Barcode Scanned", message: code, preferredStyle: .alert)
             
             let alertAction = UIAlertAction(title: "OK", style: .destructive, handler: nil)
@@ -174,6 +182,10 @@ class BarcodeScanner: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
         }
     }
     
+    func swipeDownGestureFunction() {
+        self.dismiss(animated: true, completion: nil)
     }
+    
+}
 
 
