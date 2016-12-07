@@ -2578,20 +2578,6 @@
         <image name="settingsIcon" width="115" height="113"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="5FO-LH-Ars"/>
-        <segue reference="kb9-hh-a3R"/>
-        <segue reference="OJF-l1-MeM"/>
-        <segue reference="Whz-4e-cTp"/>
-        <segue reference="pW4-3l-wOV"/>
-        <segue reference="ohn-gz-J0U"/>
-        <segue reference="JBk-rD-7PC"/>
-        <segue reference="JcE-5l-xeJ"/>
-        <segue reference="AmU-Tx-6nY"/>
-        <segue reference="3lr-Bj-ITI"/>
-        <segue reference="YvQ-k5-Oki"/>
-        <segue reference="PAq-5m-KVW"/>
-        <segue reference="VBU-Eg-ehi"/>
-        <segue reference="N4L-tY-cc2"/>
-        <segue reference="wbT-XK-359"/>
+ 
     </inferredMetricsTieBreakers>
 </document>
