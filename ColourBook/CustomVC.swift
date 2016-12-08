@@ -1,21 +1,36 @@
 //
-//  MyNameLogoVC.swift
+//  CustomVC.swift
 //  ColourBook
 //
-//  Created by Mark Meritt on 2016-12-06.
+//  Created by Mark Meritt on 2016-12-08.
 //  Copyright © 2016 Apptist. All rights reserved.
 //
 
 import UIKit
 
-class MyNameLogoVC: UIViewController {
-    
+enum ScreenState {
+    case none
+    case personal
+    case business
+    case homes
+}
 
+class CustomVC: UIViewController {
+    
+    var titleString: String = ""
+    
+    var screenState = ScreenState.none
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        if titleString == "personal" {
+            screenState = ScreenState.personal
+        } else if titleString == "business" {
+            screenState = ScreenState.business
+        } else if titleString == "my homes" {
+            screenState = ScreenState.homes
+        }
     }
 
     override func didReceiveMemoryWarning() {

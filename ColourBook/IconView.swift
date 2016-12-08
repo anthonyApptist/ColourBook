@@ -19,7 +19,7 @@ class IconView: UIView {
         self.layer.cornerRadius = 16.0
         self.imageView?.contentMode = .scaleAspectFit
         self.layer.shadowColor = UIColor.black.cgColor
-        self.layer.shadowOpacity = 1
+        self.layer.shadowOpacity = 0.3
         self.layer.shadowOffset = CGSize(width: 2.0, height: 4.0)
     }
     
