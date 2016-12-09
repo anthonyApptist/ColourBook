@@ -90,7 +90,10 @@
 		66F942C61DF92CA500C01DAF /* CustomVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F942C51DF92CA500C01DAF /* CustomVC.swift */; };
 		9277E0B11DF64F0A001E0B9B /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9277E0B01DF64F0A001E0B9B /* FBSDKCoreKit.framework */; };
 		9277E0B31DF64F63001E0B9B /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9277E0B21DF64F63001E0B9B /* Bolts.framework */; };
-		9277E0B51DF75022001E0B9B /* AfterScanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9277E0B41DF75022001E0B9B /* AfterScanViewController.swift */; };
+		9277E0B51DF75022001E0B9B /* PostScanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9277E0B41DF75022001E0B9B /* PostScanViewController.swift */; };
+		9277E0BB1DF9DD04001E0B9B /* Benjamin Moore Paint Data.csv in Resources */ = {isa = PBXBuildFile; fileRef = 9277E0BA1DF9DD04001E0B9B /* Benjamin Moore Paint Data.csv */; };
+		9277E0BE1DFA7D94001E0B9B /* SearchAddressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9277E0BD1DFA7D94001E0B9B /* SearchAddressViewController.swift */; };
+		9277E0C01DFA8323001E0B9B /* AddressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9277E0BF1DFA8323001E0B9B /* AddressViewController.swift */; };
 		92B4A61B1DE8FD9300F35DED /* CSVViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B4A61A1DE8FD9300F35DED /* CSVViewController.swift */; };
 		92B4A61D1DEA5B1C00F35DED /* Colour.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B4A61C1DEA5B1C00F35DED /* Colour.swift */; };
 		92B4A61F1DEA94D300F35DED /* PaintCan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B4A61E1DEA94D300F35DED /* PaintCan.swift */; };
@@ -98,7 +101,6 @@
 		92B4A6351DEBB8A100F35DED /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B4A6341DEBB8A100F35DED /* DataService.swift */; };
 		92B4A6371DEBB8B400F35DED /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B4A6361DEBB8B400F35DED /* AuthService.swift */; };
 		92B4A6391DEBB8E500F35DED /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B4A6381DEBB8E500F35DED /* User.swift */; };
-		92B4A63B1DECB59100F35DED /* Paint Data.csv in Resources */ = {isa = PBXBuildFile; fileRef = 92B4A63A1DECB59100F35DED /* Paint Data.csv */; };
 		92C6A1AE1DF5CE6100B2D6C4 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92C6A1AD1DF5CE6100B2D6C4 /* FBSDKLoginKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		92FD3EAB1DE52A71009341C9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 92FD3EAA1DE52A71009341C9 /* GoogleService-Info.plist */; };
 		92FD3EAF1DE52D26009341C9 /* BarcodeScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92FD3EAE1DE52D26009341C9 /* BarcodeScanner.swift */; };
@@ -194,7 +196,10 @@
 		9207D1041DF6184E00E90004 /* Facebook-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Facebook-Bridging-Header.h"; sourceTree = "<group>"; };
 		9277E0B01DF64F0A001E0B9B /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		9277E0B21DF64F63001E0B9B /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
-		9277E0B41DF75022001E0B9B /* AfterScanViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AfterScanViewController.swift; sourceTree = "<group>"; };
+		9277E0B41DF75022001E0B9B /* PostScanViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostScanViewController.swift; sourceTree = "<group>"; };
+		9277E0BA1DF9DD04001E0B9B /* Benjamin Moore Paint Data.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Benjamin Moore Paint Data.csv"; sourceTree = "<group>"; };
+		9277E0BD1DFA7D94001E0B9B /* SearchAddressViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchAddressViewController.swift; sourceTree = "<group>"; };
+		9277E0BF1DFA8323001E0B9B /* AddressViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressViewController.swift; sourceTree = "<group>"; };
 		92B4A61A1DE8FD9300F35DED /* CSVViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CSVViewController.swift; sourceTree = "<group>"; };
 		92B4A61C1DEA5B1C00F35DED /* Colour.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colour.swift; sourceTree = "<group>"; };
 		92B4A61E1DEA94D300F35DED /* PaintCan.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaintCan.swift; sourceTree = "<group>"; };
@@ -202,7 +207,6 @@
 		92B4A6341DEBB8A100F35DED /* DataService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
 		92B4A6361DEBB8B400F35DED /* AuthService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		92B4A6381DEBB8E500F35DED /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		92B4A63A1DECB59100F35DED /* Paint Data.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Paint Data.csv"; sourceTree = "<group>"; };
 		92C6A1AD1DF5CE6100B2D6C4 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		92FD3EAA1DE52A71009341C9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		92FD3EAE1DE52D26009341C9 /* BarcodeScanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarcodeScanner.swift; sourceTree = "<group>"; };
@@ -260,7 +264,9 @@
 			children = (
 				6636465B1DE0C3EA00E6D719 /* TutorialVC.swift */,
 				92FD3EAE1DE52D26009341C9 /* BarcodeScanner.swift */,
-				9277E0B41DF75022001E0B9B /* AfterScanViewController.swift */,
+				9277E0B41DF75022001E0B9B /* PostScanViewController.swift */,
+				9277E0BD1DFA7D94001E0B9B /* SearchAddressViewController.swift */,
+				9277E0BF1DFA8323001E0B9B /* AddressViewController.swift */,
 				663646881DE3E93A00E6D719 /* LogInViewController.swift */,
 				665E63771DE8293A002BA868 /* SignUpViewController.swift */,
 				92B4A61A1DE8FD9300F35DED /* CSVViewController.swift */,
@@ -282,8 +288,8 @@
 			children = (
 				663646591DE0C3EA00E6D719 /* AppDelegate.swift */,
 				9207D1041DF6184E00E90004 /* Facebook-Bridging-Header.h */,
+				9277E0BA1DF9DD04001E0B9B /* Benjamin Moore Paint Data.csv */,
 				92B4A6321DEB9E0100F35DED /* benjamin moore product list - edited.csv */,
-				92B4A63A1DECB59100F35DED /* Paint Data.csv */,
 			);
 			name = Other;
 			sourceTree = "<group>";
@@ -454,7 +460,7 @@
 				TargetAttributes = {
 					663646551DE0C3EA00E6D719 = {
 						CreatedOnToolsVersion = 8.1;
-						DevelopmentTeam = 9Z8KVAFKJA;
+						DevelopmentTeam = P486JETJ9C;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -513,13 +519,13 @@
 				663646A41DE4921F00E6D719 /* googleImg@3x.png in Resources */,
 				66F942C11DF8BDBB00C01DAF /* orange.jpg in Resources */,
 				663646A91DE4921F00E6D719 /* pinkCBLogo@2x.png in Resources */,
+				9277E0BB1DF9DD04001E0B9B /* Benjamin Moore Paint Data.csv in Resources */,
 				66C771501DE83EB300E4810A /* personalIcon.png in Resources */,
 				663646A51DE4921F00E6D719 /* greenCBlogo.png in Resources */,
 				663646A11DE4921F00E6D719 /* goldCBlogo@3x.png in Resources */,
 				663646A21DE4921F00E6D719 /* googleImg.png in Resources */,
 				66C771561DE83EEF00E4810A /* settingsIcon.png in Resources */,
 				66242ADC1DF0F302000B651F /* barcode@2x.png in Resources */,
-				92B4A63B1DECB59100F35DED /* Paint Data.csv in Resources */,
 				66C7714A1DE83EB300E4810A /* homeIcon.png in Resources */,
 				665E637D1DE82F99002BA868 /* arrowBack@2x.png in Resources */,
 				665E63741DE82833002BA868 /* iconFacebook.png in Resources */,
@@ -608,6 +614,7 @@
 				66242ADF1DF1123E000B651F /* ItemCell.swift in Sources */,
 				66242AE61DF46DD1000B651F /* CustomTextFieldContainer.swift in Sources */,
 				665E63701DE6B573002BA868 /* UIColours.swift in Sources */,
+				9277E0B51DF75022001E0B9B /* PostScanViewController.swift in Sources */,
 				66F942C41DF9241E00C01DAF /* ItemListEditVC.swift in Sources */,
 				9277E0B51DF75022001E0B9B /* AfterScanViewController.swift in Sources */,
 				665E63781DE8293A002BA868 /* SignUpViewController.swift in Sources */,
@@ -620,8 +627,10 @@
 				92B4A6391DEBB8E500F35DED /* User.swift in Sources */,
 				92B4A61F1DEA94D300F35DED /* PaintCan.swift in Sources */,
 				66242AE21DF24ED8000B651F /* Validator.swift in Sources */,
+				9277E0BE1DFA7D94001E0B9B /* SearchAddressViewController.swift in Sources */,
 				92B4A61D1DEA5B1C00F35DED /* Colour.swift in Sources */,
 				66242AE81DF46F30000B651F /* LabelCustomSpacing.swift in Sources */,
+				9277E0C01DFA8323001E0B9B /* AddressViewController.swift in Sources */,
 				6636465C1DE0C3EA00E6D719 /* TutorialVC.swift in Sources */,
 				6636465A1DE0C3EA00E6D719 /* AppDelegate.swift in Sources */,
 				92B4A61B1DE8FD9300F35DED /* CSVViewController.swift in Sources */,
@@ -757,7 +766,7 @@
 			baseConfigurationReference = D218658870BE7C0C8667A861 /* Pods-ColourBook.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 9Z8KVAFKJA;
+				DEVELOPMENT_TEAM = P486JETJ9C;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -775,7 +784,7 @@
 			baseConfigurationReference = 582541D0C63B9F68DF683CF9 /* Pods-ColourBook.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 9Z8KVAFKJA;
+				DEVELOPMENT_TEAM = P486JETJ9C;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
