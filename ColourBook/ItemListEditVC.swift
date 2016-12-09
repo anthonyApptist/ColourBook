@@ -1,17 +1,15 @@
 //
-//  ItemListVC.swift
+//  ItemListSettingsVC.swift
 //  ColourBook
 //
-//  Created by Mark Meritt on 2016-12-01.
+//  Created by Mark Meritt on 2016-12-08.
 //  Copyright © 2016 Apptist. All rights reserved.
 //
 
 import UIKit
 
-class ItemListVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    
-    var colour = UIColor()
-    
+class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
+
     var currentIndex: Int = 0
     
     @IBOutlet weak var tableView: UITableView?
@@ -21,30 +19,37 @@ class ItemListVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet var bottomView: UIView?
     
     @IBOutlet weak var titleLbl: UILabel?
-    
-    var titleString: String = ""
-    
+        
     @IBOutlet var subTitleLbl: UILabel?
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let dashboardVC = segue.destination as? MyDashboardVC {
             
-           dashboardVC.currentPage = currentIndex
+            dashboardVC.currentPage = currentIndex
             
         }
     }
     
-
-    @IBAction func backBtnPressed(_ sender: AnyObject) {
+    @IBAction func settingsBtnPressed(_ sender: AnyObject) {
         
         if titleString == "personal" {
-            currentIndex = 0
+            performSegue(withIdentifier: "ConnectToImageSettings", sender: self)
         } else if titleString == "business" {
-            currentIndex = 1
-        } else if titleString == "my homes" {
-            currentIndex = 2
-        }
+            performSegue(withIdentifier: "ConnectToMenuSettings", sender: self)
+        } 
         
+    }
+    
+    
+    @IBAction func backBtnPressed(_ sender: AnyObject) {
+        
+        if titleString == "business" {
+            currentIndex = 0
+            performSegue(withIdentifier: "BackToItemAdd", sender: self)
+        } else if titleString == "personal" {
+            currentIndex = 1
+            performSegue(withIdentifier: "BackToDashboard", sender: self)
+        }
         
     }
     
@@ -64,8 +69,6 @@ class ItemListVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         
         titleLbl?.text = titleString
         
-        self.topView?.backgroundColor = colour
-        self.bottomView?.backgroundColor = colour
         
         
     }
@@ -84,8 +87,7 @@ class ItemListVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     
-   
     
-    
-    
+
+
 }
