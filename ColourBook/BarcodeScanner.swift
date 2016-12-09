@@ -143,14 +143,15 @@ class BarcodeScanner: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
             
             print(code!)
             
-            barcodeScanned(code: code!)
+            barcodeTrimmedFrom(code: code!)
             
             captureSession.stopRunning()
             
+            goToPostScanView(code: self.code!)
         }
     }
     
-    func barcodeScanned(code: String) {
+    func barcodeTrimmedFrom(code: String) {
         
         let trimmedCode = code.trimmingCharacters(in: NSCharacterSet.whitespaces)
         
@@ -159,7 +160,10 @@ class BarcodeScanner: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
         
         if trimmedCodeString.hasPrefix("0") && trimmedCodeString.characters.count > 1 {
             trimmedCodeNoZero = String(trimmedCodeString.characters.dropFirst())
+           
+            self.code = trimmedCodeNoZero
             
+            /*
             let alert = UIAlertController(title: "Barcode Scanned", message: trimmedCodeNoZero, preferredStyle: .alert)
             
             let alertAction = UIAlertAction(title: "OK", style: .destructive, handler: nil)
@@ -167,10 +171,12 @@ class BarcodeScanner: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
             alert.addAction(alertAction)
             
             present(alert, animated: true, completion: nil)
+            */
         }
             
         else {
             
+            /*
             let alert = UIAlertController(title: "Barcode Scanned", message: code, preferredStyle: .alert)
             
             let alertAction = UIAlertAction(title: "OK", style: .destructive, handler: nil)
@@ -178,12 +184,22 @@ class BarcodeScanner: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
             alert.addAction(alertAction)
             
             present(alert, animated: true, completion: nil)
-            
+            */
         }
     }
     
     func swipeDownGestureFunction() {
         self.dismiss(animated: true, completion: nil)
+    }
+    
+    func goToPostScanView(code: String) {
+        
+        let postScanView = PostScanViewController()
+        
+        postScanView.barcode = "0023906001698"
+
+        self.present(postScanView, animated: true)
+        
     }
     
 }

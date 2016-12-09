@@ -7,3 +7,11 @@
 //
 
 import Foundation
+
+struct Address {
+    
+    var coordinates: String
+    
+    var currentlyContracting: NSDictionary
+    
+}

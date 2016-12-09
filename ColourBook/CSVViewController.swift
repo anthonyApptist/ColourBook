@@ -24,11 +24,14 @@ class CSVViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        view.backgroundColor = UIColor.brown
+    
+/*
         //MARK: Paint Data
         
         do {
-            let csvPaintString = try NSString.init(contentsOfFile: "/Users/Anthony/Documents/iOS/ColourBook/ColourBook/Paint Data.csv", encoding: String.Encoding.macOSRoman.rawValue)
+            let csvPaintString = try NSString.init(contentsOfFile: "/Users/Anthony/Documents/iOS/ColourBook/ColourBook/Benjamin Moore Paint Data.csv", encoding: String.Encoding.macOSRoman.rawValue)
 //            print(csvPaintString)
             paintData = csvPaintString as String
         }
@@ -42,29 +45,23 @@ class CSVViewController: UIViewController {
         
         csvPaintFileArray = paintData?.components(separatedBy: ",")
         
-//        print(csvFileArray?.count ?? nil ?? 0)
-        
-        csvPaintFileArray?.removeFirst(5)
-        
         print(csvPaintFileArray?.count ?? nil ?? 0)
         
         let numberOfColours = (csvPaintFileArray?.count)!/4
         
         print(numberOfColours)
         
-//        print(csvPaintFileArray?.first ?? nil ?? "error")
-        
         coloursArray = []
         
-        var i = 1
+        var i = 0
         
-        while i < (numberOfColours + 1) {
+        while i < (numberOfColours) {
             
             i += 1
             
-            // [manufactuer code, product code, product name, product image, hex code]
+            // [manufactuer code, product code, product name, hex code]
             
-            let manufactuerID = csvPaintFileArray?[0]
+            var manufactuerID = csvPaintFileArray?[0]
             
             let productCode = csvPaintFileArray?[1]
             
@@ -77,11 +74,17 @@ class CSVViewController: UIViewController {
             if (hexCode?.contains("\r"))! {
                 hexCode = hexCode?.replacingOccurrences(of: "\r", with: "")
             }
-        
-            // manufactuer id check
+            
+            // manufacturer id check
             
             if (manufactuerID?.isEmpty)! {
                 print("row \(i), manufactuerID is empty")
+            }
+            
+            // fix manufacturer id
+            
+            if (manufactuerID?.contains("\r"))! {
+                manufactuerID = manufactuerID?.replacingOccurrences(of: "\r", with: "")
             }
             
             // product code check
@@ -113,18 +116,14 @@ class CSVViewController: UIViewController {
             if (hexCode?.characters.count)! < 6 {
                 print("row \(i), hex code is less than 6")
             }
-                
+             
             else {
 //                print("nothing found")
             }
             
             let colour = Colour(manufactuerID: manufactuerID!, productCode: productCode!, colourName: productName!, colourHexCode: hexCode!)
             
-//            print(colour.colourName)
-            
             coloursArray?.append(colour)
-            
-//            print(coloursArray?.count ?? 0)
             
             csvPaintFileArray?.removeFirst(4)
             
@@ -137,7 +136,7 @@ class CSVViewController: UIViewController {
             print("error")
         }
         
-/*
+        
         // add paint data to firebase
         
         for colour in coloursArray! {
@@ -145,11 +144,10 @@ class CSVViewController: UIViewController {
             DataService.instance.savePaintData(manufactuerID: colour.manufactuerID, productCode: colour.productCode, colourName: colour.colourName, colourHexCode: colour.colourHexCode)
          
         }
-*/
-        
+  
         //MARK: Paint Cans
         
-        do { 
+        do {
             let csvPaintString = try NSString.init(contentsOfFile: "/Users/Anthony/Documents/iOS/ColourBook/ColourBook/benjamin moore product list - edited.csv", encoding: String.Encoding.macOSRoman.rawValue)
             //            print(csvPaintString)
             paintCanData = csvPaintString as String
@@ -162,11 +160,7 @@ class CSVViewController: UIViewController {
         
         csvPaintCanFileArray = paintCanData?.components(separatedBy: ",")
         
-//        print(csvPaintCanFileArray?.count ?? nil ?? 0)
-        
         csvPaintCanFileArray?.removeFirst(8)
-        
-//        print(csvPaintCanFileArray?.count ?? nil ?? 0)
         
         let numberOfCans = Float((csvPaintCanFileArray?.count)!/7)
         
@@ -179,79 +173,73 @@ class CSVViewController: UIViewController {
         var y = 1
         
         while y < (Int(numberOfCans)+1) {
-            
+         
             y += 1
-            
+         
 //            Manufacteur, Product Name, Category, Code, Product UPC, Image
-            
+         
             let manufactuerCode = csvPaintCanFileArray?[0]
-            
+         
             let productName = csvPaintCanFileArray?[1]
-            
+         
             let category = csvPaintCanFileArray?[2]
-            
+         
             let code = csvPaintCanFileArray?[3]
-            
+         
             let upcCode = csvPaintCanFileArray?[4]
-            
+         
             let paintCanImage = csvPaintCanFileArray?[5]
-            
-            
+         
+         
             // manufactuer code check
-            
+         
             if (manufactuerCode?.isEmpty)! {
                 print("row \(y), manufactuer code is empty")
             }
-            
-            // product name check 
-            
+         
+            // product name check
+         
             if (productName?.isEmpty)! {
                 print("row \(y), product name is empty")
             }
-            
+         
             // category check
-            
+         
             if (category?.isEmpty)! {
                 print("row \(y), category is empty")
             }
-            
+         
             // code check
-            
-            if (productName?.isEmpty)! {
+         
+            if (code?.isEmpty)! {
                 print("row \(y), code is empty")
             }
-            
-            if (productName?.characters.count)! < 5 {
+         
+            if (code?.characters.count)! < 5 {
                 print("row \(y), code is invalid")
             }
-            
+         
             // upc code check
-            
+         
             if (upcCode?.characters.count)! < 13 {
                 print("row \(y), upc code is invalid")
             }
-                
-            // paint can image check 
-                
-            if (paintCanImage == "N/A") {
-                print("row \(y), no image")
-            }
-                
+         
             else {
                 // print("nothing found")
             }
-            
-            
+         
+         
             let paintCan = PaintCan(manufactuer: manufactuerCode!, productName: productName!, category: category!, code: code!, upcCode: upcCode!, image: paintCanImage!)
-            
+         
 //            print(paintCan.productName ?? "")
-            
+         
             paintCansArray?.append(paintCan)
-            
+         
 //            print(paintCansArray?.count ?? 0)
-            
+         
             csvPaintCanFileArray?.removeFirst(7)
-            
+         
         }
 
         if paintCansArray?.count == Int(numberOfCans) {
@@ -261,18 +249,34 @@ class CSVViewController: UIViewController {
             print("error")
         }
 
-/*
         // add paint cans to firebase
         
         for paintCan in paintCansArray! {
-            
-            DataService.instance.savePaintCanData(manufactuer: paintCan.manufactuer, productName: paintCan.productName, category: paintCan.category, code: paintCan.code, upcCode: paintCan.upcCode, image: paintCan.image)
-            
+         
+            if paintCan.upcCode.characters.count < 13 {
+                print("upc code invalid skipped")
+            }
+         
+            else {
+         
+                let manufactuer = paintCan.manufactuer
+         
+                let productName = paintCan.productName
+         
+                let category = paintCan.category
+         
+                let code = paintCan.code
+         
+                let upcCode = paintCan.upcCode
+         
+                let image = paintCan.image
+         
+                DataService.instance.savePaintCanData(manufactuer: manufactuer, productName: productName, category: category, code: code, upcCode: upcCode, image: image)
+         
+            }
+         
         }
 */
-        
-        view.backgroundColor = UIColor.darkGray
-        
     }
 
 }

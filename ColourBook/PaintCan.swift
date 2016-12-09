@@ -10,7 +10,7 @@ import Foundation
 
 struct PaintCan {
     
-    var manufactuer: String
+    var manufacturer: String
     
     var productName: String
     

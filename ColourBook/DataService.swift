@@ -28,14 +28,19 @@ class DataService {
         return mainRef.child("users")
     }
     
+    // address reference
+    var addressRef: FIRDatabaseReference {
+        return mainRef.child("addresses")
+    }
+    
+    // barcode reference
+    var barcodeRef: FIRDatabaseReference {
+        return mainRef.child("barcodes")
+    }
+    
     // paint data reference
     var paintDataRef: FIRDatabaseReference {
         return mainRef.child("paintData")
-    }
-    
-    // paint can reference
-    var paintCanRef: FIRDatabaseReference {
-        return mainRef.child("paintCans")
     }
     
     func saveRegisterUser(uid: String, email: String, name: String) {
@@ -44,22 +49,18 @@ class DataService {
     
     func savePaintData(manufactuerID: String, productCode: String, colourName: String, colourHexCode: String) {
         
-        let paintProfile: Dictionary<String, AnyObject> = ["manufactuerID" : manufactuerID as AnyObject, colourName : productCode as AnyObject]
+        let paintProfile: Dictionary<String, AnyObject> = ["manufactuerID" : manufactuerID as AnyObject, "colourName" : colourName as AnyObject, "productCode": productCode as AnyObject]
         
         let hexCode = colourHexCode
-        
-        print(colourName)
         
         paintDataRef.child(hexCode).setValue(paintProfile)
     }
     
-    func savePaintCanData(manufactuer: String, productName: String, category: String, code: String, upcCode: String, image: String) {
+    func savePaintCanData(manufacturer: String, productName: String, category: String, code: String, upcCode: String, image: String) {
         
-        let paintCanProfile: Dictionary<String, AnyObject> = ["manufactuer" : manufactuer as AnyObject, "productName" : productName as AnyObject, "category" : category as AnyObject, productName : productName as AnyObject]
+        let paintCanProfile: Dictionary<String, AnyObject> = ["manufacturer": manufacturer as AnyObject, "productName": productName as AnyObject, "category": category as AnyObject, "code": code as AnyObject, "image": image as AnyObject, "product": "paint can" as AnyObject]
         
-        paintCanRef.child(upcCode).child("profile").setValue(paintCanProfile)
-        
-        paintCanRef.child("image").setValue(image)
+        barcodeRef.child(upcCode).child("profile").setValue(paintCanProfile)
         
     }
     
