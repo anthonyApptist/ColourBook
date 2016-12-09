@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AddEditAddressVC: UIViewController {
+class AddEditAddressVC: CustomVC {
     
 
 

@@ -8,9 +8,28 @@
 
 import UIKit
 
-class ItemListDetailVC: UIViewController {
+class ItemListDetailVC: CustomVC {
     
-
+    @IBOutlet var imgView: UIImageView?
+    
+    @IBOutlet var nameLbl: UILabel?
+    
+    @IBOutlet var productIdLbl: UILabel?
+    
+    @IBOutlet var hexCodeLbl: UILabel?
+    
+    
+    @IBAction func backBtnPressed(_ sender: AnyObject) {
+        
+        if screenState == ScreenState.personal {
+            performSegue(withIdentifier: "BackToItemEdit", sender: self)
+        } else if screenState == ScreenState.business {
+            performSegue(withIdentifier: "BackToItemAdd", sender: self)
+        } else if screenState == ScreenState.homes {
+            performSegue(withIdentifier: "BackToItemAdd", sender: self)
+        }
+        
+    }
 
 
     override func viewDidLoad() {

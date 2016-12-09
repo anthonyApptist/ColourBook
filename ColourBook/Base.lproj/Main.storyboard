@@ -186,6 +186,9 @@
                                                 <rect key="frame" x="315" y="25" width="40" height="40"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <state key="normal" image="settingsIcon"/>
+                                                <connections>
+                                                    <action selector="settingsBtnPressed:" destination="DTf-Rp-moZ" eventType="touchUpInside" id="jUe-CL-UjK"/>
+                                                </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="list w sett" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y6K-be-krh">
                                                 <rect key="frame" x="93" y="22" width="188" height="43"/>
@@ -223,7 +226,7 @@
                                                 <rect key="frame" x="0.0" y="28" width="375" height="80"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="BHQ-3w-4Cn" id="M3a-QN-wXD">
-                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="79"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="product name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TWo-lO-oo0">
@@ -712,7 +715,7 @@
                                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
                                                 <connections>
-                                                    <segue destination="DTf-Rp-moZ" kind="show" id="okB-26-Neo"/>
+                                                    <action selector="backBtnPressed:" destination="iUy-gL-S4g" eventType="touchUpInside" id="kgM-eq-dui"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -794,8 +797,12 @@
                         </constraints>
                     </view>
                     <connections>
-                        <segue destination="DTf-Rp-moZ" kind="show" id="6el-lX-Ppz"/>
-                        <segue destination="bAy-6h-cnr" kind="show" id="4fG-q1-nkl"/>
+                        <outlet property="hexCodeLbl" destination="TbD-jd-CwD" id="trF-Qd-gOq"/>
+                        <outlet property="imgView" destination="Ljv-XE-gsO" id="NRD-ea-qUu"/>
+                        <outlet property="nameLbl" destination="x3F-EQ-dw8" id="RJB-eh-0BZ"/>
+                        <outlet property="productIdLbl" destination="V75-jb-ZfX" id="5rd-CX-vGn"/>
+                        <segue destination="DTf-Rp-moZ" kind="show" identifier="BackToItemEdit" id="6el-lX-Ppz"/>
+                        <segue destination="bAy-6h-cnr" kind="show" identifier="BackToItemAdd" id="4fG-q1-nkl"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="al3-Fi-ODd" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1132,6 +1139,9 @@
                                                 <state key="normal" title="+">
                                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="addBtnPressed:" destination="bAy-6h-cnr" eventType="touchUpInside" id="H7z-R6-FcE"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1166,7 +1176,7 @@
                                                 <rect key="frame" x="0.0" y="28" width="375" height="80"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="50k-DH-85g" id="6Yz-BN-jgc">
-                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="79"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="address" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4EA-WB-cJY">
@@ -1759,13 +1769,13 @@
         <image name="settingsIcon" width="115" height="113"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="bmo-5K-FnS"/>
-        <segue reference="ltd-ad-XnG"/>
-        <segue reference="MRZ-gX-R33"/>
-        <segue reference="th3-Kr-2Ch"/>
-        <segue reference="iqx-Eu-Mjl"/>
+        <segue reference="kfr-da-4a8"/>
         <segue reference="uql-du-HUQ"/>
+        <segue reference="Ynu-Sf-j9i"/>
         <segue reference="Ly4-h0-oWd"/>
+        <segue reference="iqx-Eu-Mjl"/>
+        <segue reference="bmo-5K-FnS"/>
+        <segue reference="4fG-q1-nkl"/>
         <segue reference="5FO-LH-Ars"/>
     </inferredMetricsTieBreakers>
 </document>

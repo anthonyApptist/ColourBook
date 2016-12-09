@@ -8,9 +8,11 @@
 
 import UIKit
 
-class AddEditImageVC: UIViewController {
+class AddEditImageVC: CustomVC {
     
 
+      @IBAction func backBtnPressed(_ sender: AnyObject) {
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()

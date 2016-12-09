@@ -31,6 +31,18 @@ class CustomVC: UIViewController {
         } else if titleString == "my homes" {
             screenState = ScreenState.homes
         }
+        
+        print(screenState)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if let nextVC = segue.destination as? CustomVC {
+            
+            nextVC.screenState = self.screenState
+            
+            
+        }
     }
 
     override func didReceiveMemoryWarning() {

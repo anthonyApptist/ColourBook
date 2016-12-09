@@ -22,19 +22,11 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         
     @IBOutlet var subTitleLbl: UILabel?
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let dashboardVC = segue.destination as? MyDashboardVC {
-            
-            dashboardVC.currentPage = currentIndex
-            
-        }
-    }
-    
     @IBAction func settingsBtnPressed(_ sender: AnyObject) {
         
-        if titleString == "personal" {
+        if screenState == ScreenState.personal {
             performSegue(withIdentifier: "ConnectToImageSettings", sender: self)
-        } else if titleString == "business" {
+        } else if screenState == ScreenState.business {
             performSegue(withIdentifier: "ConnectToMenuSettings", sender: self)
         } 
         
@@ -43,10 +35,10 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
     
     @IBAction func backBtnPressed(_ sender: AnyObject) {
         
-        if titleString == "business" {
+        if screenState == ScreenState.business {
             currentIndex = 0
             performSegue(withIdentifier: "BackToItemAdd", sender: self)
-        } else if titleString == "personal" {
+        } else if screenState == ScreenState.personal {
             currentIndex = 1
             performSegue(withIdentifier: "BackToDashboard", sender: self)
         }

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SettingsVC: UIViewController {
+class SettingsVC: CustomVC {
     
 
     override func viewDidLoad() {

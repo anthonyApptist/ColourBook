@@ -22,21 +22,19 @@ class ItemListAddVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet var subTitleLbl: UILabel?
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let dashboardVC = segue.destination as? MyDashboardVC {
-            
-           dashboardVC.currentPage = currentIndex
-            
-        }
+    @IBAction func addBtnPressed(_ sender: AnyObject) {
+
+            performSegue(withIdentifier: "ConnectToNewItem", sender: self)
+        
     }
     
 
     @IBAction func backBtnPressed(_ sender: AnyObject) {
         
-        if titleString == "business" {
+        if screenState == ScreenState.business {
             currentIndex = 0
             performSegue(withIdentifier: "BackToDashboard", sender: self)
-        } else if titleString == "my homes" {
+        } else if screenState == ScreenState.homes {
             currentIndex = 1
             performSegue(withIdentifier: "BackToDashboard", sender: self)
         }
@@ -58,6 +56,8 @@ class ItemListAddVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         tableView?.dataSource = self
         
         titleLbl?.text = titleString
+        
+        
     
         
         

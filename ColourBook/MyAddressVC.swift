@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MyAddressVC: UIViewController {
+class MyAddressVC: CustomVC {
     
 
 
