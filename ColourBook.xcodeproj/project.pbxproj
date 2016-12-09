@@ -90,7 +90,6 @@
 		66F942C61DF92CA500C01DAF /* CustomVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F942C51DF92CA500C01DAF /* CustomVC.swift */; };
 		9277E0B11DF64F0A001E0B9B /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9277E0B01DF64F0A001E0B9B /* FBSDKCoreKit.framework */; };
 		9277E0B31DF64F63001E0B9B /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9277E0B21DF64F63001E0B9B /* Bolts.framework */; };
-		9277E0B51DF75022001E0B9B /* PostScanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9277E0B41DF75022001E0B9B /* PostScanViewController.swift */; };
 		9277E0BB1DF9DD04001E0B9B /* Benjamin Moore Paint Data.csv in Resources */ = {isa = PBXBuildFile; fileRef = 9277E0BA1DF9DD04001E0B9B /* Benjamin Moore Paint Data.csv */; };
 		9277E0BE1DFA7D94001E0B9B /* SearchAddressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9277E0BD1DFA7D94001E0B9B /* SearchAddressViewController.swift */; };
 		9277E0C01DFA8323001E0B9B /* AddressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9277E0BF1DFA8323001E0B9B /* AddressViewController.swift */; };
@@ -102,6 +101,7 @@
 		92B4A6371DEBB8B400F35DED /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B4A6361DEBB8B400F35DED /* AuthService.swift */; };
 		92B4A6391DEBB8E500F35DED /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B4A6381DEBB8E500F35DED /* User.swift */; };
 		92C6A1AE1DF5CE6100B2D6C4 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92C6A1AD1DF5CE6100B2D6C4 /* FBSDKLoginKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		92F9E4881DFB51A2006DCD19 /* PostScanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9277E0B41DF75022001E0B9B /* PostScanViewController.swift */; };
 		92FD3EAB1DE52A71009341C9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 92FD3EAA1DE52A71009341C9 /* GoogleService-Info.plist */; };
 		92FD3EAF1DE52D26009341C9 /* BarcodeScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92FD3EAE1DE52D26009341C9 /* BarcodeScanner.swift */; };
 		F800C68BEBC98076422569AE /* Pods_ColourBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C899EA646F9D6392D10F289 /* Pods_ColourBook.framework */; };
@@ -605,6 +605,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				92F9E4881DFB51A2006DCD19 /* PostScanViewController.swift in Sources */,
 				665E636E1DE6B55C002BA868 /* IconView.swift in Sources */,
 				92B4A6351DEBB8A100F35DED /* DataService.swift in Sources */,
 				661A47F61DF6A95700B56028 /* AddEditImageVC.swift in Sources */,
@@ -614,9 +615,7 @@
 				66242ADF1DF1123E000B651F /* ItemCell.swift in Sources */,
 				66242AE61DF46DD1000B651F /* CustomTextFieldContainer.swift in Sources */,
 				665E63701DE6B573002BA868 /* UIColours.swift in Sources */,
-				9277E0B51DF75022001E0B9B /* PostScanViewController.swift in Sources */,
 				66F942C41DF9241E00C01DAF /* ItemListEditVC.swift in Sources */,
-				9277E0B51DF75022001E0B9B /* AfterScanViewController.swift in Sources */,
 				665E63781DE8293A002BA868 /* SignUpViewController.swift in Sources */,
 				661A47FE1DF6AA0E00B56028 /* MyAddressVC.swift in Sources */,
 				663646891DE3E93A00E6D719 /* LogInViewController.swift in Sources */,
