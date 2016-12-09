@@ -61,6 +61,7 @@
 		665E637C1DE82F99002BA868 /* arrowBack.png in Resources */ = {isa = PBXBuildFile; fileRef = 665E63791DE82F99002BA868 /* arrowBack.png */; };
 		665E637D1DE82F99002BA868 /* arrowBack@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 665E637A1DE82F99002BA868 /* arrowBack@2x.png */; };
 		665E637E1DE82F99002BA868 /* arrowBack@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 665E637B1DE82F99002BA868 /* arrowBack@3x.png */; };
+		66AE554B1DFB51A400F07B1A /* PostScanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9277E0B41DF75022001E0B9B /* PostScanViewController.swift */; };
 		66C771401DE8331700E4810A /* MyDashboardVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C7713F1DE8331700E4810A /* MyDashboardVC.swift */; };
 		66C7714A1DE83EB300E4810A /* homeIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 66C771411DE83EB300E4810A /* homeIcon.png */; };
 		66C7714B1DE83EB300E4810A /* homeIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66C771421DE83EB300E4810A /* homeIcon@2x.png */; };
@@ -460,7 +461,7 @@
 				TargetAttributes = {
 					663646551DE0C3EA00E6D719 = {
 						CreatedOnToolsVersion = 8.1;
-						DevelopmentTeam = P486JETJ9C;
+						DevelopmentTeam = 9Z8KVAFKJA;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -765,7 +766,7 @@
 			baseConfigurationReference = D218658870BE7C0C8667A861 /* Pods-ColourBook.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = P486JETJ9C;
+				DEVELOPMENT_TEAM = 9Z8KVAFKJA;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -783,7 +784,7 @@
 			baseConfigurationReference = 582541D0C63B9F68DF683CF9 /* Pods-ColourBook.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = P486JETJ9C;
+				DEVELOPMENT_TEAM = 9Z8KVAFKJA;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",

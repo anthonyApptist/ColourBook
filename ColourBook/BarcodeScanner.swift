@@ -194,11 +194,11 @@ class BarcodeScanner: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
     
     func goToPostScanView(code: String) {
         
-        let postScanView = PostScanViewController()
+       let postScanView = PostScanViewController()
         
-        postScanView.barcode = "0023906001698"
+       postScanView.barcode = "0023906001698"
 
-        self.present(postScanView, animated: true)
+       self.present(postScanView, animated: true)
         
     }
     
