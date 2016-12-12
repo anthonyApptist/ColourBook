@@ -10,7 +10,13 @@ import UIKit
 
 class ItemListAddVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
     
-    var currentIndex: Int = 0
+    let homeAddress = Address(name: "My House", address: "2 Shaver Court", lat: 43.131635, long: -79.265314)
+    
+    var addresses: [Address] = []
+    
+    let apptist = Business(name: "Apptist Inc", address: "46 Spadina Ave", lat: 41.714157, long: -71.365397)
+    
+    var businesses: [Business] = []
     
     @IBOutlet weak var tableView: UITableView?
     
@@ -28,18 +34,13 @@ class ItemListAddVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         
     }
     
-
-    @IBAction func backBtnPressed(_ sender: AnyObject) {
+    override func backBtnPressed(_ sender: AnyObject) {
         
-        if screenState == ScreenState.business {
-            currentIndex = 0
-            performSegue(withIdentifier: "BackToDashboard", sender: self)
-        } else if screenState == ScreenState.homes {
-            currentIndex = 1
-            performSegue(withIdentifier: "BackToDashboard", sender: self)
-        }
+        
+        self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
         
     }
+    
     
     @IBAction func scanBtnPressed(_ sender: AnyObject) {
         
@@ -52,17 +53,36 @@ class ItemListAddVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        addresses = [homeAddress]
+        
+        businesses = [apptist]
+    }
+ 
+    
+    override func viewDidAppear(_ animated: Bool) {
+        
+        super.viewDidAppear(false)
+        
+        if self.screenState == .business {
+            self.businesses = [apptist]
+            self.subTitleLbl?.text = "my businesses"
+            
+        } else if self.screenState == .homes {
+            self.addresses = [homeAddress]
+            self.subTitleLbl?.text = "my addresses"
+            
+        }
+        
         tableView?.delegate = self
         tableView?.dataSource = self
         
+        tableView?.reloadData()
+        
         titleLbl?.text = titleString
-        
-        
-    
+
         
         
     }
-    
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -72,12 +92,70 @@ class ItemListAddVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "ItemCell", for: indexPath) as! ItemCell
+        
+        if self.screenState == .business {
+            
+            cell.titleLbl?.text = self.businesses[indexPath.row].name
+            
+        } else if self.screenState == .homes {
+            
+            cell.titleLbl?.text = self.addresses[indexPath.row].name
+            
+        }
         
         return cell
     }
     
-   
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        performSegue(withIdentifier: "ConnectToListItem", sender: self)
+        
+        let row = indexPath.row
+        
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        super.prepare(for: segue, sender: nil)
+        
+        
+        if segue.identifier == "ConnectToListItem" {
+
+        
+            if self.screenState == .business {
+                
+                let row = tableView?.indexPathForSelectedRow?.row
+
+                let item = businesses[row!]
+                
+                
+                    if let detail = segue.destination as? ItemListEditVC {
+
+                    detail.businessItem = item
+                    detail.screenState = screenState
+                    detail.titleLbl?.text = item.name
+                }
+                } else if self.screenState == .homes {
+                
+                let row = tableView?.indexPathForSelectedRow?.row
+                
+                let item = addresses[row!]
+            
+                        if let detail = segue.destination as? ItemListEditVC {
+                            
+                            detail.addressItem = item
+                            detail.screenState = screenState
+                            detail.titleLbl?.text = item.name
+
+                        }
+                    }
+        }
+            
+        
+        
+
+    }
     
     
     

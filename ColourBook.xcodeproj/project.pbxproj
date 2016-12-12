@@ -10,7 +10,7 @@
 		661A47F61DF6A95700B56028 /* AddEditImageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661A47F51DF6A95700B56028 /* AddEditImageVC.swift */; };
 		661A47F81DF6A97700B56028 /* ItemListDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661A47F71DF6A97700B56028 /* ItemListDetailVC.swift */; };
 		661A47FA1DF6A9B400B56028 /* AddEditAddressVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661A47F91DF6A9B400B56028 /* AddEditAddressVC.swift */; };
-		661A47FE1DF6AA0E00B56028 /* MyAddressVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661A47FD1DF6AA0E00B56028 /* MyAddressVC.swift */; };
+		661A47FE1DF6AA0E00B56028 /* AddressListDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661A47FD1DF6AA0E00B56028 /* AddressListDetailVC.swift */; };
 		661A48001DF6AA3800B56028 /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661A47FF1DF6AA3800B56028 /* SettingsVC.swift */; };
 		661A48021DF6AB8B00B56028 /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661A48011DF6AB8B00B56028 /* Address.swift */; };
 		661A48041DF6ABB000B56028 /* Business.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661A48031DF6ABB000B56028 /* Business.swift */; };
@@ -61,6 +61,8 @@
 		665E637C1DE82F99002BA868 /* arrowBack.png in Resources */ = {isa = PBXBuildFile; fileRef = 665E63791DE82F99002BA868 /* arrowBack.png */; };
 		665E637D1DE82F99002BA868 /* arrowBack@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 665E637A1DE82F99002BA868 /* arrowBack@2x.png */; };
 		665E637E1DE82F99002BA868 /* arrowBack@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 665E637B1DE82F99002BA868 /* arrowBack@3x.png */; };
+		66A5AD561DFD040C0090226B /* AnnotationPin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A5AD551DFD040C0090226B /* AnnotationPin.swift */; };
+
 		66C771401DE8331700E4810A /* MyDashboardVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C7713F1DE8331700E4810A /* MyDashboardVC.swift */; };
 		66C7714A1DE83EB300E4810A /* homeIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 66C771411DE83EB300E4810A /* homeIcon.png */; };
 		66C7714B1DE83EB300E4810A /* homeIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66C771421DE83EB300E4810A /* homeIcon@2x.png */; };
@@ -113,7 +115,7 @@
 		661A47F51DF6A95700B56028 /* AddEditImageVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddEditImageVC.swift; sourceTree = "<group>"; };
 		661A47F71DF6A97700B56028 /* ItemListDetailVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemListDetailVC.swift; sourceTree = "<group>"; };
 		661A47F91DF6A9B400B56028 /* AddEditAddressVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddEditAddressVC.swift; sourceTree = "<group>"; };
-		661A47FD1DF6AA0E00B56028 /* MyAddressVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyAddressVC.swift; sourceTree = "<group>"; };
+		661A47FD1DF6AA0E00B56028 /* AddressListDetailVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressListDetailVC.swift; sourceTree = "<group>"; };
 		661A47FF1DF6AA3800B56028 /* SettingsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
 		661A48011DF6AB8B00B56028 /* Address.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
 		661A48031DF6ABB000B56028 /* Business.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Business.swift; sourceTree = "<group>"; };
@@ -166,6 +168,7 @@
 		665E63791DE82F99002BA868 /* arrowBack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrowBack.png; sourceTree = "<group>"; };
 		665E637A1DE82F99002BA868 /* arrowBack@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrowBack@2x.png"; sourceTree = "<group>"; };
 		665E637B1DE82F99002BA868 /* arrowBack@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrowBack@3x.png"; sourceTree = "<group>"; };
+		66A5AD551DFD040C0090226B /* AnnotationPin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnotationPin.swift; sourceTree = "<group>"; };
 		66C7713F1DE8331700E4810A /* MyDashboardVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyDashboardVC.swift; sourceTree = "<group>"; };
 		66C771411DE83EB300E4810A /* homeIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = homeIcon.png; sourceTree = "<group>"; };
 		66C771421DE83EB300E4810A /* homeIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "homeIcon@2x.png"; sourceTree = "<group>"; };
@@ -276,7 +279,7 @@
 				661A47F71DF6A97700B56028 /* ItemListDetailVC.swift */,
 				661A47F51DF6A95700B56028 /* AddEditImageVC.swift */,
 				661A47F91DF6A9B400B56028 /* AddEditAddressVC.swift */,
-				661A47FD1DF6AA0E00B56028 /* MyAddressVC.swift */,
+				661A47FD1DF6AA0E00B56028 /* AddressListDetailVC.swift */,
 				661A47FF1DF6AA3800B56028 /* SettingsVC.swift */,
 				66F942C51DF92CA500C01DAF /* CustomVC.swift */,
 			);
@@ -299,6 +302,7 @@
 			children = (
 				66242AE11DF24ED8000B651F /* Validator.swift */,
 				66242AE31DF24FE4000B651F /* ErrorHandler.swift */,
+				66A5AD551DFD040C0090226B /* AnnotationPin.swift */,
 			);
 			name = Common;
 			sourceTree = "<group>";
@@ -605,6 +609,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				66A5AD561DFD040C0090226B /* AnnotationPin.swift in Sources */,
 				92F9E4881DFB51A2006DCD19 /* PostScanViewController.swift in Sources */,
 				665E636E1DE6B55C002BA868 /* IconView.swift in Sources */,
 				92B4A6351DEBB8A100F35DED /* DataService.swift in Sources */,
@@ -617,7 +622,7 @@
 				665E63701DE6B573002BA868 /* UIColours.swift in Sources */,
 				66F942C41DF9241E00C01DAF /* ItemListEditVC.swift in Sources */,
 				665E63781DE8293A002BA868 /* SignUpViewController.swift in Sources */,
-				661A47FE1DF6AA0E00B56028 /* MyAddressVC.swift in Sources */,
+				661A47FE1DF6AA0E00B56028 /* AddressListDetailVC.swift in Sources */,
 				663646891DE3E93A00E6D719 /* LogInViewController.swift in Sources */,
 				66242AD71DF0F0F4000B651F /* MessageView.swift in Sources */,
 				663646731DE16C6800E6D719 /* UIExtensions.swift in Sources */,

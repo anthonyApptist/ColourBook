@@ -8,29 +8,86 @@
 
 import UIKit
 
-class SettingsVC: CustomVC {
+class SettingsVC: CustomVC, UIScrollViewDelegate {
     
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    var businessItem: Business?
+    
+    var addressItem: Address?
+    
+    @IBOutlet weak var scrollView: UIScrollView!
+    
+    override func viewDidAppear(_ animated: Bool) {
+        
+        super.viewDidAppear(false)
 
         // Do any additional setup after loading the view.
-    }
+        
+        let scrollViewWidth: CGFloat = self.scrollView.frame.width
+        let scrollViewHeight: CGFloat = self.scrollView.frame.height
+        
+        self.scrollView.isScrollEnabled = true
+        self.scrollView.isPagingEnabled = true
+        self.scrollView.showsHorizontalScrollIndicator = false
+        self.scrollView?.showsVerticalScrollIndicator = false
+        
+        self.scrollView.contentSize = CGSize(width: self.scrollView.frame.width, height: self.scrollView.frame.height)
+        self.scrollView.delegate = self
+        
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        
     }
-    */
+    
+    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+        
+    }
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        super.prepare(for: segue, sender: nil)
+      
+        if segue.identifier == "ShowInfo" {
+            
+            
+            if self.screenState == .business {
+                
+                if let detail = segue.destination as? AddEditImageVC {
+                    
+                    detail.businessItem = businessItem
+                    detail.screenState = screenState
+                }
+            } else if self.screenState == .homes {
+                
+                if let detail = segue.destination as? AddEditImageVC {
+                    
+                    detail.addressItem = addressItem
+                    detail.screenState = screenState
+                }
+            }
+        }
+        
+        if segue.identifier == "ShowMapDetails" {
+            
+            
+            if self.screenState == .business {
+                
+                if let detail = segue.destination as? AddressListDetailVC {
+                    
+                    detail.businessItem = businessItem
+                    detail.screenState = screenState
+                }
+            } else if self.screenState == .homes {
+                
+                if let detail = segue.destination as? AddressListDetailVC {
+                    
+                    detail.addressItem = addressItem
+                    detail.screenState = screenState
+                }
+            }
+        }
+        
+    }
+    
 
 }

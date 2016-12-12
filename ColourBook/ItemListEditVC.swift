@@ -10,7 +10,17 @@ import UIKit
 
 class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
 
-    var currentIndex: Int = 0
+    let paintCan = PaintCan(manufacturer: "Home Depot", productName: "Dark Red Paint", category: "category", code: "990949209", upcCode: "9030499", image: "darkred")
+    
+     let paintCan2 = PaintCan(manufacturer: "Home Depot", productName: "Green Paint", category: "category", code: "990949209", upcCode: "9030499", image: "green")
+    
+     let paintCan3 = PaintCan(manufacturer: "Home Depot", productName: "Light Blue Paint", category: "category", code: "990949209", upcCode: "9030499", image: "lightblue")
+    
+    var user = User(uid: "Mark", email: "mark@theapptist.com", name: "Mark")
+    
+    var businessItem: Business?
+    
+    var addressItem: Address?
     
     @IBOutlet weak var tableView: UITableView?
     
@@ -18,7 +28,7 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet var bottomView: UIView?
     
-    @IBOutlet weak var titleLbl: UILabel?
+    @IBOutlet var titleLbl: UILabel?
         
     @IBOutlet var subTitleLbl: UILabel?
     
@@ -26,25 +36,13 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         
         if screenState == ScreenState.personal {
             performSegue(withIdentifier: "ConnectToImageSettings", sender: self)
-        } else if screenState == ScreenState.business {
+        } else if screenState == ScreenState.business || screenState == ScreenState.homes {
             performSegue(withIdentifier: "ConnectToMenuSettings", sender: self)
         } 
         
     }
     
-    
-    @IBAction func backBtnPressed(_ sender: AnyObject) {
-        
-        if screenState == ScreenState.business {
-            currentIndex = 0
-            performSegue(withIdentifier: "BackToItemAdd", sender: self)
-        } else if screenState == ScreenState.personal {
-            currentIndex = 1
-            performSegue(withIdentifier: "BackToDashboard", sender: self)
-        }
-        
-    }
-    
+
     @IBAction func scanBtnPressed(_ sender: AnyObject) {
         
         let scanView = storyboard?.instantiateViewController(withIdentifier: "BarcodeVC")
@@ -53,33 +51,205 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func backBtnPressed(_ sender: AnyObject) {
+        
+        
+        self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
+        
+    }
+    
+    
+    
+    override func viewDidAppear(_ animated: Bool) {
+
+        super.viewDidAppear(false)
         
         tableView?.delegate = self
         tableView?.dataSource = self
         
-        titleLbl?.text = titleString
+
         
+        if self.titleString == "personal" {
+            screenState = ScreenState.personal
+        } else if self.titleString == "business" {
+            screenState = ScreenState.business
+        } else if self.titleString == "my homes" {
+            screenState = ScreenState.homes
+        }
+
         
+     
+        
+        if screenState == .personal {
+            
+            if user.items.count == 0 {
+            user.addItem(item: paintCan)
+            user.addItem(item: paintCan2)
+            user.addItem(item: paintCan3)
+            }
+        
+            titleLbl?.text = user.name
+            
+        } else if screenState == .business {
+            
+            if businessItem?.items.count == 0 {
+            businessItem?.addItem(item: paintCan)
+            businessItem?.addItem(item: paintCan2)
+            businessItem?.addItem(item: paintCan3)
+            }
+            
+            titleLbl?.text = businessItem?.name
+            
+        } else if screenState == .homes {
+            
+            if addressItem?.items.count == 0 {
+            addressItem?.addItem(item: paintCan)
+            addressItem?.addItem(item: paintCan2)
+            addressItem?.addItem(item: paintCan3)
+            }
+            
+            titleLbl?.text = addressItem?.name
+        }
+        
+        tableView?.reloadData()
+
+
+        
+
         
     }
+    
+    
+
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        if screenState == .personal {
+            
+            return (user.items.count)
+            
+        } else if screenState == .business {
+            
+            return (businessItem?.items.count)!
+            
+        } else if screenState == .homes {
+            
+            return (addressItem?.items.count)!
+        }
+
+        else {
+            return 1
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ItemCell", for: indexPath) as! ItemCell
         
+        
+        if screenState == .personal {
+            
+            cell.titleLbl?.text = self.user.items[indexPath.row].productName
+            
+        } else if screenState == .business {
+            
+            cell.titleLbl?.text = self.businessItem?.items[indexPath.row].productName
+            
+        } else if screenState == .homes {
+            
+            cell.titleLbl?.text = self.addressItem?.items[indexPath.row].productName
+            
+        }
+
+        
         return cell
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let row = indexPath.row
+        
+            
+        performSegue(withIdentifier: "ShowListDetail", sender: nil)
+            
     
+        
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        super.prepare(for: segue, sender: nil)
+        
+        if segue.identifier == "ShowListDetail" {
+            
+            var item: PaintCan?
+            
+            let row = tableView?.indexPathForSelectedRow?.row
+            
+            if screenState == .personal {
+                
+                item = user.items[row!]
+                
+            } else if screenState == .business {
+                
+                item = businessItem?.items[row!]
+                
+            } else if screenState == .homes {
+                
+                item = addressItem?.items[row!]
+                
+            }
+
+            if let detail = segue.destination as? ItemListDetailVC {
+                detail.detailItem = item
+                detail.screenState = screenState
+            }
+        }
+        
+        if segue.identifier == "ConnectToMenuSettings" {
+            
+            
+            if self.screenState == .business {
+                
+                
+                if let detail = segue.destination as? SettingsVC {
+                    
+                    detail.businessItem = businessItem
+                    detail.screenState = screenState
+                }
+            } else if self.screenState == .homes {
+                
+                
+                if let detail = segue.destination as? SettingsVC {
+                    
+                    detail.addressItem = addressItem
+                    detail.screenState = screenState
+                }
+            }
+        }
+        
+        if segue.identifier == "ConnectToImageSettings" {
+            
+            
+ 
+                if let detail = segue.destination as? AddEditImageVC {
+                    
+                    detail.userItem = user
+                    detail.screenState = screenState
+           
+         
+        
+        
+       
+    }
+ 
+        }
+        
+    }
+    
+            
+    
+        
+    }
 
 
-}

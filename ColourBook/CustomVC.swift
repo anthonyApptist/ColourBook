@@ -15,50 +15,88 @@ enum ScreenState {
     case homes
 }
 
-class CustomVC: UIViewController {
+class CustomVC: UIViewController, UITextFieldDelegate {
     
-    var titleString: String = ""
+    
+    var titleString: String?
     
     var screenState = ScreenState.none
+    
+    var nextVC: CustomVC?
+    
+    var backButtonNeeded: Bool?
+    
+    var backBtnImage = UIImage(named: "arrowBack")
+    
+    var backBtn = UIButton(frame: CGRect(x: 20, y: 25, width: 40, height: 40))
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        if titleString == "personal" {
-            screenState = ScreenState.personal
-        } else if titleString == "business" {
-            screenState = ScreenState.business
-        } else if titleString == "my homes" {
-            screenState = ScreenState.homes
-        }
+        //DEFAULT VALUES
         
-        print(screenState)
+        self.backButtonNeeded = true
+        
+        
+  
+
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    override func viewWillAppear(_ animated: Bool) {
         
-        if let nextVC = segue.destination as? CustomVC {
+        
+        print(titleString)
+        print(screenState.hashValue)
+        
+        
+        if screenState == ScreenState.personal {
+            self.titleString = "personal"
+        } else if screenState == ScreenState.business {
+            self.titleString = "business"
+        } else if screenState == ScreenState.homes {
+            self.titleString = "my homes"
+        }
+        
+        
+        if(self.backButtonNeeded == true) {
             
-            nextVC.screenState = self.screenState
+            self.backBtn.setImage(self.backBtnImage, for: .normal)
+            self.view.addSubview(self.backBtn)
             
+            self.backBtn.addTarget(self, action: #selector(self.backBtnPressed(_:)), for: .touchUpInside)
             
         }
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        
+        if(self.backButtonNeeded == false) {
+            
+            self.backBtn.removeFromSuperview()
+            
+        }
+        
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    func textFieldDidEndEditing(_ textField: UITextField, reason: UITextFieldDidEndEditingReason) {
+        textField.resignFirstResponder()
     }
-    */
-
+    
+   
+    func backBtnPressed(_ sender: AnyObject) {
+        
+        
+        self.dismiss(animated: false, completion: nil)
+        
+        
+        
+    }
+ 
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+       
+   
+    
+        self.nextVC = segue.destination as? CustomVC
+        
+        self.nextVC?.screenState = self.screenState
+    
+ 
+    }
 }

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 struct Paint {
     
@@ -21,5 +22,5 @@ struct Paint {
     var upcCode: String
     
     var image: String
-    
+
 }

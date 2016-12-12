@@ -8,15 +8,12 @@
 //
 
 import UIKit
-import MapKit
 
-class MyDashboardVC: UIViewController, UIScrollViewDelegate, MKMapViewDelegate {
+class MyDashboardVC: CustomVC, UIScrollViewDelegate {
     
     let colours = UIColours(col: UIColor.clear)
     
     var btnPressed: Bool = false
-    
-    var currentPage: Int = 0
     
     @IBOutlet weak var titleLbl: UILabel!
     
@@ -29,9 +26,7 @@ class MyDashboardVC: UIViewController, UIScrollViewDelegate, MKMapViewDelegate {
     @IBOutlet weak var descLbl: UILabel!
     
     var descString: String! = "my bucket list"
-    
-    var titleString: String! = "personal"
-    
+        
     @IBOutlet weak var viewBtn: UIButton!
     
     
@@ -40,13 +35,12 @@ class MyDashboardVC: UIViewController, UIScrollViewDelegate, MKMapViewDelegate {
     
     @IBOutlet weak var pageCtrl: UIPageControl!
     
-    let locationManager = CLLocationManager()
     
     let app = UIApplication.shared.delegate as! AppDelegate
     
     @IBAction func viewBtnPressed(_ sender: AnyObject?) {
         
-        self.btnPressed = true
+        self.backButtonNeeded = true 
         
         if self.titleLbl.text == "personal" {
 
@@ -86,27 +80,22 @@ class MyDashboardVC: UIViewController, UIScrollViewDelegate, MKMapViewDelegate {
         
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-            if self.btnPressed {
-                
-                if let personalItemVC = segue.destination as? ItemListAddVC {
-                personalItemVC.titleString = self.titleString
-               
-                }
-                
-                if let personalItemVC = segue.destination as? ItemListEditVC {
-                    personalItemVC.titleString = self.titleString
-                    
-                }
-            
-        }
-    }
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.backButtonNeeded = false
+        self.screenState = .personal
+        self.pageCtrl.currentPage = 0
+
+    }
+  
+    
+    override func viewDidAppear(_ animated: Bool) {
+    
+        super.viewDidAppear(false)
+    
         
+        self.backBtn.isHidden = true 
+     
         
         self.scanBtn.addTarget(self, action: #selector(MyDashboardVC.scanBtnPressed), for: .touchUpInside)
         
@@ -150,7 +139,6 @@ class MyDashboardVC: UIViewController, UIScrollViewDelegate, MKMapViewDelegate {
         
         self.scrollView.contentSize = CGSize(width: self.scrollView.frame.width * 4, height: self.scrollView.frame.height)
         self.scrollView.delegate = self
-        self.pageCtrl.currentPage = 0
         
         self.titleLbl.setSpacing(space: 4.0)
         self.viewBtn.setSpacing(space: 4.0)
@@ -159,19 +147,7 @@ class MyDashboardVC: UIViewController, UIScrollViewDelegate, MKMapViewDelegate {
         
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(false)
-        locationAuthStatus()
-    }
-    
-    func locationAuthStatus() {
-        if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
-            
-        } else {
-            locationManager.requestWhenInUseAuthorization()
-        }
-    }
-    
+   
     func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
         let pageWidth:CGFloat = scrollView.frame.width
         let currentPage:CGFloat = floor((scrollView.contentOffset.x - pageWidth/2)/pageWidth)+1
@@ -186,6 +162,7 @@ class MyDashboardVC: UIViewController, UIScrollViewDelegate, MKMapViewDelegate {
             self.descString = "my bucket list"
             self.descLbl.text = self.descString
             self.titleLbl.setSpacing(space: 4.0)
+            self.screenState = .personal
 
         } else if Int(currentPage) == 1 {
             self.titleString = "business"
@@ -193,6 +170,7 @@ class MyDashboardVC: UIViewController, UIScrollViewDelegate, MKMapViewDelegate {
             self.descString = "company bucket list"
             self.descLbl.text = self.descString
             self.titleLbl.setSpacing(space: 4.0)
+            self.screenState = .business
 
         } else if Int(currentPage) == 2 {
             self.titleString = "my homes"
@@ -200,6 +178,7 @@ class MyDashboardVC: UIViewController, UIScrollViewDelegate, MKMapViewDelegate {
             self.descString = "home address bucket list"
             self.descLbl.text = self.descString
             self.titleLbl.setSpacing(space: 4.0)
+            self.screenState = .homes
 
         } else if Int(currentPage) == 3 {
             self.titleString = "my account"
@@ -229,6 +208,7 @@ class MyDashboardVC: UIViewController, UIScrollViewDelegate, MKMapViewDelegate {
             self.descString = "my bucket list"
             self.descLbl.text = self.descString
             self.titleLbl.setSpacing(space: 4.0)
+            self.screenState = .personal
 
             self.scanBtn.setTitle("scan", for: .normal)
             UIView.animate(withDuration: 1.0) {
@@ -245,6 +225,7 @@ class MyDashboardVC: UIViewController, UIScrollViewDelegate, MKMapViewDelegate {
             self.descString = "company bucket list"
             self.descLbl.text = self.descString
             self.titleLbl.setSpacing(space: 4.0)
+            self.screenState = .business
 
             self.scanBtn.setTitle("scan", for: .normal)
             UIView.animate(withDuration: 1.0) {
@@ -260,6 +241,7 @@ class MyDashboardVC: UIViewController, UIScrollViewDelegate, MKMapViewDelegate {
             self.descString = "home bucket list"
             self.descLbl.text = self.descString
             self.titleLbl.setSpacing(space: 4.0)
+            self.screenState = .homes
 
             self.scanBtn.setTitle("scan", for: .normal)
             UIView.animate(withDuration: 1.0) {
