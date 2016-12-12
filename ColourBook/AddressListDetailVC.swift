@@ -1,5 +1,5 @@
 //
-//  AddEditAddressVC.swift
+//  MyAddressVC.swift
 //  ColourBook
 //
 //  Created by Mark Meritt on 2016-12-06.
@@ -9,13 +9,11 @@
 import UIKit
 import MapKit
 
-class AddEditAddressVC: CustomVC, MKMapViewDelegate {
+class AddressListDetailVC: CustomVC, MKMapViewDelegate {
     
     @IBOutlet weak var titleLbl: UILabel?
     
-    @IBOutlet weak var saveBtn: UIButton!
-    
-    @IBOutlet weak var textField: UITextField?
+    @IBOutlet weak var addressLbl: UILabel?
     
     @IBOutlet weak var map: MKMapView!
     
@@ -23,50 +21,60 @@ class AddEditAddressVC: CustomVC, MKMapViewDelegate {
     
     let locationManager = CLLocationManager()
     
+    var location: CLLocation?
+    
     var businessItem: Business?
     
     var addressItem: Address?
+    
+    var coordinate: CLLocationCoordinate2D?
 
     override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(false)
-
-        locationAuthStatus()
         
-        titleLbl?.text = titleString
-
-        textField?.delegate = self
+        super.viewDidAppear(false)
+        
         
         map.delegate = self
         
-        self.saveBtn.addTarget(self, action: #selector(self.saveBtnPressed(_:)), for: .touchUpInside)
-
         if screenState == .business {
-            
             titleLbl?.text = businessItem?.name
-            
+            addressLbl?.text = businessItem?.addressName
+            coordinate = businessItem?.coordinate
+            location = CLLocation(latitude: (coordinate?.latitude)!, longitude: (coordinate?.longitude)!)
+
         } else if screenState == .homes {
             
             titleLbl?.text = addressItem?.name
-            
-        }
+            addressLbl?.text = addressItem?.addressName
+            coordinate = addressItem?.coordinate
+            location = CLLocation(latitude: (coordinate?.latitude)!, longitude: (coordinate?.longitude)!)
 
+        }
+        
+        locationAuthStatus()
+
+
+        // Do any additional setup after loading the view.
+        
 
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "ShowInfo" {
+        super.prepare(for: segue, sender: nil)
+        
+        if segue.identifier == "ShowEditAddress" {
             
             
             if self.screenState == .business {
                 
-                if let detail = segue.destination as? AddEditImageVC {
+                if let detail = segue.destination as? AddEditAddressVC {
                     
                     detail.businessItem = businessItem
                     detail.screenState = screenState
                 }
             } else if self.screenState == .homes {
                 
-                if let detail = segue.destination as? AddEditImageVC {
+                if let detail = segue.destination as? AddEditAddressVC {
                     
                     detail.addressItem = addressItem
                     detail.screenState = screenState
@@ -75,18 +83,18 @@ class AddEditAddressVC: CustomVC, MKMapViewDelegate {
         }
 
     }
-    
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        textField.endEditing(true)
-    }
-    
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        textField?.resignFirstResponder()
-    }
 
     func locationAuthStatus() {
         if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
-            map.showsUserLocation = true
+            if self.coordinate != nil {
+                self.createAnnotationForLocation(location!)
+                self.centerMapOnLocation(location!)
+            } else {
+                let alert =  UIAlertController(title: "Error", message: "Could not find this address", preferredStyle: .alert)
+                let closeAlert = UIAlertAction(title: "Continue", style: .cancel, handler: nil)
+                alert.addAction(closeAlert)
+                show(alert, sender: nil)
+            }
         } else {
             locationManager.requestWhenInUseAuthorization()
         }
@@ -97,18 +105,16 @@ class AddEditAddressVC: CustomVC, MKMapViewDelegate {
         map.setRegion(coordinateRegion, animated: true)
     }
     
-    func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
-        if let loc = userLocation.location {
-            centerMapOnLocation(loc)
-        }
-    }
-    
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         var annoView = MKPinAnnotationView()
         
         if annotation.isKind(of: AnnotationPin.self) {
             annoView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "Default")
-            annoView.pinTintColor = UIColor.blue
+            if screenState == .business{
+            annoView.pinTintColor = UIColor.red
+            } else if screenState == .homes {
+                annoView.pinTintColor = UIColor.green
+            }
             annoView.animatesDrop = true
         } else if annotation.isKind(of: MKUserLocation.self) {
             return nil
@@ -121,13 +127,5 @@ class AddEditAddressVC: CustomVC, MKMapViewDelegate {
         let pin = AnnotationPin(coordinate: location.coordinate)
         map.addAnnotation(pin)
     }
-    
-    func saveBtnPressed(_ sender: Any?) {
-        
-        self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
-        
-        
-    }
 
- 
 }

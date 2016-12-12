@@ -14,44 +14,29 @@ class ItemListDetailVC: CustomVC {
     
     @IBOutlet var nameLbl: UILabel?
     
+    @IBOutlet weak var titleLbl: UILabel?
+
     @IBOutlet var productIdLbl: UILabel?
     
     @IBOutlet var hexCodeLbl: UILabel?
     
+    var detailItem: PaintCan?
     
-    @IBAction func backBtnPressed(_ sender: AnyObject) {
+    override func viewDidAppear(_ animated: Bool) {
         
-        if screenState == ScreenState.personal {
-            performSegue(withIdentifier: "BackToItemEdit", sender: self)
-        } else if screenState == ScreenState.business {
-            performSegue(withIdentifier: "BackToItemAdd", sender: self)
-        } else if screenState == ScreenState.homes {
-            performSegue(withIdentifier: "BackToItemAdd", sender: self)
-        }
+        super.viewDidAppear(false)
         
-    }
-
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
+        titleLbl?.text = detailItem?.productName
+        nameLbl?.text = detailItem?.manufacturer
+        productIdLbl?.text = detailItem?.code
+        hexCodeLbl?.text = detailItem?.upcCode
+        
+        self.imgView?.contentMode = .scaleAspectFill
+        self.imgView?.image = UIImage(named: (detailItem?.image)!)
+        
         // Do any additional setup after loading the view.
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
+ 
 
 }
