@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct PaintCan {
+struct Paint {
     
     var manufacturer: String
     
