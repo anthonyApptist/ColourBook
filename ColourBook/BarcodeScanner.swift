@@ -21,18 +21,33 @@ class BarcodeScanner: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
     
     var captureSession: AVCaptureSession!
     
+    var captureDevice: AVCaptureDevice!
+    
+    var deviceInput: AVCaptureDeviceInput!
+    
     var code: String?
     
     var barcodeFrame: UIView!
     
     var exitCameraGesture: UISwipeGestureRecognizer!
     
+    var tapToFocus: UITapGestureRecognizer!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        setupCamera()
+        
+        // swipe gesture
         
         exitCameraGesture = UISwipeGestureRecognizer.init(target: self, action: #selector(swipeDownGestureFunction))
         
         exitCameraGesture.direction = UISwipeGestureRecognizerDirection.down
+        
+        view.addGestureRecognizer(exitCameraGesture)
+        
+        /*
+        // barcode frame?
         
         barcodeFrame = UIView()
         
@@ -41,12 +56,19 @@ class BarcodeScanner: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
         barcodeFrame.layer.borderWidth = 2
         
         view.addSubview(barcodeFrame)
-        
+         
         view.bringSubview(toFront: barcodeFrame)
+        */
         
-        view.addGestureRecognizer(exitCameraGesture)
+        // tap to focus
         
-        setupCamera()
+        tapToFocus = UITapGestureRecognizer.init(target: self, action: #selector(tapFunction))
+        
+        tapToFocus.numberOfTapsRequired = 1
+        
+        tapToFocus.numberOfTouchesRequired = 1
+        
+        view.addGestureRecognizer(tapToFocus)
         
     }
     
@@ -54,19 +76,17 @@ class BarcodeScanner: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
         
         captureSession = AVCaptureSession()
         
-        let videoCaptureDevice = AVCaptureDevice.defaultDevice(withMediaType: AVMediaTypeVideo)
-        
-        let videoInput: AVCaptureDeviceInput?
+        captureDevice = AVCaptureDevice.defaultDevice(withMediaType: AVMediaTypeVideo)
         
         do {
-            videoInput = try AVCaptureDeviceInput(device: videoCaptureDevice)
+            deviceInput = try AVCaptureDeviceInput(device: captureDevice)
         }
         catch {
             return
         }
         
-        if captureSession.canAddInput(videoInput) {
-            captureSession.addInput(videoInput)
+        if captureSession.canAddInput(deviceInput) {
+            captureSession.addInput(deviceInput)
         }
         else {
             scanningUnavailable()
@@ -137,9 +157,9 @@ class BarcodeScanner: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
             
             AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
             
-            barcodeFrame.frame = readableObject.bounds
+//            barcodeFrame.frame = readableObject.bounds
             
-            view.layer.addSublayer(barcodeFrame.layer)
+//            view.layer.addSublayer(barcodeFrame.layer)
             
             print(code!)
             
@@ -188,9 +208,52 @@ class BarcodeScanner: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
         }
     }
     
+    // swipe function
+    
     func swipeDownGestureFunction() {
         self.dismiss(animated: true, completion: nil)
     }
+    
+    // tap function
+    
+    func tapFunction() {
+        
+//        let focusPoint = tapToFocus.location(in: self.view)
+
+        let focusPoint: CGPoint = (self.previewLayer as  AVCaptureVideoPreviewLayer).captureDevicePointOfInterest(for: tapToFocus.location(in: self.view))
+        
+        print(focusPoint)
+        
+        do {
+            try captureDevice?.lockForConfiguration()
+            
+            if captureDevice.isFocusPointOfInterestSupported {
+                
+                captureDevice.focusPointOfInterest = focusPoint
+
+                captureDevice.focusMode = AVCaptureFocusMode.autoFocus
+            }
+            
+            if captureDevice.isExposurePointOfInterestSupported {
+                
+                captureDevice.exposurePointOfInterest = focusPoint
+                
+                captureDevice.exposureMode = AVCaptureExposureMode.autoExpose
+            }
+            
+            captureDevice?.unlockForConfiguration()
+            
+        } catch {
+            //handle error
+            
+            print(error.localizedDescription)
+            
+            return
+        }
+        
+    }
+    
+    
     
     func goToPostScanView(code: String) {
         
