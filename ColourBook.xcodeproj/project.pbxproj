@@ -96,7 +96,7 @@
 		9277E0C01DFA8323001E0B9B /* AddressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9277E0BF1DFA8323001E0B9B /* AddressViewController.swift */; };
 		92B4A61B1DE8FD9300F35DED /* CSVViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B4A61A1DE8FD9300F35DED /* CSVViewController.swift */; };
 		92B4A61D1DEA5B1C00F35DED /* Colour.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B4A61C1DEA5B1C00F35DED /* Colour.swift */; };
-		92B4A61F1DEA94D300F35DED /* PaintCan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B4A61E1DEA94D300F35DED /* PaintCan.swift */; };
+		92B4A61F1DEA94D300F35DED /* Paint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B4A61E1DEA94D300F35DED /* Paint.swift */; };
 		92B4A6331DEB9E0100F35DED /* benjamin moore product list - edited.csv in Resources */ = {isa = PBXBuildFile; fileRef = 92B4A6321DEB9E0100F35DED /* benjamin moore product list - edited.csv */; };
 		92B4A6351DEBB8A100F35DED /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B4A6341DEBB8A100F35DED /* DataService.swift */; };
 		92B4A6371DEBB8B400F35DED /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B4A6361DEBB8B400F35DED /* AuthService.swift */; };
@@ -204,7 +204,7 @@
 		9277E0BF1DFA8323001E0B9B /* AddressViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressViewController.swift; sourceTree = "<group>"; };
 		92B4A61A1DE8FD9300F35DED /* CSVViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CSVViewController.swift; sourceTree = "<group>"; };
 		92B4A61C1DEA5B1C00F35DED /* Colour.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colour.swift; sourceTree = "<group>"; };
-		92B4A61E1DEA94D300F35DED /* PaintCan.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaintCan.swift; sourceTree = "<group>"; };
+		92B4A61E1DEA94D300F35DED /* Paint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Paint.swift; sourceTree = "<group>"; };
 		92B4A6321DEB9E0100F35DED /* benjamin moore product list - edited.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "benjamin moore product list - edited.csv"; sourceTree = "<group>"; };
 		92B4A6341DEBB8A100F35DED /* DataService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
 		92B4A6361DEBB8B400F35DED /* AuthService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
@@ -237,7 +237,7 @@
 				92B4A6361DEBB8B400F35DED /* AuthService.swift */,
 				92B4A6381DEBB8E500F35DED /* User.swift */,
 				92B4A61C1DEA5B1C00F35DED /* Colour.swift */,
-				92B4A61E1DEA94D300F35DED /* PaintCan.swift */,
+				92B4A61E1DEA94D300F35DED /* Paint.swift */,
 				661A48011DF6AB8B00B56028 /* Address.swift */,
 				661A48031DF6ABB000B56028 /* Business.swift */,
 			);
@@ -628,7 +628,7 @@
 				92FD3EAF1DE52D26009341C9 /* BarcodeScanner.swift in Sources */,
 				66C771401DE8331700E4810A /* MyDashboardVC.swift in Sources */,
 				92B4A6391DEBB8E500F35DED /* User.swift in Sources */,
-				92B4A61F1DEA94D300F35DED /* PaintCan.swift in Sources */,
+				92B4A61F1DEA94D300F35DED /* Paint.swift in Sources */,
 				66242AE21DF24ED8000B651F /* Validator.swift in Sources */,
 				9277E0BE1DFA7D94001E0B9B /* SearchAddressViewController.swift in Sources */,
 				92B4A61D1DEA5B1C00F35DED /* Colour.swift in Sources */,

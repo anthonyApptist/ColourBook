@@ -31,6 +31,8 @@ class PostScanViewController: UIViewController {
     var addToBusinessButton: UIButton!
     
     var addToHomeButton: UIButton!
+    
+    var product: Any?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -126,6 +128,8 @@ class PostScanViewController: UIViewController {
         
         addToPersonalButton.layer.borderColor = UIColor.black.cgColor
         
+        addToPersonalButton.addTarget(self, action: #selector(addToPersonalButtonFunction), for: .touchUpInside)
+        
         // add to business list button
         
         let addToBusinessButtonOrigin = CGPoint(x: view.center.x - ((view.frame.width * 0.15)/2), y: view.frame.height * 0.85)
@@ -142,6 +146,8 @@ class PostScanViewController: UIViewController {
         
         addToBusinessButton.layer.borderColor = UIColor.black.cgColor
         
+        addToBusinessButton.addTarget(self, action: #selector(addToBusinessButtonFunction), for: .touchUpInside)
+        
         // add to home list button
         
         let addToHomeButtonOrigin = CGPoint(x: view.center.x + ((view.frame.width * 0.15)/2) + ((view.frame.width * 0.15)/2), y: view.frame.height * 0.85)
@@ -157,6 +163,8 @@ class PostScanViewController: UIViewController {
         addToHomeButton.layer.borderWidth = 3.0
         
         addToHomeButton.layer.borderColor = UIColor.black.cgColor
+        
+        addToHomeButton.addTarget(self, action: #selector(addToHomeButtonFunction), for: .touchUpInside)
         
         view.addSubview(addToPersonalButton)
         
@@ -178,13 +186,15 @@ class PostScanViewController: UIViewController {
                 
                 let paintCanProfile = profile?["profile"] as? NSDictionary
                 
-                let paintCan = PaintCan(manufacturer: paintCanProfile?["manufactuer"] as! String, productName: paintCanProfile?["productName"] as! String, category: paintCanProfile?["category"] as! String, code: paintCanProfile?["code"] as! String, upcCode: self.barcode, image: paintCanProfile?["image"] as! String)
+                let paint = Paint(manufacturer: paintCanProfile?["manufactuer"] as! String, productName: paintCanProfile?["productName"] as! String, category: paintCanProfile?["category"] as! String, code: paintCanProfile?["code"] as! String, upcCode: self.barcode, image: paintCanProfile?["image"] as! String)
+                
+                self.product = paint
                 
                 self.productTypeLabel.text = paintCanProfile?["product"] as! String?
                 
                 self.productTypeLabel.textAlignment = .center
                 
-                let imageURL = NSURL.init(string: paintCan.image)
+                let imageURL = NSURL.init(string: paint.image)
                 
                 let imageData = NSData.init(contentsOf: imageURL as! URL)
                 
@@ -194,23 +204,23 @@ class PostScanViewController: UIViewController {
                 
                 self.productImageView.contentMode = .scaleAspectFill
                 
-                self.manufacturer.text = paintCan.manufacturer
+                self.manufacturer.text = paint.manufacturer
                 
                 self.manufacturer.textAlignment = .center
                 
                 self.manufacturer.textColor = UIColor.black
                 
-                self.productName.text = paintCan.productName
+                self.productName.text = paint.productName
                 
                 self.productName.adjustsFontSizeToFitWidth = true
                 
                 self.productName.textColor = UIColor.black
                 
-                self.code.text = paintCan.code
+                self.code.text = paint.code
                 
                 self.code.textColor = UIColor.black
                 
-                self.category.text = paintCan.category
+                self.category.text = paint.category
                 
                 self.category.textColor = UIColor.black
                 
@@ -258,6 +268,47 @@ class PostScanViewController: UIViewController {
         else {
             
         }
+        
+    }
+    
+    func addToPersonalButtonFunction() {
+        
+        let signedInUser = AuthService.instance.getSignedInUser()
+        
+        let signedInUserUID = signedInUser.uid
+        
+        let paint = self.product as! Paint
+        
+        let paintProfile: Dictionary<String, AnyObject> = ["manufacturer": paint.manufacturer as AnyObject, "productName": paint.productName as AnyObject, "category": paint.category as AnyObject, "code": paint.code as AnyObject, "image": paint.image as AnyObject, "product": "paint" as AnyObject]
+        
+        DataService.instance.usersRef.child(signedInUserUID).child("personalDashboard").child(barcode).setValue(paintProfile)
+    }
+    
+    func addToBusinessButtonFunction() {
+        
+        let signedInUser = AuthService.instance.getSignedInUser()
+        
+        let signedInUserUID = signedInUser.uid
+        
+        let paint = self.product as! Paint
+        
+        let paintCanProfile: Dictionary<String, AnyObject> = ["manufacturer": paint.manufacturer as AnyObject, "productName": paint.productName as AnyObject, "category": paint.category as AnyObject, "code": paint.code as AnyObject, "image": paint.image as AnyObject, "product": "paint" as AnyObject]
+        
+        DataService.instance.usersRef.child(signedInUserUID).child("businessDashboard").child(barcode).setValue(paintCanProfile)
+        
+    }
+    
+    func addToHomeButtonFunction() {
+        
+        let signedInUser = AuthService.instance.getSignedInUser()
+        
+        let signedInUserUID = signedInUser.uid
+        
+        let paintCan = self.product as! Paint
+        
+        let paintCanProfile: Dictionary<String, AnyObject> = ["manufacturer": paintCan.manufacturer as AnyObject, "productName": paintCan.productName as AnyObject, "category": paintCan.category as AnyObject, "code": paintCan.code as AnyObject, "image": paintCan.image as AnyObject, "product": "paint" as AnyObject]
+        
+        DataService.instance.usersRef.child(signedInUserUID).child("homeDashboard").child(barcode).setValue(paintCanProfile)
         
     }
 
