@@ -20,7 +20,7 @@ class ItemListDetailVC: CustomVC {
     
     @IBOutlet var hexCodeLbl: UILabel?
     
-    var detailItem: PaintCan?
+    var detailItem: Paint?
     
     override func viewDidAppear(_ animated: Bool) {
         

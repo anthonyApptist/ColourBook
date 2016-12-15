@@ -15,7 +15,7 @@ class User {
     private var _name: String
     private var _imageName: String?
     
-    var items: [PaintCan]
+    var items: [Paint]
     
     var uid: String {
         return _uid
@@ -45,8 +45,12 @@ class User {
         self.image = UIImage(named: _imageName!)
     }
     
-    func addItem(item: PaintCan) {
+    func addItem(item: Paint) {
         items.append(item)
+    }
+    
+    func setName(new: String) {
+        _name = new
     }
 
 }

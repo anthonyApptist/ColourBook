@@ -104,7 +104,7 @@ class AuthService {
         }
         else {
             
-            let noUserSignedIn = User.init(uid: "", email: "")
+            let noUserSignedIn = User.init(uid: "", email: "", name: "")
             
             return noUserSignedIn
         }

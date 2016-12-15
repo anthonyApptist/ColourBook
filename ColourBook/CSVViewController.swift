@@ -20,7 +20,7 @@ class CSVViewController: UIViewController {
     
     var coloursArray: [Colour]?
     
-    var paintCansArray: [PaintCan]?
+    var paintCansArray: [Paint]?
 
     override func viewDidLoad() {
         super.viewDidLoad()

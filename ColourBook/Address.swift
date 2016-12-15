@@ -21,7 +21,7 @@ class Address {
     
     var coordinate: CLLocationCoordinate2D?
     
-    var items: [PaintCan]
+    var items: [Paint]
     
     private var _imageName: String?
     
@@ -48,8 +48,11 @@ class Address {
         
     }
     
-    func addItem(item: PaintCan) {
+    func addItem(item: Paint) {
         items.append(item)
     }
     
+    func setName(new: String) {
+        name = new
+    }
 }

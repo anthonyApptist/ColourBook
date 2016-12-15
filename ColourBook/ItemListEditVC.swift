@@ -10,11 +10,11 @@ import UIKit
 
 class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
 
-    let paintCan = PaintCan(manufacturer: "Home Depot", productName: "Dark Red Paint", category: "category", code: "990949209", upcCode: "9030499", image: "darkred")
+    let paintCan = Paint(manufacturer: "Home Depot", productName: "Dark Red Paint", category: "category", code: "990949209", upcCode: "9030499", image: "darkred")
     
-     let paintCan2 = PaintCan(manufacturer: "Home Depot", productName: "Green Paint", category: "category", code: "990949209", upcCode: "9030499", image: "green")
+     let paintCan2 = Paint(manufacturer: "Home Depot", productName: "Green Paint", category: "category", code: "990949209", upcCode: "9030499", image: "green")
     
-     let paintCan3 = PaintCan(manufacturer: "Home Depot", productName: "Light Blue Paint", category: "category", code: "990949209", upcCode: "9030499", image: "lightblue")
+     let paintCan3 = Paint(manufacturer: "Home Depot", productName: "Light Blue Paint", category: "category", code: "990949209", upcCode: "9030499", image: "lightblue")
     
     var user = User(uid: "Mark", email: "mark@theapptist.com", name: "Mark")
     
@@ -182,7 +182,7 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         
         if segue.identifier == "ShowListDetail" {
             
-            var item: PaintCan?
+            var item: Paint?
             
             let row = tableView?.indexPathForSelectedRow?.row
             

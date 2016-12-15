@@ -9,7 +9,16 @@
 import UIKit
 import MapKit
 
-class AddEditAddressVC: CustomVC, MKMapViewDelegate {
+class AddEditAddressVC: CustomVC, MKMapViewDelegate, UISearchBarDelegate {
+    
+    var searchController:UISearchController!
+    var annotation:MKAnnotation!
+    var localSearchRequest:MKLocalSearchRequest!
+    var localSearch:MKLocalSearch!
+    var localSearchResponse:MKLocalSearchResponse!
+    var error:NSError!
+    var pointAnnotation:MKPointAnnotation!
+    var pinAnnotationView:MKPinAnnotationView!
     
     @IBOutlet weak var titleLbl: UILabel?
     
@@ -52,6 +61,52 @@ class AddEditAddressVC: CustomVC, MKMapViewDelegate {
 
 
     }
+    
+    @IBAction func showSearchBar(_ sender: AnyObject) {
+        map.showsUserLocation = false
+        searchController = UISearchController(searchResultsController: nil)
+        searchController.hidesNavigationBarDuringPresentation = false
+        self.searchController.searchBar.delegate = self
+        present(searchController, animated: true, completion: nil)
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar){
+        //1
+        searchBar.resignFirstResponder()
+        dismiss(animated: true, completion: nil)
+        if self.map.annotations.count != 0{
+            annotation = self.map.annotations[0]
+            self.map.removeAnnotation(annotation)
+        }
+        //2
+        localSearchRequest = MKLocalSearchRequest()
+        localSearchRequest.naturalLanguageQuery = searchBar.text
+        localSearch = MKLocalSearch(request: localSearchRequest)
+        localSearch.start { (localSearchResponse, error) -> Void in
+            
+            if localSearchResponse == nil{
+                let alertController = UIAlertController(title: nil, message: "Place Not Found", preferredStyle: UIAlertControllerStyle.alert)
+                alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default, handler: nil))
+                self.present(alertController, animated: true, completion: nil)
+                return
+            }
+            //3
+            self.pointAnnotation = MKPointAnnotation()
+            self.pointAnnotation.title = searchBar.text
+            self.pointAnnotation.coordinate = CLLocationCoordinate2D(latitude: localSearchResponse!.boundingRegion.center.latitude, longitude:     localSearchResponse!.boundingRegion.center.longitude)
+            
+            
+            self.pinAnnotationView = MKPinAnnotationView(annotation: self.pointAnnotation, reuseIdentifier: nil)
+            self.map.centerCoordinate = self.pointAnnotation.coordinate
+            self.map.addAnnotation(self.pinAnnotationView.annotation!)
+            
+            let coordinate: CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: (localSearchResponse?.boundingRegion.center.latitude)!, longitude: (localSearchResponse?.boundingRegion.center.longitude)!)
+            let coordinateRegion = MKCoordinateRegionMakeWithDistance(coordinate, self.regionRadius * 2, self.regionRadius * 2)
+            self.map.setRegion(coordinateRegion, animated: true)
+            
+        }
+    }
+    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ShowInfo" {

@@ -75,6 +75,10 @@
 		66C771561DE83EEF00E4810A /* settingsIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 66C771531DE83EEF00E4810A /* settingsIcon.png */; };
 		66C771571DE83EEF00E4810A /* settingsIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66C771541DE83EEF00E4810A /* settingsIcon@2x.png */; };
 		66C771581DE83EEF00E4810A /* settingsIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66C771551DE83EEF00E4810A /* settingsIcon@3x.png */; };
+		66CB81B81E0212D800190315 /* search.png in Resources */ = {isa = PBXBuildFile; fileRef = 66CB81B51E0212D800190315 /* search.png */; };
+		66CB81B91E0212D800190315 /* search@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66CB81B61E0212D800190315 /* search@2x.png */; };
+		66CB81BA1E0212D800190315 /* search@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66CB81B71E0212D800190315 /* search@3x.png */; };
+		66CB81BC1E02175300190315 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CB81BB1E02175300190315 /* SearchViewController.swift */; };
 		66D783491DF49B4F00BACC2C /* check.png in Resources */ = {isa = PBXBuildFile; fileRef = 66D783481DF49B4F00BACC2C /* check.png */; };
 		66D7834B1DF4DD2100BACC2C /* CustomAnimatedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D7834A1DF4DD2100BACC2C /* CustomAnimatedButton.swift */; };
 		66D7834F1DF4E3CE00BACC2C /* iconCheck.png in Resources */ = {isa = PBXBuildFile; fileRef = 66D7834C1DF4E3CE00BACC2C /* iconCheck.png */; };
@@ -181,6 +185,10 @@
 		66C771531DE83EEF00E4810A /* settingsIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settingsIcon.png; sourceTree = "<group>"; };
 		66C771541DE83EEF00E4810A /* settingsIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "settingsIcon@2x.png"; sourceTree = "<group>"; };
 		66C771551DE83EEF00E4810A /* settingsIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "settingsIcon@3x.png"; sourceTree = "<group>"; };
+		66CB81B51E0212D800190315 /* search.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = search.png; sourceTree = "<group>"; };
+		66CB81B61E0212D800190315 /* search@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "search@2x.png"; sourceTree = "<group>"; };
+		66CB81B71E0212D800190315 /* search@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "search@3x.png"; sourceTree = "<group>"; };
+		66CB81BB1E02175300190315 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		66D783481DF49B4F00BACC2C /* check.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = check.png; sourceTree = "<group>"; };
 		66D7834A1DF4DD2100BACC2C /* CustomAnimatedButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomAnimatedButton.swift; sourceTree = "<group>"; };
 		66D7834C1DF4E3CE00BACC2C /* iconCheck.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iconCheck.png; sourceTree = "<group>"; };
@@ -281,6 +289,7 @@
 				661A47FD1DF6AA0E00B56028 /* AddressListDetailVC.swift */,
 				661A47FF1DF6AA3800B56028 /* SettingsVC.swift */,
 				66F942C51DF92CA500C01DAF /* CustomVC.swift */,
+				66CB81BB1E02175300190315 /* SearchViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -343,6 +352,9 @@
 		6636466B1DE16A4300E6D719 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				66CB81B51E0212D800190315 /* search.png */,
+				66CB81B61E0212D800190315 /* search@2x.png */,
+				66CB81B71E0212D800190315 /* search@3x.png */,
 				66F942B41DF8BDBB00C01DAF /* logos */,
 				66D7834C1DF4E3CE00BACC2C /* iconCheck.png */,
 				66D7834D1DF4E3CE00BACC2C /* iconCheck@2x.png */,
@@ -505,6 +517,7 @@
 				665E637C1DE82F99002BA868 /* arrowBack.png in Resources */,
 				663646701DE16A4300E6D719 /* effects@2x.png in Resources */,
 				66F942BE1DF8BDBB00C01DAF /* green.jpg in Resources */,
+				66CB81B91E0212D800190315 /* search@2x.png in Resources */,
 				66C7714E1DE83EB300E4810A /* moneyIcon@2x.png in Resources */,
 				665E637E1DE82F99002BA868 /* arrowBack@3x.png in Resources */,
 				663646611DE0C3EA00E6D719 /* Assets.xcassets in Resources */,
@@ -517,6 +530,7 @@
 				92FD3EAB1DE52A71009341C9 /* GoogleService-Info.plist in Resources */,
 				66242ADB1DF0F302000B651F /* barcode.png in Resources */,
 				66F942BC1DF8BDBB00C01DAF /* darkgreen.jpg in Resources */,
+				66CB81BA1E0212D800190315 /* search@3x.png in Resources */,
 				6636469C1DE4921F00E6D719 /* facebookImg.png in Resources */,
 				663646A31DE4921F00E6D719 /* googleImg@2x.png in Resources */,
 				663646A41DE4921F00E6D719 /* googleImg@3x.png in Resources */,
@@ -546,6 +560,7 @@
 				66242ADD1DF0F302000B651F /* barcode@3x.png in Resources */,
 				6636465F1DE0C3EA00E6D719 /* Main.storyboard in Resources */,
 				66F942C21DF8BDBB00C01DAF /* purple.jpg in Resources */,
+				66CB81B81E0212D800190315 /* search.png in Resources */,
 				66F942BF1DF8BDBB00C01DAF /* lightblue.jpg in Resources */,
 				66F942BD1DF8BDBB00C01DAF /* darkred.jpg in Resources */,
 				663646A61DE4921F00E6D719 /* greenCBlogo@2x.png in Resources */,
@@ -634,6 +649,7 @@
 				92B4A61D1DEA5B1C00F35DED /* Colour.swift in Sources */,
 				66242AE81DF46F30000B651F /* LabelCustomSpacing.swift in Sources */,
 				9277E0C01DFA8323001E0B9B /* AddressViewController.swift in Sources */,
+				66CB81BC1E02175300190315 /* SearchViewController.swift in Sources */,
 				6636465C1DE0C3EA00E6D719 /* TutorialVC.swift in Sources */,
 				6636465A1DE0C3EA00E6D719 /* AppDelegate.swift in Sources */,
 				92B4A61B1DE8FD9300F35DED /* CSVViewController.swift in Sources */,
