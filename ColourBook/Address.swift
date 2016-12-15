@@ -52,4 +52,7 @@ class Address {
         items.append(item)
     }
     
+    func setName(new: String) {
+        name = new
+    }
 }

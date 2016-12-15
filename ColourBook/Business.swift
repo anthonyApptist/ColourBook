@@ -51,4 +51,8 @@ class Business {
         items.append(item)
     }
     
+    func setName(new: String) {
+        name = new
+    }
+    
 }

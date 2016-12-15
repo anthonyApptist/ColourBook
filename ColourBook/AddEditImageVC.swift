@@ -69,6 +69,7 @@ class AddEditImageVC: CustomVC, UIImagePickerControllerDelegate, UINavigationCon
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         textField?.resignFirstResponder()
+        userItem?.setName(new: (textField?.text)!)
     }
 
     override func viewDidAppear(_ animated: Bool) {

@@ -58,6 +58,11 @@ class MyDashboardVC: CustomVC, UIScrollViewDelegate {
             performSegue(withIdentifier: "ConnectToAddresses", sender: self)
         }
         
+        if self.titleLbl.text == "search" {
+            
+            performSegue(withIdentifier: "ConnectToSearch", sender: self)
+        }
+        
       
     }
     
@@ -131,13 +136,21 @@ class MyDashboardVC: CustomVC, UIScrollViewDelegate {
         
         let pageFour = IconView(frame: CGRect(x: 0, y: 0, width: 129, height: 183))
         pageFour.frame.origin = CGPoint(x: pageThree.frame.origin.x + scrollViewWidth, y: scrollView.bounds.size.height/2 - pageFour.frame.height/2)
-        pageFour.imageView = UIImageView(frame: CGRect(x: 12.2, y: 40, width: 106.6, height: 104.3))
+        pageFour.imageView = UIImageView(frame: CGRect(x: 26, y: 56, width: 72, height: 81))
         pageFour.addSubview(pageFour.imageView!)
-        pageFour.imageView?.image = UIImage(named: "settingsIcon")
+        pageFour.imageView?.image = UIImage(named: "search")
         self.scrollView.addSubview(pageFour)
         
+        let pageFive = IconView(frame: CGRect(x: 0, y: 0, width: 129, height: 183))
+        pageFive.frame.origin = CGPoint(x: pageFour.frame.origin.x + scrollViewWidth, y: scrollView.bounds.size.height/2 - pageFive.frame.height/2)
+        pageFive.imageView = UIImageView(frame: CGRect(x: 12.2, y: 40, width: 106.6, height: 104.3))
+        pageFive.addSubview(pageFive.imageView!)
+        pageFive.imageView?.image = UIImage(named: "settingsIcon")
+        self.scrollView.addSubview(pageFive)
         
-        self.scrollView.contentSize = CGSize(width: self.scrollView.frame.width * 4, height: self.scrollView.frame.height)
+        
+        
+        self.scrollView.contentSize = CGSize(width: self.scrollView.frame.width * 5, height: self.scrollView.frame.height)
         self.scrollView.delegate = self
         
         self.titleLbl.setSpacing(space: 4.0)
@@ -181,6 +194,14 @@ class MyDashboardVC: CustomVC, UIScrollViewDelegate {
             self.screenState = .homes
 
         } else if Int(currentPage) == 3 {
+            self.titleString = "search"
+            self.titleLbl.text = self.titleString
+            self.descString = "find any list in the world"
+            self.descLbl.text = self.descString
+            self.titleLbl.setSpacing(space: 4.0)
+            self.screenState = .none
+            
+        } else if Int(currentPage) == 4 {
             self.titleString = "my account"
             self.titleLbl.text = self.titleString
             self.descString = ""
@@ -252,6 +273,22 @@ class MyDashboardVC: CustomVC, UIScrollViewDelegate {
             self.scanBtn.addTarget(self, action: #selector(MyDashboardVC.scanBtnPressed), for: .touchUpInside)
 
         } else if Int(page) == 3 {
+            self.titleString = "search"
+            self.titleLbl.text = self.titleString
+            self.descString = "find any list"
+            self.descLbl.text = self.descString
+            self.titleLbl.setSpacing(space: 4.0)
+            self.screenState = .homes
+            
+            self.scanBtn.setTitle("scan", for: .normal)
+            UIView.animate(withDuration: 1.0) {
+                self.viewBtn.alpha = 1.0
+            }
+            
+            self.scanBtn.removeTarget(self, action: #selector(MyDashboardVC.logOut), for: .touchUpInside)
+            self.scanBtn.addTarget(self, action: #selector(MyDashboardVC.scanBtnPressed), for: .touchUpInside)
+            
+        } else if Int(page) == 4 {
             self.titleString = "my account"
             self.titleLbl.text = self.titleString
             self.descString = ""

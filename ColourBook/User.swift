@@ -48,5 +48,9 @@ class User {
     func addItem(item: Paint) {
         items.append(item)
     }
+    
+    func setName(new: String) {
+        _name = new
+    }
 
 }
