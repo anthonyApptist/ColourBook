@@ -62,7 +62,6 @@
 		665E637D1DE82F99002BA868 /* arrowBack@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 665E637A1DE82F99002BA868 /* arrowBack@2x.png */; };
 		665E637E1DE82F99002BA868 /* arrowBack@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 665E637B1DE82F99002BA868 /* arrowBack@3x.png */; };
 		66A5AD561DFD040C0090226B /* AnnotationPin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A5AD551DFD040C0090226B /* AnnotationPin.swift */; };
-
 		66C771401DE8331700E4810A /* MyDashboardVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C7713F1DE8331700E4810A /* MyDashboardVC.swift */; };
 		66C7714A1DE83EB300E4810A /* homeIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 66C771411DE83EB300E4810A /* homeIcon.png */; };
 		66C7714B1DE83EB300E4810A /* homeIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66C771421DE83EB300E4810A /* homeIcon@2x.png */; };
@@ -90,20 +89,21 @@
 		66F942C21DF8BDBB00C01DAF /* purple.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 66F942BB1DF8BDBB00C01DAF /* purple.jpg */; };
 		66F942C41DF9241E00C01DAF /* ItemListEditVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F942C31DF9241E00C01DAF /* ItemListEditVC.swift */; };
 		66F942C61DF92CA500C01DAF /* CustomVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F942C51DF92CA500C01DAF /* CustomVC.swift */; };
+		9262ECDA1E00FA8A005FD5AC /* FinalizedPaint.csv in Resources */ = {isa = PBXBuildFile; fileRef = 9262ECD81E00FA8A005FD5AC /* FinalizedPaint.csv */; };
+		9262ECDB1E00FA8A005FD5AC /* productlist.csv in Resources */ = {isa = PBXBuildFile; fileRef = 9262ECD91E00FA8A005FD5AC /* productlist.csv */; };
 		9277E0B11DF64F0A001E0B9B /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9277E0B01DF64F0A001E0B9B /* FBSDKCoreKit.framework */; };
 		9277E0B31DF64F63001E0B9B /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9277E0B21DF64F63001E0B9B /* Bolts.framework */; };
-		9277E0BB1DF9DD04001E0B9B /* Benjamin Moore Paint Data.csv in Resources */ = {isa = PBXBuildFile; fileRef = 9277E0BA1DF9DD04001E0B9B /* Benjamin Moore Paint Data.csv */; };
-		9277E0BE1DFA7D94001E0B9B /* SearchAddressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9277E0BD1DFA7D94001E0B9B /* SearchAddressViewController.swift */; };
-		9277E0C01DFA8323001E0B9B /* AddressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9277E0BF1DFA8323001E0B9B /* AddressViewController.swift */; };
+		9277E0BE1DFA7D94001E0B9B /* SearchAddressVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9277E0BD1DFA7D94001E0B9B /* SearchAddressVC.swift */; };
+		9277E0C01DFA8323001E0B9B /* AddressVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9277E0BF1DFA8323001E0B9B /* AddressVC.swift */; };
 		92B4A61B1DE8FD9300F35DED /* CSVViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B4A61A1DE8FD9300F35DED /* CSVViewController.swift */; };
 		92B4A61D1DEA5B1C00F35DED /* Colour.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B4A61C1DEA5B1C00F35DED /* Colour.swift */; };
 		92B4A61F1DEA94D300F35DED /* Paint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B4A61E1DEA94D300F35DED /* Paint.swift */; };
-		92B4A6331DEB9E0100F35DED /* benjamin moore product list - edited.csv in Resources */ = {isa = PBXBuildFile; fileRef = 92B4A6321DEB9E0100F35DED /* benjamin moore product list - edited.csv */; };
 		92B4A6351DEBB8A100F35DED /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B4A6341DEBB8A100F35DED /* DataService.swift */; };
 		92B4A6371DEBB8B400F35DED /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B4A6361DEBB8B400F35DED /* AuthService.swift */; };
 		92B4A6391DEBB8E500F35DED /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B4A6381DEBB8E500F35DED /* User.swift */; };
 		92C6A1AE1DF5CE6100B2D6C4 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92C6A1AD1DF5CE6100B2D6C4 /* FBSDKLoginKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
-		92F9E4881DFB51A2006DCD19 /* PostScanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9277E0B41DF75022001E0B9B /* PostScanViewController.swift */; };
+		92CFEE2E1E00DF9A00F78C78 /* ChooseColourVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92CFEE2D1E00DF9A00F78C78 /* ChooseColourVC.swift */; };
+		92F9E4881DFB51A2006DCD19 /* PostScanVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9277E0B41DF75022001E0B9B /* PostScanVC.swift */; };
 		92FD3EAB1DE52A71009341C9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 92FD3EAA1DE52A71009341C9 /* GoogleService-Info.plist */; };
 		92FD3EAF1DE52D26009341C9 /* BarcodeScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92FD3EAE1DE52D26009341C9 /* BarcodeScanner.swift */; };
 		F800C68BEBC98076422569AE /* Pods_ColourBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C899EA646F9D6392D10F289 /* Pods_ColourBook.framework */; };
@@ -197,20 +197,21 @@
 		66F942C31DF9241E00C01DAF /* ItemListEditVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemListEditVC.swift; sourceTree = "<group>"; };
 		66F942C51DF92CA500C01DAF /* CustomVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomVC.swift; sourceTree = "<group>"; };
 		9207D1041DF6184E00E90004 /* Facebook-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Facebook-Bridging-Header.h"; sourceTree = "<group>"; };
+		9262ECD81E00FA8A005FD5AC /* FinalizedPaint.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = FinalizedPaint.csv; sourceTree = "<group>"; };
+		9262ECD91E00FA8A005FD5AC /* productlist.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = productlist.csv; sourceTree = "<group>"; };
 		9277E0B01DF64F0A001E0B9B /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		9277E0B21DF64F63001E0B9B /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
-		9277E0B41DF75022001E0B9B /* PostScanViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostScanViewController.swift; sourceTree = "<group>"; };
-		9277E0BA1DF9DD04001E0B9B /* Benjamin Moore Paint Data.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Benjamin Moore Paint Data.csv"; sourceTree = "<group>"; };
-		9277E0BD1DFA7D94001E0B9B /* SearchAddressViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchAddressViewController.swift; sourceTree = "<group>"; };
-		9277E0BF1DFA8323001E0B9B /* AddressViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressViewController.swift; sourceTree = "<group>"; };
+		9277E0B41DF75022001E0B9B /* PostScanVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostScanVC.swift; sourceTree = "<group>"; };
+		9277E0BD1DFA7D94001E0B9B /* SearchAddressVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchAddressVC.swift; sourceTree = "<group>"; };
+		9277E0BF1DFA8323001E0B9B /* AddressVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressVC.swift; sourceTree = "<group>"; };
 		92B4A61A1DE8FD9300F35DED /* CSVViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CSVViewController.swift; sourceTree = "<group>"; };
 		92B4A61C1DEA5B1C00F35DED /* Colour.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colour.swift; sourceTree = "<group>"; };
 		92B4A61E1DEA94D300F35DED /* Paint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Paint.swift; sourceTree = "<group>"; };
-		92B4A6321DEB9E0100F35DED /* benjamin moore product list - edited.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "benjamin moore product list - edited.csv"; sourceTree = "<group>"; };
 		92B4A6341DEBB8A100F35DED /* DataService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
 		92B4A6361DEBB8B400F35DED /* AuthService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		92B4A6381DEBB8E500F35DED /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		92C6A1AD1DF5CE6100B2D6C4 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
+		92CFEE2D1E00DF9A00F78C78 /* ChooseColourVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseColourVC.swift; sourceTree = "<group>"; };
 		92FD3EAA1DE52A71009341C9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		92FD3EAE1DE52D26009341C9 /* BarcodeScanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarcodeScanner.swift; sourceTree = "<group>"; };
 		D218658870BE7C0C8667A861 /* Pods-ColourBook.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ColourBook.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ColourBook/Pods-ColourBook.debug.xcconfig"; sourceTree = "<group>"; };
@@ -267,9 +268,10 @@
 			children = (
 				6636465B1DE0C3EA00E6D719 /* TutorialVC.swift */,
 				92FD3EAE1DE52D26009341C9 /* BarcodeScanner.swift */,
-				9277E0B41DF75022001E0B9B /* PostScanViewController.swift */,
-				9277E0BD1DFA7D94001E0B9B /* SearchAddressViewController.swift */,
-				9277E0BF1DFA8323001E0B9B /* AddressViewController.swift */,
+				9277E0B41DF75022001E0B9B /* PostScanVC.swift */,
+				92CFEE2D1E00DF9A00F78C78 /* ChooseColourVC.swift */,
+				9277E0BD1DFA7D94001E0B9B /* SearchAddressVC.swift */,
+				9277E0BF1DFA8323001E0B9B /* AddressVC.swift */,
 				663646881DE3E93A00E6D719 /* LogInViewController.swift */,
 				665E63771DE8293A002BA868 /* SignUpViewController.swift */,
 				92B4A61A1DE8FD9300F35DED /* CSVViewController.swift */,
@@ -291,8 +293,8 @@
 			children = (
 				663646591DE0C3EA00E6D719 /* AppDelegate.swift */,
 				9207D1041DF6184E00E90004 /* Facebook-Bridging-Header.h */,
-				9277E0BA1DF9DD04001E0B9B /* Benjamin Moore Paint Data.csv */,
-				92B4A6321DEB9E0100F35DED /* benjamin moore product list - edited.csv */,
+				9262ECD81E00FA8A005FD5AC /* FinalizedPaint.csv */,
+				9262ECD91E00FA8A005FD5AC /* productlist.csv */,
 			);
 			name = Other;
 			sourceTree = "<group>";
@@ -514,6 +516,7 @@
 				663646AD1DE4921F00E6D719 /* purpleCBlogo@3x.png in Resources */,
 				6636469E1DE4921F00E6D719 /* facebookImg@3x.png in Resources */,
 				66D783501DF4E3CE00BACC2C /* iconCheck@2x.png in Resources */,
+				9262ECDA1E00FA8A005FD5AC /* FinalizedPaint.csv in Resources */,
 				663646AB1DE4921F00E6D719 /* purpleCBlogo.png in Resources */,
 				92FD3EAB1DE52A71009341C9 /* GoogleService-Info.plist in Resources */,
 				66242ADB1DF0F302000B651F /* barcode.png in Resources */,
@@ -523,7 +526,6 @@
 				663646A41DE4921F00E6D719 /* googleImg@3x.png in Resources */,
 				66F942C11DF8BDBB00C01DAF /* orange.jpg in Resources */,
 				663646A91DE4921F00E6D719 /* pinkCBLogo@2x.png in Resources */,
-				9277E0BB1DF9DD04001E0B9B /* Benjamin Moore Paint Data.csv in Resources */,
 				66C771501DE83EB300E4810A /* personalIcon.png in Resources */,
 				663646A51DE4921F00E6D719 /* greenCBlogo.png in Resources */,
 				663646A11DE4921F00E6D719 /* goldCBlogo@3x.png in Resources */,
@@ -537,7 +539,6 @@
 				663646A01DE4921F00E6D719 /* goldCBlogo@2x.png in Resources */,
 				66D7834F1DF4E3CE00BACC2C /* iconCheck.png in Resources */,
 				663646AA1DE4921F00E6D719 /* pinkCBLogo@3x.png in Resources */,
-				92B4A6331DEB9E0100F35DED /* benjamin moore product list - edited.csv in Resources */,
 				66C771521DE83EB300E4810A /* personalIcon@3x.png in Resources */,
 				66C771581DE83EEF00E4810A /* settingsIcon@3x.png in Resources */,
 				66C771511DE83EB300E4810A /* personalIcon@2x.png in Resources */,
@@ -546,6 +547,7 @@
 				66D783491DF49B4F00BACC2C /* check.png in Resources */,
 				66242ADD1DF0F302000B651F /* barcode@3x.png in Resources */,
 				6636465F1DE0C3EA00E6D719 /* Main.storyboard in Resources */,
+				9262ECDB1E00FA8A005FD5AC /* productlist.csv in Resources */,
 				66F942C21DF8BDBB00C01DAF /* purple.jpg in Resources */,
 				66F942BF1DF8BDBB00C01DAF /* lightblue.jpg in Resources */,
 				66F942BD1DF8BDBB00C01DAF /* darkred.jpg in Resources */,
@@ -610,7 +612,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				66A5AD561DFD040C0090226B /* AnnotationPin.swift in Sources */,
-				92F9E4881DFB51A2006DCD19 /* PostScanViewController.swift in Sources */,
+				92F9E4881DFB51A2006DCD19 /* PostScanVC.swift in Sources */,
 				665E636E1DE6B55C002BA868 /* IconView.swift in Sources */,
 				92B4A6351DEBB8A100F35DED /* DataService.swift in Sources */,
 				661A47F61DF6A95700B56028 /* AddEditImageVC.swift in Sources */,
@@ -631,16 +633,17 @@
 				92B4A6391DEBB8E500F35DED /* User.swift in Sources */,
 				92B4A61F1DEA94D300F35DED /* Paint.swift in Sources */,
 				66242AE21DF24ED8000B651F /* Validator.swift in Sources */,
-				9277E0BE1DFA7D94001E0B9B /* SearchAddressViewController.swift in Sources */,
+				9277E0BE1DFA7D94001E0B9B /* SearchAddressVC.swift in Sources */,
 				92B4A61D1DEA5B1C00F35DED /* Colour.swift in Sources */,
 				66242AE81DF46F30000B651F /* LabelCustomSpacing.swift in Sources */,
-				9277E0C01DFA8323001E0B9B /* AddressViewController.swift in Sources */,
+				9277E0C01DFA8323001E0B9B /* AddressVC.swift in Sources */,
 				6636465C1DE0C3EA00E6D719 /* TutorialVC.swift in Sources */,
 				6636465A1DE0C3EA00E6D719 /* AppDelegate.swift in Sources */,
 				92B4A61B1DE8FD9300F35DED /* CSVViewController.swift in Sources */,
 				661A47F81DF6A97700B56028 /* ItemListDetailVC.swift in Sources */,
 				661A48021DF6AB8B00B56028 /* Address.swift in Sources */,
 				66242AE41DF24FE4000B651F /* ErrorHandler.swift in Sources */,
+				92CFEE2E1E00DF9A00F78C78 /* ChooseColourVC.swift in Sources */,
 				661A47FA1DF6A9B400B56028 /* AddEditAddressVC.swift in Sources */,
 				661A48001DF6AA3800B56028 /* SettingsVC.swift in Sources */,
 				92B4A6371DEBB8B400F35DED /* AuthService.swift in Sources */,

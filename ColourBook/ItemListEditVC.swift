@@ -7,20 +7,23 @@
 //
 
 import UIKit
+import FirebaseDatabase
 
 class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
-
-    let paintCan = PaintCan(manufacturer: "Home Depot", productName: "Dark Red Paint", category: "category", code: "990949209", upcCode: "9030499", image: "darkred")
     
-     let paintCan2 = PaintCan(manufacturer: "Home Depot", productName: "Green Paint", category: "category", code: "990949209", upcCode: "9030499", image: "green")
+    let paintCan = Paint(manufacturer: "Home Depot", productName: "Dark Red Paint", category: "category", code: "990949209", upcCode: "9030499", image: "darkred")
     
-     let paintCan3 = PaintCan(manufacturer: "Home Depot", productName: "Light Blue Paint", category: "category", code: "990949209", upcCode: "9030499", image: "lightblue")
+    let paintCan2 = Paint(manufacturer: "Home Depot", productName: "Green Paint", category: "category", code: "990949209", upcCode: "9030499", image: "green")
     
-    var user = User(uid: "Mark", email: "mark@theapptist.com", name: "Mark")
+    let paintCan3 = Paint(manufacturer: "Home Depot", productName: "Light Blue Paint", category: "category", code: "990949209", upcCode: "9030499", image: "lightblue")
+    
+    var user: User!
     
     var businessItem: Business?
     
     var addressItem: Address?
+    
+    
     
     @IBOutlet weak var tableView: UITableView?
     
@@ -29,7 +32,7 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet var bottomView: UIView?
     
     @IBOutlet var titleLbl: UILabel?
-        
+    
     @IBOutlet var subTitleLbl: UILabel?
     
     @IBAction func settingsBtnPressed(_ sender: AnyObject) {
@@ -38,11 +41,11 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
             performSegue(withIdentifier: "ConnectToImageSettings", sender: self)
         } else if screenState == ScreenState.business || screenState == ScreenState.homes {
             performSegue(withIdentifier: "ConnectToMenuSettings", sender: self)
-        } 
+        }
         
     }
     
-
+    
     @IBAction func scanBtnPressed(_ sender: AnyObject) {
         
         let scanView = storyboard?.instantiateViewController(withIdentifier: "BarcodeVC")
@@ -58,16 +61,14 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         
     }
     
-    
-    
     override func viewDidAppear(_ animated: Bool) {
-
+        
         super.viewDidAppear(false)
         
         tableView?.delegate = self
         tableView?.dataSource = self
         
-
+        user = AuthService.instance.getSignedInUser()
         
         if self.titleString == "personal" {
             screenState = ScreenState.personal
@@ -76,26 +77,24 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         } else if self.titleString == "my homes" {
             screenState = ScreenState.homes
         }
-
         
-     
         
         if screenState == .personal {
             
-            if user.items.count == 0 {
-            user.addItem(item: paintCan)
-            user.addItem(item: paintCan2)
-            user.addItem(item: paintCan3)
-            }
-        
+//            if user.items.count == 0 {
+//                user.addItem(item: paintCan)
+//                user.addItem(item: paintCan2)
+//                user.addItem(item: paintCan3)
+//            }
+            
             titleLbl?.text = user.name
             
         } else if screenState == .business {
             
             if businessItem?.items.count == 0 {
-            businessItem?.addItem(item: paintCan)
-            businessItem?.addItem(item: paintCan2)
-            businessItem?.addItem(item: paintCan3)
+                businessItem?.addItem(item: paintCan)
+                businessItem?.addItem(item: paintCan2)
+                businessItem?.addItem(item: paintCan3)
             }
             
             titleLbl?.text = businessItem?.name
@@ -103,24 +102,167 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         } else if screenState == .homes {
             
             if addressItem?.items.count == 0 {
-            addressItem?.addItem(item: paintCan)
-            addressItem?.addItem(item: paintCan2)
-            addressItem?.addItem(item: paintCan3)
+                addressItem?.addItem(item: paintCan)
+                addressItem?.addItem(item: paintCan2)
+                addressItem?.addItem(item: paintCan3)
             }
             
             titleLbl?.text = addressItem?.name
         }
         
-        tableView?.reloadData()
-
-
+        DispatchQueue.global(qos: .background).async {
+            print("This is run on the background queue")
+            
+            if self.screenState == .personal {
+            
+            let personalItemsRef = DataService.instance.usersRef.child(self.user.uid).child("personalDashboard")
+            
+            personalItemsRef.observeSingleEvent(of: .value, with: { (snapshot) in
+                
+                var paintArray: [Paint] = []
+                
+                for child in snapshot.children.allObjects {
+                    
+                    let product = child as? FIRDataSnapshot
+                    
+                    let productProfile = product?.value as? NSDictionary
+                    
+                    let category = productProfile?["category"] as? String ?? ""
+                    
+                    let productName = productProfile?["productName"] as? String ?? ""
+                    
+                    let code = productProfile?["code"] as? String ?? ""
+                    
+                    let image = productProfile?["image"] as? String ?? ""
+                    
+                    let upcCode = productProfile?["upcCode"] as? String ?? ""
+                    
+                    let manufacturer = productProfile?["manufacturer"] as? String ?? ""
+                    
+                    let paint = Paint(manufacturer: manufacturer, productName: productName, category: category, code: code, upcCode: upcCode, image: image)
+                    
+                    paintArray.append(paint)
+                }
+                
+                self.user.items.append(contentsOf: paintArray)
+                
+                self.user.items = paintArray
+                
+                self.tableView?.reloadData()
+                
+            })
+            
+            DispatchQueue.main.async {
+                print("This is run on the main queue, after the previous code in outer block")
+                
+                self.tableView?.reloadData()
+            }
+                
+            }
+            
+            if self.screenState == .business {
+                
+                let personalItemsRef = DataService.instance.usersRef.child(self.user.uid).child("businessDashboard")
+                
+                personalItemsRef.observeSingleEvent(of: .value, with: { (snapshot) in
+                    
+                    var paintArray: [Paint] = []
+                    
+                    for child in snapshot.children.allObjects {
+                        
+                        let product = child as? FIRDataSnapshot
+                        
+                        let productProfile = product?.value as? NSDictionary
+                        
+                        let category = productProfile?["category"] as? String ?? ""
+                        
+                        let productName = productProfile?["productName"] as? String ?? ""
+                        
+                        let code = productProfile?["code"] as? String ?? ""
+                        
+                        let image = productProfile?["image"] as? String ?? ""
+                        
+                        let upcCode = productProfile?["upcCode"] as? String ?? ""
+                        
+                        let manufacturer = productProfile?["manufacturer"] as? String ?? ""
+                        
+                        let paint = Paint(manufacturer: manufacturer, productName: productName, category: category, code: code, upcCode: upcCode, image: image)
+                        
+                        paintArray.append(paint)
+                    }
+                    
+                    self.user.items.append(contentsOf: paintArray)
+                    
+                    self.user.items = paintArray
+                    
+                    self.tableView?.reloadData()
+                    
+                })
+                
+                DispatchQueue.main.async {
+                    print("This is run on the main queue, after the previous code in outer block")
+                    
+                    self.tableView?.reloadData()
+                }
+                
+            }
+            
+            if self.screenState == .homes {
+                
+                let personalItemsRef = DataService.instance.usersRef.child(self.user.uid).child("homeDashboard")
+                
+                personalItemsRef.observeSingleEvent(of: .value, with: { (snapshot) in
+                    
+                    var paintArray: [Paint] = []
+                    
+                    for child in snapshot.children.allObjects {
+                        
+                        let product = child as? FIRDataSnapshot
+                        
+                        let productProfile = product?.value as? NSDictionary
+                        
+                        let category = productProfile?["category"] as? String ?? ""
+                        
+                        let productName = productProfile?["productName"] as? String ?? ""
+                        
+                        let code = productProfile?["code"] as? String ?? ""
+                        
+                        let image = productProfile?["image"] as? String ?? ""
+                        
+                        let upcCode = productProfile?["upcCode"] as? String ?? ""
+                        
+                        let manufacturer = productProfile?["manufacturer"] as? String ?? ""
+                        
+                        let paint = Paint(manufacturer: manufacturer, productName: productName, category: category, code: code, upcCode: upcCode, image: image)
+                        
+                        paintArray.append(paint)
+                    }
+                    
+                    self.user.items.append(contentsOf: paintArray)
+                    
+                    self.user.items = paintArray
+                    
+                    self.tableView?.reloadData()
+                    
+                })
+                
+                DispatchQueue.main.async {
+                    print("This is run on the main queue, after the previous code in outer block")
+                    
+                    self.tableView?.reloadData()
+                }
+                
+            }
+        }
         
-
+        
+        
+        
         
     }
     
     
-
+    
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -139,7 +281,7 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
             
             return (addressItem?.items.count)!
         }
-
+            
         else {
             return 1
         }
@@ -162,7 +304,7 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
             cell.titleLbl?.text = self.addressItem?.items[indexPath.row].productName
             
         }
-
+        
         
         return cell
     }
@@ -170,10 +312,10 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let row = indexPath.row
         
-            
+        
         performSegue(withIdentifier: "ShowListDetail", sender: nil)
-            
-    
+        
+        
         
     }
     
@@ -182,7 +324,7 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         
         if segue.identifier == "ShowListDetail" {
             
-            var item: PaintCan?
+            var item: Paint?
             
             let row = tableView?.indexPathForSelectedRow?.row
             
@@ -199,7 +341,7 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
                 item = addressItem?.items[row!]
                 
             }
-
+            
             if let detail = segue.destination as? ItemListDetailVC {
                 detail.detailItem = item
                 detail.screenState = screenState
@@ -231,25 +373,25 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         if segue.identifier == "ConnectToImageSettings" {
             
             
- 
-                if let detail = segue.destination as? AddEditImageVC {
-                    
-                    detail.userItem = user
-                    detail.screenState = screenState
-           
-         
-        
-        
-       
-    }
- 
+            
+            if let detail = segue.destination as? AddEditImageVC {
+                
+                detail.userItem = user
+                detail.screenState = screenState
+                
+                
+                
+                
+                
+            }
+            
         }
         
     }
     
-            
     
-        
-    }
+    
+    
+}
 
 

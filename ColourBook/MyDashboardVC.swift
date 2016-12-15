@@ -73,9 +73,9 @@ class MyDashboardVC: CustomVC, UIScrollViewDelegate {
         
         AuthService.instance.performSignOut()
                 
-        let scanView = storyboard?.instantiateViewController(withIdentifier: "LogInVC")
+        let logInView = storyboard?.instantiateViewController(withIdentifier: "LogInVC")
         
-        present(scanView!, animated: false, completion: nil)
+        present(logInView!, animated: false, completion: nil)
         
         
     }

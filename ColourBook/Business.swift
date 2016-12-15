@@ -21,7 +21,7 @@ class Business {
     
     var coordinate: CLLocationCoordinate2D?
     
-    var items: [PaintCan]
+    var items: [Paint]
     
     private var _imageName: String?
     
@@ -47,7 +47,7 @@ class Business {
         
     }
     
-    func addItem(item: PaintCan) {
+    func addItem(item: Paint) {
         items.append(item)
     }
     

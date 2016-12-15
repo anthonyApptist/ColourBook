@@ -96,7 +96,7 @@ class AuthService {
     func getSignedInUser() -> User {
         if let user = FIRAuth.auth()?.currentUser {
             
-            let signedInUser = User.init(uid: user.uid, email: user.email!, name: "")
+            let signedInUser = User.init(uid: user.uid, email: user.email!, name: "Mark")
             
             print(signedInUser.uid, signedInUser.email)
             
@@ -104,7 +104,7 @@ class AuthService {
         }
         else {
             
-            let noUserSignedIn = User.init(uid: "", email: "")
+            let noUserSignedIn = User.init(uid: "", email: "", name: "")
             
             return noUserSignedIn
         }
