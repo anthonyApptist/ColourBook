@@ -64,6 +64,7 @@ class ItemListAddVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         super.viewDidAppear(false)
         
         if self.screenState == .business {
+            
             self.businesses = [apptist]
             self.subTitleLbl?.text = "my businesses"
             

@@ -279,7 +279,7 @@ class PostScanViewController: UIViewController {
         
         let paint = self.product as! Paint
         
-        let paintProfile: Dictionary<String, AnyObject> = ["manufacturer": paint.manufacturer as AnyObject, "productName": paint.productName as AnyObject, "category": paint.category as AnyObject, "code": paint.code as AnyObject, "image": paint.image as AnyObject, "product": "paint" as AnyObject]
+        let paintProfile: Dictionary<String, AnyObject> = ["manufacturer": paint.manufacturer as AnyObject, "productName": paint.productName as AnyObject, "category": paint.category as AnyObject, "code": paint.code as AnyObject, "image": paint.image as AnyObject, "product": "Paint" as AnyObject]
         
         DataService.instance.usersRef.child(signedInUserUID).child("personalDashboard").child(barcode).setValue(paintProfile)
     }
@@ -292,9 +292,30 @@ class PostScanViewController: UIViewController {
         
         let paint = self.product as! Paint
         
-        let paintCanProfile: Dictionary<String, AnyObject> = ["manufacturer": paint.manufacturer as AnyObject, "productName": paint.productName as AnyObject, "category": paint.category as AnyObject, "code": paint.code as AnyObject, "image": paint.image as AnyObject, "product": "paint" as AnyObject]
+        let paintCanProfile: Dictionary<String, AnyObject> = ["manufacturer": paint.manufacturer as AnyObject, "productName": paint.productName as AnyObject, "category": paint.category as AnyObject, "code": paint.code as AnyObject, "image": paint.image as AnyObject, "product": "Paint" as AnyObject]
         
-        DataService.instance.usersRef.child(signedInUserUID).child("businessDashboard").child(barcode).setValue(paintCanProfile)
+        
+        DataService.instance.usersRef.child(signedInUserUID).observeSingleEvent(of: .value, with: { (snapshot) in
+            
+            if snapshot.hasChildren() {
+                
+                DataService.instance.usersRef.child(signedInUserUID).child("businessDashboard").child(self.barcode).setValue(paintCanProfile)
+                
+                return
+            }
+            
+            else {
+                let alertView = UIAlertController(title: "No Business Listings", message: "Go to you business bucket list and add an address", preferredStyle: .alert)
+                
+                let alertAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+                
+                alertView.addAction(alertAction)
+                
+                self.present(alertView, animated: true, completion: nil)
+            }
+            
+            })
+        
         
     }
     
@@ -306,7 +327,7 @@ class PostScanViewController: UIViewController {
         
         let paintCan = self.product as! Paint
         
-        let paintCanProfile: Dictionary<String, AnyObject> = ["manufacturer": paintCan.manufacturer as AnyObject, "productName": paintCan.productName as AnyObject, "category": paintCan.category as AnyObject, "code": paintCan.code as AnyObject, "image": paintCan.image as AnyObject, "product": "paint" as AnyObject]
+        let paintCanProfile: Dictionary<String, AnyObject> = ["manufacturer": paintCan.manufacturer as AnyObject, "productName": paintCan.productName as AnyObject, "category": paintCan.category as AnyObject, "code": paintCan.code as AnyObject, "image": paintCan.image as AnyObject, "product": "Paint" as AnyObject]
         
         DataService.instance.usersRef.child(signedInUserUID).child("homeDashboard").child(barcode).setValue(paintCanProfile)
         

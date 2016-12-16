@@ -63,7 +63,9 @@ class SearchAddressViewController: UIViewController {
                     
                     addressView.address = address!
                     
+                    let navigationController = UINavigationController.init(rootViewController: self)
                     
+                    navigationController.pushViewController(addressView, animated: true)
                     
                 }
             
