@@ -114,7 +114,18 @@ class ItemListAddVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+       if screenState == .business {
+            
+            return (businesses.count)
+            
+        } else if screenState == .homes {
+            
+            return (addresses.count)
+        }
+            
+        else {
+            return 1
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -139,6 +150,58 @@ class ItemListAddVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         performSegue(withIdentifier: "ConnectToListItem", sender: self)
         
         let row = indexPath.row
+        
+    }
+    
+    //DELETE ROWS
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            
+           if screenState == .business {
+                
+                if (businesses.count) > 0 {
+                    businesses.remove(at: (indexPath as NSIndexPath).row)
+                }
+                
+            } else if screenState == .homes {
+                
+                if (addresses.count) > 0 {
+                    addresses.remove(at: (indexPath as NSIndexPath).row)
+                }
+                
+                
+            }
+            
+            //enter firebase logic here to delete data from list
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+        }
+    }
+    //DELETE ROWS
+
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
+    if screenState == .business {
+            
+            if (businesses.count) > 0 {
+                if(indexPath as NSIndexPath).row >= (businesses.count) {
+                    return .insert
+                } else {
+                    return .delete
+                }
+            }
+            
+        } else if screenState == .homes {
+            
+            if (addresses.count) > 0 {
+                if(indexPath as NSIndexPath).row >= (addresses.count) {
+                    return .insert
+                } else {
+                    return .delete
+                    
+                }
+                
+            }
+        }
+        return .none
         
     }
     

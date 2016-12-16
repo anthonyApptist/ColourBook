@@ -335,6 +335,73 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         
     }
     
+    //DELETE ROWS
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            
+            if screenState == .personal {
+                
+                if user.items.count > 0 {
+                    user.items.remove(at: (indexPath as NSIndexPath).row)
+                }
+                
+            } else if screenState == .business {
+                
+                if (businessItem?.items.count)! > 0 {
+                    businessItem?.items.remove(at: (indexPath as NSIndexPath).row)
+                }
+
+            } else if screenState == .homes {
+            
+            if (addressItem?.items.count)! > 0 {
+                addressItem?.items.remove(at: (indexPath as NSIndexPath).row)
+            }
+            
+         
+        }
+                
+            //enter firebase logic here to delete data from list
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+        }
+    }
+    //DELETE ROWS
+
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
+        if screenState == .personal {
+            
+            if user.items.count > 0 {
+                if(indexPath as NSIndexPath).row >= user.items.count {
+                    return .insert
+                } else {
+                    return .delete
+                }
+            }
+            
+        } else if screenState == .business {
+            
+            if (businessItem?.items.count)! > 0 {
+                if(indexPath as NSIndexPath).row >= (businessItem?.items.count)! {
+                    return .insert
+                } else {
+                    return .delete
+                }
+            }
+            
+        } else if screenState == .homes {
+            
+            if (addressItem?.items.count)! > 0 {
+                if(indexPath as NSIndexPath).row >= (addressItem?.items.count)! {
+                    return .insert
+                } else {
+                    return .delete
+                
+            }
+ 
+    }
+        }
+            return .none
+        
+    }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         super.prepare(for: segue, sender: nil)
         
@@ -407,7 +474,5 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
     
     
     
-    
 }
-
 
