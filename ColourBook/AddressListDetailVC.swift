@@ -37,18 +37,27 @@ class AddressListDetailVC: CustomVC, MKMapViewDelegate {
         map.delegate = self
         
         if screenState == .business {
-            titleLbl?.text = businessItem?.name
-            addressLbl?.text = businessItem?.addressName
+            titleLbl?.text = businessItem?.businessName
+            addressLbl?.text = businessItem?.businessLocation
+            
+            location = CLLocation(latitude: (businessItem?.latitude)!, longitude: (businessItem?.latitude)!)
+            
+            /*
             coordinate = businessItem?.coordinate
             location = CLLocation(latitude: (coordinate?.latitude)!, longitude: (coordinate?.longitude)!)
+            */
 
         } else if screenState == .homes {
             
-            titleLbl?.text = addressItem?.name
-            addressLbl?.text = addressItem?.addressName
+            titleLbl?.text = addressItem?.addressName
+            addressLbl?.text = addressItem?.addressLocation
+            
+            location = CLLocation(latitude: (addressItem?.latitude)!, longitude: (addressItem?.longitude)!)
+            
+            /*
             coordinate = addressItem?.coordinate
             location = CLLocation(latitude: (coordinate?.latitude)!, longitude: (coordinate?.longitude)!)
-
+            */
         }
         
         locationAuthStatus()

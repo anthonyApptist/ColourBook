@@ -164,7 +164,7 @@ class PostScanViewController: UIViewController {
         
         addToHomeButton.layer.borderColor = UIColor.black.cgColor
         
-        addToHomeButton.addTarget(self, action: #selector(addToHomeButtonFunction), for: .touchUpInside)
+        addToHomeButton.addTarget(self, action: #selector(addToAddressButtonFunction), for: .touchUpInside)
         
         view.addSubview(addToPersonalButton)
         
@@ -186,7 +186,7 @@ class PostScanViewController: UIViewController {
                 
                 let paintCanProfile = profile?["profile"] as? NSDictionary
                 
-                let paint = Paint(manufacturer: paintCanProfile?["manufactuer"] as! String, productName: paintCanProfile?["productName"] as! String, category: paintCanProfile?["category"] as! String, code: paintCanProfile?["code"] as! String, upcCode: self.barcode, image: paintCanProfile?["image"] as! String)
+                let paint = Paint(manufacturer: paintCanProfile?["manufacturer"] as! String, productName: paintCanProfile?["productName"] as! String, category: paintCanProfile?["category"] as! String, code: paintCanProfile?["code"] as! String, upcCode: self.barcode, image: paintCanProfile?["image"] as! String)
                 
                 self.product = paint
                 
@@ -246,7 +246,7 @@ class PostScanViewController: UIViewController {
     
     func checkProductType() {
         
-        if productTypeLabel.text == "paint can" {
+        if productTypeLabel.text == "Paint" {
             
             let addColourButtonOrigin = CGPoint(x: view.center.x - ((view.frame.width * 0.6)/2), y: view.frame.height * 0.75)
             
@@ -297,7 +297,7 @@ class PostScanViewController: UIViewController {
         
         DataService.instance.usersRef.child(signedInUserUID).observeSingleEvent(of: .value, with: { (snapshot) in
             
-            if snapshot.hasChildren() {
+            if snapshot.hasChild("businessDashboard") {
                 
                 DataService.instance.usersRef.child(signedInUserUID).child("businessDashboard").child(self.barcode).setValue(paintCanProfile)
                 
@@ -319,7 +319,7 @@ class PostScanViewController: UIViewController {
         
     }
     
-    func addToHomeButtonFunction() {
+    func addToAddressButtonFunction() {
         
         let signedInUser = AuthService.instance.getSignedInUser()
         
@@ -329,7 +329,26 @@ class PostScanViewController: UIViewController {
         
         let paintCanProfile: Dictionary<String, AnyObject> = ["manufacturer": paintCan.manufacturer as AnyObject, "productName": paintCan.productName as AnyObject, "category": paintCan.category as AnyObject, "code": paintCan.code as AnyObject, "image": paintCan.image as AnyObject, "product": "Paint" as AnyObject]
         
-        DataService.instance.usersRef.child(signedInUserUID).child("homeDashboard").child(barcode).setValue(paintCanProfile)
+        DataService.instance.usersRef.child(signedInUserUID).observeSingleEvent(of: .value, with: { (snapshot) in
+            
+            if snapshot.hasChild("addressDashboard") {
+                
+                DataService.instance.usersRef.child(signedInUserUID).child("addressDashboard").child(self.barcode).setValue(paintCanProfile)
+                
+                return
+            }
+                
+            else {
+                let alertView = UIAlertController(title: "No address added", message: "Go to you address bucket list and add an address", preferredStyle: .alert)
+                
+                let alertAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+                
+                alertView.addAction(alertAction)
+                
+                self.present(alertView, animated: true, completion: nil)
+            }
+            
+        })
         
     }
 

@@ -19,11 +19,13 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
     
     var user: User!
     
-    var businessItem: Business?
+    var userBusinessBucketList: [Paint] = []
     
-    var addressItem: Address?
+    var userAddressBucketList: [Paint] = []
     
+    var selectedBusiness: Business?
     
+    var selectedAddress: Address?
     
     @IBOutlet weak var tableView: UITableView?
     
@@ -91,23 +93,28 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
             
         } else if screenState == .business {
             
-            if businessItem?.items.count == 0 {
-                businessItem?.addItem(item: paintCan)
-                businessItem?.addItem(item: paintCan2)
+            
+            
+            /*
+            if businessItem.items.count == 0 {
+                businessItem.addItem(item: paintCan)
+                businessItem.addItem(item: paintCan2)
                 businessItem?.addItem(item: paintCan3)
             }
             
             titleLbl?.text = businessItem?.name
+            */
             
         } else if screenState == .homes {
-            
+            /*
             if addressItem?.items.count == 0 {
                 addressItem?.addItem(item: paintCan)
                 addressItem?.addItem(item: paintCan2)
                 addressItem?.addItem(item: paintCan3)
             }
-            
             titleLbl?.text = addressItem?.name
+             */
+            
         }
         
         DispatchQueue.global(qos: .background).async {
@@ -142,6 +149,7 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
                     let paint = Paint(manufacturer: manufacturer, productName: productName, category: category, code: code, upcCode: upcCode, image: image)
                     
                     paintArray.append(paint)
+
                 }
                 
                 self.user.items.append(contentsOf: paintArray)
@@ -162,7 +170,7 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
             
             if self.screenState == .business {
                 
-                let personalItemsRef = DataService.instance.usersRef.child(self.user.uid).child("businessDashboard")
+                let personalItemsRef = DataService.instance.usersRef.child(self.user.uid).child("businessDashboard").child((self.selectedBusiness?.businessName)!)
                 
                 personalItemsRef.observeSingleEvent(of: .value, with: { (snapshot) in
                     
@@ -191,9 +199,9 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
                         paintArray.append(paint)
                     }
                     
-                    self.user.items.append(contentsOf: paintArray)
+                    self.userBusinessBucketList.append(contentsOf: paintArray)
                     
-                    self.user.items = paintArray
+                    self.userBusinessBucketList = paintArray
                     
                     self.tableView?.reloadData()
                     
@@ -209,7 +217,7 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
             
             if self.screenState == .homes {
                 
-                let personalItemsRef = DataService.instance.usersRef.child(self.user.uid).child("homeDashboard")
+                let personalItemsRef = DataService.instance.usersRef.child(self.user.uid).child("homeDashboard").child((self.selectedAddress?.addressName)!)
                 
                 personalItemsRef.observeSingleEvent(of: .value, with: { (snapshot) in
                     
@@ -238,9 +246,9 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
                         paintArray.append(paint)
                     }
                     
-                    self.user.items.append(contentsOf: paintArray)
+                    self.userAddressBucketList.append(contentsOf: paintArray)
                     
-                    self.user.items = paintArray
+                    self.userAddressBucketList = paintArray
                     
                     self.tableView?.reloadData()
                     
@@ -275,11 +283,19 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
             
         } else if screenState == .business {
             
-            return (businessItem?.items.count)!
+            // get number of businesses
+            
+            return userBusinessBucketList.count
+            
+//            return (businessItem.items.count)!
             
         } else if screenState == .homes {
             
-            return (addressItem?.items.count)!
+            // get number of addresses
+            
+            return userAddressBucketList.count
+            
+//            return (addressItem?.items.count)!
         }
             
         else {
@@ -297,11 +313,11 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
             
         } else if screenState == .business {
             
-            cell.titleLbl?.text = self.businessItem?.items[indexPath.row].productName
+            cell.titleLbl?.text = self.userBusinessBucketList[indexPath.row].productName
             
         } else if screenState == .homes {
             
-            cell.titleLbl?.text = self.addressItem?.items[indexPath.row].productName
+            cell.titleLbl?.text = self.userAddressBucketList[indexPath.row].productName
             
         }
         
@@ -324,7 +340,7 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         
         if segue.identifier == "ShowListDetail" {
             
-            var item: Paint?
+            var item: Any?
             
             let row = tableView?.indexPathForSelectedRow?.row
             
@@ -334,16 +350,16 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
                 
             } else if screenState == .business {
                 
-                item = businessItem?.items[row!]
+                item = userBusinessBucketList[row!]
                 
             } else if screenState == .homes {
                 
-                item = addressItem?.items[row!]
+                item = userAddressBucketList[row!]
                 
             }
             
             if let detail = segue.destination as? ItemListDetailVC {
-                detail.detailItem = item
+                detail.detailItem = item as! Paint?
                 detail.screenState = screenState
             }
         }
@@ -356,7 +372,7 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
                 
                 if let detail = segue.destination as? SettingsVC {
                     
-                    detail.businessItem = businessItem
+                    detail.selectedBusinessInfo = selectedBusiness
                     detail.screenState = screenState
                 }
             } else if self.screenState == .homes {
@@ -364,7 +380,7 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
                 
                 if let detail = segue.destination as? SettingsVC {
                     
-                    detail.addressItem = addressItem
+                    detail.selectedAddressInfo = selectedAddress
                     detail.screenState = screenState
                 }
             }

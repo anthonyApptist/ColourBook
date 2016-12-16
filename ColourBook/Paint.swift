@@ -6,7 +6,6 @@
 //  Copyright © 2016 Apptist. All rights reserved.
 //
 
-import Foundation
 import UIKit
 
 struct Paint {

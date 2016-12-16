@@ -51,12 +51,15 @@ class AddEditAddressVC: CustomVC, MKMapViewDelegate, UISearchBarDelegate {
 
         if screenState == .business {
             
-            titleLbl?.text = businessItem?.name
+            titleLbl?.text = businessItem?.businessName
             
         } else if screenState == .homes {
             
-            titleLbl?.text = addressItem?.name
+            // set title
             
+            /*
+            titleLbl?.text = addressItem?.name
+            */
         }
 
 
@@ -181,7 +184,48 @@ class AddEditAddressVC: CustomVC, MKMapViewDelegate, UISearchBarDelegate {
         
         let user = AuthService.instance.getSignedInUser()
         
+        let currentLocation = self.locationManager.location?.coordinate
         
+        let geoCoder = CLGeocoder()
+        
+        let location = CLLocation(latitude: (currentLocation?.latitude)!, longitude: (currentLocation?.longitude)!)
+        
+        geoCoder.reverseGeocodeLocation(location, completionHandler: { (placemarks, error) in
+            
+            var placeMark: CLPlacemark!
+            
+            placeMark = placemarks?[0]
+            
+            // Location name
+            if let locationName = placeMark.addressDictionary!["Name"] as? String {
+                print(locationName)
+                
+                let address = Address(addressName: "Address", addressLocation: locationName, latitude: (currentLocation?.latitude)!, longitude: (currentLocation?.longitude)!, currentContracting: "", image: "")
+            }
+            
+            // Street address
+            if let street = placeMark.addressDictionary!["Thoroughfare"] as? String {
+                print(street)
+            }
+            
+            // City
+            if let city = placeMark.addressDictionary!["City"] as? NSString {
+                print(city)
+            }
+            
+            // Zip code
+            if let zip = placeMark.addressDictionary!["ZIP"] as? NSString {
+                print(zip)
+            }
+            
+            // Country
+            if let country = placeMark.addressDictionary!["Country"] as? NSString {
+                print(country)
+            }
+        
+            
+            
+        })
         
         self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
         

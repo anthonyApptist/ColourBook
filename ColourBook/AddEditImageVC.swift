@@ -51,10 +51,10 @@ class AddEditImageVC: CustomVC, UIImagePickerControllerDelegate, UINavigationCon
             userItem?.image = pickedImage
             
         } else if screenState == .business {
-            businessItem?.image = pickedImage
+//            businessItem?.image = pickedImage
             
         } else if screenState == .homes {
-            addressItem?.image = pickedImage
+//            addressItem?.image = pickedImage
         }
         
         self.dismiss(animated: true, completion: nil)
@@ -89,16 +89,16 @@ class AddEditImageVC: CustomVC, UIImagePickerControllerDelegate, UINavigationCon
             
         } else if screenState == .business {
             
-            textField?.text = businessItem?.name
+            textField?.text = businessItem?.businessName
             photoTitleLbl.text = "Business Logo"
-            self.imgView.image = businessItem?.image
+//            self.imgView.image = businessItem?.image
 
             
         } else if screenState == .homes {
             
-            textField?.text = addressItem?.name
+            textField?.text = addressItem?.addressName
             photoTitleLbl.text = "Address Profile Picture"
-            self.imgView.image = addressItem?.image
+//            self.imgView.image = addressItem?.image
 
         }
         
@@ -127,16 +127,16 @@ class AddEditImageVC: CustomVC, UIImagePickerControllerDelegate, UINavigationCon
                 
                 } else if screenState == .business {
                     
-                    detail.businessItem = businessItem
+                    detail.selectedBusiness = businessItem
                     detail.screenState = screenState
-                    detail.titleLbl?.text = self.businessItem?.name
+                    detail.titleLbl?.text = self.businessItem?.businessName
 
                     
                 } else if screenState == .homes {
                     
-                    detail.addressItem = addressItem
+                    detail.selectedAddress = addressItem
                     detail.screenState = screenState
-                    detail.titleLbl?.text = self.addressItem?.name
+                    detail.titleLbl?.text = self.addressItem?.addressName
 
                     
                 }

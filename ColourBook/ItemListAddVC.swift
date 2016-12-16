@@ -10,11 +10,7 @@ import UIKit
 
 class ItemListAddVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
     
-    let homeAddress = Address(name: "My House", address: "2 Shaver Court", lat: 43.131635, long: -79.265314)
-    
     var addresses: [Address] = []
-    
-    let apptist = Business(name: "Apptist Inc", address: "46 Spadina Ave", lat: 41.714157, long: -71.365397)
     
     var businesses: [Business] = []
     
@@ -53,9 +49,37 @@ class ItemListAddVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        addresses = [homeAddress]
+    
         
-        businesses = [apptist]
+        if self.screenState == .business {
+            
+            // get businesses from user account
+            
+            let signedInUser = AuthService.instance.getSignedInUser()
+            
+            let signedInUserUID = signedInUser.uid
+            
+            DataService.instance.usersRef.child(signedInUserUID).observeSingleEvent(of: .value, with: { (snapshot) in
+                
+                if snapshot.childSnapshot(forPath: "businessDashboard").hasChildren() {
+                    
+                }
+                
+            })
+            
+            self.subTitleLbl?.text = "my businesses"
+            
+        } else if self.screenState == .homes {
+            
+            // get addresses from user account
+            
+            self.subTitleLbl?.text = "my addresses"
+    
+        }
+        
+        addresses = []
+        
+        businesses = []
     }
  
     
@@ -65,11 +89,12 @@ class ItemListAddVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         
         if self.screenState == .business {
             
-            self.businesses = [apptist]
+            self.businesses = []
             self.subTitleLbl?.text = "my businesses"
             
         } else if self.screenState == .homes {
-            self.addresses = [homeAddress]
+            
+            self.addresses = []
             self.subTitleLbl?.text = "my addresses"
             
         }
@@ -98,11 +123,11 @@ class ItemListAddVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         
         if self.screenState == .business {
             
-            cell.titleLbl?.text = self.businesses[indexPath.row].name
+            cell.titleLbl?.text = self.businesses[indexPath.row].businessName
             
         } else if self.screenState == .homes {
             
-            cell.titleLbl?.text = self.addresses[indexPath.row].name
+            cell.titleLbl?.text = self.addresses[indexPath.row].addressName
             
         }
         
@@ -123,36 +148,51 @@ class ItemListAddVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         
         if segue.identifier == "ConnectToListItem" {
 
-        
+            
             if self.screenState == .business {
                 
                 let row = tableView?.indexPathForSelectedRow?.row
-
-                let item = businesses[row!]
+                
+                let selectedBusiness = businesses[row!]
                 
                 
-                    if let detail = segue.destination as? ItemListEditVC {
-
-                    detail.businessItem = item
-                    detail.screenState = screenState
-                    detail.titleLbl?.text = item.name
+                if let detail = segue.destination as? ItemListEditVC {
+                    
+                    // get paint items in selected business
+                    
+                    
+                    // set the current business selected for next page
+                    detail.selectedBusiness = selectedBusiness
+                    
+                    /*
+                     detail.userBusinessBucketList = item as? Paint
+                     detail.screenState = screenState
+                     detail.titleLbl?.text = item
+                     */
                 }
-                } else if self.screenState == .homes {
+            } else if self.screenState == .homes {
                 
                 let row = tableView?.indexPathForSelectedRow?.row
                 
-                let item = addresses[row!]
-            
-                        if let detail = segue.destination as? ItemListEditVC {
-                            
-                            detail.addressItem = item
-                            detail.screenState = screenState
-                            detail.titleLbl?.text = item.name
-
-                        }
-                    }
+                let selectedAddress = addresses[row!]
+                
+                if let detail = segue.destination as? ItemListEditVC {
+                    
+                    // get paint items in selected address
+                    
+                    
+                    // set the current address selected for next page
+                    detail.selectedAddress = selectedAddress    
+                    
+                    /*
+                     detail.addressItem = item as! Address
+                     detail.screenState = screenState
+                     detail.titleLbl?.text = item.addressName
+                     */
+                }
+            }
         }
-            
+        
         
         
 

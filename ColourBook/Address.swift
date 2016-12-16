@@ -6,9 +6,25 @@
 //  Copyright © 2016 Apptist. All rights reserved.
 //
 
-import Foundation
-import MapKit
+import UIKit
 
+struct Address {
+    
+    var addressName: String
+    
+    var addressLocation: String
+    
+    var latitude: Double
+    
+    var longitude: Double
+    
+    var currentContracting: String
+    
+    var image: String
+}
+
+/*
+import MapKit
 class Address {
     
     var name: String
@@ -56,3 +72,4 @@ class Address {
         name = new
     }
 }
+*/

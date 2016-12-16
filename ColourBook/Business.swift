@@ -6,9 +6,24 @@
 //  Copyright © 2016 Apptist. All rights reserved.
 //
 
-import Foundation
-import MapKit
+import UIKit
 
+struct Business {
+    
+    var businessName: String
+    
+    var businessLocation: String
+    
+    var latitude: Double
+    
+    var longitude: Double
+    
+    var image: String
+
+}
+
+/*
+import MapKit
 class Business {
     
     var name: String
@@ -56,3 +71,4 @@ class Business {
     }
     
 }
+ */

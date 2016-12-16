@@ -10,9 +10,9 @@ import UIKit
 
 class SettingsVC: CustomVC, UIScrollViewDelegate {
     
-    var businessItem: Business?
+    var selectedBusinessInfo: Business?
     
-    var addressItem: Address?
+    var selectedAddressInfo: Address?
     
     @IBOutlet weak var scrollView: UIScrollView!
     
@@ -54,14 +54,14 @@ class SettingsVC: CustomVC, UIScrollViewDelegate {
                 
                 if let detail = segue.destination as? AddEditImageVC {
                     
-                    detail.businessItem = businessItem
+                    detail.businessItem = selectedBusinessInfo
                     detail.screenState = screenState
                 }
             } else if self.screenState == .homes {
                 
                 if let detail = segue.destination as? AddEditImageVC {
                     
-                    detail.addressItem = addressItem
+                    detail.addressItem = selectedAddressInfo
                     detail.screenState = screenState
                 }
             }
@@ -74,14 +74,14 @@ class SettingsVC: CustomVC, UIScrollViewDelegate {
                 
                 if let detail = segue.destination as? AddressListDetailVC {
                     
-                    detail.businessItem = businessItem
+                    detail.businessItem = selectedBusinessInfo
                     detail.screenState = screenState
                 }
             } else if self.screenState == .homes {
                 
                 if let detail = segue.destination as? AddressListDetailVC {
                     
-                    detail.addressItem = addressItem
+                    detail.addressItem = selectedAddressInfo
                     detail.screenState = screenState
                 }
             }
