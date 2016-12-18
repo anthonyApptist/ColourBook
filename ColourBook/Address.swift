@@ -18,8 +18,6 @@ struct Address {
     
     var longitude: Double
     
-    var currentContracting: String
-    
     var image: String
 }
 

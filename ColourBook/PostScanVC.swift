@@ -186,7 +186,7 @@ class PostScanViewController: UIViewController {
                 
                 let paintCanProfile = profile?["profile"] as? NSDictionary
                 
-                let paint = Paint(manufacturer: paintCanProfile?["manufacturer"] as! String, productName: paintCanProfile?["productName"] as! String, category: paintCanProfile?["category"] as! String, code: paintCanProfile?["code"] as! String, upcCode: self.barcode, image: paintCanProfile?["image"] as! String)
+                let paint = Paint(manufacturer: paintCanProfile?["manufacturer"] as! String, productName: paintCanProfile?["productName"] as! String, category: paintCanProfile?["category"] as! String, code: paintCanProfile?["code"] as! String, upcCode: self.barcode, image: paintCanProfile?["image"] as! String, colour: paintCanProfile?["colour"] as! String)
                 
                 self.product = paint
                 
@@ -281,7 +281,9 @@ class PostScanViewController: UIViewController {
         
         let paintProfile: Dictionary<String, AnyObject> = ["manufacturer": paint.manufacturer as AnyObject, "productName": paint.productName as AnyObject, "category": paint.category as AnyObject, "code": paint.code as AnyObject, "image": paint.image as AnyObject, "product": "Paint" as AnyObject]
         
-        DataService.instance.usersRef.child(signedInUserUID).child("personalDashboard").child(barcode).setValue(paintProfile)
+        DataService.instance.usersRef.child(signedInUserUID).child("personalDashboard").child("barcodes").child(self.barcode).setValue(paintProfile)
+        
+        
     }
     
     func addToBusinessButtonFunction() {
@@ -299,7 +301,7 @@ class PostScanViewController: UIViewController {
             
             if snapshot.hasChild("businessDashboard") {
                 
-                DataService.instance.usersRef.child(signedInUserUID).child("businessDashboard").child(self.barcode).setValue(paintCanProfile)
+                DataService.instance.usersRef.child(signedInUserUID).child("businessDashboard").child("barcodes").child(self.barcode).child("profile").setValue(paintCanProfile)
                 
                 return
             }
@@ -311,16 +313,35 @@ class PostScanViewController: UIViewController {
                 
                 alertView.addAction(alertAction)
                 
-                self.present(alertView, animated: true, completion: nil)
+                self.present(alertView, animated: true, completion: { (error) in
+                    
+                    self.dismiss(animated: true, completion: nil)
+                    
+                })
+            
             }
             
-            })
+        })
         
         
     }
     
     func addToAddressButtonFunction() {
         
+        let selectView = SelectAddressVC()
+        
+        selectView.state = "homes"
+        
+        selectView.barcode = self.barcode
+        
+        selectView.productProfile = self.product as! Paint
+        
+        self.present(selectView, animated: true, completion: { (error) in
+            
+//            currentVC.dismiss(animated: true, completion: nil)
+        
+        })
+        /*
         let signedInUser = AuthService.instance.getSignedInUser()
         
         let signedInUserUID = signedInUser.uid
@@ -349,6 +370,7 @@ class PostScanViewController: UIViewController {
             }
             
         })
+ */
         
     }
 

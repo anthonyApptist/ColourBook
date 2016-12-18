@@ -15,6 +15,8 @@ class ChooseColourViewController: UIViewController {
     var searchColourTextfield: UITextField!
     
     var searchColourButton: UIButton!
+    
+    var addToPaintButton: UIButton!
 
 
     override func viewDidLoad() {

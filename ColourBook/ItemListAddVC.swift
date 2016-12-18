@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FirebaseDatabase
 
 class ItemListAddVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
     
@@ -49,37 +50,109 @@ class ItemListAddVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-    
-        
-        if self.screenState == .business {
+        DispatchQueue.global(qos: .background).async {
+            print("This is run on the background queue")
             
-            // get businesses from user account
-            
-            let signedInUser = AuthService.instance.getSignedInUser()
-            
-            let signedInUserUID = signedInUser.uid
-            
-            DataService.instance.usersRef.child(signedInUserUID).observeSingleEvent(of: .value, with: { (snapshot) in
+            if self.screenState == .business {
                 
-                if snapshot.childSnapshot(forPath: "businessDashboard").hasChildren() {
+                // get businesses from user account
+                
+                let signedInUser = AuthService.instance.getSignedInUser()
+                
+                let signedInUserUID = signedInUser.uid
+                
+                let businessRef = DataService.instance.usersRef.child(signedInUserUID).child("businessDashboard")
+                
+                businessRef.observeSingleEvent(of: .value, with: { (snapshot) in
                     
-                }
+                    // check if user has a business list
+                    if snapshot.hasChildren() {
+                        for child in snapshot.children.allObjects {
+                            
+                            let businessDatabase = child as? FIRDataSnapshot
+                            
+                            let profile = businessDatabase?.value as? NSDictionary
+                            
+                            let businessProfile = profile?["businessProfile"] as? NSDictionary
+                            
+                            let businessName = businessProfile?["businessName"]
+                            
+                            let businessLocation = businessProfile?["businessLocation"]
+                            
+                            let latitude = businessProfile?["latitude"]
+                            
+                            let longitude = businessProfile?["longitude"]
+                            
+                            let image = businessProfile?["image"]
+                            
+                            let business = Business(businessName: businessName as! String, businessLocation: businessLocation as! String, latitude: latitude as! Double, longitude: longitude as! Double, image: image as! String)
+                            
+                            self.businesses.append(business)
+                            
+                            self.tableView?.reloadData()
+                        }
+                    }
+                    
+                })
                 
-            })
+                self.subTitleLbl?.text = "my businesses"
+                
+                
+            } else if self.screenState == .homes {
+                
+                // get addresses from user account
+                
+                let signedInUser = AuthService.instance.getSignedInUser()
+                
+                let signedInUserUID = signedInUser.uid
+                
+                let addressRef = DataService.instance.usersRef.child(signedInUserUID).child("addressDashboard")
+                
+                addressRef.observeSingleEvent(of: .value, with: { (snapshot) in
+                    
+                    // check if user has a business list
+                    if snapshot.hasChildren() {
+                        for child in snapshot.children.allObjects {
+                            
+                            let addressDatabase = child as? FIRDataSnapshot
+                            
+                            let profile = addressDatabase?.value as? NSDictionary
+                            
+                            let addressProfile = profile?["locationProfile"] as? NSDictionary
+                            
+                            let addressName = addressProfile?["addressName"]
+                            
+                            let addressLocation = addressProfile?["addressLocation"]
+                            
+                            let latitude = addressProfile?["latitude"]
+                            
+                            let longitude = addressProfile?["longitude"]
+                            
+                            let image = addressProfile?["image"]
+                            
+                            let address = Address(addressName: addressName as! String, addressLocation: addressLocation as! String, latitude: latitude as! Double, longitude: longitude as! Double, image: image as! String)
+                            
+                            self.addresses.append(address)
+                            
+                            self.tableView?.reloadData()
+                        }
+                    }
+                    
+                })
+                
+                self.subTitleLbl?.text = "my addresses"
             
-            self.subTitleLbl?.text = "my businesses"
+                
+            }
             
-        } else if self.screenState == .homes {
-            
-            // get addresses from user account
-            
-            self.subTitleLbl?.text = "my addresses"
-    
         }
         
-        addresses = []
+        DispatchQueue.main.async {
+            print("This is run on the main queue, after the previous code in outer block")
+            
+            self.tableView?.reloadData()
+        }
         
-        businesses = []
     }
  
     
@@ -89,12 +162,10 @@ class ItemListAddVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         
         if self.screenState == .business {
             
-            self.businesses = []
             self.subTitleLbl?.text = "my businesses"
             
         } else if self.screenState == .homes {
             
-            self.addresses = []
             self.subTitleLbl?.text = "my addresses"
             
         }
@@ -134,11 +205,31 @@ class ItemListAddVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         
         if self.screenState == .business {
             
-            cell.titleLbl?.text = self.businesses[indexPath.row].businessName
+            if self.businesses[indexPath.row].businessName.isEmpty {
+                
+                cell.titleLbl?.text = self.businesses[indexPath.row].businessLocation
+                
+            }
+                
+            else {
+                
+                cell.titleLbl?.text = self.businesses[indexPath.row].businessName
+                
+            }
             
         } else if self.screenState == .homes {
             
-            cell.titleLbl?.text = self.addresses[indexPath.row].addressName
+            if self.addresses[indexPath.row].addressName.isEmpty {
+                
+                cell.titleLbl?.text = self.addresses[indexPath.row].addressLocation
+                
+            }
+                
+            else {
+                
+                cell.titleLbl?.text = self.addresses[indexPath.row].addressName
+                
+            }
             
         }
         
@@ -146,13 +237,13 @@ class ItemListAddVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    
         
         performSegue(withIdentifier: "ConnectToListItem", sender: self)
-        
-        let row = indexPath.row
+    
         
     }
-    
+
     //DELETE ROWS
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {

@@ -33,6 +33,11 @@ class DataService {
         return mainRef.child("addresses")
     }
     
+    // business reference
+    var businessRef: FIRDatabaseReference {
+        return mainRef.child("businesses")
+    }
+    
     // barcode reference
     var barcodeRef: FIRDatabaseReference {
         return mainRef.child("barcodes")
@@ -56,9 +61,9 @@ class DataService {
         paintDataRef.child(hexCode).setValue(paintProfile)
     }
     
-    func savePaintCanData(manufacturer: String, productName: String, category: String, code: String, upcCode: String, image: String) {
+    func savePaintCanData(manufacturer: String, productName: String, category: String, code: String, upcCode: String, image: String, colour: String) {
         
-        let paintCanProfile: Dictionary<String, AnyObject> = ["manufacturer": manufacturer as AnyObject, "productName": productName as AnyObject, "category": category as AnyObject, "code": code as AnyObject, "image": image as AnyObject, "product": "Paint" as AnyObject]
+        let paintCanProfile: Dictionary<String, AnyObject> = ["manufacturer": manufacturer as AnyObject, "productName": productName as AnyObject, "category": category as AnyObject, "code": code as AnyObject, "image": image as AnyObject, "colour": "" as AnyObject, "product": "Paint" as AnyObject]
         
         barcodeRef.child(upcCode).child("profile").setValue(paintCanProfile)
         
@@ -109,7 +114,9 @@ class DataService {
 
                     let manufacturer = productProfile?["manufacturer"] as? String ?? ""
                     
-                    let paint = Paint(manufacturer: manufacturer, productName: productName, category: category, code: code, upcCode: upcCode, image: image)
+                    let colour = productProfile?["colour"] as? String ?? ""
+                    
+                    let paint = Paint(manufacturer: manufacturer, productName: productName, category: category, code: code, upcCode: upcCode, image: image, colour: colour)
                     
                     paintArray.append(paint)
                 }

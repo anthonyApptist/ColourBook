@@ -28,7 +28,7 @@ class CSVViewController: UIViewController {
         view.backgroundColor = UIColor.brown
     
         
-
+/*
         //MARK: Paint Data
         
         do {
@@ -149,7 +149,7 @@ class CSVViewController: UIViewController {
          
         }
   
-
+*/
  
         //MARK: Paint Cans
         
@@ -239,7 +239,7 @@ class CSVViewController: UIViewController {
             }
          
          
-            let paintCan = Paint(manufacturer: manufacturerCode!, productName: productName!, category: category!, code: code!, upcCode: upcCode!, image: paintCanImage!)
+            let paintCan = Paint(manufacturer: manufacturerCode!, productName: productName!, category: category!, code: code!, upcCode: upcCode!, image: paintCanImage!, colour: "")
          
 //            print(paintCan.productName ?? "")
          
@@ -279,8 +279,10 @@ class CSVViewController: UIViewController {
                 let upcCode = paintCan.upcCode
          
                 let image = paintCan.image
+                
+                let colour = paintCan.colour
          
-                DataService.instance.savePaintCanData(manufacturer: manufactuer, productName: productName, category: category, code: code, upcCode: upcCode, image: image)
+                DataService.instance.savePaintCanData(manufacturer: manufactuer, productName: productName, category: category, code: code, upcCode: upcCode, image: image, colour: colour)
          
             }
          

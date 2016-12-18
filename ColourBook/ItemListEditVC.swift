@@ -11,12 +11,6 @@ import FirebaseDatabase
 
 class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
     
-    let paintCan = Paint(manufacturer: "Home Depot", productName: "Dark Red Paint", category: "category", code: "990949209", upcCode: "9030499", image: "darkred")
-    
-    let paintCan2 = Paint(manufacturer: "Home Depot", productName: "Green Paint", category: "category", code: "990949209", upcCode: "9030499", image: "green")
-    
-    let paintCan3 = Paint(manufacturer: "Home Depot", productName: "Light Blue Paint", category: "category", code: "990949209", upcCode: "9030499", image: "lightblue")
-    
     var user: User!
     
     var userBusinessBucketList: [Paint] = []
@@ -102,8 +96,8 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
                 businessItem?.addItem(item: paintCan3)
             }
             
-            titleLbl?.text = businessItem?.name
             */
+            titleLbl?.text = selectedBusiness?.businessLocation
             
         } else if screenState == .homes {
             /*
@@ -112,8 +106,8 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
                 addressItem?.addItem(item: paintCan2)
                 addressItem?.addItem(item: paintCan3)
             }
-            titleLbl?.text = addressItem?.name
              */
+            titleLbl?.text = selectedAddress?.addressLocation
             
         }
         
@@ -122,41 +116,55 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
             
             if self.screenState == .personal {
             
+            // user personal dashboard database ref
+                
             let personalItemsRef = DataService.instance.usersRef.child(self.user.uid).child("personalDashboard")
             
             personalItemsRef.observeSingleEvent(of: .value, with: { (snapshot) in
                 
-                var paintArray: [Paint] = []
+                // check if user has barcodes added 
                 
-                for child in snapshot.children.allObjects {
+                if snapshot.hasChild("barcodes") {
                     
-                    let product = child as? FIRDataSnapshot
+                    var paintArray: [Paint] = []
                     
-                    let productProfile = product?.value as? NSDictionary
+                    for child in snapshot.children.allObjects {
+                        
+                        // snapshot of personal dashboard
+                        
+                        let product = child as? FIRDataSnapshot
+                        
+                        // product profile
+                        
+                        let productProfile = product?.value as? NSDictionary
+                        
+                        let category = productProfile?["category"] as? String ?? ""
+                        
+                        let productName = productProfile?["productName"] as? String ?? ""
+                        
+                        let code = productProfile?["code"] as? String ?? ""
+                        
+                        let image = productProfile?["image"] as? String ?? ""
+                        
+                        let upcCode = productProfile?["upcCode"] as? String ?? ""
+                        
+                        let manufacturer = productProfile?["manufacturer"] as? String ?? ""
+                        
+                        let colour = productProfile?["colour"] as? String ?? ""
+                        
+                        let paint = Paint(manufacturer: manufacturer, productName: productName, category: category, code: code, upcCode: upcCode, image: image, colour: colour)
+                        
+                        paintArray.append(paint)
+                        
+                    }
                     
-                    let category = productProfile?["category"] as? String ?? ""
+                    self.user.items.append(contentsOf: paintArray)
                     
-                    let productName = productProfile?["productName"] as? String ?? ""
+                    self.user.items = paintArray
                     
-                    let code = productProfile?["code"] as? String ?? ""
+                    self.tableView?.reloadData()
                     
-                    let image = productProfile?["image"] as? String ?? ""
-                    
-                    let upcCode = productProfile?["upcCode"] as? String ?? ""
-                    
-                    let manufacturer = productProfile?["manufacturer"] as? String ?? ""
-                    
-                    let paint = Paint(manufacturer: manufacturer, productName: productName, category: category, code: code, upcCode: upcCode, image: image)
-                    
-                    paintArray.append(paint)
-
                 }
-                
-                self.user.items.append(contentsOf: paintArray)
-                
-                self.user.items = paintArray
-                
-                self.tableView?.reloadData()
                 
             })
             
@@ -170,42 +178,57 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
             
             if self.screenState == .business {
                 
-                let personalItemsRef = DataService.instance.usersRef.child(self.user.uid).child("businessDashboard").child((self.selectedBusiness?.businessName)!)
+                // user business dashboard database ref
                 
-                personalItemsRef.observeSingleEvent(of: .value, with: { (snapshot) in
+                let businessItemsRef = DataService.instance.usersRef.child(self.user.uid).child("businessDashboard").child((self.selectedBusiness?.businessName)!)
+                
+                businessItemsRef.observeSingleEvent(of: .value, with: { (snapshot) in
                     
-                    var paintArray: [Paint] = []
+                    // check if this business has barcodes
                     
-                    for child in snapshot.children.allObjects {
+                    if snapshot.hasChild("barcodes") {
                         
-                        let product = child as? FIRDataSnapshot
+                        var paintArray: [Paint] = []
                         
-                        let productProfile = product?.value as? NSDictionary
+                        for barcodes in snapshot.childSnapshot(forPath: "barcodes").children.allObjects {
+                            
+                            let products = barcodes as? FIRDataSnapshot
+                            
+                            // product profile
+                            
+                            let barcodeData = products?.value as? NSDictionary
+                            
+                            let productProfile = barcodeData?["productProfile"] as? NSDictionary
+                            
+                            let category = productProfile?["category"] as? String ?? ""
+                            
+                            let productName = productProfile?["productName"] as? String ?? ""
+                            
+                            let code = productProfile?["code"] as? String ?? ""
+                            
+                            let image = productProfile?["image"] as? String ?? ""
+                            
+                            let upcCode = productProfile?["upcCode"] as? String ?? ""
+                            
+                            let manufacturer = productProfile?["manufacturer"] as? String ?? ""
+                            
+                            let colour = productProfile?["colour"] as? String ?? ""
+                            
+                            let paint = Paint(manufacturer: manufacturer, productName: productName, category: category, code: code, upcCode: upcCode, image: image, colour: colour)
+                            
+                            paintArray.append(paint)
+                        }
                         
-                        let category = productProfile?["category"] as? String ?? ""
+                        self.userBusinessBucketList.append(contentsOf: paintArray)
                         
-                        let productName = productProfile?["productName"] as? String ?? ""
+//                        self.userBusinessBucketList = paintArray
                         
-                        let code = productProfile?["code"] as? String ?? ""
+                        self.tableView?.reloadData()
                         
-                        let image = productProfile?["image"] as? String ?? ""
-                        
-                        let upcCode = productProfile?["upcCode"] as? String ?? ""
-                        
-                        let manufacturer = productProfile?["manufacturer"] as? String ?? ""
-                        
-                        let paint = Paint(manufacturer: manufacturer, productName: productName, category: category, code: code, upcCode: upcCode, image: image)
-                        
-                        paintArray.append(paint)
                     }
                     
-                    self.userBusinessBucketList.append(contentsOf: paintArray)
-                    
-                    self.userBusinessBucketList = paintArray
-                    
-                    self.tableView?.reloadData()
-                    
                 })
+                
                 
                 DispatchQueue.main.async {
                     print("This is run on the main queue, after the previous code in outer block")
@@ -217,40 +240,54 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
             
             if self.screenState == .homes {
                 
-                let personalItemsRef = DataService.instance.usersRef.child(self.user.uid).child("homeDashboard").child((self.selectedAddress?.addressName)!)
+                // user address dashboard database ref
                 
-                personalItemsRef.observeSingleEvent(of: .value, with: { (snapshot) in
+                let addressItemsRef = DataService.instance.usersRef.child(self.user.uid).child("addressDashboard").child((self.selectedAddress?.addressLocation)!)
+                
+                addressItemsRef.observeSingleEvent(of: .value, with: { (snapshot) in
                     
-                    var paintArray: [Paint] = []
+                    // check if this address has barcodes
                     
-                    for child in snapshot.children.allObjects {
+                    if snapshot.hasChild("barcodes") {
                         
-                        let product = child as? FIRDataSnapshot
+                        var paintArray: [Paint] = []
                         
-                        let productProfile = product?.value as? NSDictionary
+                        for barcodes in snapshot.childSnapshot(forPath: "barcodes").children.allObjects {
+                            
+                            let products = barcodes as? FIRDataSnapshot
+                            
+                            // product profile
+                            
+                            let barcodeData = products?.value as? NSDictionary
+                            
+                            let productProfile = barcodeData?["productProfile"] as? NSDictionary
+                            
+                            let category = productProfile?["category"] as? String ?? ""
+                            
+                            let productName = productProfile?["productName"] as? String ?? ""
+                            
+                            let code = productProfile?["code"] as? String ?? ""
+                            
+                            let image = productProfile?["image"] as? String ?? ""
+                            
+                            let upcCode = productProfile?["upcCode"] as? String ?? ""
+                            
+                            let manufacturer = productProfile?["manufacturer"] as? String ?? ""
+                            
+                            let colour = productProfile?["colour"] as? String ?? ""
+                            
+                            let paint = Paint(manufacturer: manufacturer, productName: productName, category: category, code: code, upcCode: upcCode, image: image, colour: colour)
+                            
+                            paintArray.append(paint)
+                        }
                         
-                        let category = productProfile?["category"] as? String ?? ""
+                        self.userAddressBucketList.append(contentsOf: paintArray)
                         
-                        let productName = productProfile?["productName"] as? String ?? ""
+//                        self.userAddressBucketList = paintArray
                         
-                        let code = productProfile?["code"] as? String ?? ""
+                        self.tableView?.reloadData()
                         
-                        let image = productProfile?["image"] as? String ?? ""
-                        
-                        let upcCode = productProfile?["upcCode"] as? String ?? ""
-                        
-                        let manufacturer = productProfile?["manufacturer"] as? String ?? ""
-                        
-                        let paint = Paint(manufacturer: manufacturer, productName: productName, category: category, code: code, upcCode: upcCode, image: image)
-                        
-                        paintArray.append(paint)
                     }
-                    
-                    self.userAddressBucketList.append(contentsOf: paintArray)
-                    
-                    self.userAddressBucketList = paintArray
-                    
-                    self.tableView?.reloadData()
                     
                 })
                 
@@ -262,10 +299,6 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
                 
             }
         }
-        
-        
-        
-        
         
     }
     
@@ -321,7 +354,6 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
             
         }
         
-        
         return cell
     }
     
@@ -335,6 +367,7 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         
     }
     
+    /*
     //DELETE ROWS
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
@@ -364,6 +397,7 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
             tableView.deleteRows(at: [indexPath], with: .automatic)
         }
     }
+ 
     //DELETE ROWS
 
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
@@ -402,6 +436,8 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
             return .none
         
     }
+    */
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         super.prepare(for: segue, sender: nil)
         
@@ -461,10 +497,6 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
                 
                 detail.userItem = user
                 detail.screenState = screenState
-                
-                
-                
-                
                 
             }
             

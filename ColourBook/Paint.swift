@@ -22,4 +22,5 @@ struct Paint {
     
     var image: String
 
+    var colour: String
 }

@@ -56,12 +56,12 @@ class AddEditAddressVC: CustomVC, MKMapViewDelegate, UISearchBarDelegate {
         } else if screenState == .homes {
             
             // set title
-            
-            /*
-            titleLbl?.text = addressItem?.name
-            */
+        
+            titleLbl?.text = addressItem?.addressName
+ 
         }
 
+        displayCurrentLocation()
 
     }
     
@@ -196,13 +196,55 @@ class AddEditAddressVC: CustomVC, MKMapViewDelegate, UISearchBarDelegate {
             
             placeMark = placemarks?[0]
             
-            // Location name
+                // Location name
             if let locationName = placeMark.addressDictionary!["Name"] as? String {
                 print(locationName)
                 
-                let address = Address(addressName: "Address", addressLocation: locationName, latitude: (currentLocation?.latitude)!, longitude: (currentLocation?.longitude)!, currentContracting: "", image: "")
+                if self.screenState == .business {
+                    
+                    // business info
+                    let business = Business(businessName: "", businessLocation: locationName, latitude: (currentLocation?.latitude)!, longitude: (currentLocation?.longitude)!, image: "")
+                    
+                    // currently contracting
+                    let currentlyContracting: Dictionary<String, AnyObject> = ["address": "" as AnyObject, "image": "" as AnyObject]
+                    
+                    // business profile
+                    let businessProfile: Dictionary<String, AnyObject> = ["businessName": business.businessName as AnyObject, "businessLocation": business.businessLocation as AnyObject, "latitude": business.latitude as AnyObject, "longitude": business.longitude as AnyObject, "currrentlyContracting": currentlyContracting as AnyObject, "image": business.image as AnyObject]
+                    
+                    
+                    // add to user address bucket list
+                    
+                    DataService.instance.usersRef.child(user.uid).child("businessDashboard").child(locationName).child("businessProfile").setValue(businessProfile)
+                    
+                    // add to business database
+                    
+                    DataService.instance.businessRef.child(business.businessLocation).child("businessProfile").setValue(businessProfile)
+                    
+                    
+                }
+                
+                if self.screenState == .homes {
+                    
+                    let address = Address(addressName: "", addressLocation: locationName, latitude: (currentLocation?.latitude)!, longitude: (currentLocation?.longitude)!, image: "")
+                    
+                    let locationProfile: Dictionary<String, AnyObject> = ["addressName": address.addressName as AnyObject, "addressLocation": address.addressLocation as AnyObject, "latitude": address.latitude as AnyObject, "longitude": address.longitude as AnyObject, "image": "" as AnyObject]
+                    
+                    let contractorProfile: Dictionary<String, AnyObject> = ["businessLocation": "" as AnyObject, "businessName": "" as AnyObject, "image": "" as AnyObject]
+                    
+                    // add to user address bucket list
+                    
+                    DataService.instance.usersRef.child(user.uid).child("addressDashboard").child(locationName).child("locationProfile").setValue(locationProfile)
+                    
+                    // add to address database
+                    
+                    let addressLocationProfile: Dictionary<String, AnyObject> = ["addressName": address.addressName as AnyObject, "addressLocation": address.addressLocation as AnyObject, "latitude": address.latitude as AnyObject, "longitude": address.longitude as AnyObject, "currrentlyContracting":contractorProfile as AnyObject, "image": "" as AnyObject]
+                    
+                    DataService.instance.addressRef.child(locationName).child("locationProfile").setValue(addressLocationProfile)
+                }
+                
             }
             
+            /*
             // Street address
             if let street = placeMark.addressDictionary!["Thoroughfare"] as? String {
                 print(street)
@@ -222,14 +264,90 @@ class AddEditAddressVC: CustomVC, MKMapViewDelegate, UISearchBarDelegate {
             if let country = placeMark.addressDictionary!["Country"] as? NSString {
                 print(country)
             }
+            */
         
-            
-            
         })
         
         self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
+    
+    }
+    
+    func displayCurrentLocation() {
         
+        let user = AuthService.instance.getSignedInUser()
         
+        let currentLocation = self.locationManager.location?.coordinate
+        
+        let geoCoder = CLGeocoder()
+        
+        let location = CLLocation(latitude: (currentLocation?.latitude)!, longitude: (currentLocation?.longitude)!)
+        
+        geoCoder.reverseGeocodeLocation(location, completionHandler: { (placemarks, error) in
+            
+            var placeMark: CLPlacemark!
+            
+            placeMark = placemarks?[0]
+            
+            // Location name
+            if let locationName = placeMark.addressDictionary!["Name"] as? String {
+                print(locationName)
+                
+                if self.screenState == .business {
+                    
+                    // business info
+                    let business = Business(businessName: "", businessLocation: locationName, latitude: (currentLocation?.latitude)!, longitude: (currentLocation?.longitude)!, image: "")
+                    
+                    // currently contracting
+                    let currentlyContracting: Dictionary<String, AnyObject> = ["address": "" as AnyObject, "image": "" as AnyObject]
+                    
+                    // business profile
+                    let businessProfile: Dictionary<String, AnyObject> = ["businessName": business.businessName as AnyObject, "businessLocation": business.businessLocation as AnyObject, "latitude": business.latitude as AnyObject, "longitude": business.longitude as AnyObject, "currrentlyContracting": currentlyContracting as AnyObject, "image": business.image as AnyObject]
+                    
+                    
+                    let alertView = UIAlertController(title: "Is this your current address?", message: locationName, preferredStyle: .alert)
+                    
+                    let alertAction = UIAlertAction(title: "Add", style: .destructive, handler: { (action) in
+                        
+                        // add to business database
+                        
+                        DataService.instance.businessRef.child(business.businessLocation).child("businessProfile").setValue(businessProfile)
+                        
+                        // add to user business bucket list
+                        
+                        DataService.instance.usersRef.child(user.uid).child("businessDashboard").child(locationName).child("businessProfile").setValue(businessProfile)
+                        
+                    })
+                    
+                    let alertCancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+                    
+                    alertView.addAction(alertAction)
+                    
+                    alertView.addAction(alertCancel)
+                    
+                    self.present(alertView, animated: true, completion: nil)
+                    
+                }
+                
+                if self.screenState == .homes {
+                    
+                    let address = Address(addressName: "", addressLocation: locationName, latitude: (currentLocation?.latitude)!, longitude: (currentLocation?.longitude)!, image: "")
+                    
+                    let locationProfile: Dictionary<String, AnyObject> = ["addressName": address.addressName as AnyObject, "addressLocation": address.addressLocation as AnyObject, "latitude": address.latitude as AnyObject, "longitude": address.longitude as AnyObject, "image": "" as AnyObject]
+                    
+                    let contractorProfile: Dictionary<String, AnyObject> = ["businessLocation": "" as AnyObject, "businessName": "" as AnyObject, "image": "" as AnyObject]
+                    
+                    // add to user address bucket list
+                    DataService.instance.usersRef.child(user.uid).child("addressDashboard").child(locationName).child("locationProfile").setValue(locationProfile)
+                    
+                    // add to address database
+                    
+                    let addressLocationProfile: Dictionary<String, AnyObject> = ["addressName": address.addressName as AnyObject, "addressLocation": address.addressLocation as AnyObject, "latitude": address.latitude as AnyObject, "longitude": address.longitude as AnyObject, "currrentlyContracting":contractorProfile as AnyObject, "image": "" as AnyObject]
+                    
+                    DataService.instance.addressRef.child(locationName).child("locationProfile").setValue(addressLocationProfile)
+                }
+                
+            }
+        })
         
     }
 
