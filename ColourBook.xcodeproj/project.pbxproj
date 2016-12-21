@@ -93,6 +93,7 @@
 		66F942C21DF8BDBB00C01DAF /* purple.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 66F942BB1DF8BDBB00C01DAF /* purple.jpg */; };
 		66F942C41DF9241E00C01DAF /* ItemListEditVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F942C31DF9241E00C01DAF /* ItemListEditVC.swift */; };
 		66F942C61DF92CA500C01DAF /* CustomVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F942C51DF92CA500C01DAF /* CustomVC.swift */; };
+		924C00991E07AC1000C73C6A /* ColourResultsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924C00981E07AC1000C73C6A /* ColourResultsVC.swift */; };
 		9262ECDA1E00FA8A005FD5AC /* FinalizedPaint.csv in Resources */ = {isa = PBXBuildFile; fileRef = 9262ECD81E00FA8A005FD5AC /* FinalizedPaint.csv */; };
 		9262ECDB1E00FA8A005FD5AC /* productlist.csv in Resources */ = {isa = PBXBuildFile; fileRef = 9262ECD91E00FA8A005FD5AC /* productlist.csv */; };
 		9277E0B11DF64F0A001E0B9B /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9277E0B01DF64F0A001E0B9B /* FBSDKCoreKit.framework */; };
@@ -206,6 +207,7 @@
 		66F942C31DF9241E00C01DAF /* ItemListEditVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemListEditVC.swift; sourceTree = "<group>"; };
 		66F942C51DF92CA500C01DAF /* CustomVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomVC.swift; sourceTree = "<group>"; };
 		9207D1041DF6184E00E90004 /* Facebook-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Facebook-Bridging-Header.h"; sourceTree = "<group>"; };
+		924C00981E07AC1000C73C6A /* ColourResultsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColourResultsVC.swift; sourceTree = "<group>"; };
 		9262ECD81E00FA8A005FD5AC /* FinalizedPaint.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = FinalizedPaint.csv; sourceTree = "<group>"; };
 		9262ECD91E00FA8A005FD5AC /* productlist.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = productlist.csv; sourceTree = "<group>"; };
 		9277E0B01DF64F0A001E0B9B /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
@@ -281,6 +283,7 @@
 				9277E0B41DF75022001E0B9B /* PostScanVC.swift */,
 				929AD0021E03C56E00AB9C63 /* SelectAddressVC.swift */,
 				92CFEE2D1E00DF9A00F78C78 /* ChooseColourVC.swift */,
+				924C00981E07AC1000C73C6A /* ColourResultsVC.swift */,
 				9277E0BD1DFA7D94001E0B9B /* SearchAddressVC.swift */,
 				9277E0BF1DFA8323001E0B9B /* AddressVC.swift */,
 				663646881DE3E93A00E6D719 /* LogInViewController.swift */,
@@ -660,6 +663,7 @@
 				6636465C1DE0C3EA00E6D719 /* TutorialVC.swift in Sources */,
 				6636465A1DE0C3EA00E6D719 /* AppDelegate.swift in Sources */,
 				92B4A61B1DE8FD9300F35DED /* CSVViewController.swift in Sources */,
+				924C00991E07AC1000C73C6A /* ColourResultsVC.swift in Sources */,
 				661A47F81DF6A97700B56028 /* ItemListDetailVC.swift in Sources */,
 				661A48021DF6AB8B00B56028 /* Address.swift in Sources */,
 				66242AE41DF24FE4000B651F /* ErrorHandler.swift in Sources */,
@@ -799,6 +803,7 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = ColourBook/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = colourBook;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -817,6 +822,7 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = ColourBook/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = colourBook;
 				PRODUCT_NAME = "$(TARGET_NAME)";

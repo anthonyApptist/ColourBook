@@ -50,6 +50,14 @@ class SearchAddressViewController: UIViewController {
         
         if (searchTextfield.text?.isEmpty)! {
             
+            let alertView = UIAlertController.init(title: "No address typed in", message: "", preferredStyle: .alert)
+            
+            let alertAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+            
+            alertView.addAction(alertAction)
+            
+            self.present(alertView, animated: true, completion: nil)
+            
         }
         
         else {
@@ -62,11 +70,7 @@ class SearchAddressViewController: UIViewController {
                     let addressView = AddressViewController()
                     
                     addressView.address = address!
-                    
-                    let navigationController = UINavigationController.init(rootViewController: self)
-                    
-                    navigationController.pushViewController(addressView, animated: true)
-                    
+
                 }
             
                 else {

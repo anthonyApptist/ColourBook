@@ -258,6 +258,8 @@ class PostScanViewController: UIViewController {
             
             addColourButton.setTitleColor(UIColor.black, for: .normal)
             
+            addColourButton.addTarget(self, action: #selector(addColourFunction), for: .touchUpInside)
+            
             addColourButton.layer.borderWidth = 3.0
             
             addColourButton.layer.borderColor = UIColor.black.cgColor
@@ -372,6 +374,13 @@ class PostScanViewController: UIViewController {
         })
  */
         
+    }
+    
+    func addColourFunction() {
+        
+        let searchColourView = ChooseColourVC()
+
+        present(searchColourView, animated: true, completion: nil)
     }
 
 }
