@@ -35,7 +35,6 @@ class MyDashboardVC: CustomVC, UIScrollViewDelegate {
     
     @IBOutlet weak var pageCtrl: UIPageControl!
     
-    
     let app = UIApplication.shared.delegate as! AppDelegate
     
     @IBAction func viewBtnPressed(_ sender: AnyObject?) {
@@ -90,6 +89,8 @@ class MyDashboardVC: CustomVC, UIScrollViewDelegate {
         self.backButtonNeeded = false
         self.screenState = .personal
         self.pageCtrl.currentPage = 0
+        
+        app.window?.rootViewController = self
 
     }
   
