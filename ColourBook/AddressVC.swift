@@ -8,83 +8,102 @@
 
 import UIKit
 
-class AddressViewController: UIViewController {
+class AddressVC: UIViewController {
     
-    var address: String = ""
+    var address: Address?
     
-    var productImageView: UIImageView!
+    var addressName: UILabel!
     
-    var manufacturer: UILabel!
+    var addressLocation: UILabel!
     
-    var productName: UILabel!
+    var latitude: UILabel!
     
-    var category: UILabel!
+    var longitude: UILabel!
     
-    var code: UILabel!
-    
-    var productTypeLabel: UILabel!
+    var addressImageView: UIImageView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        view.backgroundColor = UIColor.white
 
         // MARK: View
         
-        // product type label
+        // address name label
         
-        let productTypeLabelOrigin = CGPoint(x: view.center.x - ((view.frame.width * 0.6)/2), y: view.frame.height * 0.03)
+        let addressNameOrigin = CGPoint(x: view.center.x - ((view.frame.width * 0.6)/2), y: view.frame.height * 0.03)
         
-        let productTypeLabelSize = CGSize(width: view.frame.width * 0.6, height: 50)
+        let addressNameSize = CGSize(width: view.frame.width * 0.6, height: 50)
         
-        productTypeLabel = UILabel.init(frame: CGRect(origin: productTypeLabelOrigin, size: productTypeLabelSize))
+        addressName = UILabel(frame: CGRect(origin: addressNameOrigin, size: addressNameSize))
         
-        productTypeLabel.backgroundColor = UIColor.clear
+        addressName.backgroundColor = UIColor.clear
+        
+        addressName.textColor = UIColor.black
+        
+        addressName.text = address?.addressName
+        
+        
+        // address location label
+        
+        let addressLocationOrigin = CGPoint(x: view.center.x - ((view.frame.width * 0.6)/2), y: view.frame.height * 0.50)
+        
+        let addressLocationSize = CGSize(width: view.frame.width * 0.6, height: 50)
+        
+        addressLocation = UILabel(frame: CGRect(origin: addressLocationOrigin, size: addressLocationSize))
+        
+        addressLocation.backgroundColor = UIColor.clear
+        
+        addressLocation.text = address?.addressLocation
+        
+        // latitude label
+        
+        let latitudeOrigin = CGPoint(x: view.center.x - ((view.frame.width * 0.6)/2), y: view.frame.height * 0.55)
+        
+        let latitudeSize = CGSize(width: view.frame.width * 0.6, height: 50)
+        
+        latitude = UILabel(frame: CGRect(origin: latitudeOrigin, size: latitudeSize))
+        
+        latitude.backgroundColor = UIColor.clear
+        
+        latitude.textColor = UIColor.black
+        
+        latitude.text = String(describing: address?.latitude)
+        
+        // longitude label
+        
+        let longitudeOrigin = CGPoint(x: view.center.x - ((view.frame.width * 0.6)/2), y: view.frame.height * 0.60)
+        
+        let longitudeSize = CGSize(width: view.frame.width * 0.6, height: 50)
+        
+        longitude = UILabel(frame: CGRect(origin: longitudeOrigin, size: longitudeSize))
+        
+        longitude.backgroundColor = UIColor.clear
+        
+        longitude.text = String(describing: address?.longitude)
         
         // image view
         
-        let imageViewOrigin = CGPoint(x: view.center.x - ((view.frame.width * 0.4)/2), y: view.frame.height * 0.08)
+        let addressImageOrigin = CGPoint(x: view.center.x - ((view.frame.width * 0.4)/2), y: view.frame.height * 0.08)
         
-        let imageViewSize = CGSize(width: view.frame.width * 0.4, height: view.frame.height * 0.4)
+        let addressImageSize = CGSize(width: view.frame.width * 0.4, height: view.frame.height * 0.4)
         
-        productImageView = UIImageView.init(frame: CGRect(origin: imageViewOrigin, size: imageViewSize))
+        addressImageView = UIImageView(frame: CGRect(origin: addressImageOrigin, size: addressImageSize))
         
         
-        // manufacturer label
         
-        let manufacturerLabelOrigin = CGPoint(x: view.center.x - ((view.frame.width * 0.6)/2), y: view.frame.height * 0.50)
+        // add to view 
         
-        let manufacturerLabelSize = CGSize(width: view.frame.width * 0.6, height: 50)
+        view.addSubview(addressName)
         
-        manufacturer = UILabel.init(frame: CGRect(origin: manufacturerLabelOrigin, size: manufacturerLabelSize))
+        view.addSubview(addressLocation)
         
-        manufacturer.backgroundColor = UIColor.clear
+        view.addSubview(latitude)
         
-        // product name label
+        view.addSubview(longitude)
         
-        let nameLabelOrigin = CGPoint(x: view.center.x - ((view.frame.width * 0.6)/2), y: view.frame.height * 0.55)
+        view.addSubview(addressImageView)
         
-        let nameLabelSize = CGSize(width: view.frame.width * 0.6, height: 50)
-        
-        productName = UILabel.init(frame: CGRect(origin: nameLabelOrigin, size: nameLabelSize))
-        
-        productName.backgroundColor = UIColor.clear
-        
-        // code label
-        
-        let codeLabelOrigin = CGPoint(x: view.center.x - ((view.frame.width * 0.6)/2), y: view.frame.height * 0.60)
-        
-        let codeLabelSize = CGSize(width: view.frame.width * 0.6, height: 50)
-        
-        code = UILabel.init(frame: CGRect(origin: codeLabelOrigin, size: codeLabelSize))
-        
-        code.backgroundColor = UIColor.clear
-        
-        // category label
-        
-        let categoryLabelOrigin = CGPoint(x: view.center.x - ((view.frame.width * 0.6)/2), y: view.frame.height * 0.65)
-        
-        let categoryLabelSize = CGSize(width: view.frame.width * 0.6, height: 50)
-
     }
-
-
+    
 }
