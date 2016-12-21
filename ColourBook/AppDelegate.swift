@@ -48,7 +48,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
             if userDefaults.bool(forKey: "userJoined") == true  {
                 
-                let initialView = storyboard.instantiateViewController(withIdentifier: "LogInVC")
+                let initialView = storyboard.instantiateViewController(withIdentifier: "MyDashboardVC")
                 
                 window?.rootViewController = initialView
                 window?.makeKeyAndVisible()
