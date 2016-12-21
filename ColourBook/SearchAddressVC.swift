@@ -8,30 +8,62 @@
 
 import UIKit
 
-class SearchAddressViewController: UIViewController {
+class SearchAddressVC: UIViewController {
     
     var searchTextfield: UITextField!
     
     var searchButton: UIButton!
+    
+    var addressResultView: UIView!
+    
+    var defaultLabel: UILabel!
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // search text field
 
-        let searchTextFieldOrigin = CGPoint(x: view.center.x - (view.frame.width * 0.6)/2, y: view.frame.height * 0.4)
+        let searchTextFieldOrigin = CGPoint(x: 0, y: 20)
         
-        let searchTextFieldSize = CGSize(width: view.frame.width * 0.6, height: view.frame.height * 0.15)
+        let searchTextFieldSize = CGSize(width: view.frame.width, height: view.frame.height * 0.15)
         
-        searchTextfield = UITextField.init(frame: CGRect(origin: searchTextFieldOrigin, size: searchTextFieldSize))
+        searchTextfield = UITextField(frame: CGRect(origin: searchTextFieldOrigin, size: searchTextFieldSize))
         
         searchTextfield.placeholder = "type address and press search"
         
+        searchTextfield.textAlignment = .center
+        
         view.addSubview(searchTextfield)
         
-        let searchButtonOrigin = CGPoint(x: view.center.x - (view.frame.width * 0.6)/2, y: view.frame.height * 0.75)
+        // results view
+        
+        let resultViewOrigin = CGPoint(x: 0, y: searchTextfield.frame.maxY)
+        
+        let resultViewSize = CGSize(width: view.frame.width, height: view.frame.height - searchTextfield.frame.height)
+        
+        addressResultView = UIView(frame: CGRect(origin: resultViewOrigin, size: resultViewSize))
+        
+        view.addSubview(addressResultView)
+        
+        // default label 
+        
+        let defaultLabelOrigin = CGPoint(x: addressResultView.center.x - ((view.frame.width * 0.6)/2), y: addressResultView.center.y - ((addressResultView.frame.height * 0.15)/2))
+        
+        let defaultLabelSize = CGSize(width: view.frame.width * 0.6, height: addressResultView.frame.height * 0.15)
+        
+        defaultLabel = UILabel(frame: CGRect(origin: defaultLabelOrigin, size: defaultLabelSize))
+        
+        defaultLabel.text = "Search from our database"
+        
+        view.addSubview(defaultLabel)
+        
+        // search button
+        
+        let searchButtonOrigin = CGPoint(x: view.center.x - (view.frame.width * 0.6)/2, y: addressResultView.frame.maxY)
         
         let searchButtonSize = CGSize(width: view.frame.width * 0.6, height: view.frame.height * 0.15)
         
-        searchButton = UIButton.init(frame: CGRect(origin: searchButtonOrigin, size: searchButtonSize))
+        searchButton = UIButton(frame: CGRect(origin: searchButtonOrigin, size: searchButtonSize))
         
         searchButton.setTitle("Search", for: .normal)
         
@@ -67,9 +99,7 @@ class SearchAddressViewController: UIViewController {
                 
                 if (snapshot.hasChild(address!)) {
                     
-                    let addressView = AddressViewController()
                     
-                    addressView.address = address!
 
                 }
             

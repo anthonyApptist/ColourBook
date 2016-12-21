@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -1479,7 +1479,7 @@
         <!--Map Places-->
         <scene sceneID="VXe-W7-uqC">
             <objects>
-                <viewController id="raJ-T6-crP" customClass="SearchViewController" customModule="ColourBook" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="raJ-T6-crP" customClass="SearchAddressVC" customModule="ColourBook" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="m25-cB-RKB"/>
                         <viewControllerLayoutGuide type="bottom" id="ddt-b2-V09"/>
@@ -1551,12 +1551,12 @@
         <image name="settingsIcon" width="115" height="113"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="uql-du-HUQ"/>
-        <segue reference="MRZ-gX-R33"/>
-        <segue reference="2NH-Fi-qo3"/>
-        <segue reference="kb9-hh-a3R"/>
         <segue reference="5FO-LH-Ars"/>
+        <segue reference="kb9-hh-a3R"/>
+        <segue reference="2NH-Fi-qo3"/>
+        <segue reference="wAl-iJ-x6S"/>
         <segue reference="7N6-SU-pcQ"/>
         <segue reference="Zda-su-YiC"/>
+        <segue reference="uql-du-HUQ"/>
     </inferredMetricsTieBreakers>
 </document>
