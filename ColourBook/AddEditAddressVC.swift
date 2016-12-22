@@ -39,7 +39,6 @@ class AddEditAddressVC: CustomVC, MKMapViewDelegate, UISearchBarDelegate {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(false)
 
-        locationAuthStatus()
         
         titleLbl?.text = titleString
 
@@ -142,13 +141,7 @@ class AddEditAddressVC: CustomVC, MKMapViewDelegate, UISearchBarDelegate {
         textField?.resignFirstResponder()
     }
 
-    func locationAuthStatus() {
-        if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
-            map.showsUserLocation = true
-        } else {
-            locationManager.requestWhenInUseAuthorization()
-        }
-    }
+ 
     
     func centerMapOnLocation(_ location: CLLocation) {
         let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate, regionRadius * 2, regionRadius * 2)

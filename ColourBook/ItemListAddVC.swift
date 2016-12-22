@@ -173,7 +173,7 @@ class ItemListAddVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         tableView?.delegate = self
         tableView?.dataSource = self
         
-     //   tableView?.reloadData()
+        tableView?.reloadData()
         
         titleLbl?.text = titleString
 

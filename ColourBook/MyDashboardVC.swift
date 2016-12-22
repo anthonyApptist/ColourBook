@@ -8,6 +8,7 @@
 //
 
 import UIKit
+import MapKit
 
 class MyDashboardVC: CustomVC, UIScrollViewDelegate {
     
@@ -31,6 +32,8 @@ class MyDashboardVC: CustomVC, UIScrollViewDelegate {
     
     
     @IBOutlet weak var scanBtn: UIButton!
+    
+    let locationManager = CLLocationManager()
     
     
     @IBOutlet weak var pageCtrl: UIPageControl!
@@ -93,14 +96,26 @@ class MyDashboardVC: CustomVC, UIScrollViewDelegate {
         app.window?.rootViewController = self
 
     }
+    
+    func locationAuthStatus() {
+        if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
+       //     map.showsUserLocation = true
+        } else {
+            locationManager.requestWhenInUseAuthorization()
+        }
+    }
   
     
     override func viewDidAppear(_ animated: Bool) {
     
         super.viewDidAppear(false)
     
+        locationAuthStatus()
         
-        self.backBtn.isHidden = true 
+        self.backBtn.isHidden = true
+        
+        app.window?.rootViewController = self
+
      
         
         self.scanBtn.addTarget(self, action: #selector(MyDashboardVC.scanBtnPressed), for: .touchUpInside)

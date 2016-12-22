@@ -185,7 +185,7 @@
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="list" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y6K-be-krh">
                                                 <rect key="frame" x="93" y="22" width="188" height="43"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="36"/>
+                                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="24"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
@@ -218,7 +218,7 @@
                                                 <rect key="frame" x="0.0" y="28" width="375" height="80"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="BHQ-3w-4Cn" id="M3a-QN-wXD">
-                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="79"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="product name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TWo-lO-oo0">
@@ -992,7 +992,7 @@
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="list" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F21-Gd-3qI">
                                                 <rect key="frame" x="93" y="22" width="188" height="43"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="36"/>
+                                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="24"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="bottom" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="chG-o1-bfc" userLabel="add new">
@@ -1042,7 +1042,7 @@
                                                 <rect key="frame" x="0.0" y="28" width="375" height="80"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="50k-DH-85g" id="6Yz-BN-jgc">
-                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="79"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="address" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4EA-WB-cJY">
@@ -1479,7 +1479,6 @@
         <!--Search AddressVC-->
         <scene sceneID="VXe-W7-uqC">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="kwK-Zo-EiV" sceneMemberID="firstResponder"/>
                 <viewController id="raJ-T6-crP" customClass="SearchAddressVC" customModule="ColourBook" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="m25-cB-RKB"/>
@@ -1491,6 +1490,7 @@
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="kwK-Zo-EiV" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-482.39999999999998" y="859.52023988005999"/>
         </scene>
@@ -1501,12 +1501,12 @@
         <image name="settingsIcon" width="115" height="113"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="5FO-LH-Ars"/>
-        <segue reference="kb9-hh-a3R"/>
+        <segue reference="MRZ-gX-R33"/>
         <segue reference="2NH-Fi-qo3"/>
-        <segue reference="wAl-iJ-x6S"/>
+        <segue reference="kb9-hh-a3R"/>
+        <segue reference="5FO-LH-Ars"/>
         <segue reference="7N6-SU-pcQ"/>
-        <segue reference="Zda-su-YiC"/>
         <segue reference="uql-du-HUQ"/>
+        <segue reference="Zda-su-YiC"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -57,6 +57,17 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        DispatchQueue.main.async {
+            print("This is run on the main queue, after the previous code in outer block")
+            
+            self.tableView?.reloadData()
+        }
+
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         
         super.viewDidAppear(false)
