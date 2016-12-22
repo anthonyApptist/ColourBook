@@ -40,8 +40,7 @@ class ColourResultsVC: UIViewController {
         colourName.textColor = UIColor.black
         
         colourName.text = colour?.colourName
-        
-        
+         
         // colour hexcode label
         
         let hexcodeOrigin = CGPoint(x: view.center.x - ((view.frame.width * 0.6)/2), y: view.frame.maxY + 10)

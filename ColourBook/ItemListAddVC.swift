@@ -11,6 +11,8 @@ import FirebaseDatabase
 
 class ItemListAddVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
     
+    var user: User!
+    
     var addresses: [Address] = []
     
     var businesses: [Business] = []
@@ -50,6 +52,8 @@ class ItemListAddVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        user = AuthService.instance.getSignedInUser()
+        
         DispatchQueue.global(qos: .background).async {
             print("This is run on the background queue")
             
@@ -57,11 +61,7 @@ class ItemListAddVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
                 
                 // get businesses from user account
                 
-                let signedInUser = AuthService.instance.getSignedInUser()
-                
-                let signedInUserUID = signedInUser.uid
-                
-                let businessRef = DataService.instance.usersRef.child(signedInUserUID).child("businessDashboard")
+                let businessRef = DataService.instance.usersRef.child(self.user.uid).child("businessDashboard")
                 
                 businessRef.observeSingleEvent(of: .value, with: { (snapshot) in
                     
@@ -89,8 +89,11 @@ class ItemListAddVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
                             
                             self.businesses.append(business)
                             
-                            self.tableView?.reloadData()
                         }
+                        
+                        // reload table view
+                        
+                        self.tableView?.reloadData()
                     }
                     
                 })
@@ -102,11 +105,7 @@ class ItemListAddVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
                 
                 // get addresses from user account
                 
-                let signedInUser = AuthService.instance.getSignedInUser()
-                
-                let signedInUserUID = signedInUser.uid
-                
-                let addressRef = DataService.instance.usersRef.child(signedInUserUID).child("addressDashboard")
+                let addressRef = DataService.instance.usersRef.child(self.user.uid).child("addressDashboard")
                 
                 addressRef.observeSingleEvent(of: .value, with: { (snapshot) in
                     
@@ -133,9 +132,12 @@ class ItemListAddVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
                             let address = Address(addressName: addressName as! String, addressLocation: addressLocation as! String, latitude: latitude as! Double, longitude: longitude as! Double, image: image as! String)
                             
                             self.addresses.append(address)
-                            
-                            self.tableView?.reloadData()
                         }
+                        
+                        // reload table view
+                        
+                        self.tableView?.reloadData()
+
                     }
                     
                 })
@@ -149,8 +151,6 @@ class ItemListAddVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         
         DispatchQueue.main.async {
             print("This is run on the main queue, after the previous code in outer block")
-            
-            self.tableView?.reloadData()
         }
         
     }
@@ -252,17 +252,27 @@ class ItemListAddVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
                 
                 if (businesses.count) > 0 {
                     
+                    // expected business to be deleted
+                    
                     let businessToBeRemoved = businesses[indexPath.row]
+                
+                    // pending delete business location
                     
                     let businessToBeRemovedLocation = businessToBeRemoved.businessLocation
                     
-                    businesses.remove(at: (indexPath as NSIndexPath).row)
+                    // get user
                     
                     let signedInUser = AuthService.instance.getSignedInUser()
                     
+                    // user uid
+                    
                     let signedInUserUID = signedInUser.uid
                     
+                    // user business database reference
+                    
                     let userBusinessRef = DataService.instance.usersRef.child(signedInUserUID).child("businessDashboard")
+                    
+                    // remove business location
                     
                     userBusinessRef.child(businessToBeRemovedLocation).removeValue(completionBlock: { (error, ref) in
                         if error != nil {
@@ -270,12 +280,17 @@ class ItemListAddVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
                         }
                     })
                     
+                    // remove from stored list
+                    
+                    self.businesses.remove(at: (indexPath as NSIndexPath).row)
+                    
                 }
                 
             } else if screenState == .homes {
                 
                 if (addresses.count) > 0 {
-                    addresses.remove(at: (indexPath as NSIndexPath).row)
+                    
+                    // address to be removed
                     
                     let addressToBeRemoved = addresses[indexPath.row]
                     
@@ -285,13 +300,20 @@ class ItemListAddVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
                     
                     let signedInUserUID = signedInUser.uid
                     
+                    // user
+                    
                     let userAddressRef = DataService.instance.usersRef.child(signedInUserUID).child("addressDashboard")
+                    
+                    // remove address location
                     
                     userAddressRef.child(addressToBeRemovedLocation).removeValue(completionBlock: { (error, ref) in
                         if error != nil {
                             print(error?.localizedDescription ?? "")
                         }
                     })
+                    
+                    //remove from stored list
+                    self.addresses.remove(at: (indexPath as NSIndexPath).row)
                     
                 }
                 
@@ -352,6 +374,9 @@ class ItemListAddVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
                     // set the current business selected for next page
                     detail.selectedBusiness = selectedBusiness
                     
+                    // send user info through
+//                    detail.user = self.user
+                    
                     /*
                      detail.userBusinessBucketList = item as? Paint
                      detail.screenState = screenState
@@ -370,7 +395,10 @@ class ItemListAddVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
                     
                     
                     // set the current address selected for next page
-                    detail.selectedAddress = selectedAddress    
+                    detail.selectedAddress = selectedAddress
+                    
+                    // send user info through
+//                    detail.user = self.user
                     
                     /*
                      detail.addressItem = item as! Address

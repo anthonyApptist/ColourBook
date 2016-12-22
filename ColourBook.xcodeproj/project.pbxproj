@@ -487,7 +487,7 @@
 				TargetAttributes = {
 					663646551DE0C3EA00E6D719 = {
 						CreatedOnToolsVersion = 8.1;
-						DevelopmentTeam = VDQS4882Z8;
+						DevelopmentTeam = P486JETJ9C;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -801,7 +801,7 @@
 			baseConfigurationReference = D218658870BE7C0C8667A861 /* Pods-ColourBook.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = VDQS4882Z8;
+				DEVELOPMENT_TEAM = P486JETJ9C;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -820,7 +820,7 @@
 			baseConfigurationReference = 582541D0C63B9F68DF683CF9 /* Pods-ColourBook.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = VDQS4882Z8;
+				DEVELOPMENT_TEAM = P486JETJ9C;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",

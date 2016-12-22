@@ -37,8 +37,6 @@ class CustomVC: UIViewController, UITextFieldDelegate {
         
         self.backButtonNeeded = true
         
-        
-  
 
     }
     
@@ -85,14 +83,18 @@ class CustomVC: UIViewController, UITextFieldDelegate {
         
         self.dismiss(animated: false, completion: nil)
         
-        
+        /*
+        // check next screen is table view
+        if let backToItemAdd = self.nextVC as? ItemListAddVC {
+            
+        }
+        */
+
         
     }
  
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-       
-   
-    
+        
         self.nextVC = segue.destination as? CustomVC
         
         self.nextVC?.screenState = self.screenState
