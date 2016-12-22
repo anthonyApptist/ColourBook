@@ -180,6 +180,8 @@ class PostScanViewController: UIViewController {
             
             if (snapshot.hasChild(self.barcode)) {
                 
+                // barcode database
+                
                 let barcodeDatabase = snapshot.value as? NSDictionary
                 
                 let profile = barcodeDatabase?[self.barcode] as? NSDictionary
@@ -190,9 +192,13 @@ class PostScanViewController: UIViewController {
                 
                 self.product = paint
                 
+                // get product type
+                
                 self.productTypeLabel.text = paintCanProfile?["product"] as! String?
                 
                 self.productTypeLabel.textAlignment = .center
+                
+                // product image
                 
                 let imageURL = NSURL.init(string: paint.image)
                 
@@ -204,11 +210,15 @@ class PostScanViewController: UIViewController {
                 
                 self.productImageView.contentMode = .scaleAspectFill
                 
+                // manufacturer text
+                
                 self.manufacturer.text = paint.manufacturer
                 
                 self.manufacturer.textAlignment = .center
                 
                 self.manufacturer.textColor = UIColor.black
+                
+                // product name
                 
                 self.productName.text = paint.productName
                 
@@ -216,13 +226,19 @@ class PostScanViewController: UIViewController {
                 
                 self.productName.textColor = UIColor.black
                 
+                // product code
+                
                 self.code.text = paint.code
                 
                 self.code.textColor = UIColor.black
                 
+                // product category
+                
                 self.category.text = paint.category
                 
                 self.category.textColor = UIColor.black
+                
+                // check product type
                 
                 self.checkProductType()
                 
@@ -279,9 +295,9 @@ class PostScanViewController: UIViewController {
         
         let signedInUserUID = signedInUser.uid
         
-        let paint = self.product as! Paint
+        let paint = self.product as? Paint
         
-        let paintProfile: Dictionary<String, AnyObject> = ["manufacturer": paint.manufacturer as AnyObject, "productName": paint.productName as AnyObject, "category": paint.category as AnyObject, "code": paint.code as AnyObject, "image": paint.image as AnyObject, "product": "Paint" as AnyObject]
+        let paintProfile: Dictionary<String, AnyObject> = ["manufacturer": paint!.manufacturer as AnyObject, "productName": paint!.productName as AnyObject, "category": paint!.category as AnyObject, "code": paint!.code as AnyObject, "image": paint!.image as AnyObject, "colour": paint!.colour as AnyObject, "product": "Paint" as AnyObject]
         
         DataService.instance.usersRef.child(signedInUserUID).child("personalDashboard").child("barcodes").child(self.barcode).setValue(paintProfile)
         
@@ -359,6 +375,8 @@ class PostScanViewController: UIViewController {
     func addColourFunction() {
         
         let searchColourView = ChooseColourVC()
+        
+        searchColourView.paint = self.product as? Paint
 
         present(searchColourView, animated: true, completion: nil)
     }

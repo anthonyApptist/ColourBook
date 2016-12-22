@@ -85,9 +85,9 @@ class ColourResultsVC: UIViewController {
         
         view.addSubview(colourHexCode)
         
-         view.addSubview(productCode)
+        view.addSubview(productCode)
          
-         view.addSubview(manufacturerID)
+        view.addSubview(manufacturerID)
         
         
     }

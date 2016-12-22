@@ -10,7 +10,9 @@ import UIKit
 
 class ChooseColourVC: CustomVC {
     
-    var colour: String?
+    var paint: Paint?
+    
+    var currentColour: String?
     
     var searchColourTextfield: UITextField!
     
@@ -136,7 +138,6 @@ class ChooseColourVC: CustomVC {
                     
                 }
                 
-                
                 for colour in self.coloursArray {
                     
                     if colour.colourName == searchQuery! {
@@ -145,6 +146,8 @@ class ChooseColourVC: CustomVC {
                         
                         colourView.colour = colour
                         
+                        self.currentColour = colour.colourHexCode
+                        
                         self.present(colourView, animated: true, completion: nil)
                     }
                     
@@ -154,11 +157,15 @@ class ChooseColourVC: CustomVC {
                         
                         colourView.colour = colour
                         
+                        self.currentColour = colour.colourHexCode
+                        
                         self.present(colourView, animated: true, completion: nil)
 
                     }
                     
                     if let _ = self.coloursArray.last {
+                        
+                            self.currentColour = ""
                             
                             let alertView = UIAlertController(title: "Result", message: "colour searched is not in database", preferredStyle: .alert)
                             
@@ -191,6 +198,31 @@ class ChooseColourVC: CustomVC {
             alertView.addAction(alertAction)
             
             present(alertView, animated: true, completion: nil)
+        }
+    }
+    
+    func addToPaintFunction() {
+        
+        // check if there was a search results/user selected colour
+        
+        if self.currentColour == "" {
+            let alertView = UIAlertController(title: "No colour searched", message: "type in a new colour", preferredStyle: .alert)
+            
+            let alertAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+            
+            alertView.addAction(alertAction)
+            
+            present(alertView, animated: true, completion: nil)
+        }
+            
+        // if there is colour add hexcode to paint
+        
+        else {
+            
+            self.paint?.colour = self.currentColour!
+            
+            // transfer new paint profile back to post scan VC
+            
         }
     }
     

@@ -225,7 +225,6 @@ class AddEditAddressVC: CustomVC, MKMapViewDelegate, UISearchBarDelegate {
                     let contractorProfile: Dictionary<String, AnyObject> = ["businessLocation": "" as AnyObject, "businessName": "" as AnyObject, "image": "" as AnyObject]
                     
                     // add to user address bucket list
-                    
                     DataService.instance.usersRef.child(user.uid).child("addressDashboard").child(locationName).child("locationProfile").setValue(locationProfile)
                     
                     // add to address database
