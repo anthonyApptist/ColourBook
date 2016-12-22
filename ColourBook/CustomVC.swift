@@ -83,19 +83,17 @@ class CustomVC: UIViewController, UITextFieldDelegate {
         
         self.dismiss(animated: false, completion: nil)
         
-        /*
-        // check next screen is table view
-        if let backToItemAdd = self.nextVC as? ItemListAddVC {
-            
-        }
-        */
-
-        
     }
  
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         self.nextVC = segue.destination as? CustomVC
+        
+        // reload table view if in upcoming view
+        
+        if let itemListAdd = self.nextVC as? ItemListAddVC {
+            itemListAdd.tableView?.reloadData()
+        }
         
         self.nextVC?.screenState = self.screenState
     

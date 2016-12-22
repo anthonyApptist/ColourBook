@@ -36,11 +36,57 @@ class SelectAddressVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        user = AuthService.instance.getSignedInUser()
+        
+        DispatchQueue.global(qos: .background).async {
+            
+            if self.state == "business" {
+                
+                DataService.instance.usersRef.child(self.user.uid).observeSingleEvent(of: .value, with: { (snapshot) in
+                    
+                    if snapshot.hasChild("businessDashboard") {
+                        
+                    }
+                        
+                    else {
+                        let alertView = UIAlertController(title: "No business added", message: "Go to you business bucket list and add an address", preferredStyle: .alert)
+                        
+                        let alertAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+                        
+                        alertView.addAction(alertAction)
+                        
+                        self.present(alertView, animated: true, completion: nil)
+                    }
+                })
+                
+            }
+            
+            if self.state == "homes" {
+                
+                DataService.instance.usersRef.child(self.user.uid).observeSingleEvent(of: .value, with: { (snapshot) in
+                    
+                    if snapshot.hasChild("addressDashboard") {
+                        
+                    }
+                        
+                    else {
+                        let alertView = UIAlertController(title: "No address added", message: "Go to you address bucket list and add an address", preferredStyle: .alert)
+                        
+                        let alertAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+                        
+                        alertView.addAction(alertAction)
+                        
+                        self.present(alertView, animated: true, completion: nil)
+                    }
+                })
+            }
+            
+        }
+        
         //MARK: View
         
         self.view.backgroundColor = UIColor.white
-        
-        user = AuthService.instance.getSignedInUser()
+    
         
         // title label
         

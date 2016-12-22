@@ -22,10 +22,6 @@ class ChooseColourVC: CustomVC {
 
     var searchResultView: UIView!
     
-    var dismissButton: UIButton!
-    
-    var resultView: UIView!
-    
     var coloursArray: [Colour] = []
 
 
@@ -72,6 +68,8 @@ class ChooseColourVC: CustomVC {
         
         searchColourButton.addTarget(self, action: #selector(searchColourButtonFunction), for: .touchUpInside)
         
+        searchColourButton.isUserInteractionEnabled = true
+        
         searchColourButton.setTitleColor(UIColor.black, for: .normal)
         
         searchColourButton.backgroundColor = UIColor.white
@@ -86,18 +84,6 @@ class ChooseColourVC: CustomVC {
         
         addToPaintButton.backgroundColor = UIColor.white
         
-        // dismiss button 
-        
-        dismissButton = UIButton(frame: CGRect(x: view.center.x - ((view.frame.width * 0.6)/2), y: view.frame.maxY - (1 * (view.frame.height * 0.05)), width: view.frame.width * 0.6, height: view.frame.height * 0.05))
-        
-        dismissButton.backgroundColor = UIColor.white
-        
-        dismissButton.setTitle("Back", for: .normal)
-        
-        dismissButton.addTarget(self, action: #selector(dismissButtonFunction), for: .touchUpInside)
-        
-        dismissButton.setTitleColor(UIColor.black, for: .normal)
-        
         // add to view
         
         view.addSubview(searchColourTextfield)
@@ -107,8 +93,6 @@ class ChooseColourVC: CustomVC {
         view.addSubview(addToPaintButton)
         
         view.addSubview(searchResultView)
-        
-        view.addSubview(dismissButton)
         
     }
     
@@ -226,15 +210,9 @@ class ChooseColourVC: CustomVC {
             
             // transfer new paint profile back to post scan VC
             
-            dismiss(animated: true, completion: {
-                
-            })
+            dismiss(animated: true, completion: nil)
             
         }
-    }
-    
-    func dismissButtonFunction() {
-        dismiss(animated: true, completion: nil)
     }
 
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {

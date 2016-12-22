@@ -299,7 +299,8 @@ class PostScanViewController: UIViewController {
             if colourView.isBeingDismissed {
                 colourView.paint = self.product as? Paint
             }
-        }    }
+        }
+    }
     
     func addToPersonalButtonFunction() {
         
