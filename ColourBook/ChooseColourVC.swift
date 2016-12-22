@@ -179,6 +179,8 @@ class ChooseColourVC: CustomVC {
                     
                     else {
                         
+                        self.currentColour = ""
+                        
                         print("error looking for colour")
                         
                     }
@@ -206,6 +208,7 @@ class ChooseColourVC: CustomVC {
         // check if there was a search results/user selected colour
         
         if self.currentColour == "" {
+            
             let alertView = UIAlertController(title: "No colour searched", message: "type in a new colour", preferredStyle: .alert)
             
             let alertAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
@@ -222,6 +225,10 @@ class ChooseColourVC: CustomVC {
             self.paint?.colour = self.currentColour!
             
             // transfer new paint profile back to post scan VC
+            
+            dismiss(animated: true, completion: {
+                
+            })
             
         }
     }

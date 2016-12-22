@@ -33,6 +33,8 @@ class PostScanViewController: UIViewController {
     var addToHomeButton: UIButton!
     
     var product: Any?
+    
+    var colourView: ChooseColourVC?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -289,6 +291,16 @@ class PostScanViewController: UIViewController {
         
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        
+        if let colourView = self.colourView {
+            
+            // check if choose colour view is being dismissed
+            if colourView.isBeingDismissed {
+                colourView.paint = self.product as? Paint
+            }
+        }    }
+    
     func addToPersonalButtonFunction() {
         
         let signedInUser = AuthService.instance.getSignedInUser()
@@ -374,11 +386,12 @@ class PostScanViewController: UIViewController {
     
     func addColourFunction() {
         
-        let searchColourView = ChooseColourVC()
+        self.colourView = ChooseColourVC()
         
-        searchColourView.paint = self.product as? Paint
+        self.colourView?.paint = self.product as? Paint
 
-        present(searchColourView, animated: true, completion: nil)
+        present(self.colourView!, animated: true, completion: nil)
+        
     }
 
 }
