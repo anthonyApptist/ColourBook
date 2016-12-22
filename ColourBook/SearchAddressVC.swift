@@ -9,7 +9,7 @@
 import UIKit
 import FirebaseDatabase
 
-class SearchAddressVC: UIViewController {
+class SearchAddressVC: CustomVC {
     
     var searchTextfield: UITextField!
     
@@ -45,6 +45,10 @@ class SearchAddressVC: UIViewController {
         addressResultView = UIView(frame: CGRect(origin: resultViewOrigin, size: resultViewSize))
         
         view.addSubview(addressResultView)
+        
+        print(addressResultView.frame.height)
+        
+        print(view.frame.height)
         
         // default label 
         
@@ -106,9 +110,9 @@ class SearchAddressVC: UIViewController {
                     
                     let addressVC = AddressVC()
                     
-                    let addressData = snapshot.childSnapshot(forPath: addressQuery!) as? FIRDataSnapshot
+                    let addressData = snapshot.childSnapshot(forPath: addressQuery!)
                     
-                    let profile = addressData?.value as? NSDictionary
+                    let profile = addressData.value as? NSDictionary
                     
                     let addressProfile = profile?["locationProfile"] as? NSDictionary
                     
