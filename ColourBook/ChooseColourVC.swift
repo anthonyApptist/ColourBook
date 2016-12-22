@@ -119,7 +119,9 @@ class ChooseColourVC: CustomVC {
                     
                     let colourName = paintData?["colourName"] as! String
                     
-                    let colour = Colour(manufacturerID: manufacturerID, productCode: productCode, colourName: colourName, colourHexCode: hexcode as! String)
+                    let colourHexCode = colourProfile?.key
+                    
+                    let colour = Colour(manufacturerID: manufacturerID, productCode: productCode, colourName: colourName, colourHexCode: colourHexCode!)
                     
                     self.coloursArray.append(colour)
                     
@@ -135,10 +137,12 @@ class ChooseColourVC: CustomVC {
                         
                         self.currentColour = colour.colourHexCode
                         
-                        self.present(colourView, animated: true, completion: nil)
+                        self.paint?.colour = self.currentColour!
+                        
+                        self.searchResultView.addSubview(colourView.view)
                     }
                     
-                    if colour.colourName == searchQuery! {
+                    if colour.colourHexCode == searchQuery! {
                         
                         let colourView = ColourResultsVC()
                         
@@ -146,11 +150,14 @@ class ChooseColourVC: CustomVC {
                         
                         self.currentColour = colour.colourHexCode
                         
-                        self.present(colourView, animated: true, completion: nil)
+                        self.paint?.colour = self.currentColour!
+                        
+                        self.searchResultView.addSubview(colourView.view)
 
                     }
                     
-                    if let _ = self.coloursArray.last {
+                    /*
+                    if self.coloursArray.last != searchQuery! {
                         
                             self.currentColour = ""
                             
@@ -163,12 +170,11 @@ class ChooseColourVC: CustomVC {
                             self.present(alertView, animated: true, completion: nil)
                         
                     }
+                    */
                     
                     else {
                         
-                        self.currentColour = ""
                         
-                        print("error looking for colour")
                         
                     }
                     

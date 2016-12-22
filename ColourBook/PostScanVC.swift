@@ -297,7 +297,7 @@ class PostScanViewController: UIViewController {
             
             // check if choose colour view is being dismissed
             if colourView.isBeingDismissed {
-                colourView.paint = self.product as? Paint
+                self.product = colourView.paint
             }
         }
     }
@@ -313,6 +313,8 @@ class PostScanViewController: UIViewController {
         let paintProfile: Dictionary<String, AnyObject> = ["manufacturer": paint!.manufacturer as AnyObject, "productName": paint!.productName as AnyObject, "category": paint!.category as AnyObject, "code": paint!.code as AnyObject, "image": paint!.image as AnyObject, "colour": paint!.colour as AnyObject, "product": "Paint" as AnyObject]
         
         DataService.instance.usersRef.child(signedInUserUID).child("personalDashboard").child("barcodes").child(self.barcode).setValue(paintProfile)
+        
+        self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
         
         
     }
