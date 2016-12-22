@@ -125,7 +125,7 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
                 
                 // user business dashboard database ref
                 
-                let businessItemsRef = DataService.instance.usersRef.child(self.user.uid).child("businessDashboard").child((self.selectedBusiness?.businessName)!)
+                let businessItemsRef = DataService.instance.usersRef.child(self.user.uid).child("businessDashboard").child((self.selectedBusiness?.businessLocation)!)
                 
                 businessItemsRef.observeSingleEvent(of: .value, with: { (snapshot) in
                     

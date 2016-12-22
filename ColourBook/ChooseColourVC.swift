@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FirebaseDatabase
 
 class ChooseColourVC: CustomVC {
     
@@ -46,9 +47,9 @@ class ChooseColourVC: CustomVC {
         
         // search results view
         
-        searchResultView = UIView(frame: CGRect(x: 0, y: 20 + view.frame.height * 0.05, width: view.frame.width, height: view.frame.height - (3 * (view.frame.height * 0.05 - 60))))
+        searchResultView = UIView(frame: CGRect(x: 0, y: 20 + view.frame.height * 0.05, width: 0, height: 0))
         
-        searchResultView.backgroundColor = UIColor.clear
+        searchResultView.backgroundColor = UIColor.black
         
         let colourTitle = UILabel(frame: CGRect(x: searchResultView.center.x - ((searchResultView.frame.width * 0.6)/2), y: searchResultView.center.y - ((searchResultView.frame.height * 0.1)/2), width: searchResultView.frame.width * 0.6, height: searchResultView.frame.height * 0.1))
         
@@ -108,7 +109,9 @@ class ChooseColourVC: CustomVC {
                 
                 for hexcode in snapshot.children.allObjects {
                     
-                    let paintData = snapshot.childSnapshot(forPath: searchQuery!).value as? NSDictionary
+                    let colourProfile = hexcode as? FIRDataSnapshot
+                    
+                    let paintData = colourProfile?.value as? NSDictionary
                     
                     let manufacturerID = paintData?["manufacturerID"] as! String
                     
