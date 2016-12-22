@@ -18,6 +18,7 @@ class ColourResultsVC: UIViewController {
         super.viewDidLoad()
 
         
+        
     }
 
 

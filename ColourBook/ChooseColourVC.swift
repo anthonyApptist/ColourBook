@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ChooseColourVC: UIViewController {
+class ChooseColourVC: CustomVC {
     
     var colour: String?
     
@@ -23,6 +23,11 @@ class ChooseColourVC: UIViewController {
     var dismissButton: UIButton!
     
     var resultView: UIView!
+    
+    var hexcodeArray: [String] = []
+    
+    var colourNameArray: [String] = []
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -117,17 +122,29 @@ class ChooseColourVC: UIViewController {
             
             DataService.instance.paintDataRef.observeSingleEvent(of: .value, with: { (snapshot) in
                 
-                if snapshot.hasChild(searchQuery!) {
+                for hexcode in snapshot.children.allObjects {
                     
-                    let colourView = ColourResultsVC()
+                    self.hexcodeArray.append(hexcode as! String)
                     
-                    colourView.exist = true
+                    let paintProfile = snapshot.childSnapshot(forPath: hexcode as! String).value as? NSDictionary
                     
-//                    snapshot.value = 
+                    let colourName = paintProfile?["colourName"] as? String
+                    
+                    self.colourNameArray.append(colourName!)
                     
                 }
                 
-                else {
+                if self.hexcodeArray.contains(searchQuery!) {
+                    
+                    
+                    
+                }
+                
+                if self.colourNameArray.contains(searchQuery!) {
+                    
+                    
+                    
+                    
                     
                 }
                 

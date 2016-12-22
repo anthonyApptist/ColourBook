@@ -290,40 +290,20 @@ class PostScanViewController: UIViewController {
     
     func addToBusinessButtonFunction() {
         
-        let signedInUser = AuthService.instance.getSignedInUser()
+        let selectView = SelectAddressVC()
         
-        let signedInUserUID = signedInUser.uid
+        selectView.state = "business"
         
-        let paint = self.product as! Paint
+        selectView.barcode = self.barcode
         
-        let paintCanProfile: Dictionary<String, AnyObject> = ["manufacturer": paint.manufacturer as AnyObject, "productName": paint.productName as AnyObject, "category": paint.category as AnyObject, "code": paint.code as AnyObject, "image": paint.image as AnyObject, "product": "Paint" as AnyObject]
+        selectView.productProfile = self.product as? Paint
         
-        
-        DataService.instance.usersRef.child(signedInUserUID).observeSingleEvent(of: .value, with: { (snapshot) in
+        self.present(selectView, animated: true, completion: { (error) in
             
-            if snapshot.hasChild("businessDashboard") {
-                
-                DataService.instance.usersRef.child(signedInUserUID).child("businessDashboard").child("barcodes").child(self.barcode).child("profile").setValue(paintCanProfile)
-                
-                return
-            }
-            
-            else {
-                let alertView = UIAlertController(title: "No Business Listings", message: "Go to you business bucket list and add an address", preferredStyle: .alert)
-                
-                let alertAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-                
-                alertView.addAction(alertAction)
-                
-                self.present(alertView, animated: true, completion: { (error) in
-                    
-                    self.dismiss(animated: true, completion: nil)
-                    
-                })
-            
-            }
+            //            currentVC.dismiss(animated: true, completion: nil)
             
         })
+
         
         
     }
@@ -336,7 +316,7 @@ class PostScanViewController: UIViewController {
         
         selectView.barcode = self.barcode
         
-        selectView.productProfile = self.product as! Paint
+        selectView.productProfile = self.product as? Paint
         
         self.present(selectView, animated: true, completion: { (error) in
             

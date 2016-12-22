@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AddressVC: UIViewController {
+class AddressVC: CustomVC {
     
     var address: Address?
     
