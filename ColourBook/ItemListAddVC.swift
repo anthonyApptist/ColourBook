@@ -251,24 +251,58 @@ class ItemListAddVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
            if screenState == .business {
                 
                 if (businesses.count) > 0 {
+                    
+                    let businessToBeRemoved = businesses[indexPath.row]
+                    
+                    let businessToBeRemovedLocation = businessToBeRemoved.businessLocation
+                    
                     businesses.remove(at: (indexPath as NSIndexPath).row)
+                    
+                    let signedInUser = AuthService.instance.getSignedInUser()
+                    
+                    let signedInUserUID = signedInUser.uid
+                    
+                    let userBusinessRef = DataService.instance.usersRef.child(signedInUserUID).child("businessDashboard")
+                    
+                    userBusinessRef.child(businessToBeRemovedLocation).removeValue(completionBlock: { (error, ref) in
+                        if error != nil {
+                            print(error?.localizedDescription ?? "")
+                        }
+                    })
+                    
                 }
                 
             } else if screenState == .homes {
                 
                 if (addresses.count) > 0 {
                     addresses.remove(at: (indexPath as NSIndexPath).row)
+                    
+                    let addressToBeRemoved = addresses[indexPath.row]
+                    
+                    let addressToBeRemovedLocation = addressToBeRemoved.addressLocation
+                    
+                    let signedInUser = AuthService.instance.getSignedInUser()
+                    
+                    let signedInUserUID = signedInUser.uid
+                    
+                    let userAddressRef = DataService.instance.usersRef.child(signedInUserUID).child("addressDashboard")
+                    
+                    userAddressRef.child(addressToBeRemovedLocation).removeValue(completionBlock: { (error, ref) in
+                        if error != nil {
+                            print(error?.localizedDescription ?? "")
+                        }
+                    })
+                    
                 }
                 
                 
             }
             
-            //enter firebase logic here to delete data from list
             tableView.deleteRows(at: [indexPath], with: .automatic)
         }
     }
+    
     //DELETE ROWS
-
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
     if screenState == .business {
             

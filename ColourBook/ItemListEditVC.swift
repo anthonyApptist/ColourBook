@@ -378,7 +378,6 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         
     }
     
-    /*
     //DELETE ROWS
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
@@ -386,25 +385,66 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
             if screenState == .personal {
                 
                 if user.items.count > 0 {
+                    
+                    let paint = self.user.items[indexPath.row]
+                    
+                    let upcCode = paint.upcCode
+                    
                     user.items.remove(at: (indexPath as NSIndexPath).row)
+                    
+                    let userPersonalBarcodeRef = DataService.instance.usersRef.child(self.user.uid).child("personalDashboard").child("barcodes")
+                    
+                   userPersonalBarcodeRef.child(upcCode).removeValue(completionBlock: { (error, ref) in
+                        if error != nil {
+                        print(error?.localizedDescription ?? "")
+                        }
+                   })
+                    
                 }
                 
             } else if screenState == .business {
                 
-                if (businessItem?.items.count)! > 0 {
-                    businessItem?.items.remove(at: (indexPath as NSIndexPath).row)
+                if (userBusinessBucketList.count) > 0 {
+                    
+                    let paint = userBusinessBucketList[indexPath.row]
+                    
+                    let upcCode = paint.upcCode
+                    
+                    userBusinessBucketList.remove(at: (indexPath as NSIndexPath).row)
+                    
+                    let userBusinessBarcodeRef = DataService.instance.usersRef.child(self.user.uid).child("businessDashboard").child((selectedBusiness?.businessLocation)!).child("barcodes")
+                    
+                    userBusinessBarcodeRef.child(upcCode).removeValue(completionBlock: { (error, ref) in
+                        if error != nil {
+                            print(error?.localizedDescription ?? "")
+                        }
+                    })
+
                 }
 
             } else if screenState == .homes {
             
-            if (addressItem?.items.count)! > 0 {
-                addressItem?.items.remove(at: (indexPath as NSIndexPath).row)
+            if (userAddressBucketList.count) > 0 {
+                
+                let paint = userAddressBucketList[indexPath.row]
+                
+                let upcCode = paint.upcCode
+                
+                userAddressBucketList.remove(at: (indexPath as NSIndexPath).row)
+                
+                let userAddressBarcodeRef = DataService.instance.usersRef.child(self.user.uid).child("addressDashboard").child((selectedAddress?.addressLocation)!).child("barcodes")
+                
+                userAddressBarcodeRef.child(upcCode).removeValue(completionBlock: { (error, ref) in
+                    if error != nil {
+                        print(error?.localizedDescription ?? "")
+                    }
+                })
+                
             }
             
          
         }
-                
-            //enter firebase logic here to delete data from list
+            
             tableView.deleteRows(at: [indexPath], with: .automatic)
         }
     }
@@ -424,8 +464,8 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
             
         } else if screenState == .business {
             
-            if (businessItem?.items.count)! > 0 {
-                if(indexPath as NSIndexPath).row >= (businessItem?.items.count)! {
+            if (userBusinessBucketList.count) > 0 {
+                if(indexPath as NSIndexPath).row >= (userBusinessBucketList.count) {
                     return .insert
                 } else {
                     return .delete
@@ -434,8 +474,8 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
             
         } else if screenState == .homes {
             
-            if (addressItem?.items.count)! > 0 {
-                if(indexPath as NSIndexPath).row >= (addressItem?.items.count)! {
+            if (userAddressBucketList.count) > 0 {
+                if(indexPath as NSIndexPath).row >= (userAddressBucketList.count) {
                     return .insert
                 } else {
                     return .delete
@@ -447,7 +487,6 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
             return .none
         
     }
-    */
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         super.prepare(for: segue, sender: nil)

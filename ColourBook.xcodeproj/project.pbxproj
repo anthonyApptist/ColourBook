@@ -100,6 +100,7 @@
 		9277E0B31DF64F63001E0B9B /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9277E0B21DF64F63001E0B9B /* Bolts.framework */; };
 		9277E0BE1DFA7D94001E0B9B /* SearchAddressVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9277E0BD1DFA7D94001E0B9B /* SearchAddressVC.swift */; };
 		9277E0C01DFA8323001E0B9B /* AddressVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9277E0BF1DFA8323001E0B9B /* AddressVC.swift */; };
+		92874DE11E0BB1E400A3D6BC /* UIColourExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92874DE01E0BB1E400A3D6BC /* UIColourExtension.swift */; };
 		929AD0031E03C56E00AB9C63 /* SelectAddressVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929AD0021E03C56E00AB9C63 /* SelectAddressVC.swift */; };
 		92B4A61B1DE8FD9300F35DED /* CSVViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B4A61A1DE8FD9300F35DED /* CSVViewController.swift */; };
 		92B4A61D1DEA5B1C00F35DED /* Colour.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B4A61C1DEA5B1C00F35DED /* Colour.swift */; };
@@ -215,6 +216,7 @@
 		9277E0B41DF75022001E0B9B /* PostScanVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostScanVC.swift; sourceTree = "<group>"; };
 		9277E0BD1DFA7D94001E0B9B /* SearchAddressVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchAddressVC.swift; sourceTree = "<group>"; };
 		9277E0BF1DFA8323001E0B9B /* AddressVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressVC.swift; sourceTree = "<group>"; };
+		92874DE01E0BB1E400A3D6BC /* UIColourExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColourExtension.swift; sourceTree = "<group>"; };
 		929AD0021E03C56E00AB9C63 /* SelectAddressVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectAddressVC.swift; sourceTree = "<group>"; };
 		92B4A61A1DE8FD9300F35DED /* CSVViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CSVViewController.swift; sourceTree = "<group>"; };
 		92B4A61C1DEA5B1C00F35DED /* Colour.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colour.swift; sourceTree = "<group>"; };
@@ -320,6 +322,7 @@
 				66242AE11DF24ED8000B651F /* Validator.swift */,
 				66242AE31DF24FE4000B651F /* ErrorHandler.swift */,
 				66A5AD551DFD040C0090226B /* AnnotationPin.swift */,
+				92874DE01E0BB1E400A3D6BC /* UIColourExtension.swift */,
 			);
 			name = Common;
 			sourceTree = "<group>";
@@ -650,6 +653,7 @@
 				66242AD71DF0F0F4000B651F /* MessageView.swift in Sources */,
 				663646731DE16C6800E6D719 /* UIExtensions.swift in Sources */,
 				92FD3EAF1DE52D26009341C9 /* BarcodeScanner.swift in Sources */,
+				92874DE11E0BB1E400A3D6BC /* UIColourExtension.swift in Sources */,
 				66C771401DE8331700E4810A /* MyDashboardVC.swift in Sources */,
 				929AD0031E03C56E00AB9C63 /* SelectAddressVC.swift in Sources */,
 				92B4A6391DEBB8E500F35DED /* User.swift in Sources */,

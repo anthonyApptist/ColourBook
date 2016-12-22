@@ -24,9 +24,7 @@ class ChooseColourVC: CustomVC {
     
     var resultView: UIView!
     
-    var hexcodeArray: [String] = []
-    
-    var colourNameArray: [String] = []
+    var coloursArray: [Colour] = []
 
 
     override func viewDidLoad() {
@@ -124,29 +122,63 @@ class ChooseColourVC: CustomVC {
                 
                 for hexcode in snapshot.children.allObjects {
                     
-                    self.hexcodeArray.append(hexcode as! String)
+                    let paintData = snapshot.childSnapshot(forPath: searchQuery!).value as? NSDictionary
                     
-                    let paintProfile = snapshot.childSnapshot(forPath: hexcode as! String).value as? NSDictionary
+                    let manufacturerID = paintData?["manufacturerID"] as! String
                     
-                    let colourName = paintProfile?["colourName"] as? String
+                    let productCode = paintData?["productCode"] as! String
                     
-                    self.colourNameArray.append(colourName!)
+                    let colourName = paintData?["colourName"] as! String
                     
-                }
-                
-                if self.hexcodeArray.contains(searchQuery!) {
+                    let colour = Colour(manufacturerID: manufacturerID, productCode: productCode, colourName: colourName, colourHexCode: hexcode as! String)
                     
-                    
+                    self.coloursArray.append(colour)
                     
                 }
                 
-                if self.colourNameArray.contains(searchQuery!) {
+                
+                for colour in self.coloursArray {
                     
+                    if colour.colourName == searchQuery! {
+                        
+                        let colourView = ColourResultsVC()
+                        
+                        colourView.colour = colour
+                        
+                        self.present(colourView, animated: true, completion: nil)
+                    }
                     
+                    if colour.colourName == searchQuery! {
+                        
+                        let colourView = ColourResultsVC()
+                        
+                        colourView.colour = colour
+                        
+                        self.present(colourView, animated: true, completion: nil)
+
+                    }
                     
+                    if let _ = self.coloursArray.last {
+                            
+                            let alertView = UIAlertController(title: "Result", message: "colour searched is not in database", preferredStyle: .alert)
+                            
+                            let alertAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+                            
+                            alertView.addAction(alertAction)
+                            
+                            self.present(alertView, animated: true, completion: nil)
+                        
+                    }
+                    
+                    else {
+                        
+                        print("error looking for colour")
+                        
+                    }
                     
                     
                 }
+                
                 
             })
         }
