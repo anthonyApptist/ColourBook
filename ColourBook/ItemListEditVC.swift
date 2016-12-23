@@ -274,7 +274,8 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         
         DispatchQueue.main.async {
             // main queue
-            
+            self.tableView?.reloadData()
+
         }
         
     }

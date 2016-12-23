@@ -130,7 +130,7 @@ class SearchAddressVC: CustomVC {
                     
                     addressVC.address = address
                     
-                    self.addressResultView.addSubview(addressVC.view)
+                    self.addressResultView.addSubview(addressVC)
 
                 }
             

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AddressVC: CustomVC {
+class AddressVC: UIView {
     
     var address: Address?
     
@@ -22,10 +22,9 @@ class AddressVC: CustomVC {
     
     var longitude: UILabel!
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        view.backgroundColor = UIColor.white
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.backgroundColor = UIColor.white
 
         // MARK: View
         
@@ -33,7 +32,7 @@ class AddressVC: CustomVC {
         
         let addressImageOrigin = CGPoint(x: 0, y: 0)
         
-        let addressImageSize = CGSize(width: view.frame.width, height: super.view.frame.height * 0.35)
+        let addressImageSize = CGSize(width: self.frame.width / 2, height: self.frame.height / 2)
         
         addressImageView = UIImageView(frame: CGRect(origin: addressImageOrigin, size: addressImageSize))
         
@@ -41,9 +40,9 @@ class AddressVC: CustomVC {
         
         addressImageView.contentMode = .scaleAspectFill
         
-        if address?.image == "" {
+        if address?.image == nil {
             
-            let image = UIImage(named: "homeIcon")
+            let image = UIImage(named: "darkred")
             
             addressImageView.image = image
             
@@ -60,12 +59,12 @@ class AddressVC: CustomVC {
             addressImageView.image = image
             
         }
-        
+     
         // address name label
         
-        let addressNameOrigin = CGPoint(x: view.center.x - ((view.frame.width * 0.6)/2), y: addressImageView.frame.maxY + 10)
+        let addressNameOrigin = CGPoint(x: self.center.x - ((self.frame.width * 0.6)/2), y: addressImageView.frame.maxY + 10)
         
-        let addressNameSize = CGSize(width: view.frame.width * 0.6, height: view.frame.height * 0.10)
+        let addressNameSize = CGSize(width: self.frame.width * 0.6, height: self.frame.height * 0.10)
         
         addressName = UILabel(frame: CGRect(origin: addressNameOrigin, size: addressNameSize))
         
@@ -78,9 +77,9 @@ class AddressVC: CustomVC {
         
         // address location label
         
-        let addressLocationOrigin = CGPoint(x: view.center.x - ((view.frame.width * 0.6)/2), y: addressName.frame.maxY + 10)
+        let addressLocationOrigin = CGPoint(x: self.center.x - ((self.frame.width * 0.6)/2), y: addressName.frame.maxY + 10)
         
-        let addressLocationSize = CGSize(width: view.frame.width * 0.6, height: view.frame.height * 0.10)
+        let addressLocationSize = CGSize(width: self.frame.width * 0.6, height: self.frame.height * 0.10)
         
         addressLocation = UILabel(frame: CGRect(origin: addressLocationOrigin, size: addressLocationSize))
         
@@ -118,11 +117,16 @@ class AddressVC: CustomVC {
         
         // add to view
         
-        view.addSubview(addressImageView)
+        self.addSubview(addressImageView)
         
-        view.addSubview(addressName)
+        addressImageView.pinToTop(view: self, margin: 40).isActive = true
+        addressImageView.pinToLeft(view: self, margin: 40).isActive = true
+        addressImageView.pinToRight(view: self, margin: 40).isActive = true
+        addressImageView.pinToBottom(view: self, margin: 40).isActive = true
         
-        view.addSubview(addressLocation)
+        self.addSubview(addressName)
+        
+        self.addSubview(addressLocation)
         
         /*
         view.addSubview(latitude)
@@ -130,7 +134,11 @@ class AddressVC: CustomVC {
         view.addSubview(longitude)
         */
         
-        
     }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     
 }

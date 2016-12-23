@@ -33,6 +33,33 @@ extension UILabel {
     
 }
 
+extension UIView {
+    
+    func pinToTop(view: UIView, margin: CGFloat) -> NSLayoutConstraint {
+        let topViewConstraint = NSLayoutConstraint(item: self, attribute: .top, relatedBy: .equal, toItem: view, attribute: .topMargin, multiplier: 1, constant: margin)
+        
+        return topViewConstraint
+    }
+    
+    func pinToLeft(view: UIView, margin: CGFloat) -> NSLayoutConstraint {
+        let leftViewConstraint = NSLayoutConstraint(item: self, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leadingMargin, multiplier: 1, constant: margin)
+        
+        return leftViewConstraint
+    }
+    
+    func pinToRight(view: UIView, margin: CGFloat) -> NSLayoutConstraint {
+        let rightViewConstraint = NSLayoutConstraint(item: self, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailingMargin, multiplier: 1, constant: margin)
+        
+        return rightViewConstraint
+    }
+    
+    func pinToBottom(view: UIView, margin: CGFloat) -> NSLayoutConstraint {
+        let bottomViewConstraint = NSLayoutConstraint(item: self, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottomMargin, multiplier: 1.0, constant: margin)
+        
+        return bottomViewConstraint
+    }
+}
+
 
 extension UIImage{
     
