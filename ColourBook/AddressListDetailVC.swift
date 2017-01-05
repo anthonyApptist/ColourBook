@@ -70,7 +70,7 @@ class AddressListDetailVC: CustomVC, MKMapViewDelegate {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         super.prepare(for: segue, sender: nil)
-        
+     /*
         if segue.identifier == "ShowEditAddress" {
             
             
@@ -90,12 +90,12 @@ class AddressListDetailVC: CustomVC, MKMapViewDelegate {
                 }
             }
         }
-
+        */
     }
 
     func locationAuthStatus() {
         if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
-            if self.coordinate != nil {
+            if self.location != nil {
                 self.createAnnotationForLocation(location!)
                 self.centerMapOnLocation(location!)
             } else {

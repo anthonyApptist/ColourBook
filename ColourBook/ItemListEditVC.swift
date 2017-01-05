@@ -84,6 +84,7 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
             self.products = self.signedInUser.items as! [ScannedProduct]
             
             self.tableView?.reloadData()
+
         }
         
     }

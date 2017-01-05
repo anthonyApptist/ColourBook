@@ -191,10 +191,13 @@ class SearchAddressVC: CustomVC {
                     
                     addressVC.addressImageView.image = self.searchImage!
                     
+<<<<<<< HEAD
                     addressVC.addressName.text = address.addressName
                     
                     addressVC.addressLocation.text = address.addressLocation
                     
+=======
+>>>>>>> 2e47a8155a354697ac08dd23ba17577593a9083c
                     self.addressResultView.addSubview(addressVC)
 
                 }
