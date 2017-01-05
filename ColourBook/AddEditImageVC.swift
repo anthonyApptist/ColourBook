@@ -7,12 +7,11 @@
 //
 
 import UIKit
-
 class AddEditImageVC: CustomVC, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     @IBOutlet weak var titleLbl: UILabel!
     
-    @IBOutlet weak var photoTitleLbl: UILabel! 
+    @IBOutlet weak var photoTitleLbl: UILabel!
     
     @IBOutlet weak var saveBtn: UIButton!
     
@@ -22,11 +21,60 @@ class AddEditImageVC: CustomVC, UIImagePickerControllerDelegate, UINavigationCon
     
     let imagePicker = UIImagePickerController()
     
-    var userItem: User?
+    var selectedLocation: String?
     
-    var businessItem: Business?
+    var image: String?
     
-    var addressItem: Address?
+    var postalCode: String?
+    
+    var imageString: String?
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        if screenState == .personal {
+
+            DispatchQueue.global(qos: .background).async {
+                
+                self.getProfileFor(user: self.signedInUser.uid)
+                
+            }
+            
+            DispatchQueue.main.async {
+                
+                print("This is run on the main queue, after the previous code in outer block")
+                
+                self.setPersonalInfo()
+                
+            }
+
+        }
+        
+        if screenState == .business || screenState == .homes {
+            
+            DispatchQueue.global(qos: .background).async {
+                
+                self.getInfoFor(location: self.selectedLocation, user: self.signedInUser.uid, screenState: self.screenState)
+                
+            }
+            
+            DispatchQueue.main.async {
+                
+                print("This is run on the main queue, after the previous code in outer block")
+                    
+                self.setLocationInfo()
+                
+            }
+            
+        }
+        
+        self.imagePicker.delegate = self
+        
+        textField?.delegate = self
+        
+        self.saveBtn.addTarget(self, action: #selector(self.saveBtnPressed(_:)), for: .touchUpInside)
+        
+    }
     
     @IBAction func addPicBtnPressed(_sender: UIButton!) {
         
@@ -37,29 +85,24 @@ class AddEditImageVC: CustomVC, UIImagePickerControllerDelegate, UINavigationCon
         present(self.imagePicker, animated: true, completion: nil)
         
     }
-
+    
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         
         let pickedImage = info[UIImagePickerControllerEditedImage] as! UIImage
-  
         
-        self.imgView.contentMode = .scaleAspectFill
+        let pickedImageData: Data = UIImagePNGRepresentation(pickedImage)!
+        
+        let pickedImageDataString = pickedImageData.base64EncodedString()
+        
+        // assign to imageString
+        
+        self.imageString = pickedImageDataString
+        
+        self.imgView.contentMode = .scaleAspectFit
+        
         self.imgView.image = pickedImage
         
-        
-        if screenState == .personal {
-            userItem?.image = pickedImage
-            
-        } else if screenState == .business {
-//            businessItem?.image = pickedImage
-            
-        } else if screenState == .homes {
-//            addressItem?.image = pickedImage
-        }
-        
         self.dismiss(animated: true, completion: nil)
-        
-        
         
     }
     
@@ -67,87 +110,177 @@ class AddEditImageVC: CustomVC, UIImagePickerControllerDelegate, UINavigationCon
         dismiss(animated: true, completion: nil)
     }
     
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        textField?.resignFirstResponder()
-        userItem?.setName(new: (textField?.text)!)
-    }
-
     override func viewDidAppear(_ animated: Bool) {
         
-        super.viewDidAppear(false)
+        print(self.imageString)
         
-        self.imagePicker.delegate = self
-        
-        
-        textField?.delegate = self
-        
-        if screenState == .personal {
-            
-            textField?.text = userItem?.name
-            photoTitleLbl.text = "My Profile Picture"
-            self.imgView.image = userItem?.image
-            
-        } else if screenState == .business {
-            
-            textField?.text = businessItem?.businessName
-            photoTitleLbl.text = "Business Logo"
-//            self.imgView.image = businessItem?.image
-
-            
-        } else if screenState == .homes {
-            
-            textField?.text = addressItem?.addressName
-            photoTitleLbl.text = "Address Profile Picture"
-//            self.imgView.image = addressItem?.image
-
-        }
-        
-        self.saveBtn.addTarget(self, action: #selector(self.saveBtnPressed(_:)), for: .touchUpInside)
-        
-
     }
+    
+    // MARK: Save Button
     
     func saveBtnPressed(_ sender: Any?) {
         
-            performSegue(withIdentifier: "BackToItemEdit", sender: self)
+        DataService.instance.saveInfoFor(user: self.signedInUser.uid, screenState: self.screenState, location: self.selectedLocation, image: self.imageString, name: self.textField?.text)
+        
+        AuthService.instance.saveDisplay(name: (self.textField?.text)!)
+        
+        performSegue(withIdentifier: "BackToItemEdit", sender: self)
         
     }
+    
+    func stringToImage(imageName: String) -> UIImage {
+        
+        let imageDataString = imageName
+        
+        let imageData = Data(base64Encoded: imageDataString)
+        
+        let image = UIImage(data: imageData!)
+        
+        return image!
+        
+    }
+    
+    // MARK: - Get location Info
+    
+    func getInfoFor(location: String?, user: String, screenState: ScreenState) {
+        
+        getLocationRefFor(location: location!, user: user, screenState: screenState)
+        
+        let locationInfoRef = DataService.instance.generalRef
+        
+        locationInfoRef?.observeSingleEvent(of: .value, with: { (snapshot) in
+            
+                let profile = snapshot.value as? NSDictionary
+                
+                let postalCode = profile?["postalCode"] as! String
+                
+                let image = profile?["image"] as! String
+                
+                self.postalCode = postalCode
+                
+                self.image = image
+            
+        })
+        
+    }
+    
+    func getLocationRefFor(location: String?, user: String, screenState: ScreenState) {
+        
+        if screenState == .business {
+            DataService.instance.generalRef = DataService.instance.usersRef.child(user).child(BusinessDashboard).child(location!)
+        }
+        else if screenState == .homes {
+            DataService.instance.generalRef = DataService.instance.usersRef.child(user).child(AddressDashboard).child(location!)
+        }
+        
+    }
+    
+    // MARK: - Get Personal Info
+    
+    func getProfileFor(user: String) {
+        
+        let uidRef = DataService.instance.usersRef.child(user)
+        
+        uidRef.observeSingleEvent(of: .value, with: { (snapshot) in
+            
+            let profile = snapshot.value as? NSDictionary
+            
+            let image = profile?["image"] as! String
+            
+            self.image = image
+            
+        })
+        
+    }
+    
+    // MARK: Save Button Segue
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "BackToItemEdit" {
             
-            
             if let detail = segue.destination as? ItemListEditVC {
                 
-                if screenState == .personal {
+                detail.screenState = self.screenState
                 
-                detail.user = userItem!
-                detail.screenState = screenState
-                detail.titleLbl?.text = self.userItem?.name
-                
-                } else if screenState == .business {
-                    
-                    detail.selectedBusiness = businessItem
-                    detail.screenState = screenState
-                    detail.titleLbl?.text = self.businessItem?.businessName
-
-                    
-                } else if screenState == .homes {
-                    
-                    detail.selectedAddress = addressItem
-                    detail.screenState = screenState
-                    detail.titleLbl?.text = self.addressItem?.addressName
-
-                    
-                }
-                
-                
-                
+                detail.selectedLocation = self.selectedLocation
                 
             }
+        
+        }
+        
     }
+    
+    // set location info
+    
+    func setLocationInfo() {
+        
+        self.photoTitleLbl.text = self.selectedLocation
+        
+        if let image = self.image {
+            
+            let locationImage = stringToImage(imageName: image)
+            
+            self.imgView.image = locationImage
+        }
+        
+        else {
+            
+            let image = UIImage(contentsOfFile: "darkgreen.jpg")
+            
+            self.imgView.image = image
+            
+        }
+        
+        self.titleLbl.text = ""
+        
+    }
+    
+    // set personal info
+    
+    func setPersonalInfo() {
+        
+        if self.signedInUser.name.isEmpty {
+            
+            self.textField?.text = ""
+            
+        }
+            
+        else {
+            
+            self.textField?.text = self.signedInUser.name
+            
+        }
+        
+        self.photoTitleLbl.text = self.signedInUser.email
+        
+        self.signedInUser.image = self.image
+        
+        if self.signedInUser.image == nil || self.signedInUser.image!.isEmpty {
+            
+            let image = UIImage(named: "darkgreen.jpg")
+            
+            self.imgView.image = image
+            
+        }
+        
+        else {
+            
+            let imageEncodedString = self.signedInUser.image
+            
+            let imageData = Data(base64Encoded: imageEncodedString!)
+            
+            let image = UIImage(data: imageData!)
+            
+            self.imgView.image = image
+            
+        }
         
     }
 
-   
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        textField?.resignFirstResponder()
+    }
+    
+    
+    
 }

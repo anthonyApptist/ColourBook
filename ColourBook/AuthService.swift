@@ -37,7 +37,7 @@ class AuthService {
                                 if user?.uid != nil {
                     
                                     // save user uid to database
-                                    DataService.instance.createNewUser(uid: user!.uid, email: email)
+                                    DataService.instance.createNewUser(uid: user!.uid, email: email, image: "")
                                     
                                     FIRAuth.auth()!.signIn(withEmail: email, password: password, completion: { (user, error) in
                                         
@@ -45,7 +45,7 @@ class AuthService {
                                             print(error!.localizedDescription)
                                         }
                                         else {
-                                            let createdUser = User.init(uid: user!.uid, email: user!.email!, name: "")
+                                            let createdUser = User(uid: user!.uid, email: user!.email!, name: user!.displayName!, image: "")
                                             print(createdUser.email)
                                             print("signed in created user")
                                             onComplete?(nil, user)
@@ -66,7 +66,7 @@ class AuthService {
                 }
             }
             else {
-                let signedInUser = User.init(uid: user!.uid, email: user!.email!, name: "")
+                let signedInUser = User(uid: user!.uid, email: user!.email!, name: user!.displayName!, image: "")
                 print(signedInUser.uid, signedInUser.email)
                 print("signed in")
                 onComplete?(nil, user)
@@ -96,17 +96,33 @@ class AuthService {
     func getSignedInUser() -> User {
         if let user = FIRAuth.auth()?.currentUser {
             
-            let signedInUser = User.init(uid: user.uid, email: user.email!, name: "Mark")
-            
-            print(signedInUser.uid, signedInUser.email)
-            
-            return signedInUser
+            if (user.displayName != nil) {
+                
+                let signedInUser = User(uid: user.uid, email: user.email!, name: user.displayName!, image: "")
+                
+                print(signedInUser.uid, signedInUser.email, user.displayName!)
+                
+                return signedInUser
+                
+            }
+                
+            else {
+                
+                let signedInUser = User(uid: user.uid, email: user.email!, name: "", image: "")
+                
+                print(signedInUser.uid, signedInUser.email, "")
+                
+                return signedInUser
+
+            }
         }
+        
         else {
             
-            let noUserSignedIn = User.init(uid: "", email: "", name: "")
+            let noUserSignedIn = User(uid: "", email: "", name: "", image: "")
             
             return noUserSignedIn
+            
         }
     }
     
@@ -125,6 +141,16 @@ class AuthService {
             } else {
                 // Password reset email sent.
             }
+        }
+    }
+    
+    func saveDisplay(name: String) {
+        
+        if let changeRequest = FIRAuth.auth()?.currentUser?.profileChangeRequest() {
+            changeRequest.displayName = name
+            changeRequest.commitChanges(completion: { (error) in
+                print(error?.localizedDescription)
+            })
         }
     }
 }

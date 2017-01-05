@@ -10,47 +10,20 @@ import UIKit
 
 class User {
     
-    private var _uid: String
-    private var _email: String
-    private var _name: String
-    private var _imageName: String?
+    var items: [Any]
     
-    var items: [Paint]
+    var uid: String
+    var email: String
+    var name: String
+    var image: String?
     
-    var uid: String {
-        return _uid
+    init(uid: String, email: String, name: String, image: String) {
+        self.uid = uid
+        self.email = email
+        self.name = name
+        self.image = image
+        self.items = []
     }
-    
-    var email: String {
-        return _email
-    }
-    
-    var name: String {
-        return _name
-    }
-    
-    var imageName: String {
-        return _imageName!
-    }
-    
-    var image: UIImage?
-    
-    init(uid: String, email: String, name: String) {
-        _uid = uid
-        _email = email
-        items = []
-        _name = name
-        _imageName = "darkred"
-        
-        self.image = UIImage(named: _imageName!)
-    }
-    
-    func addItem(item: Paint) {
-        items.append(item)
-    }
-    
-    func setName(new: String) {
-        _name = new
-    }
+
 
 }

@@ -139,7 +139,7 @@ class ChooseColourVC: CustomVC {
                         
                         self.paint?.colour = self.currentColour!
                         
-                        self.searchResultView.addSubview(colourView.view)
+                        self.searchResultView.addSubview(colourView)
                     }
                     
                     if colour.colourHexCode == searchQuery! {
@@ -152,7 +152,7 @@ class ChooseColourVC: CustomVC {
                         
                         self.paint?.colour = self.currentColour!
                         
-                        self.searchResultView.addSubview(colourView.view)
+                        self.searchResultView.addSubview(colourView)
 
                     }
                     

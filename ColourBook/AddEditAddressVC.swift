@@ -32,34 +32,25 @@ class AddEditAddressVC: CustomVC, MKMapViewDelegate, UISearchBarDelegate {
     
     let locationManager = CLLocationManager()
     
-    var businessItem: Business?
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+    }
     
-    var addressItem: Address?
-
+    override func viewWillAppear(_ animated: Bool) {
+        
+        titleLbl?.text = setAddEditAddressTitle(screenState: screenState)
+        
+        self.saveBtn.addTarget(self, action: #selector(self.saveBtnPressed(_:)), for: .touchUpInside)
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(false)
-
-        
-        titleLbl?.text = titleString
 
         textField?.delegate = self
         
         map.delegate = self
-        
-        self.saveBtn.addTarget(self, action: #selector(self.saveBtnPressed(_:)), for: .touchUpInside)
-
-        if screenState == .business {
-            
-            titleLbl?.text = businessItem?.businessName
-            
-        } else if screenState == .homes {
-            
-            // set title
-        
-            titleLbl?.text = addressItem?.addressName
- 
-        }
-
+    
         displayCurrentLocation()
 
     }
@@ -117,16 +108,18 @@ class AddEditAddressVC: CustomVC, MKMapViewDelegate, UISearchBarDelegate {
             if self.screenState == .business {
                 
                 if let detail = segue.destination as? AddEditImageVC {
-                    
+                    /*
                     detail.businessItem = businessItem
                     detail.screenState = screenState
+ */
                 }
             } else if self.screenState == .homes {
                 
                 if let detail = segue.destination as? AddEditImageVC {
-                    
+                    /*
                     detail.addressItem = addressItem
                     detail.screenState = screenState
+ */
                 }
             }
         }
@@ -175,8 +168,6 @@ class AddEditAddressVC: CustomVC, MKMapViewDelegate, UISearchBarDelegate {
     
     func saveBtnPressed(_ sender: Any?) {
         
-        let user = AuthService.instance.getSignedInUser()
-        
         let currentLocation = self.locationManager.location?.coordinate
         
         let geoCoder = CLGeocoder()
@@ -189,74 +180,19 @@ class AddEditAddressVC: CustomVC, MKMapViewDelegate, UISearchBarDelegate {
             
             placeMark = placemarks?[0]
             
-                // Location name
-            if let locationName = placeMark.addressDictionary!["Name"] as? String {
-                print(locationName)
-                
-                if self.screenState == .business {
-                    
-                    // business info
-                    let business = Business(businessName: "", businessLocation: locationName, latitude: (currentLocation?.latitude)!, longitude: (currentLocation?.longitude)!, image: "")
-                    
-                    // currently contracting
-                    let currentlyContracting: Dictionary<String, AnyObject> = ["address": "" as AnyObject, "image": "" as AnyObject]
-                    
-                    // business profile
-                    let businessProfile: Dictionary<String, AnyObject> = ["businessName": business.businessName as AnyObject, "businessLocation": business.businessLocation as AnyObject, "latitude": business.latitude as AnyObject, "longitude": business.longitude as AnyObject, "currrentlyContracting": currentlyContracting as AnyObject, "image": business.image as AnyObject]
-                    
-                    
-                    // add to user address bucket list
-                    
-                    DataService.instance.usersRef.child(user.uid).child("businessDashboard").child(locationName).child("businessProfile").setValue(businessProfile)
-                    
-                    // add to business database
-                    
-                    DataService.instance.businessRef.child(business.businessLocation).child("businessProfile").setValue(businessProfile)
-                    
-                    
-                }
-                
-                if self.screenState == .homes {
-                    
-                    let address = Address(addressName: "", addressLocation: locationName, latitude: (currentLocation?.latitude)!, longitude: (currentLocation?.longitude)!, image: "")
-                    
-                    let locationProfile: Dictionary<String, AnyObject> = ["addressName": address.addressName as AnyObject, "addressLocation": address.addressLocation as AnyObject, "latitude": address.latitude as AnyObject, "longitude": address.longitude as AnyObject, "image": "" as AnyObject]
-                    
-                    let contractorProfile: Dictionary<String, AnyObject> = ["businessLocation": "" as AnyObject, "businessName": "" as AnyObject, "image": "" as AnyObject]
-                    
-                    // add to user address bucket list
-                    DataService.instance.usersRef.child(user.uid).child("addressDashboard").child(locationName).child("locationProfile").setValue(locationProfile)
-                    
-                    // add to address database
-                    
-                    let addressLocationProfile: Dictionary<String, AnyObject> = ["addressName": address.addressName as AnyObject, "addressLocation": address.addressLocation as AnyObject, "latitude": address.latitude as AnyObject, "longitude": address.longitude as AnyObject, "currrentlyContracting":contractorProfile as AnyObject, "image": "" as AnyObject]
-                    
-                    DataService.instance.addressRef.child(locationName).child("locationProfile").setValue(addressLocationProfile)
-                }
-                
-            }
+            let locationName = placeMark.name
             
-            /*
-            // Street address
-            if let street = placeMark.addressDictionary!["Thoroughfare"] as? String {
-                print(street)
-            }
+            let postalCode = placeMark.postalCode
             
-            // City
-            if let city = placeMark.addressDictionary!["City"] as? NSString {
-                print(city)
-            }
+            let image = ""
             
-            // Zip code
-            if let zip = placeMark.addressDictionary!["ZIP"] as? NSString {
-                print(zip)
-            }
+            self.setNewLocation(locationName: locationName!, postalCode: postalCode!, image: image)
             
-            // Country
-            if let country = placeMark.addressDictionary!["Country"] as? NSString {
-                print(country)
-            }
-            */
+            // add to business database
+            DataService.instance.saveLocation(screenState: self.screenState, location: self.location!)
+            
+            // add to user business bucket list
+            DataService.instance.saveLocationTo(user: self.signedInUser, location: self.location!, screenState: self.screenState)
         
         })
         
@@ -266,8 +202,6 @@ class AddEditAddressVC: CustomVC, MKMapViewDelegate, UISearchBarDelegate {
     
     func displayCurrentLocation() {
         
-        let user = AuthService.instance.getSignedInUser()
-        
         let currentLocation = self.locationManager.location?.coordinate
         
         let geoCoder = CLGeocoder()
@@ -280,68 +214,40 @@ class AddEditAddressVC: CustomVC, MKMapViewDelegate, UISearchBarDelegate {
             
             placeMark = placemarks?[0]
             
-            // Location name
-            if let locationName = placeMark.addressDictionary!["Name"] as? String {
-                print(locationName)
-                
-                if self.screenState == .business {
-                    
-                    // business info
-                    let business = Business(businessName: "", businessLocation: locationName, latitude: (currentLocation?.latitude)!, longitude: (currentLocation?.longitude)!, image: "")
-                    
-                    // currently contracting
-                    let currentlyContracting: Dictionary<String, AnyObject> = ["address": "" as AnyObject, "image": "" as AnyObject]
-                    
-                    // business profile
-                    let businessProfile: Dictionary<String, AnyObject> = ["businessName": business.businessName as AnyObject, "businessLocation": business.businessLocation as AnyObject, "latitude": business.latitude as AnyObject, "longitude": business.longitude as AnyObject, "currrentlyContracting": currentlyContracting as AnyObject, "image": business.image as AnyObject]
-                    
-                    
-                    let alertView = UIAlertController(title: "Is this your current address?", message: locationName, preferredStyle: .alert)
-                    
-                    let alertAction = UIAlertAction(title: "Add", style: .destructive, handler: { (action) in
-                        
-                        // add to business database
-                        
-                        DataService.instance.businessRef.child(business.businessLocation).child("businessProfile").setValue(businessProfile)
-                        
-                        // add to user business bucket list
-                        
-                        DataService.instance.usersRef.child(user.uid).child("businessDashboard").child(locationName).child("businessProfile").setValue(businessProfile)
-                        
-                    })
-                    
-                    let alertCancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-                    
-                    alertView.addAction(alertAction)
-                    
-                    alertView.addAction(alertCancel)
-                    
-                    self.present(alertView, animated: true, completion: nil)
-                    
-                }
-                
-                if self.screenState == .homes {
-                    
-                    let address = Address(addressName: "", addressLocation: locationName, latitude: (currentLocation?.latitude)!, longitude: (currentLocation?.longitude)!, image: "")
-                    
-                    let locationProfile: Dictionary<String, AnyObject> = ["addressName": address.addressName as AnyObject, "addressLocation": address.addressLocation as AnyObject, "latitude": address.latitude as AnyObject, "longitude": address.longitude as AnyObject, "image": "" as AnyObject]
-                    
-                    let contractorProfile: Dictionary<String, AnyObject> = ["businessLocation": "" as AnyObject, "businessName": "" as AnyObject, "image": "" as AnyObject]
-                    
-                    // add to user address bucket list
-                    DataService.instance.usersRef.child(user.uid).child("addressDashboard").child(locationName).child("locationProfile").setValue(locationProfile)
-                    
-                    // add to address database
-                    
-                    let addressLocationProfile: Dictionary<String, AnyObject> = ["addressName": address.addressName as AnyObject, "addressLocation": address.addressLocation as AnyObject, "latitude": address.latitude as AnyObject, "longitude": address.longitude as AnyObject, "currrentlyContracting":contractorProfile as AnyObject, "image": "" as AnyObject]
-                    
-                    DataService.instance.addressRef.child(locationName).child("locationProfile").setValue(addressLocationProfile)
-                }
-                
-            }
+            let locationName = placeMark.name
+            
+            let postalCode = placeMark.postalCode
+            
+            let image = ""
+            
+            self.setNewLocation(locationName: locationName!, postalCode: postalCode!, image: image)
+            
+            self.displayLocationAddAlertController(location: self.location!)
+            
+        })
+    }
+    
+    func displayLocationAddAlertController(location: Location) {
+        let alertView = UIAlertController(title: "Is this your current location", message: "", preferredStyle: .alert)
+        
+        let alertAction = UIAlertAction(title: "Add", style: .destructive, handler: { (action) in
+            
+            // add to business database
+            DataService.instance.saveLocation(screenState: self.screenState, location: location)
+            
+            // add to user business bucket list
+            DataService.instance.saveLocationTo(user: self.signedInUser, location: location, screenState: self.screenState)
+            
+            self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
         })
         
+        let alertCancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        alertView.addAction(alertAction)
+        
+        alertView.addAction(alertCancel)
+        
+        self.present(alertView, animated: true, completion: nil)
+        
     }
-
- 
 }

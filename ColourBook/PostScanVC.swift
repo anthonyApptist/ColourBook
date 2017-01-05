@@ -8,9 +8,9 @@
 
 import UIKit
 
-class PostScanViewController: UIViewController {
+class PostScanViewController: CustomVC {
     
-    var barcode: String = ""
+    var barcode: String = "0023906001698"
     
     var productImageView: UIImageView!
     
@@ -38,6 +38,8 @@ class PostScanViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.backButtonNeeded = false
         
         view.backgroundColor = UIColor.white
         
@@ -174,6 +176,66 @@ class PostScanViewController: UIViewController {
         
         view.addSubview(addToHomeButton)
         
+        lookup(barcode: self.barcode)
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        
+        if let colourView = self.colourView {
+            
+            // check if choose colour view is being dismissed
+            if colourView.isBeingDismissed {
+                self.product = colourView.paint
+            }
+        }
+    }
+    
+    func addToPersonalButtonFunction() {
+        
+        
+        
+        self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
+        
+        
+    }
+    
+    func addToBusinessButtonFunction() {
+        
+        let selectView = SelectAddressVC()
+        
+        selectView.screenState = .business
+        
+        selectView.barcode = self.barcode
+        
+        selectView.productProfile = self.product as? Paint
+        
+        self.present(selectView, animated: true, completion: { (error) in
+            
+        })
+
+        
+        
+    }
+    
+    func addToAddressButtonFunction() {
+        
+        let selectView = SelectAddressVC()
+        
+        selectView.screenState = .homes
+        
+        selectView.barcode = self.barcode
+        
+        selectView.productProfile = self.product as? Paint
+        
+        self.present(selectView, animated: true, completion: { (error) in
+            
+        })
+        
+    }
+    
+    func lookup(barcode: String) {
+        
         // get barcode information
         
         DataService.instance.barcodeRef.observeSingleEvent(of: .value, with: { (snapshot) in
@@ -202,11 +264,7 @@ class PostScanViewController: UIViewController {
                 
                 // product image
                 
-                let imageURL = NSURL.init(string: paint.image)
-                
-                let imageData = NSData.init(contentsOf: imageURL as! URL)
-                
-                let image = UIImage.init(data: imageData as! Data)
+                let image = self.showProductImage(url: paint.image)
                 
                 self.productImageView.image = image
                 
@@ -242,10 +300,10 @@ class PostScanViewController: UIViewController {
                 
                 // check product type
                 
-                self.checkProductType()
+                self.check(product: self.productTypeLabel.text!)
                 
             }
-            
+                
             else {
                 
                 let alertView = UIAlertController.init(title: "Barcode not in database", message: "", preferredStyle: .alert)
@@ -262,9 +320,13 @@ class PostScanViewController: UIViewController {
         
     }
     
-    func checkProductType() {
+    // check if paint can
+    
+    func check(product: String) {
         
-        if productTypeLabel.text == "Paint" {
+        if product == "Paint" {
+            
+            // add colour button
             
             let addColourButtonOrigin = CGPoint(x: view.center.x - ((view.frame.width * 0.6)/2), y: view.frame.height * 0.75)
             
@@ -284,108 +346,15 @@ class PostScanViewController: UIViewController {
             
             view.addSubview(addColourButton)
         }
-        
+            
         else {
             
         }
         
     }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        
-        if let colourView = self.colourView {
-            
-            // check if choose colour view is being dismissed
-            if colourView.isBeingDismissed {
-                self.product = colourView.paint
-            }
-        }
-    }
-    
-    func addToPersonalButtonFunction() {
-        
-        let signedInUser = AuthService.instance.getSignedInUser()
-        
-        let signedInUserUID = signedInUser.uid
-        
-        let paint = self.product as? Paint
-        
-        let paintProfile: Dictionary<String, AnyObject> = ["manufacturer": paint!.manufacturer as AnyObject, "productName": paint!.productName as AnyObject, "category": paint!.category as AnyObject, "code": paint!.code as AnyObject, "image": paint!.image as AnyObject, "colour": paint!.colour as AnyObject, "product": "Paint" as AnyObject]
-        
-        DataService.instance.usersRef.child(signedInUserUID).child("personalDashboard").child("barcodes").child(self.barcode).setValue(paintProfile)
-        
-        self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
-        
-        
-    }
-    
-    func addToBusinessButtonFunction() {
-        
-        let selectView = SelectAddressVC()
-        
-        selectView.state = "business"
-        
-        selectView.barcode = self.barcode
-        
-        selectView.productProfile = self.product as? Paint
-        
-        self.present(selectView, animated: true, completion: { (error) in
-            
-            //            currentVC.dismiss(animated: true, completion: nil)
-            
-        })
 
-        
-        
-    }
     
-    func addToAddressButtonFunction() {
-        
-        let selectView = SelectAddressVC()
-        
-        selectView.state = "homes"
-        
-        selectView.barcode = self.barcode
-        
-        selectView.productProfile = self.product as? Paint
-        
-        self.present(selectView, animated: true, completion: { (error) in
-            
-//            currentVC.dismiss(animated: true, completion: nil)
-        
-        })
-        /*
-        let signedInUser = AuthService.instance.getSignedInUser()
-        
-        let signedInUserUID = signedInUser.uid
-        
-        let paintCan = self.product as! Paint
-        
-        let paintCanProfile: Dictionary<String, AnyObject> = ["manufacturer": paintCan.manufacturer as AnyObject, "productName": paintCan.productName as AnyObject, "category": paintCan.category as AnyObject, "code": paintCan.code as AnyObject, "image": paintCan.image as AnyObject, "product": "Paint" as AnyObject]
-        
-        DataService.instance.usersRef.child(signedInUserUID).observeSingleEvent(of: .value, with: { (snapshot) in
-            
-            if snapshot.hasChild("addressDashboard") {
-                
-                DataService.instance.usersRef.child(signedInUserUID).child("addressDashboard").child(self.barcode).setValue(paintCanProfile)
-                
-                return
-            }
-                
-            else {
-                let alertView = UIAlertController(title: "No address added", message: "Go to you address bucket list and add an address", preferredStyle: .alert)
-                
-                let alertAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-                
-                alertView.addAction(alertAction)
-                
-                self.present(alertView, animated: true, completion: nil)
-            }
-            
-        })
- */
-        
-    }
+    // add to colour function
     
     func addColourFunction() {
         
@@ -393,7 +362,34 @@ class PostScanViewController: UIViewController {
         
         self.colourView?.paint = self.product as? Paint
 
-        present(self.colourView!, animated: true, completion: nil)
+        self.present(self.colourView!, animated: true, completion: nil)
+        
+    }
+    
+    // show product image
+    
+    func showProductImage(url: String?) -> UIImage {
+        
+        if let urlString = url {
+
+            let imageURL = NSURL(string: urlString)
+            
+            let imageData = NSData(contentsOf: imageURL as! URL)
+            
+            let image = UIImage(data: imageData as! Data)
+            
+            return image!
+
+        }
+        
+        else {
+            
+            let image = UIImage(contentsOfFile: "darkgreen.jpg")
+            
+            return image!
+            
+        }
+        
         
     }
 

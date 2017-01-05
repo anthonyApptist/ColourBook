@@ -17,6 +17,9 @@ enum ScreenState {
 
 class CustomVC: UIViewController, UITextFieldDelegate {
     
+    var signedInUser: User!
+    
+    var location: Location?
     
     var titleString: String?
     
@@ -32,6 +35,10 @@ class CustomVC: UIViewController, UITextFieldDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // get signed in user
+        
+        self.signedInUser = AuthService.instance.getSignedInUser()
 
         //DEFAULT VALUES
         
@@ -43,7 +50,6 @@ class CustomVC: UIViewController, UITextFieldDelegate {
     override func viewWillAppear(_ animated: Bool) {
         
         
-        print(titleString)
         print(screenState.hashValue)
         
         
@@ -55,6 +61,7 @@ class CustomVC: UIViewController, UITextFieldDelegate {
             self.titleString = "my homes"
         }
         
+        print(titleString ?? "")
         
         if(self.backButtonNeeded == true) {
             
@@ -80,7 +87,6 @@ class CustomVC: UIViewController, UITextFieldDelegate {
    
     func backBtnPressed(_ sender: AnyObject) {
         
-        
         self.dismiss(animated: false, completion: nil)
         
     }
@@ -97,6 +103,37 @@ class CustomVC: UIViewController, UITextFieldDelegate {
         
         self.nextVC?.screenState = self.screenState
     
- 
     }
+    
+    func setAddEditAddressTitle(screenState: ScreenState) -> String {
+        
+        if screenState == .business {
+            return "edit business"
+        }
+        else if screenState == .homes {
+            return "edit address"
+        }
+        else {
+            return ""
+        }
+    }
+    
+    func setNewLocation(locationName: String, postalCode: String, image: String) {
+        
+        self.location = Location(locationName: locationName, postalCode: postalCode, image: image)
+        
+    }
+    
+    func setImageFrom(urlString: String) -> UIImage {
+        
+        let imageURL = NSURL(string: urlString)
+        
+        let imageData = NSData(contentsOf: imageURL as! URL)
+        
+        let image = UIImage(data: imageData as! Data)
+        
+        return image!
+        
+    }
+
 }

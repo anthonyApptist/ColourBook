@@ -25,7 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FIRApp.configure()
         
         window = UIWindow.init(frame: UIScreen.main.bounds)
-                
+      
         if userDefaults.bool(forKey: "skipTutorial") == false {
         
         let initialView = storyboard.instantiateViewController(withIdentifier: "TutorialVC")
@@ -72,8 +72,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
         }
         
-        
-   
         return true
 
     }

@@ -9,13 +9,13 @@
 import UIKit
 import AVFoundation
 
-protocol BarcodeDelegate {
-    func barcodeScanned(barcode: String)
-}
+//protocol BarcodeDelegate {
+//    func barcodeScanned(barcode: String)
+//}
 
 class BarcodeScanner: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
     
-    var delegate: BarcodeDelegate?
+//    var delegate: BarcodeDelegate?
     
     var previewLayer: AVCaptureVideoPreviewLayer!
     
@@ -38,7 +38,7 @@ class BarcodeScanner: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
         
         setupCamera()
         
-        // swipe gesture
+        // swipe gesture to exit camera
         
         exitCameraGesture = UISwipeGestureRecognizer.init(target: self, action: #selector(swipeDownGestureFunction))
         
@@ -180,45 +180,31 @@ class BarcodeScanner: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
         
         if trimmedCodeString.hasPrefix("0") && trimmedCodeString.characters.count > 1 {
             trimmedCodeNoZero = String(trimmedCodeString.characters.dropFirst())
-           
+
+            // successful barcode scanned
+            
             self.code = trimmedCodeNoZero
-            
-            /*
-            let alert = UIAlertController(title: "Barcode Scanned", message: trimmedCodeNoZero, preferredStyle: .alert)
-            
-            let alertAction = UIAlertAction(title: "OK", style: .destructive, handler: nil)
-            
-            alert.addAction(alertAction)
-            
-            present(alert, animated: true, completion: nil)
-            */
         }
             
         else {
             
-            /*
-            let alert = UIAlertController(title: "Barcode Scanned", message: code, preferredStyle: .alert)
+            // no barcode
             
-            let alertAction = UIAlertAction(title: "OK", style: .destructive, handler: nil)
-            
-            alert.addAction(alertAction)
-            
-            present(alert, animated: true, completion: nil)
-            */
         }
     }
     
     // swipe function
     
     func swipeDownGestureFunction() {
+        
+        // dismiss camera view
+        
         self.dismiss(animated: true, completion: nil)
     }
     
-    // tap function
+    // tap to zoom
     
     func tapFunction() {
-        
-//        let focusPoint = tapToFocus.location(in: self.view)
 
         let focusPoint: CGPoint = (self.previewLayer as  AVCaptureVideoPreviewLayer).captureDevicePointOfInterest(for: tapToFocus.location(in: self.view))
         
@@ -259,7 +245,7 @@ class BarcodeScanner: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
         
         let postScanView = PostScanViewController()
         
-        postScanView.barcode = "0023906002046"
+        postScanView.barcode = "0023906001742"
         
         self.present(postScanView, animated: true)
         

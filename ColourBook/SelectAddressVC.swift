@@ -9,79 +9,29 @@
 import UIKit
 import FirebaseDatabase
 
-class SelectAddressVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
-
+class SelectAddressVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
+    
     // barcode from product and profile
     
     var barcode: String?
     
     var productProfile: Paint?
     
-    var user: User!
     
-    var titleLabel: UILabel!
+    var locations = [Location]()
     
     var tableView: UITableView!
     
+    var name: UILabel!
+    
     var addButton: UIButton?
-    
-    var addresses: [String] = []
-    
-    var businesses: [String] = []
-    
-    var state: String?
     
     var selectedItems: [Int:String] = [:]
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        user = AuthService.instance.getSignedInUser()
-        
-        DispatchQueue.global(qos: .background).async {
-            
-            if self.state == "business" {
-                
-                DataService.instance.usersRef.child(self.user.uid).observeSingleEvent(of: .value, with: { (snapshot) in
-                    
-                    if snapshot.hasChild("businessDashboard") {
-                        
-                    }
-                        
-                    else {
-                        let alertView = UIAlertController(title: "No business added", message: "Go to you business bucket list and add an address", preferredStyle: .alert)
-                        
-                        let alertAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-                        
-                        alertView.addAction(alertAction)
-                        
-                        self.present(alertView, animated: true, completion: nil)
-                    }
-                })
-                
-            }
-            
-            if self.state == "homes" {
-                
-                DataService.instance.usersRef.child(self.user.uid).observeSingleEvent(of: .value, with: { (snapshot) in
-                    
-                    if snapshot.hasChild("addressDashboard") {
-                        
-                    }
-                        
-                    else {
-                        let alertView = UIAlertController(title: "No address added", message: "Go to you address bucket list and add an address", preferredStyle: .alert)
-                        
-                        let alertAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-                        
-                        alertView.addAction(alertAction)
-                        
-                        self.present(alertView, animated: true, completion: nil)
-                    }
-                })
-            }
-            
-        }
+        self.backButtonNeeded = true
         
         //MARK: View
         
@@ -90,149 +40,76 @@ class SelectAddressVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         
         // title label
         
-        titleLabel = UILabel.init(frame: CGRect(x: 0, y: 20, width: view.frame.width, height: 50))
+        name = UILabel(frame: CGRect(x: 0, y: 20, width: view.frame.width, height: 50))
         
-        titleLabel.textColor = UIColor.black
+        name.textColor = UIColor.white
         
-        titleLabel.textAlignment = .center  
+        name.textAlignment = .center
         
-        titleLabel.backgroundColor = UIColor.white
+        name.backgroundColor = UIColor.black
         
-        if state == "business" {
-            titleLabel.text = "Businesses"
+        if screenState == .business {
+            name.text = "My businesses"
         }
         
-        if state == "homes" {
-            titleLabel.text = "Addresses"
+        if screenState == .homes {
+            name.text = "My addresses"
         }
         
         
         // table view
-        tableView = UITableView.init(frame: CGRect(x: 0, y: 70, width: view.frame.width, height: view.frame.maxY - (view.frame.height * 0.1) - 70))
-        
-        tableView.delegate = self
-        
-        tableView.dataSource = self
+        tableView = UITableView(frame: CGRect(x: 0, y: 70, width: view.frame.width, height: view.frame.maxY - (view.frame.height * 0.1) - 70))
         
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "item")
         
         tableView.alwaysBounceVertical = false
         
+        tableView.delegate = self
+        
+        tableView.dataSource = self
+ 
         
         // add button
         
-        addButton = UIButton.init(frame: CGRect(x: view.center.x - ((view.frame.width * 0.6)/2), y: view.frame.maxY - (view.frame.height * 0.1), width: view.frame.width * 0.6, height: view.frame.height * 0.10))
+        addButton = UIButton(frame: CGRect(x: view.center.x - ((view.frame.width)/2), y: view.frame.maxY - (view.frame.height * 0.1), width: view.frame.width, height: view.frame.height * 0.10))
     
         addButton?.setTitle("Add", for: .normal)
         
-        addButton?.setTitleColor(UIColor.black, for: .normal)
+        addButton?.setTitleColor(UIColor.white, for: .normal)
         
-        addButton?.backgroundColor = UIColor.white
+        addButton?.backgroundColor = UIColor.black
         
         addButton?.addTarget(self, action: #selector(addToSelectedRow), for: .touchUpInside)
         
         
         // add to view
         
-        view.addSubview(titleLabel!)
+        view.addSubview(name)
         
         view.addSubview(tableView)
         
         view.addSubview(addButton!)
         
-        // grab arrays
-    
+        
         DispatchQueue.global(qos: .background).async {
-            print("This is run on the background queue")
             
-            if self.state == "business" {
-                
-                // get businesses from user account
-                
-                let businessRef = DataService.instance.usersRef.child(self.user.uid).child("businessDashboard")
-                
-                businessRef.observeSingleEvent(of: .value, with: { (snapshot) in
-                    
-                    // check if user has a business list
-                    if snapshot.hasChildren() {
-                        for child in snapshot.children.allObjects {
-                            
-                            let businessDatabase = child as? FIRDataSnapshot
-                            
-                            let profile = businessDatabase?.value as? NSDictionary
-                            
-                            let businessProfile = profile?["businessProfile"] as? NSDictionary
-                            
-                            let businessName = businessProfile?["businessName"]
-                            
-                            let businessLocation = businessProfile?["businessLocation"]
-                            
-                            let latitude = businessProfile?["latitude"]
-                            
-                            let longitude = businessProfile?["longitude"]
-                            
-                            let image = businessProfile?["image"]
-                            
-                            let business = Business(businessName: businessName as! String, businessLocation: businessLocation as! String, latitude: latitude as! Double, longitude: longitude as! Double, image: image as! String)
-                            
-                            self.businesses.append(business.businessLocation)
-                            
-                            self.tableView?.reloadData()
-                        }
-                    }
-                    
-                })
-    
-                
-            } else if self.state == "homes" {
-                
-                // get addresses from user account
-                
-                let addressRef = DataService.instance.usersRef.child(self.user.uid).child("addressDashboard")
-                
-                addressRef.observeSingleEvent(of: .value, with: { (snapshot) in
-                    
-                    // check if user has a business list
-                    if snapshot.hasChildren() {
-                        for child in snapshot.children.allObjects {
-                            
-                            let addressDatabase = child as? FIRDataSnapshot
-                            
-                            let profile = addressDatabase?.value as? NSDictionary
-                            
-                            let addressProfile = profile?["locationProfile"] as? NSDictionary
-                            
-                            let addressName = addressProfile?["addressName"]
-                            
-                            let addressLocation = addressProfile?["addressLocation"]
-                            
-                            let latitude = addressProfile?["latitude"]
-                            
-                            let longitude = addressProfile?["longitude"]
-                            
-                            let image = addressProfile?["image"]
-                            
-                            let address = Address(addressName: addressName as! String, addressLocation: addressLocation as! String, latitude: latitude as! Double, longitude: longitude as! Double, image: image as! String)
-                            
-                            self.addresses.append(address.addressLocation)
-                            
-                            self.tableView?.reloadData()
-                        }
-                    }
-                    
-                })
-                
-                
-            }
+            self.getLocationLists(screenState: self.screenState, user: self.signedInUser)
             
         }
+    
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
         
         DispatchQueue.main.async {
             print("This is run on the main queue, after the previous code in outer block")
             
+            self.locations = self.signedInUser.items as! [Location]
+            
             self.tableView?.reloadData()
+            
+            print(self.locations)
         }
-        
         
     }
 
@@ -243,41 +120,14 @@ class SelectAddressVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        var count: Int = 0
-        
-        if state == "business" {
-            
-            count = self.businesses.count
-            
-        }
-        
-        if state == "homes" {
-            
-            count = self.addresses.count
-            
-        }
-
-        
-        return count
-        
+        return self.locations.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = UITableViewCell.init(style: .default, reuseIdentifier: "item")
-        
-        if state == "business" {
+        let cell = UITableViewCell(style: .default, reuseIdentifier: "item")
             
-            cell.textLabel?.text = self.businesses[indexPath.row]
-            
-        }
-        
-        if state == "homes" {
-            
-            cell.textLabel?.text = self.addresses[indexPath.row]
-            
-        }
+        cell.textLabel?.text = self.locations[indexPath.row].locationName
         
         return cell
         
@@ -289,118 +139,106 @@ class SelectAddressVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         
         let cell = tableView.cellForRow(at: indexPath)
         
-        if state == "business" {
+        if cell?.accessoryType == UITableViewCellAccessoryType.checkmark {
             
-            let selectedItems = self.businesses[indexPath.row]
+            tableView.deselectRow(at: indexPath, animated: true)
             
-            self.selectedItems.updateValue(selectedItems, forKey: indexPath.row)
+            cell?.accessoryType = .none
+            
+            self.selectedItems.removeValue(forKey: indexPath.row)
+            
+            print(self.selectedItems)
         }
         
-        if state == "homes" {
+        else {
             
-            if cell?.accessoryType == UITableViewCellAccessoryType.checkmark {
-                
-                tableView.deselectRow(at: indexPath, animated: true)
-                
-                cell?.accessoryType = .none
-                
-                self.selectedItems.removeValue(forKey: indexPath.row)
-            }
+            tableView.selectRow(at: indexPath, animated: true, scrollPosition: .none)
             
-            else {
-                
-                tableView.selectRow(at: indexPath, animated: true, scrollPosition: .none)
-                
-                let selectedItems = self.addresses[indexPath.row]
-                
-                cell?.accessoryType = .checkmark
-                
-                self.selectedItems.updateValue(selectedItems, forKey: indexPath.row)
-                
-            }
+            let selectedItems = self.locations[indexPath.row]
+            
+            cell?.accessoryType = .checkmark
+            
+            self.selectedItems.updateValue(selectedItems.locationName, forKey: indexPath.row)
+            
+            print(self.selectedItems)
         }
         
     }
-    /*
-     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-     
-     let cell = tableView.cellForRow(at: indexPath)
-     
-     if state == "business" {
-     
-     if cell?.accessoryType == UITableViewCellAccessoryType.checkmark {
-     
-     cell?.accessoryType = UITableViewCellAccessoryType.none
-     
-     self.selectedItems.remove(at: indexPath.row)
-     }
-     
-     if state == "homes" {
-     
-     if cell?.accessoryType == UITableViewCellAccessoryType.checkmark {
-     
-     cell?.accessoryType = UITableViewCellAccessoryType.none
-     
-     self.selectedItems.remove(at: indexPath.row)
-     }
-     
-     }
-     }
-     }
-     */
 
     // add to selected row
 
     func addToSelectedRow() {
- 
-        if state == "business" {
- 
-            // add to each business
+        
+        // add to each business
+        
+        let paint = self.productProfile
+        
+        let paintProfile: Dictionary<String, String> = ["manufacturer": paint!.manufacturer, "productName": paint!.productName, "category": paint!.category, "code": paint!.code, "image": paint!.image, "product": "Paint", "colour": paint!.colour]
+        
+        for key in self.selectedItems.keys {
             
-            let paint = self.productProfile
+            // business location
             
-            let paintProfile: Dictionary<String, AnyObject> = ["manufacturer": paint!.manufacturer as AnyObject, "productName": paint!.productName as AnyObject, "category": paint!.category as AnyObject, "code": paint!.code as AnyObject, "image": paint!.image as AnyObject, "product": "Paint" as AnyObject, "colour": paint!.colour as AnyObject]
+            let location = self.selectedItems[key]
             
-            // selected business
+            // save to the address in selected list
             
-            for key in self.selectedItems.keys {
-                
-                // business location
-                
-                let business = self.selectedItems[key]
-                
-                // save to the address in selected list
-                DataService.instance.usersRef.child(self.user.uid).child("businessDashboard").child(business!).child("barcodes").child(self.barcode!).child("productProfile").setValue(paintProfile)
-                
-            }
+            DataService.instance.saveProductFor(user: self.signedInUser.uid, screenState: self.screenState, location: location, barcode: self.barcode!, value: paintProfile)
             
+            // save barcodes to public business entry
+            
+            DataService.instance.saveProductFor(location: location, screenState: self.screenState, barcode: self.barcode!, value: paintProfile)
+            
+            self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
             
         }
-        
-        if state == "homes" {
-            
-            let paint = self.productProfile
-            
-            let paintProfile: Dictionary<String, AnyObject> = ["manufacturer": paint!.manufacturer as AnyObject, "productName": paint!.productName as AnyObject, "category": paint!.category as AnyObject, "code": paint!.code as AnyObject, "image": paint!.image as AnyObject, "product": "Paint" as AnyObject, "colour": paint!.colour as AnyObject]
-            
-            // selected addresses
-            
-            for key in self.selectedItems.keys {
-                
-                // address name
-                
-                let address = self.selectedItems[key]
-                
-                // save to the address in selected list
-                DataService.instance.usersRef.child(self.user.uid).child("addressDashboard").child(address!).child("barcodes").child(self.barcode!).child("productProfile").setValue(paintProfile)
-                
-            }
-            
-            
-        }
-        
-        self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
-    
     }
+    
+    func getLocationLists(screenState: ScreenState, user: User) {
+        
+        getLocationsRefFor(user: user, screenState: screenState)
+        
+        let locationsRef = DataService.instance.generalRef
+        
+        locationsRef?.observeSingleEvent(of: .value, with: { (snapshot) in
+            
+            user.items = []
+            
+            for child in snapshot.children.allObjects {
+                
+                let addressProfile = child as! FIRDataSnapshot
+                
+                let profile = addressProfile.value as? NSDictionary
+                
+                let postalCode = profile?["postalCode"] as! String
+                
+                let image = profile?["image"] as! String
+                
+                let name = addressProfile.key
+                
+                let location = Location(locationName: name, postalCode: postalCode, image: image)
+                
+                user.items.append(location)
+                
+            }
+            
+        }, withCancel: { (error) in
+            print(error.localizedDescription)
+            user.items = []
+        })
+        
+    }
+    
+    func getLocationsRefFor(user: User, screenState: ScreenState) {
+        
+        if screenState == .business {
+            DataService.instance.generalRef = DataService.instance.usersRef.child(user.uid).child(BusinessDashboard)
+        }
+        else if screenState == .homes {
+            DataService.instance.generalRef = DataService.instance.usersRef.child(user.uid).child(AddressDashboard)
+        }
+        
+    }
+    
 
 }

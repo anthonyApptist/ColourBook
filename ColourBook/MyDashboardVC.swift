@@ -99,7 +99,7 @@ class MyDashboardVC: CustomVC, UIScrollViewDelegate {
     
     func locationAuthStatus() {
         if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
-       //     map.showsUserLocation = true
+//            map.showsUserLocation = true
         } else {
             locationManager.requestWhenInUseAuthorization()
         }
@@ -115,9 +115,7 @@ class MyDashboardVC: CustomVC, UIScrollViewDelegate {
         self.backBtn.isHidden = true
         
         app.window?.rootViewController = self
-
      
-        
         self.scanBtn.addTarget(self, action: #selector(MyDashboardVC.scanBtnPressed), for: .touchUpInside)
         
         self.viewBtn.addTarget(self, action: #selector(MyDashboardVC.viewBtnPressed), for: .touchUpInside)
@@ -164,8 +162,6 @@ class MyDashboardVC: CustomVC, UIScrollViewDelegate {
         pageFive.imageView?.image = UIImage(named: "settingsIcon")
         self.scrollView.addSubview(pageFive)
         
-        
-        
         self.scrollView.contentSize = CGSize(width: self.scrollView.frame.width * 5, height: self.scrollView.frame.height)
         self.scrollView.delegate = self
         
@@ -182,8 +178,6 @@ class MyDashboardVC: CustomVC, UIScrollViewDelegate {
         let currentPage:CGFloat = floor((scrollView.contentOffset.x - pageWidth/2)/pageWidth)+1
         
         self.pageCtrl.currentPage = Int(currentPage)
-        
-
         
         if Int(currentPage) == 0 {
             self.titleString = "personal"

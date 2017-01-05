@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ColourResultsVC: UIViewController {
+class ColourResultsVC: UIView {
     
     var colour: Colour?
     
@@ -20,42 +20,38 @@ class ColourResultsVC: UIViewController {
     
     var manufacturerID: UILabel!
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         
-        view.backgroundColor = UIColor.white
+        backgroundColor = UIColor.white
         
         // MARK: View
         
         // colour name label
         
-        let colourNameOrigin = CGPoint(x: view.center.x - ((view.frame.width * 0.6)/2), y: 50)
+        let colourNameOrigin = CGPoint(x: center.x - ((frame.width * 0.6)/2), y: 50)
         
-        let colourNameSize = CGSize(width: view.frame.width * 0.6, height: view.frame.height * 0.10)
+        let colourNameSize = CGSize(width: frame.width * 0.6, height: frame.height * 0.10)
         
         colourName = UILabel(frame: CGRect(origin: colourNameOrigin, size: colourNameSize))
         
         colourName.backgroundColor = UIColor.clear
         
         colourName.textColor = UIColor.black
-        
-        colourName.text = colour?.colourName
          
         // colour hexcode label
         
-        let hexcodeOrigin = CGPoint(x: view.center.x - ((view.frame.width * 0.6)/2), y: view.frame.maxY + 10)
+        let hexcodeOrigin = CGPoint(x: center.x - ((frame.width * 0.6)/2), y: frame.maxY + 10)
         
-        let hexcodeSize = CGSize(width: view.frame.width * 0.6, height: view.frame.height * 0.10)
+        let hexcodeSize = CGSize(width: frame.width * 0.6, height: frame.height * 0.10)
         
         colourHexCode = UILabel(frame: CGRect(origin: hexcodeOrigin, size: hexcodeSize))
         
-        colourHexCode.backgroundColor = UIColor(hexString: (colour?.colourHexCode)!)
-        
          // product code label
          
-         let productCodeOrigin = CGPoint(x: view.center.x - ((view.frame.width * 0.6)/2), y: view.frame.maxY)
+         let productCodeOrigin = CGPoint(x: center.x - ((frame.width * 0.6)/2), y: frame.maxY)
          
-         let productCodeSize = CGSize(width: view.frame.width * 0.6, height: view.frame.height * 0.10)
+         let productCodeSize = CGSize(width: frame.width * 0.6, height: frame.height * 0.10)
          
          productCode = UILabel(frame: CGRect(origin: productCodeOrigin, size: productCodeSize))
          
@@ -63,32 +59,32 @@ class ColourResultsVC: UIViewController {
          
          productCode.textColor = UIColor.black
          
-         productCode.text = colour?.productCode
-         
          // manufacturer label
          
-         let manufacturerOrigin = CGPoint(x: view.center.x - ((view.frame.width * 0.6)/2), y: view.frame.maxY)
+         let manufacturerOrigin = CGPoint(x: center.x - ((frame.width * 0.6)/2), y: frame.maxY)
          
-         let manufacturerSize = CGSize(width: view.frame.width * 0.6, height: view.frame.height * 0.10)
+         let manufacturerSize = CGSize(width: frame.width * 0.6, height: frame.height * 0.10)
          
          manufacturerID = UILabel(frame: CGRect(origin: manufacturerOrigin, size: manufacturerSize))
          
          manufacturerID.backgroundColor = UIColor.clear
-         
-         manufacturerID.text = colour?.manufacturerID
         
         
         // add to view
         
-        view.addSubview(colourName)
+        addSubview(colourName)
         
-        view.addSubview(colourHexCode)
+        addSubview(colourHexCode)
         
-        view.addSubview(productCode)
+        addSubview(productCode)
          
-        view.addSubview(manufacturerID)
+        addSubview(manufacturerID)
         
         
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
 

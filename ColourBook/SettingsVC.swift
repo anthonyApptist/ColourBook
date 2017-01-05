@@ -10,11 +10,11 @@ import UIKit
 
 class SettingsVC: CustomVC, UIScrollViewDelegate {
     
+    @IBOutlet weak var scrollView: UIScrollView!
+ /*
     var selectedBusinessInfo: Business?
     
     var selectedAddressInfo: Address?
-    
-    @IBOutlet weak var scrollView: UIScrollView!
     
     override func viewDidAppear(_ animated: Bool) {
         
@@ -89,5 +89,5 @@ class SettingsVC: CustomVC, UIScrollViewDelegate {
         
     }
     
-
+*/
 }

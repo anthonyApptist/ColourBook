@@ -9,9 +9,8 @@
 import UIKit
 
 class ItemListDetailVC: CustomVC {
-    
     @IBOutlet var imgView: UIImageView?
-    
+ 
     @IBOutlet var nameLbl: UILabel?
     
     @IBOutlet weak var titleLbl: UILabel?
@@ -19,31 +18,34 @@ class ItemListDetailVC: CustomVC {
     @IBOutlet var productIdLbl: UILabel?
     
     @IBOutlet var hexCodeLbl: UILabel?
-    
-    var detailItem: Paint?
+
+    var detailItem: ScannedProduct?
     
     override func viewDidAppear(_ animated: Bool) {
         
-        super.viewDidAppear(false)
-        
-        titleLbl?.text = detailItem?.productName
+        titleLbl?.text = detailItem?.productType
         nameLbl?.text = detailItem?.manufacturer
-        productIdLbl?.text = detailItem?.code
-        hexCodeLbl?.text = detailItem?.upcCode
+        productIdLbl?.text = detailItem?.upcCode
+        hexCodeLbl?.text = " "
         
         self.imgView?.contentMode = .scaleAspectFill
         
-        let imageURL = NSURL.init(string: (detailItem?.image)!)
+        if let imageUrlString = detailItem?.image {
+            
+            let image = self.setImageFrom(urlString: imageUrlString)
+                
+            self.imgView?.image = image
+            
+        }
         
-        let imageData = NSData.init(contentsOf: imageURL as! URL)
+        else {
+            
+            let image = UIImage(contentsOfFile: "darkgreen.jpg")
+            
+            self.imgView?.image = image
+            
+        }
         
-        let image = UIImage.init(data: imageData as! Data)
-        
-        self.imgView?.image = image
-        
-        // Do any additional setup after loading the view.
     }
-
- 
 
 }

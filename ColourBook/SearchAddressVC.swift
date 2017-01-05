@@ -18,13 +18,15 @@ class SearchAddressVC: CustomVC {
     var addressResultView: UIView!
     
     var defaultLabel: UILabel!
-
+    
+    var searchImage: UIImage?
+/*
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // search text field
 
-        let searchTextFieldOrigin = CGPoint(x: 0, y: 20)
+        let searchTextFieldOrigin = CGPoint(x: 0, y: self.backBtn.frame.maxY - (view.frame.height * 0.1))
         
         let searchTextFieldSize = CGSize(width: view.frame.width, height: view.frame.height * 0.1)
         
@@ -100,17 +102,61 @@ class SearchAddressVC: CustomVC {
         }
         
         else {
-            DataService.instance.addressRef.observeSingleEvent(of: .value, with: { (snapshot) in
-            
-                let addressQuery = self.searchTextfield.text
+            DataService.instance.mainRef.observeSingleEvent(of: .value, with: { (snapshot) in
                 
-                if (snapshot.hasChild(addressQuery!)) {
+                let addressQuery = self.searchTextfield.text?.capitalized
+                
+                if (snapshot.childSnapshot(forPath: "businesses").hasChild(addressQuery!)) {
                     
                     self.defaultLabel.removeFromSuperview()
                     
-                    let addressVC = AddressVC()
+                    let businessData = snapshot.childSnapshot(forPath: "businesses").childSnapshot(forPath: addressQuery!)
                     
-                    let addressData = snapshot.childSnapshot(forPath: addressQuery!)
+                    let profile = businessData.value as? NSDictionary
+                    
+                    let businessProfile = profile?["businessProfile"] as? NSDictionary
+                    
+                    let businessName = businessProfile?["businessName"]
+                    
+                    let businessLocation = businessProfile?["businessLocation"]
+                    
+                    let latitude = businessProfile?["latitude"]
+                    
+                    let longitude = businessProfile?["longitude"]
+                    
+                    let image = businessProfile?["image"]
+                    
+                    let business = Business(businessName: businessName as! String, businessLocation: businessLocation as! String, latitude: latitude as! Double, longitude: longitude as! Double, image: image as! String)
+                    
+                    if business.image == "" {
+                        
+                        // add default image
+                        self.searchImage = UIImage(named: "homeIcon")
+                    }
+                    
+                    else {
+                        
+                        // convert image data string
+                        
+                    }
+                    
+                    let addressVC = AddressVC(frame: self.addressResultView.frame)
+                    
+                    addressVC.addressImageView.image = self.searchImage!
+                    
+                    addressVC.addressName.text = business.businessName
+                    
+                    addressVC.addressLocation.text = business.businessLocation
+                    
+                    self.addressResultView.addSubview(addressVC)
+                    
+                }
+                
+                else if (snapshot.childSnapshot(forPath: "addresses").hasChild(addressQuery!)) {
+                    
+                    self.defaultLabel.removeFromSuperview()
+                    
+                    let addressData = snapshot.childSnapshot(forPath: "businesses").childSnapshot(forPath: addressQuery!)
                     
                     let profile = addressData.value as? NSDictionary
                     
@@ -128,9 +174,28 @@ class SearchAddressVC: CustomVC {
                     
                     let address = Address(addressName: addressName as! String, addressLocation: addressLocation as! String, latitude: latitude as! Double, longitude: longitude as! Double, image: image as! String)
                     
-                    addressVC.address = address
+                    if address.image == "" {
+                        
+                        // add default image
+                        self.searchImage = UIImage(named: "homeIcon")
+                        
+                    }
+                        
+                    else {
+                        
+                        // convert image data string
+                        
+                    }
                     
-                    self.addressResultView.addSubview(addressVC.view)
+                    let addressVC = AddressVC(frame: self.addressResultView.frame)
+                    
+                    addressVC.addressImageView.image = self.searchImage!
+                    
+                    addressVC.addressName.text = address.addressName
+                    
+                    addressVC.addressLocation.text = address.addressLocation
+                    
+                    self.addressResultView.addSubview(addressVC)
 
                 }
             
@@ -153,5 +218,5 @@ class SearchAddressVC: CustomVC {
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         searchTextfield.resignFirstResponder()
     }
-
+*/
 }

@@ -5,7 +5,6 @@
 //  Created by Mark Meritt on 2016-12-06.
 //  Copyright © 2016 Apptist. All rights reserved.
 //
-
 import UIKit
 import MapKit
 
@@ -16,7 +15,8 @@ class AddressListDetailVC: CustomVC, MKMapViewDelegate {
     @IBOutlet weak var addressLbl: UILabel?
     
     @IBOutlet weak var map: MKMapView!
-    
+
+/*
     let regionRadius: CLLocationDistance = 1000
     
     let locationManager = CLLocationManager()
@@ -136,5 +136,6 @@ class AddressListDetailVC: CustomVC, MKMapViewDelegate {
         let pin = AnnotationPin(coordinate: location.coordinate)
         map.addAnnotation(pin)
     }
+     */
 
 }
