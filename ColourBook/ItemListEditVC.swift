@@ -54,6 +54,8 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
     
     var products = [ScannedProduct]()
     
+    var colour: String?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -166,6 +168,7 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
             
             if let detail = segue.destination as? ItemListDetailVC {
                 detail.detailItem = item
+                detail.colour = item.colour
                 detail.screenState = screenState
             }
         }
@@ -234,7 +237,9 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
                 
                 let image = profile?["image"] as! String
                 
-                let product = ScannedProduct(productType: productType, manufacturer: manufacturer, upcCode: upcCode, image: image)
+                let colourForPaint = profile?["colour"] as! String
+                
+                let product = ScannedProduct(productType: productType, manufacturer: manufacturer, upcCode: upcCode, image: image, colour: colourForPaint)
                 
                 user.items.append(product)
                 

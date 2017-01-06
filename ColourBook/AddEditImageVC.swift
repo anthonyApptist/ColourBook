@@ -120,9 +120,9 @@ class AddEditImageVC: CustomVC, UIImagePickerControllerDelegate, UINavigationCon
     
     func saveBtnPressed(_ sender: Any?) {
         
-        DataService.instance.saveInfoFor(user: self.signedInUser.uid, screenState: self.screenState, location: self.selectedLocation, image: self.imageString, name: self.textField?.text)
-        
         if screenState == .personal {
+            
+            DataService.instance.saveInfoFor(user: self.signedInUser.uid, screenState: self.screenState, location: "", image: self.image, name: self.textField?.text)
         
             AuthService.instance.saveDisplay(name: (self.textField?.text)!)
             
@@ -130,8 +130,17 @@ class AddEditImageVC: CustomVC, UIImagePickerControllerDelegate, UINavigationCon
         
         if screenState == .business {
             
-            DataService.instance.usersRef.updateChildValues(["name" : self.textField?.text])
+            DataService.instance.saveInfoFor(user: self.signedInUser.uid, screenState: self.screenState, location: self.selectedLocation, image: self.image, name: self.textField?.text)
             
+            DataService.instance.businessRef.child(self.selectedLocation!).updateChildValues(["name" : self.textField?.text ?? "", "image" : self.image ?? ""])
+            
+        }
+        
+        if screenState == .homes {
+            
+            DataService.instance.saveInfoFor(user: self.signedInUser.uid, screenState: self.screenState, location: self.selectedLocation, image: self.image, name: self.textField?.text)
+            
+            DataService.instance.addressRef.child(self.selectedLocation!).updateChildValues(["name" : self.textField?.text ?? "", "image" : self.image ?? ""])
         }
         
         performSegue(withIdentifier: "BackToItemEdit", sender: self)

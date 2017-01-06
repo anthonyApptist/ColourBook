@@ -83,7 +83,9 @@ extension DataService {
                 
                 let image = profile?["image"] as! String
                 
-                let product = ScannedProduct(productType: productType, manufacturer: manufacturer, upcCode: upcCode, image: image)
+                let colour = profile?["colour"] as? String
+                
+                let product = ScannedProduct(productType: productType, manufacturer: manufacturer, upcCode: upcCode, image: image, colour: "")
                 
                 user.items.append(product)
                 

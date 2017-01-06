@@ -21,12 +21,20 @@ class ItemListDetailVC: CustomVC {
 
     var detailItem: ScannedProduct?
     
+    var colour: String?
+    
     override func viewDidAppear(_ animated: Bool) {
         
         titleLbl?.text = detailItem?.productType
         nameLbl?.text = detailItem?.manufacturer
         productIdLbl?.text = detailItem?.upcCode
-        hexCodeLbl?.text = " "
+        
+        if self.colour == "" {
+            hexCodeLbl?.text = ""
+        }
+        else {
+            hexCodeLbl?.backgroundColor = UIColor(hexString: self.colour!)
+        }
         
         self.imgView?.contentMode = .scaleAspectFill
         

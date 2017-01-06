@@ -209,6 +209,8 @@ class ItemListAddVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
                 
             }
             
+            self.tableView?.reloadData()
+            
         }, withCancel: { (error) in
             print(error.localizedDescription)
             user.items = []
