@@ -10,17 +10,13 @@ import UIKit
 
 class ColourResultsVC: UIView {
     
-    var colour: Colour?
-    
+    // properties
     var colourName: UILabel!
-    
     var colourHexCode: UILabel!
-    
     var productCode: UILabel!
-    
     var manufacturerID: UILabel!
     
-    override init(frame: CGRect) {
+    init(frame: CGRect, colour: Colour) {
         super.init(frame: frame)
         
         backgroundColor = UIColor.white
@@ -29,55 +25,49 @@ class ColourResultsVC: UIView {
         
         // colour name label
         
-        let colourNameOrigin = CGPoint(x: center.x - ((frame.width * 0.6)/2), y: 50)
-        
+        let colourNameOrigin = CGPoint(x: center.x - ((frame.width * 0.6)/2), y: center.y - ((frame.height * 0.10)/2) - ((frame.height * 0.5)/2))
         let colourNameSize = CGSize(width: frame.width * 0.6, height: frame.height * 0.10)
-        
         colourName = UILabel(frame: CGRect(origin: colourNameOrigin, size: colourNameSize))
-        
-        colourName.backgroundColor = UIColor.clear
-        
+        colourName.backgroundColor = UIColor.white
         colourName.textColor = UIColor.black
-         
+        colourName.textAlignment = .center
+        colourName.text = colour.colourName
+        
         // colour hexcode label
         
-        let hexcodeOrigin = CGPoint(x: center.x - ((frame.width * 0.6)/2), y: frame.maxY + 10)
-        
+        let hexcodeOrigin = CGPoint(x: center.x - ((frame.width * 0.6)/2), y: center.y - ((frame.height * 0.10)/2))
         let hexcodeSize = CGSize(width: frame.width * 0.6, height: frame.height * 0.10)
-        
         colourHexCode = UILabel(frame: CGRect(origin: hexcodeOrigin, size: hexcodeSize))
+        colourHexCode.backgroundColor = UIColor.white
+        colourHexCode.textColor = UIColor.black
+        colourHexCode.textAlignment = .center
+        colourHexCode.text = colour.colourHexCode
         
-         // product code label
-         
-         let productCodeOrigin = CGPoint(x: center.x - ((frame.width * 0.6)/2), y: frame.maxY)
-         
-         let productCodeSize = CGSize(width: frame.width * 0.6, height: frame.height * 0.10)
-         
-         productCode = UILabel(frame: CGRect(origin: productCodeOrigin, size: productCodeSize))
-         
-         productCode.backgroundColor = UIColor.clear
-         
-         productCode.textColor = UIColor.black
-         
-         // manufacturer label
-         
-         let manufacturerOrigin = CGPoint(x: center.x - ((frame.width * 0.6)/2), y: frame.maxY)
-         
-         let manufacturerSize = CGSize(width: frame.width * 0.6, height: frame.height * 0.10)
-         
-         manufacturerID = UILabel(frame: CGRect(origin: manufacturerOrigin, size: manufacturerSize))
-         
-         manufacturerID.backgroundColor = UIColor.clear
+        // product code label
         
+        let productCodeOrigin = CGPoint(x: center.x - ((frame.width * 0.6)/2), y: (frame.maxY * 0.75) - (frame.height * 0.10))
+        let productCodeSize = CGSize(width: frame.width * 0.6, height: frame.height * 0.10)
+        productCode = UILabel(frame: CGRect(origin: productCodeOrigin, size: productCodeSize))
+        productCode.backgroundColor = UIColor.white
+        productCode.textColor = UIColor.black
+        productCode.textAlignment = .center
+        productCode.text = colour.productCode
+        
+        // manufacturer label
+        
+        let manufacturerOrigin = CGPoint(x: center.x - ((frame.width * 0.6)/2), y: (frame.maxY * 0.85) - (frame.height * 0.10))
+        let manufacturerSize = CGSize(width: frame.width * 0.6, height: frame.height * 0.10)
+        manufacturerID = UILabel(frame: CGRect(origin: manufacturerOrigin, size: manufacturerSize))
+        manufacturerID.backgroundColor = UIColor.white
+        manufacturerID.textColor = UIColor.black
+        manufacturerID.textAlignment = .center
+        manufacturerID.text = colour.manufacturerID
         
         // add to view
         
         addSubview(colourName)
-        
         addSubview(colourHexCode)
-        
         addSubview(productCode)
-         
         addSubview(manufacturerID)
         
         

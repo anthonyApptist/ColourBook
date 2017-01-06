@@ -10,7 +10,7 @@ import UIKit
 import FirebaseDatabase
 
 class SearchAddressVC: CustomVC {
-    
+  /*
     var searchTextfield: UITextField!
     
     var searchButton: UIButton!
@@ -20,7 +20,7 @@ class SearchAddressVC: CustomVC {
     var defaultLabel: UILabel!
     
     var searchImage: UIImage?
-/*
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -190,14 +190,11 @@ class SearchAddressVC: CustomVC {
                     let addressVC = AddressVC(frame: self.addressResultView.frame)
                     
                     addressVC.addressImageView.image = self.searchImage!
-                    
-<<<<<<< HEAD
+     
                     addressVC.addressName.text = address.addressName
                     
                     addressVC.addressLocation.text = address.addressLocation
-                    
-=======
->>>>>>> 2e47a8155a354697ac08dd23ba17577593a9083c
+
                     self.addressResultView.addSubview(addressVC)
 
                 }
@@ -221,5 +218,7 @@ class SearchAddressVC: CustomVC {
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         searchTextfield.resignFirstResponder()
     }
-*/
+    
+    */
+
 }

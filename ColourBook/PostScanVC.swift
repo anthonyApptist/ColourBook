@@ -33,6 +33,8 @@ class PostScanViewController: CustomVC {
     var addToHomeButton: UIButton!
     
     var product: Any?
+
+    var hexcode: String?
     
     var colourView: ChooseColourVC?
 
@@ -170,6 +172,28 @@ class PostScanViewController: CustomVC {
         
         addToHomeButton.addTarget(self, action: #selector(addToAddressButtonFunction), for: .touchUpInside)
         
+        // add colour button
+        
+        let addColourButtonOrigin = CGPoint(x: view.center.x - ((view.frame.width * 0.6)/2), y: view.frame.height * 0.75)
+        
+        let addColourButtonSize = CGSize(width: view.frame.width * 0.6, height: view.frame.height * 0.08)
+        
+        addColourButton = UIButton.init(frame: CGRect(origin: addColourButtonOrigin, size: addColourButtonSize))
+        
+        addColourButton.setTitle("Add colour", for: .normal)
+        
+        addColourButton.setTitleColor(UIColor.black, for: .normal)
+        
+        addColourButton.addTarget(self, action: #selector(addColourFunction), for: .touchUpInside)
+        
+        addColourButton.layer.borderWidth = 3.0
+        
+        addColourButton.layer.borderColor = UIColor.black.cgColor
+        
+        view.addSubview(addColourButton)
+        
+        addColourButton.alpha = 0.0
+        
         view.addSubview(addToPersonalButton)
         
         view.addSubview(addToBusinessButton)
@@ -187,13 +211,23 @@ class PostScanViewController: CustomVC {
             // check if choose colour view is being dismissed
             if colourView.isBeingDismissed {
                 self.product = colourView.paint
+                self.hexcode = colourView.paint?.colour
+                self.check(product: "Paint")
+                self.addColourButton.setTitle("", for: .normal)
+                self.addColourButton.backgroundColor = UIColor(hexString: self.hexcode!)
             }
         }
     }
     
     func addToPersonalButtonFunction() {
         
+        self.screenState = .personal
         
+        let paint = self.product as? Paint
+        
+        let paintProfile: Dictionary<String, String> = ["manufacturer": paint!.manufacturer, "productName": paint!.productName, "category": paint!.category, "code": paint!.code, "image": paint!.image, "product": "Paint", "colour": paint!.colour]
+        
+        DataService.instance.saveProductFor(user: self.signedInUser.uid, screenState: self.screenState, location: "", barcode: self.barcode, value: paintProfile)
         
         self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
         
@@ -326,25 +360,8 @@ class PostScanViewController: CustomVC {
         
         if product == "Paint" {
             
-            // add colour button
-            
-            let addColourButtonOrigin = CGPoint(x: view.center.x - ((view.frame.width * 0.6)/2), y: view.frame.height * 0.75)
-            
-            let addColourButtonSize = CGSize(width: view.frame.width * 0.6, height: view.frame.height * 0.08)
-            
-            let addColourButton = UIButton.init(frame: CGRect(origin: addColourButtonOrigin, size: addColourButtonSize))
-            
-            addColourButton.setTitle("Add colour", for: .normal)
-            
-            addColourButton.setTitleColor(UIColor.black, for: .normal)
-            
-            addColourButton.addTarget(self, action: #selector(addColourFunction), for: .touchUpInside)
-            
-            addColourButton.layer.borderWidth = 3.0
-            
-            addColourButton.layer.borderColor = UIColor.black.cgColor
-            
-            view.addSubview(addColourButton)
+            self.addColourButton.alpha = 1.0
+
         }
             
         else {

@@ -122,7 +122,17 @@ class AddEditImageVC: CustomVC, UIImagePickerControllerDelegate, UINavigationCon
         
         DataService.instance.saveInfoFor(user: self.signedInUser.uid, screenState: self.screenState, location: self.selectedLocation, image: self.imageString, name: self.textField?.text)
         
-        AuthService.instance.saveDisplay(name: (self.textField?.text)!)
+        if screenState == .personal {
+        
+            AuthService.instance.saveDisplay(name: (self.textField?.text)!)
+            
+        }
+        
+        if screenState == .business {
+            
+            DataService.instance.usersRef.updateChildValues(["name" : self.textField?.text])
+            
+        }
         
         performSegue(withIdentifier: "BackToItemEdit", sender: self)
         
@@ -150,15 +160,15 @@ class AddEditImageVC: CustomVC, UIImagePickerControllerDelegate, UINavigationCon
         
         locationInfoRef?.observeSingleEvent(of: .value, with: { (snapshot) in
             
-                let profile = snapshot.value as? NSDictionary
-                
-                let postalCode = profile?["postalCode"] as! String
-                
-                let image = profile?["image"] as! String
-                
-                self.postalCode = postalCode
-                
-                self.image = image
+            let profile = snapshot.value as? NSDictionary
+            
+            let postalCode = profile?["postalCode"] as! String
+            
+            let image = profile?["image"] as! String
+            
+            self.postalCode = postalCode
+            
+            self.image = image
             
             if self.image == nil || self.image == "" {
                 
@@ -233,6 +243,8 @@ class AddEditImageVC: CustomVC, UIImagePickerControllerDelegate, UINavigationCon
     // set location info
     
     func setLocationInfo() {
+        
+        self.photoTitleLbl.adjustsFontForContentSizeCategory = true
         
         self.photoTitleLbl.text = self.selectedLocation
         

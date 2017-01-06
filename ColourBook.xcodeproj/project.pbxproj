@@ -301,7 +301,6 @@
 				9277E0B41DF75022001E0B9B /* PostScanVC.swift */,
 				920B52761E1066AB005D5B60 /* SaveButtons.swift */,
 				920B52731E0E03A8005D5B60 /* SearchControllers */,
-				9277E0BF1DFA8323001E0B9B /* AddressVC.swift */,
 				663646881DE3E93A00E6D719 /* LogInViewController.swift */,
 				665E63771DE8293A002BA868 /* SignUpViewController.swift */,
 				92B4A61A1DE8FD9300F35DED /* CSVViewController.swift */,
@@ -465,6 +464,7 @@
 				924C00981E07AC1000C73C6A /* ColourResultsVC.swift */,
 				929AD0021E03C56E00AB9C63 /* SelectAddressVC.swift */,
 				9277E0BD1DFA7D94001E0B9B /* SearchAddressVC.swift */,
+				9277E0BF1DFA8323001E0B9B /* AddressVC.swift */,
 			);
 			name = SearchControllers;
 			sourceTree = "<group>";

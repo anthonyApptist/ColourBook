@@ -111,7 +111,7 @@ class AddEditAddressVC: CustomVC, MKMapViewDelegate, UISearchBarDelegate {
                     /*
                     detail.businessItem = businessItem
                     detail.screenState = screenState
- */
+                    */
                 }
             } else if self.screenState == .homes {
                 
@@ -119,7 +119,7 @@ class AddEditAddressVC: CustomVC, MKMapViewDelegate, UISearchBarDelegate {
                     /*
                     detail.addressItem = addressItem
                     detail.screenState = screenState
- */
+                    */
                 }
             }
         }
@@ -228,7 +228,7 @@ class AddEditAddressVC: CustomVC, MKMapViewDelegate, UISearchBarDelegate {
     }
     
     func displayLocationAddAlertController(location: Location) {
-        let alertView = UIAlertController(title: "Is this your current location", message: "", preferredStyle: .alert)
+        let alertView = UIAlertController(title: "Is this your current location", message: location.locationName, preferredStyle: .alert)
         
         let alertAction = UIAlertAction(title: "Add", style: .destructive, handler: { (action) in
             

@@ -9,9 +9,8 @@
 import UIKit
 
 class AddressVC: UIView {
-    
-    /*
-    var address: Address?
+   /*
+    var resultLocation: Location?
     
     var addressImageView: UIImageView!
     
@@ -43,9 +42,7 @@ class AddressVC: UIView {
         
         addressImageView.contentMode = .scaleAspectFit
         
-
-        
-        if address?.image == nil {
+        if resultLocation?.image == nil || resultLocation?.image == "" {
             
             let image = UIImage(named: "darkred")
             
@@ -55,7 +52,7 @@ class AddressVC: UIView {
         
         else {
             
-            let imageURL = NSURL(string: (address?.image)!)
+            let imageURL = NSURL(string: (resultLocation?.image)!)
             
             let imageData = NSData(contentsOf: imageURL as! URL)
             
@@ -98,9 +95,9 @@ class AddressVC: UIView {
 
         // latitude label
         
-        let latitudeOrigin = CGPoint(x: view.center.x - ((view.frame.width * 0.6)/2), y: addressLocation.frame.maxY)
+        let latitudeOrigin = CGPoint(x: frame.center.x - ((frame.width * 0.6)/2), y: addressLocation.frame.maxY)
         
-        let latitudeSize = CGSize(width: view.frame.width * 0.6, height: view.frame.height * 0.10)
+        let latitudeSize = CGSize(width: frame.width * 0.6, height: frame.height * 0.10)
         
         latitude = UILabel(frame: CGRect(origin: latitudeOrigin, size: latitudeSize))
         
@@ -151,9 +148,8 @@ class AddressVC: UIView {
         super.init(coder: aDecoder)
         fatalError("init(coder:) has not been implemented")
     }
-
-}
 */
-
 }
+
+
  

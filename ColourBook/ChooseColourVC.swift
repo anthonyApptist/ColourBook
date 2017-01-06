@@ -23,8 +23,9 @@ class ChooseColourVC: CustomVC {
 
     var searchResultView: UIView!
     
+    var colourView: ColourResultsVC?
+    
     var coloursArray: [Colour] = []
-
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,23 +48,13 @@ class ChooseColourVC: CustomVC {
         
         // search results view
         
-        searchResultView = UIView(frame: CGRect(x: 0, y: 20 + view.frame.height * 0.05, width: 0, height: 0))
+        searchResultView = UIView(frame: CGRect(x: 0, y: 40 + view.frame.height * 0.05, width: view.frame.width, height: view.frame.height - (view.frame.height * 0.05) - (view.frame.height * 0.05) - (view.frame.height * 0.05) - 40))
         
-        searchResultView.backgroundColor = UIColor.black
-        
-        let colourTitle = UILabel(frame: CGRect(x: searchResultView.center.x - ((searchResultView.frame.width * 0.6)/2), y: searchResultView.center.y - ((searchResultView.frame.height * 0.1)/2), width: searchResultView.frame.width * 0.6, height: searchResultView.frame.height * 0.1))
-        
-        colourTitle.backgroundColor = UIColor.white
-        
-        colourTitle.text = "Colour"
-        
-        colourTitle.textColor = UIColor.black
-        
-        searchResultView.addSubview(colourTitle)
-        
+//        searchResultView.backgroundColor = UIColor.clear
+    
         // search colour button
         
-        searchColourButton = UIButton(frame: CGRect(x: view.center.x - ((view.frame.width * 0.6)/2), y: view.frame.maxY - (3 * (view.frame.height * 0.05)) - 30, width: view.frame.width * 0.6, height: view.frame.height * 0.05))
+        searchColourButton = UIButton(frame: CGRect(x: view.center.x - ((view.frame.width)/2), y: view.frame.maxY - (view.frame.height * 0.05) - (view.frame.height * 0.05), width: view.frame.width, height: view.frame.height * 0.05))
         
         searchColourButton.setTitle("Search", for: .normal)
         
@@ -77,9 +68,13 @@ class ChooseColourVC: CustomVC {
         
         // add to paint button
         
-        addToPaintButton = UIButton(frame: CGRect(x: view.center.x - ((view.frame.width * 0.6)/2), y: view.frame.maxY - (2 * (view.frame.height * 0.05)) - 15, width: view.frame.width * 0.6, height: view.frame.height * 0.05))
+        addToPaintButton = UIButton(frame: CGRect(x: view.center.x - ((view.frame.width)/2), y: view.frame.maxY - (view.frame.height * 0.05), width: view.frame.width, height: view.frame.height * 0.05))
         
         addToPaintButton.setTitle("Add to Paint", for: .normal)
+        
+        addToPaintButton.addTarget(self, action: #selector(addToPaintFunction), for: .touchUpInside)
+        
+        addToPaintButton.isUserInteractionEnabled = true
         
         addToPaintButton.setTitleColor(UIColor.white, for: .normal)
         
@@ -89,11 +84,11 @@ class ChooseColourVC: CustomVC {
         
         view.addSubview(searchColourTextfield)
         
+        view.addSubview(searchResultView)
+        
         view.addSubview(searchColourButton)
         
         view.addSubview(addToPaintButton)
-        
-        view.addSubview(searchResultView)
         
     }
     
@@ -101,7 +96,7 @@ class ChooseColourVC: CustomVC {
         
         if searchColourTextfield.text != nil {
             
-            let searchQuery = searchColourTextfield.text?.capitalized
+            let colourQuery = searchColourTextfield.text?.capitalized
             
             // check database
             
@@ -129,30 +124,46 @@ class ChooseColourVC: CustomVC {
                 
                 for colour in self.coloursArray {
                     
-                    if colour.colourName == searchQuery! {
+                    if colour.colourName == colourQuery! {
                         
-                        let colourView = ColourResultsVC()
+                        self.colourView = ColourResultsVC(frame: self.searchResultView.bounds, colour: colour)
                         
-                        colourView.colour = colour
+                        self.currentColour = colour.colourHexCode // set current colour as hexcode
                         
-                        self.currentColour = colour.colourHexCode
+                        print(self.currentColour!)
                         
-                        self.paint?.colour = self.currentColour!
+//                        self.paint?.colour = self.currentColour! // add to paint object
                         
-                        self.searchResultView.addSubview(colourView)
+                
+                        self.searchResultView.addSubview(self.colourView!)
+                        
+                        
+                        
+                        print(self.colourView!.colourName.frame)
+                        
+                        print(self.searchResultView.frame)
+                        
+                        print(self.colourView?.frame)
+                        
+                        self.searchColourTextfield.text = ""
+
+                        break
+                        
                     }
                     
-                    if colour.colourHexCode == searchQuery! {
+                    if colour.colourHexCode == colourQuery! {
                         
-                        let colourView = ColourResultsVC()
-                        
-                        colourView.colour = colour
+                        self.colourView = ColourResultsVC(frame: self.searchResultView.frame, colour: colour)
                         
                         self.currentColour = colour.colourHexCode
                         
-                        self.paint?.colour = self.currentColour!
+//                        self.paint?.colour = self.currentColour!
                         
-                        self.searchResultView.addSubview(colourView)
+                        self.searchResultView.addSubview(self.colourView!)
+                        
+                        self.searchColourTextfield.text = ""
+                        
+                        break
 
                     }
                     
@@ -172,13 +183,6 @@ class ChooseColourVC: CustomVC {
                     }
                     */
                     
-                    else {
-                        
-                        
-                        
-                    }
-                    
-                    
                 }
                 
                 
@@ -186,6 +190,7 @@ class ChooseColourVC: CustomVC {
         }
         
         else {
+            
             let alertView = UIAlertController(title: "No colour to search for", message: "type in a colour", preferredStyle: .alert)
             
             let alertAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
