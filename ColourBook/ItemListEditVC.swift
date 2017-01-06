@@ -65,12 +65,8 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         
         // access user database
         
-        DispatchQueue.global(qos: .background).async {
-            print("This is run on the background queue")
-            
-            self.getPaintArray(screenState: self.screenState, user: self.signedInUser, location: self.selectedLocation)
-            
-        }
+        self.getPaintArray(screenState: self.screenState, user: self.signedInUser, location: self.selectedLocation)
+  
         
     }
     
@@ -82,8 +78,6 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         tableView?.dataSource = self
         
         DispatchQueue.main.async {
-            
-            self.products = self.signedInUser.items as! [ScannedProduct]
             
             self.tableView?.reloadData()
 
@@ -244,6 +238,10 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
                 user.items.append(product)
                 
             }
+            
+            self.products = self.signedInUser.items as! [ScannedProduct]
+            
+            self.tableView?.reloadData()
             
         }, withCancel: { (error) in
             print(error.localizedDescription)

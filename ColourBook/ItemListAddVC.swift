@@ -52,13 +52,9 @@ class ItemListAddVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         tableView?.delegate = self
         tableView?.dataSource = self
 
- 
-        DispatchQueue.global(qos: .background).async {
-
-            self.getLocationLists(screenState: self.screenState, user: self.signedInUser)
+        self.getLocationLists(screenState: self.screenState, user: self.signedInUser)
             
-//            self.tableView?.reloadData()
-        }
+
     }
  
     
@@ -68,8 +64,6 @@ class ItemListAddVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         
         DispatchQueue.main.async {
             print("This is run on the main queue, after the previous code in outer block")
-            
-            self.locations = self.signedInUser.items as! [Location]
             
             self.tableView?.reloadData()
             
@@ -209,6 +203,7 @@ class ItemListAddVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
                 
             }
             
+            self.locations = self.signedInUser.items as! [Location]
             self.tableView?.reloadData()
             
         }, withCancel: { (error) in
