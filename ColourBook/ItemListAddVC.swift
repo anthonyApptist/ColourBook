@@ -48,6 +48,10 @@ class ItemListAddVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        tableView?.delegate = self
+        tableView?.dataSource = self
+
  
         DispatchQueue.global(qos: .background).async {
 
@@ -81,11 +85,6 @@ class ItemListAddVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
             self.subTitleLbl?.text = "my addresses"
             
         }
-        
-        tableView?.delegate = self
-        tableView?.dataSource = self
-        
-        tableView?.reloadData()
         
         titleLbl?.text = titleString
 

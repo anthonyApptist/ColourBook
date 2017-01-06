@@ -172,24 +172,12 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         
         if segue.identifier == "ConnectToMenuSettings" {
             
-            
-            if self.screenState == .business {
+            if let detail = segue.destination as? SettingsVC {
                 
-                
-                if let detail = segue.destination as? SettingsVC {
-                    
-//                    detail.selectedBusinessInfo = selectedBusiness
-                    detail.screenState = screenState
-                }
-            } else if self.screenState == .homes {
-                
-                
-                if let detail = segue.destination as? SettingsVC {
-                    
-//                    detail.selectedAddressInfo = selectedAddress
-                    detail.screenState = screenState
-                }
+                detail.selectedLocation = self.selectedLocation
+                detail.screenState = screenState
             }
+
         }
         
         if segue.identifier == "ConnectToImageSettings" {

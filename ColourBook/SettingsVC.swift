@@ -11,10 +11,8 @@ import UIKit
 class SettingsVC: CustomVC, UIScrollViewDelegate {
     
     @IBOutlet weak var scrollView: UIScrollView!
- /*
-    var selectedBusinessInfo: Business?
-    
-    var selectedAddressInfo: Address?
+ 
+    var selectedLocation: String?
     
     override func viewDidAppear(_ animated: Bool) {
         
@@ -49,22 +47,12 @@ class SettingsVC: CustomVC, UIScrollViewDelegate {
       
         if segue.identifier == "ShowInfo" {
             
-            
-            if self.screenState == .business {
+            if let detail = segue.destination as? AddEditImageVC {
                 
-                if let detail = segue.destination as? AddEditImageVC {
-                    
-                    detail.businessItem = selectedBusinessInfo
-                    detail.screenState = screenState
-                }
-            } else if self.screenState == .homes {
-                
-                if let detail = segue.destination as? AddEditImageVC {
-                    
-                    detail.addressItem = selectedAddressInfo
-                    detail.screenState = screenState
-                }
+                detail.selectedLocation = selectedLocation
+                detail.screenState = screenState
             }
+
         }
         
         if segue.identifier == "ShowMapDetails" {
@@ -74,14 +62,14 @@ class SettingsVC: CustomVC, UIScrollViewDelegate {
                 
                 if let detail = segue.destination as? AddressListDetailVC {
                     
-                    detail.businessItem = selectedBusinessInfo
+//                    detail.businessItem = selectedBusinessInfo
                     detail.screenState = screenState
                 }
             } else if self.screenState == .homes {
                 
                 if let detail = segue.destination as? AddressListDetailVC {
                     
-                    detail.addressItem = selectedAddressInfo
+//                    detail.addressItem = selectedAddressInfo
                     detail.screenState = screenState
                 }
             }
@@ -89,5 +77,4 @@ class SettingsVC: CustomVC, UIScrollViewDelegate {
         
     }
     
-*/
 }

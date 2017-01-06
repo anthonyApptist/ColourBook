@@ -106,6 +106,7 @@
 		9277E0C01DFA8323001E0B9B /* AddressVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9277E0BF1DFA8323001E0B9B /* AddressVC.swift */; };
 		92874DE11E0BB1E400A3D6BC /* UIColourExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92874DE01E0BB1E400A3D6BC /* UIColourExtension.swift */; };
 		929AD0031E03C56E00AB9C63 /* SelectAddressVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929AD0021E03C56E00AB9C63 /* SelectAddressVC.swift */; };
+		92A7A7ED1E1EECA800070FE0 /* DataService-Query.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A7A7EC1E1EECA800070FE0 /* DataService-Query.swift */; };
 		92A7D3EF1E15823800345D94 /* DataService-Save.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A7D3EE1E15823800345D94 /* DataService-Save.swift */; };
 		92B4A61B1DE8FD9300F35DED /* CSVViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B4A61A1DE8FD9300F35DED /* CSVViewController.swift */; };
 		92B4A61D1DEA5B1C00F35DED /* Colour.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B4A61C1DEA5B1C00F35DED /* Colour.swift */; };
@@ -227,6 +228,7 @@
 		9277E0BF1DFA8323001E0B9B /* AddressVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressVC.swift; sourceTree = "<group>"; };
 		92874DE01E0BB1E400A3D6BC /* UIColourExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColourExtension.swift; sourceTree = "<group>"; };
 		929AD0021E03C56E00AB9C63 /* SelectAddressVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectAddressVC.swift; sourceTree = "<group>"; };
+		92A7A7EC1E1EECA800070FE0 /* DataService-Query.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DataService-Query.swift"; sourceTree = "<group>"; };
 		92A7D3EE1E15823800345D94 /* DataService-Save.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DataService-Save.swift"; sourceTree = "<group>"; };
 		92B4A61A1DE8FD9300F35DED /* CSVViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CSVViewController.swift; sourceTree = "<group>"; };
 		92B4A61C1DEA5B1C00F35DED /* Colour.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colour.swift; sourceTree = "<group>"; };
@@ -265,6 +267,7 @@
 				920B52781E108DCD005D5B60 /* DataService-Retrieve.swift */,
 				92A7D3EE1E15823800345D94 /* DataService-Save.swift */,
 				92367A1F1E16CD4A005B11F9 /* DataService-Delete.swift */,
+				92A7A7EC1E1EECA800070FE0 /* DataService-Query.swift */,
 				92B4A6361DEBB8B400F35DED /* AuthService.swift */,
 				92B4A6381DEBB8E500F35DED /* User.swift */,
 				92B4A61C1DEA5B1C00F35DED /* Colour.swift */,
@@ -510,7 +513,7 @@
 				TargetAttributes = {
 					663646551DE0C3EA00E6D719 = {
 						CreatedOnToolsVersion = 8.1;
-						DevelopmentTeam = VDQS4882Z8;
+						DevelopmentTeam = P486JETJ9C;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -693,6 +696,7 @@
 				6636465C1DE0C3EA00E6D719 /* TutorialVC.swift in Sources */,
 				6636465A1DE0C3EA00E6D719 /* AppDelegate.swift in Sources */,
 				92A7D3EF1E15823800345D94 /* DataService-Save.swift in Sources */,
+				92A7A7ED1E1EECA800070FE0 /* DataService-Query.swift in Sources */,
 				92B4A61B1DE8FD9300F35DED /* CSVViewController.swift in Sources */,
 				924C00991E07AC1000C73C6A /* ColourResultsVC.swift in Sources */,
 				661A47F81DF6A97700B56028 /* ItemListDetailVC.swift in Sources */,
@@ -829,7 +833,7 @@
 			baseConfigurationReference = D218658870BE7C0C8667A861 /* Pods-ColourBook.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = VDQS4882Z8;
+				DEVELOPMENT_TEAM = P486JETJ9C;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -848,7 +852,7 @@
 			baseConfigurationReference = 582541D0C63B9F68DF683CF9 /* Pods-ColourBook.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = VDQS4882Z8;
+				DEVELOPMENT_TEAM = P486JETJ9C;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",

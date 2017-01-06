@@ -160,6 +160,22 @@ class AddEditImageVC: CustomVC, UIImagePickerControllerDelegate, UINavigationCon
                 
                 self.image = image
             
+            if self.image == nil || self.image == "" {
+                
+                let image = UIImage(named: "darkgreen.jpg")
+                
+                self.imgView.image = image
+                
+            }
+            
+            else {
+                
+                let locationImage = self.stringToImage(imageName: self.image!)
+                
+                self.imgView.image = locationImage
+                
+            }
+            
         })
         
     }
@@ -189,6 +205,10 @@ class AddEditImageVC: CustomVC, UIImagePickerControllerDelegate, UINavigationCon
             
             self.image = image
             
+            self.signedInUser.image = self.image
+            
+            self.imgView.image = self.stringToImage(imageName: self.signedInUser.image!)
+            
         })
         
     }
@@ -215,21 +235,6 @@ class AddEditImageVC: CustomVC, UIImagePickerControllerDelegate, UINavigationCon
     func setLocationInfo() {
         
         self.photoTitleLbl.text = self.selectedLocation
-        
-        if let image = self.image {
-            
-            let locationImage = stringToImage(imageName: image)
-            
-            self.imgView.image = locationImage
-        }
-        
-        else {
-            
-            let image = UIImage(contentsOfFile: "darkgreen.jpg")
-            
-            self.imgView.image = image
-            
-        }
         
         self.titleLbl.text = ""
         

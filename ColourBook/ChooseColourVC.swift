@@ -71,9 +71,9 @@ class ChooseColourVC: CustomVC {
         
         searchColourButton.isUserInteractionEnabled = true
         
-        searchColourButton.setTitleColor(UIColor.black, for: .normal)
+        searchColourButton.setTitleColor(UIColor.white, for: .normal)
         
-        searchColourButton.backgroundColor = UIColor.white
+        searchColourButton.backgroundColor = UIColor.black
         
         // add to paint button
         
@@ -81,9 +81,9 @@ class ChooseColourVC: CustomVC {
         
         addToPaintButton.setTitle("Add to Paint", for: .normal)
         
-        addToPaintButton.setTitleColor(UIColor.black, for: .normal)
+        addToPaintButton.setTitleColor(UIColor.white, for: .normal)
         
-        addToPaintButton.backgroundColor = UIColor.white
+        addToPaintButton.backgroundColor = UIColor.black
         
         // add to view
         
@@ -202,7 +202,7 @@ class ChooseColourVC: CustomVC {
         
         if self.currentColour == "" {
             
-            let alertView = UIAlertController(title: "No colour searched", message: "type in a new colour", preferredStyle: .alert)
+            let alertView = UIAlertController(title: "No colour searched", message: "type to search for a new colour", preferredStyle: .alert)
             
             let alertAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
             
