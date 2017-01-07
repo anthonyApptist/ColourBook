@@ -45,7 +45,7 @@ class AuthService {
                                             print(error!.localizedDescription)
                                         }
                                         else {
-                                            let createdUser = User(uid: user!.uid, email: user!.email!, name: user!.displayName!, image: "")
+                                            let createdUser = User(uid: user!.uid, email: user!.email!, name: "", image: "")
                                             print(createdUser.email)
                                             print("signed in created user")
                                             onComplete?(nil, user)
@@ -66,8 +66,22 @@ class AuthService {
                 }
             }
             else {
-                let signedInUser = User(uid: user!.uid, email: user!.email!, name: user!.displayName!, image: "")
-                print(signedInUser.uid, signedInUser.email)
+                if (user?.displayName != nil) {
+                    
+                    let signedInUser = User(uid: (user?.uid)!, email: (user?.email!)!, name: (user?.displayName!)!, image: "")
+                    
+                    print(signedInUser.uid, signedInUser.email, user?.displayName!)
+                    
+                }
+                    
+                else {
+                    
+                    let signedInUser = User(uid: (user?.uid)!, email: (user?.email!)!, name: "", image: "")
+                    
+                    print(signedInUser.uid, signedInUser.email, "")
+                    
+                }
+            
                 print("signed in")
                 onComplete?(nil, user)
             }
