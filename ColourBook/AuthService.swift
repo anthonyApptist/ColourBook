@@ -110,7 +110,7 @@ class AuthService {
     func getSignedInUser() -> User {
         if let user = FIRAuth.auth()?.currentUser {
             
-            if (user.displayName != nil) {
+            if user.displayName != nil {
                 
                 let signedInUser = User(uid: user.uid, email: user.email!, name: user.displayName!, image: "")
                 

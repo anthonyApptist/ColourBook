@@ -19,63 +19,6 @@ class AddEditImageVC: CustomVC, UIImagePickerControllerDelegate, UINavigationCon
     
     @IBOutlet weak var imgView: UIImageView!
     
-    let imagePicker = UIImagePickerController()
-    
-    var selectedLocation: String?
-    
-    var image: String?
-    
-    var postalCode: String?
-    
-    var imageString: String?
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        if screenState == .personal {
-
-            DispatchQueue.global(qos: .background).async {
-                
-                self.getProfileFor(user: self.signedInUser.uid)
-                
-            }
-            
-            DispatchQueue.main.async {
-                
-                print("This is run on the main queue, after the previous code in outer block")
-                
-                self.setPersonalInfo()
-                
-            }
-
-        }
-        
-        if screenState == .business || screenState == .homes {
-            
-            DispatchQueue.global(qos: .background).async {
-                
-                self.getInfoFor(location: self.selectedLocation, user: self.signedInUser.uid, screenState: self.screenState)
-                
-            }
-            
-            DispatchQueue.main.async {
-                
-                print("This is run on the main queue, after the previous code in outer block")
-                    
-                self.setLocationInfo()
-                
-            }
-            
-        }
-        
-        self.imagePicker.delegate = self
-        
-        textField?.delegate = self
-        
-        self.saveBtn.addTarget(self, action: #selector(self.saveBtnPressed(_:)), for: .touchUpInside)
-        
-    }
-    
     @IBAction func addPicBtnPressed(_sender: UIButton!) {
         
         self.imagePicker.allowsEditing = true
@@ -86,22 +29,64 @@ class AddEditImageVC: CustomVC, UIImagePickerControllerDelegate, UINavigationCon
         
     }
     
+    let imagePicker = UIImagePickerController()
+    
+    var selectedLocation: String?
+    
+    var image: String?
+    
+    var postalCode: String?
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        self.imagePicker.delegate = self
+        
+        textField?.delegate = self
+        
+        self.saveBtn.addTarget(self, action: #selector(self.saveBtnPressed(_:)), for: .touchUpInside)
+        
+        if screenState == .personal {
+            DispatchQueue.global(qos: .background).async {
+                self.getProfileFor(user: self.signedInUser.uid)
+            }
+            DispatchQueue.main.async {
+                self.setPersonalInfo()
+            }
+        }
+        if screenState == .business || screenState == .homes {
+            DispatchQueue.global(qos: .background).async {
+                self.getInfoFor(location: self.selectedLocation, user: self.signedInUser.uid, screenState: self.screenState)
+            }
+            
+            DispatchQueue.main.async {
+                self.setLocationInfo()
+            }
+        }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        
+        
+    }
+    
+    // MARK: - ImagePicker Delegate
+    
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         
+        // chosen image
         let pickedImage = info[UIImagePickerControllerEditedImage] as! UIImage
         
+        // turn image to data
         let pickedImageData: Data = UIImagePNGRepresentation(pickedImage)!
         
+        // encode image data string
         let pickedImageDataString = pickedImageData.base64EncodedString()
         
-        // assign to imageString
-        
-        self.imageString = pickedImageDataString
-        
+        // assign to image string
+        self.image = pickedImageDataString
         self.imgView.contentMode = .scaleAspectFit
-        
         self.imgView.image = pickedImage
-        
         self.dismiss(animated: true, completion: nil)
         
     }
@@ -110,13 +95,7 @@ class AddEditImageVC: CustomVC, UIImagePickerControllerDelegate, UINavigationCon
         dismiss(animated: true, completion: nil)
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        
-        print(self.imageString)
-        
-    }
-    
-    // MARK: Save Button
+    // MARK: - Save Button
     
     func saveBtnPressed(_ sender: Any?) {
         
@@ -125,17 +104,13 @@ class AddEditImageVC: CustomVC, UIImagePickerControllerDelegate, UINavigationCon
             DataService.instance.saveInfoFor(user: self.signedInUser.uid, screenState: self.screenState, location: "", image: self.image, name: self.textField?.text)
         
             AuthService.instance.saveDisplay(name: (self.textField?.text)!)
-            
         }
-        
         if screenState == .business {
             
             DataService.instance.saveInfoFor(user: self.signedInUser.uid, screenState: self.screenState, location: self.selectedLocation, image: self.image, name: self.textField?.text)
             
             DataService.instance.businessRef.child(self.selectedLocation!).updateChildValues(["name" : self.textField?.text ?? "", "image" : self.image ?? ""])
-            
         }
-        
         if screenState == .homes {
             
             DataService.instance.saveInfoFor(user: self.signedInUser.uid, screenState: self.screenState, location: self.selectedLocation, image: self.image, name: self.textField?.text)
@@ -159,7 +134,7 @@ class AddEditImageVC: CustomVC, UIImagePickerControllerDelegate, UINavigationCon
         
     }
     
-    // MARK: - Get location Info
+    // MARK: - Firebase location Info
     
     func getInfoFor(location: String?, user: String, screenState: ScreenState) {
         
@@ -174,6 +149,13 @@ class AddEditImageVC: CustomVC, UIImagePickerControllerDelegate, UINavigationCon
             let postalCode = profile?["postalCode"] as! String
             
             let image = profile?["image"] as! String
+            
+            if let name = profile?["name"] as? String {
+                self.textField.text = name
+            }
+            else {
+                self.textField.text = ""
+            }
             
             self.postalCode = postalCode
             
@@ -190,10 +172,12 @@ class AddEditImageVC: CustomVC, UIImagePickerControllerDelegate, UINavigationCon
             else {
                 
                 let locationImage = self.stringToImage(imageName: self.image!)
-                
+    
                 self.imgView.image = locationImage
                 
             }
+            
+            
             
         })
         
@@ -210,7 +194,7 @@ class AddEditImageVC: CustomVC, UIImagePickerControllerDelegate, UINavigationCon
         
     }
     
-    // MARK: - Get Personal Info
+    // MARK: - Firebase Personal Info
     
     func getProfileFor(user: String) {
         
@@ -224,15 +208,27 @@ class AddEditImageVC: CustomVC, UIImagePickerControllerDelegate, UINavigationCon
             
             self.image = image
             
-            self.signedInUser.image = self.image
-            
-            self.imgView.image = self.stringToImage(imageName: self.signedInUser.image!)
+            if self.image == nil || self.image == "" {
+                
+                let image = UIImage(named: "darkgreen.jpg")
+                
+                self.imgView.image = image
+                
+            }
+                
+            else {
+                
+                let locationImage = self.stringToImage(imageName: self.image!)
+                
+                self.imgView.image = locationImage
+                
+            }
             
         })
         
     }
     
-    // MARK: Save Button Segue
+    // MARK: - Save Button Segue
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "BackToItemEdit" {
@@ -249,57 +245,25 @@ class AddEditImageVC: CustomVC, UIImagePickerControllerDelegate, UINavigationCon
         
     }
     
-    // set location info
+    // MARK: - Set UI data
     
     func setLocationInfo() {
         
         self.photoTitleLbl.adjustsFontForContentSizeCategory = true
-        
         self.photoTitleLbl.text = self.selectedLocation
         
-        self.titleLbl.text = ""
-        
     }
-    
-    // set personal info
     
     func setPersonalInfo() {
         
         if self.signedInUser.name.isEmpty {
-            
             self.textField?.text = ""
-            
         }
-            
         else {
-            
             self.textField?.text = self.signedInUser.name
-            
         }
         
         self.photoTitleLbl.text = self.signedInUser.email
-        
-        self.signedInUser.image = self.image
-        
-        if self.signedInUser.image == nil || self.signedInUser.image!.isEmpty {
-            
-            let image = UIImage(named: "darkgreen.jpg")
-            
-            self.imgView.image = image
-            
-        }
-        
-        else {
-            
-            let imageEncodedString = self.signedInUser.image
-            
-            let imageData = Data(base64Encoded: imageEncodedString!)
-            
-            let image = UIImage(data: imageData!)
-            
-            self.imgView.image = image
-            
-        }
         
     }
 
