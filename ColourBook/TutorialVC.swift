@@ -90,10 +90,10 @@ class TutorialVC: UIViewController, UIScrollViewDelegate  {
         } else if Int(currentPage) == 1 {
             self.scanLbl.text = "View your product"
         } else if Int(currentPage) == 2 {
-            self.scanLbl.text = "Add your product to your Personal Bucket List"
+            self.scanLbl.text = "Add your product"
             self.scanLbl.numberOfLines = 3
         } else if Int(currentPage) == 3 {
-            self.scanLbl.text = "Add your product to your home"
+            self.scanLbl.text = "Search products"
             self.scanLbl.numberOfLines = 2
         }
     }
@@ -114,11 +114,11 @@ class TutorialVC: UIViewController, UIScrollViewDelegate  {
             self.scanLbl.text = "View your product"
             
         } else if Int(page) == 2 {
-            self.scanLbl.text = "Add your product to your Personal Bucket List"
+            self.scanLbl.text = "Add your product"
             self.scanLbl.numberOfLines = 3
             
         } else if Int(page) == 3 {
-            self.scanLbl.text = "Add your product to your home"
+            self.scanLbl.text = "Search products"
 
             
         }
