@@ -65,7 +65,7 @@ class ItemListAddVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         DispatchQueue.main.async {
             print("This is run on the main queue, after the previous code in outer block")
             
-            self.tableView?.reloadData()
+//            self.tableView?.reloadData()
             
             print(self.locations)
         }

@@ -31,7 +31,7 @@ extension DataService {
     func getLocationRef(screenState: ScreenState) {
         
         if screenState == .business {
-            self.generalRef = self.businessRef.child("businesses")
+            self.generalRef = self.businessRef
         }
         if screenState == .homes {
             self.generalRef = self.addressRef

@@ -85,7 +85,6 @@ class AddEditImageVC: CustomVC, UIImagePickerControllerDelegate, UINavigationCon
         
         // assign to image string
         self.image = pickedImageDataString
-        self.imgView.contentMode = .scaleAspectFit
         self.imgView.image = pickedImage
         self.dismiss(animated: true, completion: nil)
         
@@ -151,10 +150,10 @@ class AddEditImageVC: CustomVC, UIImagePickerControllerDelegate, UINavigationCon
             let image = profile?["image"] as! String
             
             if let name = profile?["name"] as? String {
-                self.textField.text = name
+                self.textField?.text = name
             }
             else {
-                self.textField.text = ""
+                self.textField?.text = ""
             }
             
             self.postalCode = postalCode
