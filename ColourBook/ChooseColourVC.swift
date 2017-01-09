@@ -36,7 +36,7 @@ class ChooseColourVC: CustomVC {
 
         // search colour text field
 
-        searchColourTextfield = UITextField(frame: CGRect(x: self.backBtn.frame.maxX, y: 25, width: view.frame.width - self.backBtn.frame.maxX, height: view.frame.height * 0.05))
+        searchColourTextfield = UITextField(frame: CGRect(x: 0, y: 25, width: view.frame.width, height: 40))
         searchColourTextfield.placeholder = "Search for your colour in our database"
         searchColourTextfield.adjustsFontSizeToFitWidth = true
         searchColourTextfield.textColor = UIColor.black
@@ -45,7 +45,7 @@ class ChooseColourVC: CustomVC {
         
         // search results view
         
-        searchResultView = UIView(frame: CGRect(x: 0, y: 40 + view.frame.height * 0.05, width: view.frame.width, height: view.frame.height - (view.frame.height * 0.05) - (view.frame.height * 0.05) - (view.frame.height * 0.05) - 40))
+        searchResultView = UIView(frame: CGRect(x: 0, y: searchColourTextfield.frame.maxY, width: view.frame.width, height: view.frame.height - (2 * (view.frame.height * 0.10)) - 65))
     
         // search colour button
         
@@ -54,7 +54,7 @@ class ChooseColourVC: CustomVC {
         addToPaintButton.setTitle("Add To Paint", for: .normal)
         addToPaintButton.isUserInteractionEnabled = true
         addToPaintButton.setTitleColor(UIColor.white, for: .normal)
-        addToPaintButton.titleLabel?.font = UIFont(name: "HelveticaNeue-Medium", size: addToPaintButton.frame.height * 0.5)
+        addToPaintButton.titleLabel?.font = UIFont(name: "HelveticaNeue-Medium", size: addToPaintButton.frame.height * 0.4)
         addToPaintButton.backgroundColor = UIColor.black
         addToPaintButton.titleLabel?.alpha = 0.0
         
@@ -65,7 +65,7 @@ class ChooseColourVC: CustomVC {
         searchColourButton.addTarget(self, action: #selector(searchColourButtonFunction), for: .touchUpInside)
         searchColourButton.isUserInteractionEnabled = true
         searchColourButton.setTitleColor(UIColor.white, for: .normal)
-        searchColourButton.titleLabel?.font = UIFont(name: "HelveticaNeue-Medium", size: searchColourButton.frame.height * 0.5)
+        searchColourButton.titleLabel?.font = UIFont(name: "HelveticaNeue-Medium", size: searchColourButton.frame.height * 0.4)
         searchColourButton.backgroundColor = UIColor.black
         
         // add to view

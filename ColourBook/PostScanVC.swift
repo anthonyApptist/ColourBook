@@ -13,27 +13,19 @@ class PostScanViewController: CustomVC {
     var barcode: String = "0023906001698"
     
     var productImageView: UIImageView!
-    
     var manufacturer: UILabel!
-    
     var productName: UILabel!
-    
     var category: UILabel!
-    
     var code: UILabel!
-    
     var productTypeLabel: UILabel!
     
+    // buttons
     var addColourButton: UIButton!
-    
     var addToPersonalButton: UIButton!
-    
     var addToBusinessButton: UIButton!
-    
     var addToHomeButton: UIButton!
     
     var product: Any?
-
     var hexcode: String?
     
     var colourView: ChooseColourVC?
@@ -50,142 +42,104 @@ class PostScanViewController: CustomVC {
         // product type label
         
         let productTypeLabelOrigin = CGPoint(x: view.center.x - ((view.frame.width * 0.6)/2), y: view.frame.height * 0.03)
-        
         let productTypeLabelSize = CGSize(width: view.frame.width * 0.6, height: 50)
-        
-        productTypeLabel = UILabel.init(frame: CGRect(origin: productTypeLabelOrigin, size: productTypeLabelSize))
-        
+        productTypeLabel = UILabel(frame: CGRect(origin: productTypeLabelOrigin, size: productTypeLabelSize))
         productTypeLabel.backgroundColor = UIColor.clear
         
         // image view
         
         let imageViewOrigin = CGPoint(x: view.center.x - ((view.frame.width * 0.4)/2), y: view.frame.height * 0.08)
-        
         let imageViewSize = CGSize(width: view.frame.width * 0.4, height: view.frame.height * 0.4)
-        
-        productImageView = UIImageView.init(frame: CGRect(origin: imageViewOrigin, size: imageViewSize))
+        productImageView = UIImageView(frame: CGRect(origin: imageViewOrigin, size: imageViewSize))
         
         
         // manufacturer label
         
         let manufacturerLabelOrigin = CGPoint(x: view.center.x - ((view.frame.width * 0.6)/2), y: view.frame.height * 0.50)
-        
         let manufacturerLabelSize = CGSize(width: view.frame.width * 0.6, height: 50)
-        
-        manufacturer = UILabel.init(frame: CGRect(origin: manufacturerLabelOrigin, size: manufacturerLabelSize))
-        
+        manufacturer = UILabel(frame: CGRect(origin: manufacturerLabelOrigin, size: manufacturerLabelSize))
         manufacturer.backgroundColor = UIColor.clear
     
         // product name label
         
         let nameLabelOrigin = CGPoint(x: view.center.x - ((view.frame.width * 0.6)/2), y: view.frame.height * 0.55)
-        
         let nameLabelSize = CGSize(width: view.frame.width * 0.6, height: 50)
-        
-        productName = UILabel.init(frame: CGRect(origin: nameLabelOrigin, size: nameLabelSize))
-        
+        productName = UILabel(frame: CGRect(origin: nameLabelOrigin, size: nameLabelSize))
         productName.backgroundColor = UIColor.clear
 
         // code label
         
         let codeLabelOrigin = CGPoint(x: view.center.x - ((view.frame.width * 0.6)/2), y: view.frame.height * 0.60)
-        
         let codeLabelSize = CGSize(width: view.frame.width * 0.6, height: 50)
-        
-        code = UILabel.init(frame: CGRect(origin: codeLabelOrigin, size: codeLabelSize))
-        
+        code = UILabel(frame: CGRect(origin: codeLabelOrigin, size: codeLabelSize))
         code.backgroundColor = UIColor.clear
         
         // category label
         
         let categoryLabelOrigin = CGPoint(x: view.center.x - ((view.frame.width * 0.6)/2), y: view.frame.height * 0.65)
-        
         let categoryLabelSize = CGSize(width: view.frame.width * 0.6, height: 50)
-        
         category = UILabel.init(frame: CGRect(origin: categoryLabelOrigin, size: categoryLabelSize))
-        
         category.backgroundColor = UIColor.clear
         
+        // add to view
+        
         view.addSubview(productTypeLabel)
-        
         view.addSubview(productImageView)
-        
         view.addSubview(manufacturer)
-        
         view.addSubview(productName)
-        
         view.addSubview(code)
-        
         view.addSubview(category)
         
+        // MARK: - Buttons
+        
         // add to personal list button
+        
+        addToPersonalButton = UIButton(type: .system)
         
         let addToPersonalListButtonOrigin = CGPoint(x: view.center.x - ((view.frame.width * 0.15)/2) - ((view.frame.width * 0.15)/2) - (view.frame.width * 0.15), y: view.frame.height * 0.85)
         
         let addToPersonalListButtonSize = CGSize(width: view.frame.width * 0.15, height: view.frame.width * 0.15)
         
-        addToPersonalButton = UIButton.init(frame: CGRect(origin: addToPersonalListButtonOrigin, size: addToPersonalListButtonSize))
+        addToPersonalButton.frame = CGRect(origin: addToPersonalListButtonOrigin, size: addToPersonalListButtonSize)
         
         addToPersonalButton.setTitle("P", for: .normal)
-        
         addToPersonalButton.setTitleColor(UIColor.black, for: .normal)
-        
-        addToPersonalButton.layer.borderWidth = 3.0
-        
-        addToPersonalButton.layer.borderColor = UIColor.black.cgColor
         
         addToPersonalButton.addTarget(self, action: #selector(addToPersonalButtonFunction), for: .touchUpInside)
         
         // add to business list button
         
+        addToBusinessButton = UIButton(type: .system)
+        
         let addToBusinessButtonOrigin = CGPoint(x: view.center.x - ((view.frame.width * 0.15)/2), y: view.frame.height * 0.85)
         
         let addToBusinessButtonSize = CGSize(width: view.frame.width * 0.15, height: view.frame.width * 0.15)
         
-        addToBusinessButton = UIButton.init(frame: CGRect(origin: addToBusinessButtonOrigin, size: addToBusinessButtonSize))
-        
+        addToBusinessButton.frame = CGRect(origin: addToBusinessButtonOrigin, size: addToBusinessButtonSize)
         addToBusinessButton.setTitle("B", for: .normal)
-        
         addToBusinessButton.setTitleColor(UIColor.black, for: .normal)
-        
-        addToBusinessButton.layer.borderWidth = 3.0
-        
-        addToBusinessButton.layer.borderColor = UIColor.black.cgColor
-        
         addToBusinessButton.addTarget(self, action: #selector(addToBusinessButtonFunction), for: .touchUpInside)
         
         // add to home list button
         
+        addToHomeButton = UIButton(type: .system)
         let addToHomeButtonOrigin = CGPoint(x: view.center.x + ((view.frame.width * 0.15)/2) + ((view.frame.width * 0.15)/2), y: view.frame.height * 0.85)
-        
         let addToHomeButtonSize = CGSize(width: view.frame.width * 0.15, height: view.frame.width * 0.15)
-        
-        addToHomeButton = UIButton.init(frame: CGRect(origin: addToHomeButtonOrigin, size: addToHomeButtonSize))
-        
+        addToHomeButton.frame = CGRect(origin: addToHomeButtonOrigin, size: addToHomeButtonSize)
         addToHomeButton.setTitle("H", for: .normal)
-        
         addToHomeButton.setTitleColor(UIColor.black, for: .normal)
-        
-        addToHomeButton.layer.borderWidth = 3.0
-        
-        addToHomeButton.layer.borderColor = UIColor.black.cgColor
-        
         addToHomeButton.addTarget(self, action: #selector(addToAddressButtonFunction), for: .touchUpInside)
         
         // add colour button
         
+        addColourButton = UIButton(type: .system)
+        
         let addColourButtonOrigin = CGPoint(x: view.center.x - ((view.frame.width * 0.6)/2), y: view.frame.height * 0.75)
-        
         let addColourButtonSize = CGSize(width: view.frame.width * 0.6, height: view.frame.height * 0.08)
-        
-        addColourButton = UIButton.init(frame: CGRect(origin: addColourButtonOrigin, size: addColourButtonSize))
-        
+        addColourButton.frame = CGRect(origin: addColourButtonOrigin, size: addColourButtonSize)
         addColourButton.setTitle("Add colour", for: .normal)
-        
         addColourButton.setTitleColor(UIColor.black, for: .normal)
-        
         addColourButton.addTarget(self, action: #selector(addColourFunction), for: .touchUpInside)
-        
         addColourButton.layer.borderWidth = 3.0
         
         addColourButton.layer.borderColor = UIColor.black.cgColor
@@ -195,9 +149,7 @@ class PostScanViewController: CustomVC {
         addColourButton.alpha = 0.0
         
         view.addSubview(addToPersonalButton)
-        
         view.addSubview(addToBusinessButton)
-        
         view.addSubview(addToHomeButton)
         
         lookup(barcode: self.barcode)
@@ -212,9 +164,14 @@ class PostScanViewController: CustomVC {
             if colourView.isBeingDismissed {
                 self.product = colourView.paint
                 self.hexcode = colourView.paint?.colour
-                self.check(product: "Paint")
-                self.addColourButton.setTitle("", for: .normal)
-                self.addColourButton.backgroundColor = UIColor(hexString: self.hexcode!)
+                if self.hexcode == "" {
+                    
+                }
+                else {
+                    self.check(product: "Paint")
+                    self.addColourButton.setTitle("", for: .normal)
+                    self.addColourButton.backgroundColor = UIColor(hexString: self.hexcode!)
+                }
             }
         }
     }
@@ -237,13 +194,9 @@ class PostScanViewController: CustomVC {
     func addToBusinessButtonFunction() {
         
         let selectView = SelectAddressVC()
-        
         selectView.screenState = .business
-        
         selectView.barcode = self.barcode
-        
         selectView.productProfile = self.product as? Paint
-        
         self.present(selectView, animated: true, completion: { (error) in
             
         })
@@ -255,13 +208,9 @@ class PostScanViewController: CustomVC {
     func addToAddressButtonFunction() {
         
         let selectView = SelectAddressVC()
-        
         selectView.screenState = .homes
-        
         selectView.barcode = self.barcode
-        
         selectView.productProfile = self.product as? Paint
-        
         self.present(selectView, animated: true, completion: { (error) in
             
         })
@@ -281,55 +230,44 @@ class PostScanViewController: CustomVC {
                 // barcode database
                 
                 let barcodeDatabase = snapshot.value as? NSDictionary
-                
                 let profile = barcodeDatabase?[self.barcode] as? NSDictionary
-                
                 let paintCanProfile = profile?["profile"] as? NSDictionary
                 
                 let paint = Paint(manufacturer: paintCanProfile?["manufacturer"] as! String, productName: paintCanProfile?["productName"] as! String, category: paintCanProfile?["category"] as! String, code: paintCanProfile?["code"] as! String, upcCode: self.barcode, image: paintCanProfile?["image"] as! String, colour: paintCanProfile?["colour"] as! String)
-                
+
                 self.product = paint
                 
                 // get product type
                 
                 self.productTypeLabel.text = paintCanProfile?["product"] as! String?
-                
                 self.productTypeLabel.textAlignment = .center
                 
                 // product image
                 
                 let image = self.showProductImage(url: paint.image)
-                
                 self.productImageView.image = image
-                
                 self.productImageView.contentMode = .scaleAspectFill
                 
                 // manufacturer text
                 
                 self.manufacturer.text = paint.manufacturer
-                
                 self.manufacturer.textAlignment = .center
-                
                 self.manufacturer.textColor = UIColor.black
                 
                 // product name
                 
                 self.productName.text = paint.productName
-                
                 self.productName.adjustsFontSizeToFitWidth = true
-                
                 self.productName.textColor = UIColor.black
                 
                 // product code
                 
                 self.code.text = paint.code
-                
                 self.code.textColor = UIColor.black
                 
                 // product category
                 
                 self.category.text = paint.category
-                
                 self.category.textColor = UIColor.black
                 
                 // check product type
@@ -360,7 +298,9 @@ class PostScanViewController: CustomVC {
         
         if product == "Paint" {
             
-            self.addColourButton.alpha = 1.0
+            UIView.animate(withDuration: 1.0, animations: {
+                self.addColourButton.alpha = 1.0
+            })
 
         }
             
@@ -374,13 +314,9 @@ class PostScanViewController: CustomVC {
     // add to colour function
     
     func addColourFunction() {
-        
         self.colourView = ChooseColourVC()
-        
         self.colourView?.paint = self.product as? Paint
-
         self.present(self.colourView!, animated: true, completion: nil)
-        
     }
     
     // show product image
@@ -388,23 +324,14 @@ class PostScanViewController: CustomVC {
     func showProductImage(url: String?) -> UIImage {
         
         if let urlString = url {
-
             let imageURL = NSURL(string: urlString)
-            
             let imageData = NSData(contentsOf: imageURL as! URL)
-            
             let image = UIImage(data: imageData as! Data)
-            
             return image!
-
         }
-        
         else {
-            
             let image = UIImage(contentsOfFile: "darkgreen.jpg")
-            
             return image!
-            
         }
         
         

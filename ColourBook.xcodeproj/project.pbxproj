@@ -116,6 +116,8 @@
 		92B4A6391DEBB8E500F35DED /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B4A6381DEBB8E500F35DED /* User.swift */; };
 		92C6A1AE1DF5CE6100B2D6C4 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92C6A1AD1DF5CE6100B2D6C4 /* FBSDKLoginKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		92CFEE2E1E00DF9A00F78C78 /* ChooseColourVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92CFEE2D1E00DF9A00F78C78 /* ChooseColourVC.swift */; };
+		92F6B6F41E2352BE00643AD0 /* AddressItemsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92F6B6F31E2352BE00643AD0 /* AddressItemsVC.swift */; };
+		92F6B6F61E2354A100643AD0 /* ProductCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92F6B6F51E2354A100643AD0 /* ProductCell.swift */; };
 		92F9E4881DFB51A2006DCD19 /* PostScanVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9277E0B41DF75022001E0B9B /* PostScanVC.swift */; };
 		92FD3EAB1DE52A71009341C9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 92FD3EAA1DE52A71009341C9 /* GoogleService-Info.plist */; };
 		92FD3EAF1DE52D26009341C9 /* BarcodeScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92FD3EAE1DE52D26009341C9 /* BarcodeScanner.swift */; };
@@ -238,6 +240,8 @@
 		92B4A6381DEBB8E500F35DED /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		92C6A1AD1DF5CE6100B2D6C4 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		92CFEE2D1E00DF9A00F78C78 /* ChooseColourVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseColourVC.swift; sourceTree = "<group>"; };
+		92F6B6F31E2352BE00643AD0 /* AddressItemsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressItemsVC.swift; sourceTree = "<group>"; };
+		92F6B6F51E2354A100643AD0 /* ProductCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductCell.swift; sourceTree = "<group>"; };
 		92FD3EAA1DE52A71009341C9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		92FD3EAE1DE52D26009341C9 /* BarcodeScanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarcodeScanner.swift; sourceTree = "<group>"; };
 		D218658870BE7C0C8667A861 /* Pods-ColourBook.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ColourBook.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ColourBook/Pods-ColourBook.debug.xcconfig"; sourceTree = "<group>"; };
@@ -464,6 +468,8 @@
 				924C00981E07AC1000C73C6A /* ColourResultsVC.swift */,
 				929AD0021E03C56E00AB9C63 /* SelectAddressVC.swift */,
 				9277E0BD1DFA7D94001E0B9B /* SearchAddressVC.swift */,
+				92F6B6F31E2352BE00643AD0 /* AddressItemsVC.swift */,
+				92F6B6F51E2354A100643AD0 /* ProductCell.swift */,
 				9277E0BF1DFA8323001E0B9B /* AddressVC.swift */,
 			);
 			name = SearchControllers;
@@ -687,12 +693,14 @@
 				920B52771E1066AB005D5B60 /* SaveButtons.swift in Sources */,
 				92B4A6391DEBB8E500F35DED /* User.swift in Sources */,
 				92B4A61F1DEA94D300F35DED /* Paint.swift in Sources */,
+				92F6B6F61E2354A100643AD0 /* ProductCell.swift in Sources */,
 				66242AE21DF24ED8000B651F /* Validator.swift in Sources */,
 				9277E0BE1DFA7D94001E0B9B /* SearchAddressVC.swift in Sources */,
 				92B4A61D1DEA5B1C00F35DED /* Colour.swift in Sources */,
 				66242AE81DF46F30000B651F /* LabelCustomSpacing.swift in Sources */,
 				9277E0C01DFA8323001E0B9B /* AddressVC.swift in Sources */,
 				66CB81BC1E02175300190315 /* SearchViewController.swift in Sources */,
+				92F6B6F41E2352BE00643AD0 /* AddressItemsVC.swift in Sources */,
 				6636465C1DE0C3EA00E6D719 /* TutorialVC.swift in Sources */,
 				6636465A1DE0C3EA00E6D719 /* AppDelegate.swift in Sources */,
 				92A7D3EF1E15823800345D94 /* DataService-Save.swift in Sources */,
