@@ -10,7 +10,6 @@
 		661A47F61DF6A95700B56028 /* AddEditImageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661A47F51DF6A95700B56028 /* AddEditImageVC.swift */; };
 		661A47F81DF6A97700B56028 /* ItemListDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661A47F71DF6A97700B56028 /* ItemListDetailVC.swift */; };
 		661A47FA1DF6A9B400B56028 /* AddEditAddressVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661A47F91DF6A9B400B56028 /* AddEditAddressVC.swift */; };
-		661A47FE1DF6AA0E00B56028 /* AddressListDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661A47FD1DF6AA0E00B56028 /* AddressListDetailVC.swift */; };
 		661A48001DF6AA3800B56028 /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661A47FF1DF6AA3800B56028 /* SettingsVC.swift */; };
 		66242AD51DF0EDAE000B651F /* ItemListAddVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66242AD41DF0EDAE000B651F /* ItemListAddVC.swift */; };
 		66242AD71DF0F0F4000B651F /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66242AD61DF0F0F4000B651F /* MessageView.swift */; };
@@ -128,7 +127,6 @@
 		661A47F51DF6A95700B56028 /* AddEditImageVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddEditImageVC.swift; sourceTree = "<group>"; };
 		661A47F71DF6A97700B56028 /* ItemListDetailVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemListDetailVC.swift; sourceTree = "<group>"; };
 		661A47F91DF6A9B400B56028 /* AddEditAddressVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddEditAddressVC.swift; sourceTree = "<group>"; };
-		661A47FD1DF6AA0E00B56028 /* AddressListDetailVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressListDetailVC.swift; sourceTree = "<group>"; };
 		661A47FF1DF6AA3800B56028 /* SettingsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
 		66242AD41DF0EDAE000B651F /* ItemListAddVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemListAddVC.swift; sourceTree = "<group>"; };
 		66242AD61DF0F0F4000B651F /* MessageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
@@ -310,7 +308,6 @@
 				66F942C31DF9241E00C01DAF /* ItemListEditVC.swift */,
 				661A47F51DF6A95700B56028 /* AddEditImageVC.swift */,
 				661A47F71DF6A97700B56028 /* ItemListDetailVC.swift */,
-				661A47FD1DF6AA0E00B56028 /* AddressListDetailVC.swift */,
 				661A47FF1DF6AA3800B56028 /* SettingsVC.swift */,
 				66F942C51DF92CA500C01DAF /* CustomVC.swift */,
 				66CB81BB1E02175300190315 /* SearchViewController.swift */,
@@ -676,7 +673,6 @@
 				665E63701DE6B573002BA868 /* UIColours.swift in Sources */,
 				66F942C41DF9241E00C01DAF /* ItemListEditVC.swift in Sources */,
 				665E63781DE8293A002BA868 /* SignUpViewController.swift in Sources */,
-				661A47FE1DF6AA0E00B56028 /* AddressListDetailVC.swift in Sources */,
 				663646891DE3E93A00E6D719 /* LogInViewController.swift in Sources */,
 				66242AD71DF0F0F4000B651F /* MessageView.swift in Sources */,
 				663646731DE16C6800E6D719 /* UIExtensions.swift in Sources */,
@@ -845,7 +841,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = .ColourBook;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -868,7 +864,7 @@
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 3.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

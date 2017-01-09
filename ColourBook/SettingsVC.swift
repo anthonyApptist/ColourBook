@@ -55,25 +55,7 @@ class SettingsVC: CustomVC, UIScrollViewDelegate {
 
         }
         
-        if segue.identifier == "ShowMapDetails" {
-            
-            
-            if self.screenState == .business {
-                
-                if let detail = segue.destination as? AddressListDetailVC {
-                    
-//                    detail.businessItem = selectedBusinessInfo
-                    detail.screenState = screenState
-                }
-            } else if self.screenState == .homes {
-                
-                if let detail = segue.destination as? AddressListDetailVC {
-                    
-//                    detail.addressItem = selectedAddressInfo
-                    detail.screenState = screenState
-                }
-            }
-        }
+    
         
     }
     
