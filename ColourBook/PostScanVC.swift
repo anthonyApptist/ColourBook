@@ -10,7 +10,7 @@ import UIKit
 
 class PostScanViewController: CustomVC {
     
-    var barcode: String = "0023906001698"
+    var barcode: String!
     
     var productImageView: UIImageView!
     
