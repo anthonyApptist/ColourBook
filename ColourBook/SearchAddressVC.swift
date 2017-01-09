@@ -26,8 +26,8 @@ class SearchAddressVC: CustomVC {
         
         // search text field
 
-        let searchTextFieldOrigin = CGPoint(x: self.backBtn.frame.maxX, y: 25)
-        let searchTextFieldSize = CGSize(width: view.frame.width - self.backBtn.frame.maxX, height: view.frame.height * 0.05)
+        let searchTextFieldOrigin = CGPoint(x: 0, y: 25)
+        let searchTextFieldSize = CGSize(width: view.frame.width, height: 40)
         searchTextfield = UITextField(frame: CGRect(origin: searchTextFieldOrigin, size: searchTextFieldSize))
         searchTextfield.placeholder = "Type in address"
         searchTextfield.adjustsFontSizeToFitWidth = true
@@ -35,17 +35,18 @@ class SearchAddressVC: CustomVC {
         
         // results title label
         
-        let resultTitleOrigin = CGPoint(x: 0, y: searchTextfield.frame.maxY + 20)
+        let resultTitleOrigin = CGPoint(x: 0, y: searchTextfield.frame.maxY)
         let resultTitleSize = CGSize(width: view.frame.width, height: view.frame.height * 0.10)
         resultTitleLabel = UILabel(frame: CGRect(origin: resultTitleOrigin, size: resultTitleSize))
         resultTitleLabel.backgroundColor = UIColor.black
         resultTitleLabel.textColor = UIColor.white
-        self.resultTitleLabel.numberOfLines = 0
+        resultTitleLabel.textAlignment = .center
+        resultTitleLabel.numberOfLines = 0
         
         // results view
         
-        let resultViewOrigin = CGPoint(x: 0, y: searchTextfield.frame.height + resultTitleLabel.frame.height + 25)
-        let resultViewSize = CGSize(width: view.frame.width, height: view.frame.height - searchTextfield.frame.height - (3 * (view.frame.height * 0.10)) - 25)
+        let resultViewOrigin = CGPoint(x: 0, y: resultTitleLabel.frame.maxY)
+        let resultViewSize = CGSize(width: view.frame.width, height: view.frame.height - (3 * (view.frame.height * 0.10)) - 40)
         locationResultView = UIView(frame: CGRect(origin: resultViewOrigin, size: resultViewSize))
         
         // view button
@@ -114,8 +115,8 @@ class SearchAddressVC: CustomVC {
                 
                 if businessLocations.contains(addressQuery!) {
                     
-                    self.resultTitleLabel.text = "Business"
                     self.resultTitleLabel.font = UIFont(name: "HelveticaNeue-Medium", size: self.resultTitleLabel.frame.height * 0.50)
+                    self.resultTitleLabel.text = "Business"
                     childString = "businesses"
                     
                     let locationData = snapshot.childSnapshot(forPath: childString).childSnapshot(forPath: addressQuery!)
@@ -169,8 +170,10 @@ class SearchAddressVC: CustomVC {
                 
                 else if homeLocations.contains(addressQuery!) {
                     
-                    self.resultTitleLabel.text = "Address"
                     self.resultTitleLabel.font = UIFont(name: "HelveticaNeue-Medium", size: self.resultTitleLabel.frame.height * 0.50)
+                    self.resultTitleLabel.textAlignment = .center
+                    self.resultTitleLabel.text = "Address"
+                    
                     self.resultTitleLabel.adjustsFontForContentSizeCategory = true
                     childString = "addresses"
                     
@@ -238,18 +241,22 @@ class SearchAddressVC: CustomVC {
     
     func viewButtonFunction() {
         
-        /*
         if self.resultTitleLabel.text == "Business" {
-            let barcodes = ItemListEditVC()
+            let barcodes = AddressItemVC()
             barcodes.screenState = .business
             barcodes.selectedLocation = self.resultLocation
+            self.present(barcodes, animated: true, completion: {
+                
+            })
         }
         if self.resultTitleLabel.text == "Address" {
-            let barcodes = ItemListEditVC()
+            let barcodes = AddressItemVC()
             barcodes.screenState = .homes
             barcodes.selectedLocation = self.resultLocation
+            self.present(barcodes, animated: true, completion: {
+                
+            })
         }
-         */
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
