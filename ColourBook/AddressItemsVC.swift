@@ -61,7 +61,7 @@ class AddressItemVC: CustomVC, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = ProductCell(style: .default, reuseIdentifier: "item")
+        let cell = tableView.dequeueReusableCell(withIdentifier: "item") as! ProductCell
         
         let product = products[indexPath.row]
         

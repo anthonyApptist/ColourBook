@@ -37,7 +37,7 @@ class ChooseColourVC: CustomVC {
         // search colour text field
 
         searchColourTextfield = UITextField(frame: CGRect(x: 0, y: 25, width: view.frame.width, height: 40))
-        searchColourTextfield.placeholder = "Search for your colour in our database"
+        searchColourTextfield.placeholder = "Search for colour"
         searchColourTextfield.adjustsFontSizeToFitWidth = true
         searchColourTextfield.textColor = UIColor.black
         searchColourTextfield.backgroundColor = UIColor.white

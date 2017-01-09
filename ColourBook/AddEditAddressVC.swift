@@ -32,9 +32,12 @@ class AddEditAddressVC: CustomVC, MKMapViewDelegate, UISearchBarDelegate {
     
     let locationManager = CLLocationManager()
     
+    var searchedCoordinates: CLLocation?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.saveBtn.alpha = 0.0
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -96,6 +99,8 @@ class AddEditAddressVC: CustomVC, MKMapViewDelegate, UISearchBarDelegate {
             let coordinate: CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: (localSearchResponse?.boundingRegion.center.latitude)!, longitude: (localSearchResponse?.boundingRegion.center.longitude)!)
             let coordinateRegion = MKCoordinateRegionMakeWithDistance(coordinate, self.regionRadius * 2, self.regionRadius * 2)
             self.map.setRegion(coordinateRegion, animated: true)
+            
+            self.searchedCoordinates = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
             
         }
     }
@@ -168,13 +173,9 @@ class AddEditAddressVC: CustomVC, MKMapViewDelegate, UISearchBarDelegate {
     
     func saveBtnPressed(_ sender: Any?) {
         
-        let currentLocation = self.locationManager.location?.coordinate
-        
         let geoCoder = CLGeocoder()
         
-        let location = CLLocation(latitude: (currentLocation?.latitude)!, longitude: (currentLocation?.longitude)!)
-        
-        geoCoder.reverseGeocodeLocation(location, completionHandler: { (placemarks, error) in
+        geoCoder.reverseGeocodeLocation(self.searchedCoordinates!, completionHandler: { (placemarks, error) in
             
             var placeMark: CLPlacemark!
             
@@ -194,9 +195,9 @@ class AddEditAddressVC: CustomVC, MKMapViewDelegate, UISearchBarDelegate {
             // add to user business bucket list
             DataService.instance.saveLocationTo(user: self.signedInUser, location: self.location!, screenState: self.screenState)
         
+            self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
         })
         
-        self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
     
     }
     
@@ -247,7 +248,11 @@ class AddEditAddressVC: CustomVC, MKMapViewDelegate, UISearchBarDelegate {
         
         alertView.addAction(alertCancel)
         
-        self.present(alertView, animated: true, completion: nil)
+        self.present(alertView, animated: true) { 
+            UIView.animate(withDuration: 1.0, animations: { 
+                self.saveBtn.alpha = 1.0
+            })
+        }
         
     }
 }

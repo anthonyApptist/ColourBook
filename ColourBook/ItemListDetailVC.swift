@@ -38,20 +38,13 @@ class ItemListDetailVC: CustomVC {
         
         self.imgView?.contentMode = .scaleAspectFill
         
-        if let imageUrlString = detailItem?.image {
-            
-            let image = self.setImageFrom(urlString: imageUrlString)
-                
+        if detailItem?.image == "N/A" {
+            let image = UIImage(named: "darkgreen.jpg")
             self.imgView?.image = image
-            
         }
-        
         else {
-            
-            let image = UIImage(contentsOfFile: "darkgreen.jpg")
-            
+            let image = self.setImageFrom(urlString: (detailItem?.image)!)
             self.imgView?.image = image
-            
         }
         
     }
