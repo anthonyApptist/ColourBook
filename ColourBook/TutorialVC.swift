@@ -43,11 +43,11 @@ class TutorialVC: UIViewController, UIScrollViewDelegate  {
         let scrollViewHeight: CGFloat = self.scrollView.frame.height
         
         self.scrollView.isScrollEnabled = true
-        self.scrollView.isPagingEnabled = true
+        self.scrollView.isPagingEnabled = false
         self.scrollView.showsHorizontalScrollIndicator = false
         
         let pageOne = IconView(frame: CGRect(x: 0, y: 0, width: 170, height: 163))
-        pageOne.frame.origin = CGPoint(x: scrollView.bounds.size.width/2 - pageOne.frame.width/2, y: scrollView.bounds.size.height/2 - pageOne.frame.height/2)
+        pageOne.frame.origin = CGPoint(x: scrollView.bounds.size.width/2 - pageOne.frame.width/2 - 35, y: scrollView.bounds.size.height/2 - pageOne.frame.height/2)
         pageOne.imageView = UIImageView(frame: CGRect(x: 14, y: 7, width: 150, height: 128))
         pageOne.addSubview(pageOne.imageView!)
         pageOne.imageView?.image = UIImage(named: "darkgreen")

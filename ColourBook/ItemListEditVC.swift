@@ -61,8 +61,7 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         
         titleLbl?.adjustsFontSizeToFitWidth = true
         
-        setTitleLabelTextFor()
-        
+
         // access user database
         
         self.getPaintArray(screenState: self.screenState, user: self.signedInUser, location: self.selectedLocation)
@@ -77,11 +76,15 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         tableView?.delegate = self
         tableView?.dataSource = self
         
+        setTitleLabelTextFor()
+        
         DispatchQueue.main.async {
             
             self.tableView?.reloadData()
 
         }
+        
+
         
     }
     
