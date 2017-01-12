@@ -176,21 +176,12 @@ class BarcodeScanner: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
         let trimmedCode = code.trimmingCharacters(in: NSCharacterSet.whitespaces)
         
         let trimmedCodeString = "\(trimmedCode)"
-        var trimmedCodeNoZero: String
+        var trimmedCodeAddZero: String
         
-        if trimmedCodeString.hasPrefix("0") && trimmedCodeString.characters.count > 1 {
-            trimmedCodeNoZero = String(trimmedCodeString.characters.dropFirst())
-
-            // successful barcode scanned
+        trimmedCodeAddZero = "0" + "\(trimmedCodeString)"
             
-            self.code = trimmedCodeNoZero
-        }
-            
-        else {
-            
-            self.code = code
-            
-        }
+        self.code = trimmedCodeAddZero
+        
     }
     
     // swipe function

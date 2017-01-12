@@ -70,9 +70,13 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         
         super.viewWillAppear(false)
         
+        products = []
+        
         // access user database
-        self.getInfo(screenState: self.screenState, user: self.signedInUser, location: self.selectedLocation)
-
+        self.getPaint(screenState: self.screenState, user: self.signedInUser, location: self.selectedLocation)
+        
+        
+        
     }
 
     
@@ -174,7 +178,7 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
     
     // MARK: - Get Barcodes
     
-    func getInfo(screenState: ScreenState, user: User, location: String?) {
+    func getPaint(screenState: ScreenState, user: User, location: String?) {
         
         let productsRef = DataService.instance.usersRef.child(user.uid)
         
