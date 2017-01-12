@@ -163,7 +163,9 @@ class BarcodeScanner: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
             
             print(code!)
             
-            self.barcodeTrimmedFrom(code: code!)
+            self.code = code!
+            
+//            self.barcodeTrimmedFrom(code: code!)
             
             captureSession.stopRunning()
             
