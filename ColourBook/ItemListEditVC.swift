@@ -60,11 +60,10 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         super.viewDidLoad()
         
         titleLbl?.adjustsFontSizeToFitWidth = true
-        
+    
         tableView?.delegate = self
         tableView?.dataSource = self
-        
-        
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -73,6 +72,7 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         
         // access user database
         self.getInfo(screenState: self.screenState, user: self.signedInUser, location: self.selectedLocation)
+
     }
 
     

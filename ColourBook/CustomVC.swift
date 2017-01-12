@@ -38,9 +38,9 @@ class CustomVC: UIViewController, UITextFieldDelegate {
         
         // get signed in user
         
-        self.signedInUser = AuthService.instance.getSignedInUser()
 
         //DEFAULT VALUES
+        self.signedInUser = AuthService.instance.getSignedInUser()
         
         self.backButtonNeeded = true
         
@@ -48,8 +48,10 @@ class CustomVC: UIViewController, UITextFieldDelegate {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(false)
         
-        
+        self.signedInUser = AuthService.instance.getSignedInUser()
+
         print(screenState.hashValue)
         
         
