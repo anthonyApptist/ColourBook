@@ -61,32 +61,20 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         
         titleLbl?.adjustsFontSizeToFitWidth = true
         
-        setTitleLabelTextFor()
-        
-        // access user database
-        
-        self.getPaintArray(screenState: self.screenState, user: self.signedInUser, location: self.selectedLocation)
-  
-        
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        
-        super.viewDidAppear(false)
-        
         tableView?.delegate = self
         tableView?.dataSource = self
         
-        DispatchQueue.main.async {
-            
-            self.tableView?.reloadData()
-
-        }
         
     }
     
-    
-    
+    override func viewWillAppear(_ animated: Bool) {
+        
+        super.viewWillAppear(false)
+        
+        // access user database
+        self.getInfo(screenState: self.screenState, user: self.signedInUser, location: self.selectedLocation)
+    }
+
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -142,11 +130,8 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
             } else {
                 return .delete
             }
-            
         }
-        
         return .none
-        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -166,7 +151,6 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
                 detail.screenState = screenState
             }
         }
-        
         if segue.identifier == "ConnectToMenuSettings" {
             
             if let detail = segue.destination as? SettingsVC {
@@ -174,7 +158,6 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
                 detail.selectedLocation = self.selectedLocation
                 detail.screenState = screenState
             }
-
         }
         
         if segue.identifier == "ConnectToImageSettings" {
@@ -189,60 +172,127 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         
     }
     
-    // set title label for screen state
-
-    func setTitleLabelTextFor() {
-        
-        if screenState == .personal {
-            
-            titleLbl?.text = self.signedInUser.name
-            
-        } else if screenState == .business || screenState == .homes {
-            
-            titleLbl?.text = selectedLocation
-            
-        }
-    }
-
-    
     // MARK: - Get Barcodes
     
-    func getPaintArray(screenState: ScreenState, user: User, location: String?) {
+    func getInfo(screenState: ScreenState, user: User, location: String?) {
         
-        getBarcodesRefFor(user: user, screenState: screenState, location: location)
+        let productsRef = DataService.instance.usersRef.child(user.uid)
         
-        let productsRef = DataService.instance.generalRef
-        
-        productsRef?.observeSingleEvent(of: .value, with: { (snapshot) in
-            
+        productsRef.observeSingleEvent(of: .value, with: { (snapshot) in
             user.items = []
             
-            for child in snapshot.children.allObjects {
+            if screenState == .personal {
+                if snapshot.hasChild("name") {
+                    let name = snapshot.childSnapshot(forPath: "name").value as! String
+                    self.titleLbl?.text = name
+                    
+                    if snapshot.hasChild(PersonalDashboard) {
+                        for child in snapshot.childSnapshot(forPath: PersonalDashboard).childSnapshot(forPath: Barcodes).children.allObjects {
+                            let paintProfile = child as! FIRDataSnapshot
+                            
+                            let profile = paintProfile.value as? NSDictionary
+                            let productType = profile?["product"] as! String
+                            let manufacturer = profile?["manufacturer"] as! String
+                            let upcCode = paintProfile.key
+                            let image = profile?["image"] as! String
+                            let colourForPaint = profile?["colour"] as! String
+                            let product = ScannedProduct(productType: productType, manufacturer: manufacturer, upcCode: upcCode, image: image, colour: colourForPaint)
+                            
+                            user.items.append(product)
+                            
+                        }
+                        
+                        let items = user.items as! [ScannedProduct]
+                        self.products.append(contentsOf: items)
+                        
+                        self.tableView?.reloadData()
+                    }
+                    else {
+                        user.items = []
+                    }
+
+                }
                 
-                let paintProfile = child as! FIRDataSnapshot
+                else {
+                    
+                    self.titleLbl?.text = ""
+                    
+                    if snapshot.hasChild(PersonalDashboard) {
+                        for child in snapshot.childSnapshot(forPath: PersonalDashboard).childSnapshot(forPath: Barcodes).children.allObjects {
+                            let paintProfile = child as! FIRDataSnapshot
+                            
+                            let profile = paintProfile.value as? NSDictionary
+                            let productType = profile?["product"] as! String
+                            let manufacturer = profile?["manufacturer"] as! String
+                            let upcCode = paintProfile.key
+                            let image = profile?["image"] as! String
+                            let colourForPaint = profile?["colour"] as! String
+                            let product = ScannedProduct(productType: productType, manufacturer: manufacturer, upcCode: upcCode, image: image, colour: colourForPaint)
+                            
+                            user.items.append(product)
+                            
+                        }
+                        
+                        let items = user.items as! [ScannedProduct]
+                        self.products.append(contentsOf: items)
+                        
+                        self.tableView?.reloadData()
+
+                    }
+                    else {
+                        user.items = []
+                    }
+                }
+            }
+            else {
                 
-                let profile = paintProfile.value as? NSDictionary
-                
-                let productType = profile?["product"] as! String
-                
-                let manufacturer = profile?["manufacturer"] as! String
-                
-                let upcCode = paintProfile.key
-                
-                let image = profile?["image"] as! String
-                
-                let colourForPaint = profile?["colour"] as! String
-                
-                let product = ScannedProduct(productType: productType, manufacturer: manufacturer, upcCode: upcCode, image: image, colour: colourForPaint)
-                
-                user.items.append(product)
-                
+                if screenState == .business {
+                    // get items
+                    for child in snapshot.childSnapshot(forPath: BusinessDashboard).childSnapshot(forPath: self.selectedLocation!).childSnapshot(forPath: Barcodes).children.allObjects {
+                        let paintProfile = child as! FIRDataSnapshot
+                        
+                        let profile = paintProfile.value as? NSDictionary
+                        let productType = profile?["product"] as! String
+                        let manufacturer = profile?["manufacturer"] as! String
+                        let upcCode = paintProfile.key
+                        let image = profile?["image"] as! String
+                        let colourForPaint = profile?["colour"] as! String
+                        let product = ScannedProduct(productType: productType, manufacturer: manufacturer, upcCode: upcCode, image: image, colour: colourForPaint)
+                        
+                        user.items.append(product)
+                    }
+                    
+                    let items = user.items as! [ScannedProduct]
+                    self.products.append(contentsOf: items)
+                    
+                    self.tableView?.reloadData()
+
+                }
+                else if screenState == .homes {
+                    // get items
+                    for child in snapshot.childSnapshot(forPath: AddressDashboard).childSnapshot(forPath: self.selectedLocation!).childSnapshot(forPath: Barcodes).children.allObjects {
+                        let paintProfile = child as! FIRDataSnapshot
+                        
+                        let profile = paintProfile.value as? NSDictionary
+                        let productType = profile?["product"] as! String
+                        let manufacturer = profile?["manufacturer"] as! String
+                        let upcCode = paintProfile.key
+                        let image = profile?["image"] as! String
+                        let colourForPaint = profile?["colour"] as! String
+                        let product = ScannedProduct(productType: productType, manufacturer: manufacturer, upcCode: upcCode, image: image, colour: colourForPaint)
+                        
+                        user.items.append(product)
+                    }
+                    
+                    let items = user.items as! [ScannedProduct]
+                    self.products.append(contentsOf: items)
+                    
+                    self.tableView?.reloadData()
+                }
+            
             }
             
-            self.products = self.signedInUser.items as! [ScannedProduct]
-            
-            self.tableView?.reloadData()
-            
+            // Error
         }, withCancel: { (error) in
             print(error.localizedDescription)
             user.items = []
@@ -251,7 +301,7 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
     }
     
     func getBarcodesRefFor(user: User, screenState: ScreenState, location: String?) {
-        
+    
         if screenState == .personal {
             DataService.instance.generalRef = DataService.instance.usersRef.child(user.uid).child(PersonalDashboard).child(Barcodes)
         }
@@ -261,9 +311,7 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         else if screenState == .homes {
             DataService.instance.generalRef = DataService.instance.usersRef.child(user.uid).child(AddressDashboard).child(location!).child(Barcodes)
         }
-        
     }
-    
 }
 
 

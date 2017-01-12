@@ -31,7 +31,7 @@ class PostScanViewController: CustomVC {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.backButtonNeeded = false
+        self.backButtonNeeded = true
         
         view.backgroundColor = UIColor.white
         
@@ -92,8 +92,8 @@ class PostScanViewController: CustomVC {
 
         // product type label
         
-        let productTypeLabelOrigin = CGPoint(x: 0, y: 20)
-        let productTypeLabelSize = CGSize(width: view.frame.width, height: view.frame.height * 0.1 - 20)
+        let productTypeLabelOrigin = CGPoint(x: 0, y: 60)
+        let productTypeLabelSize = CGSize(width: view.frame.width, height: view.frame.height * 0.1)
         productTypeLabel = UILabel(frame: CGRect(origin: productTypeLabelOrigin, size: productTypeLabelSize))
         productTypeLabel.backgroundColor = UIColor.black
         productTypeLabel.textColor = UIColor.white
@@ -213,7 +213,7 @@ class PostScanViewController: CustomVC {
                 self.productImageView.image = image
                 self.productImageView.contentMode = .scaleAspectFill
                 
-                self.productInfo = UIView(frame: CGRect(x: 0, y: self.productImageView.frame.maxY, width: self.view.frame.width, height: self.view.frame.height - 20 - (self.view.frame.width * 0.5) - (self.view.frame.height * 0.1) - (self.view.frame.width * 0.1) - (self.view.frame.height * 0.1)))
+                self.productInfo = UIView(frame: CGRect(x: 0, y: self.productImageView.frame.maxY, width: self.view.frame.width, height: self.view.frame.height - 60 - (self.view.frame.width * 0.5) - (self.view.frame.height * 0.1) - (self.view.frame.width * 0.1) - (self.view.frame.height * 0.1)))
                 
                 self.view.addSubview(self.productInfo)
                 

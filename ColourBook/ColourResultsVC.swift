@@ -22,19 +22,30 @@ class ColourResultsVC: UIView {
         
         backgroundColor = UIColor.white
         
+        let wrapView = CGRect(x: 0, y: 20, width: frame.width, height: frame.height - 20 - 20)
+        
+        let colourLabel = UIView(frame: CGRect(x: 0, y: wrapView.minY, width: frame.width, height: wrapView.height * 0.15))
+        
+        let remainingHeight: CGFloat = wrapView.height - (wrapView.height * 0.15)
+        
+        let firstQuarter = UIView(frame: CGRect(x: 0, y: colourLabel.frame.maxY, width: frame.width, height: remainingHeight/4))
+        
+        let secondQuarter = UIView(frame: CGRect(x: 0, y: firstQuarter.frame.maxY, width: frame.width, height: remainingHeight/4))
+        
+        let thirdQuarter = UIView(frame: CGRect(x: 0, y: secondQuarter.frame.maxY, width: frame.width, height: remainingHeight/4))
+        
+        let fourthQuarter = UIView(frame: CGRect(x: 0, y: thirdQuarter.frame.maxY, width: frame.width, height: remainingHeight/4))
+        
         // MARK: View
         
         // colour view
-        
-        let colourViewOrigin = CGPoint(x: 0, y: 0)
-        let colourViewSize = CGSize(width: frame.width, height: frame.height * 0.15)
-        colourView = UILabel(frame: CGRect(origin: colourViewOrigin, size: colourViewSize))
+        colourView = UILabel(frame: colourLabel.frame)
         colourView.backgroundColor = UIColor(hexString: colour.colourHexCode)
         
         // colour name label
         
-        let colourNameOrigin = CGPoint(x: center.x - ((frame.width * 0.6)/2), y: colourView.frame.maxY + 20)
-        let colourNameSize = CGSize(width: frame.width * 0.6, height: frame.height * 0.10)
+        let colourNameOrigin = CGPoint(x: firstQuarter.center.x - ((firstQuarter.frame.width * 0.6)/2), y: firstQuarter.center.y - ((firstQuarter.frame.height * 0.50)/2))
+        let colourNameSize = CGSize(width: firstQuarter.frame.width * 0.6, height: firstQuarter.frame.height * 0.50)
         colourName = UILabel(frame: CGRect(origin: colourNameOrigin, size: colourNameSize))
         colourName.backgroundColor = UIColor.white
         colourName.textColor = UIColor.black
@@ -43,8 +54,8 @@ class ColourResultsVC: UIView {
         
         // colour hexcode label
         
-        let hexcodeOrigin = CGPoint(x: center.x - ((frame.width * 0.6)/2), y: colourName.frame.maxY + 25)
-        let hexcodeSize = CGSize(width: frame.width * 0.6, height: frame.height * 0.10)
+        let hexcodeOrigin = CGPoint(x: secondQuarter.center.x - ((secondQuarter.frame.width * 0.6)/2), y: secondQuarter.center.y - ((secondQuarter.frame.height * 0.50)/2))
+        let hexcodeSize = CGSize(width: secondQuarter.frame.width * 0.6, height: secondQuarter.frame.height * 0.50)
         colourHexCode = UILabel(frame: CGRect(origin: hexcodeOrigin, size: hexcodeSize))
         colourHexCode.backgroundColor = UIColor.white
         colourHexCode.textColor = UIColor.black
@@ -53,8 +64,8 @@ class ColourResultsVC: UIView {
         
         // product code label
         
-        let productCodeOrigin = CGPoint(x: center.x - ((frame.width * 0.6)/2), y: colourHexCode.frame.maxY + 25)
-        let productCodeSize = CGSize(width: frame.width * 0.6, height: frame.height * 0.10)
+        let productCodeOrigin = CGPoint(x: thirdQuarter.center.x - ((thirdQuarter.frame.width * 0.6)/2), y: thirdQuarter.center.y - ((thirdQuarter.frame.height * 0.50)/2))
+        let productCodeSize = CGSize(width: thirdQuarter.frame.width * 0.6, height: thirdQuarter.frame.height * 0.50)
         productCode = UILabel(frame: CGRect(origin: productCodeOrigin, size: productCodeSize))
         productCode.backgroundColor = UIColor.white
         productCode.textColor = UIColor.black
@@ -63,8 +74,8 @@ class ColourResultsVC: UIView {
         
         // manufacturer label
         
-        let manufacturerOrigin = CGPoint(x: center.x - ((frame.width * 0.6)/2), y: productCode.frame.maxY + 25)
-        let manufacturerSize = CGSize(width: frame.width * 0.6, height: frame.height * 0.10)
+        let manufacturerOrigin = CGPoint(x: fourthQuarter.center.x - ((fourthQuarter.frame.width * 0.6)/2), y: fourthQuarter.center.y - ((fourthQuarter.frame.height * 0.50)/2))
+        let manufacturerSize = CGSize(width: fourthQuarter.frame.width * 0.6, height: fourthQuarter.frame.height * 0.50)
         manufacturerID = UILabel(frame: CGRect(origin: manufacturerOrigin, size: manufacturerSize))
         manufacturerID.backgroundColor = UIColor.white
         manufacturerID.textColor = UIColor.black
@@ -72,6 +83,8 @@ class ColourResultsVC: UIView {
         manufacturerID.text = colour.manufacturerID
         
         // add to view
+        
+        
         
         addSubview(colourView)
         addSubview(colourName)

@@ -30,9 +30,10 @@ class ItemListDetailVC: CustomVC {
         productIdLbl?.text = detailItem?.upcCode
         
         if self.colour == "" {
-            hexCodeLbl?.text = ""
+            hexCodeLbl?.text = "No colour added"
         }
         else {
+            hexCodeLbl?.text = ""
             hexCodeLbl?.backgroundColor = UIColor(hexString: self.colour!)
         }
         

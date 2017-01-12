@@ -112,7 +112,7 @@ class ChooseColourVC: CustomVC {
 
                         break
                     }
-                    if colour.colourHexCode == colourQuery! {
+                    if colour.productCode == colourQuery! {
                         
                         self.colourView = ColourResultsVC(frame: self.searchResultView.bounds, colour: colour)
                         self.currentColour = colour.colourHexCode
@@ -159,5 +159,9 @@ class ChooseColourVC: CustomVC {
 
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         searchColourTextfield.resignFirstResponder()
+    }
+    
+    func setResultsVC(colour: Colour) {
+        
     }
 }

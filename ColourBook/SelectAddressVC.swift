@@ -42,11 +42,11 @@ class SelectAddressVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         
         name = UILabel(frame: CGRect(x: 0, y: 20, width: view.frame.width, height: 50))
         
-        name.textColor = UIColor.white
+        name.textColor = UIColor.black
         
         name.textAlignment = .center
         
-        name.backgroundColor = UIColor.black
+        name.backgroundColor = UIColor.white
         
         if screenState == .business {
             name.text = "My businesses"
