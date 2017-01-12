@@ -49,8 +49,6 @@ class CustomVC: UIViewController, UITextFieldDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(false)
-        
-        self.signedInUser = AuthService.instance.getSignedInUser()
 
         print(screenState.hashValue)
         
