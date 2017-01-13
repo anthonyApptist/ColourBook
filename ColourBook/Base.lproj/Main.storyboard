@@ -369,15 +369,22 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="riz-Jo-Fv6" customClass="CustomTextFieldContainer" customModule="ColourBook" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="209" height="50"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="209" id="0RP-GZ-N9R"/>
+                                            <constraint firstAttribute="width" secondItem="riz-Jo-Fv6" secondAttribute="height" multiplier="209:50" id="KfF-eR-78x"/>
+                                            <constraint firstAttribute="height" constant="50" id="ZjB-UN-iie"/>
+                                        </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2yh-yU-fr1" customClass="CustomTextFieldContainer" customModule="ColourBook" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="70" width="209" height="50"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="NtR-Se-uqP"/>
+                                            <constraint firstAttribute="width" constant="209" id="W42-RR-5vz"/>
+                                            <constraint firstAttribute="width" secondItem="2yh-yU-fr1" secondAttribute="height" multiplier="209:50" id="lTn-u3-VrK"/>
+                                        </constraints>
                                     </view>
                                 </subviews>
-                                <constraints>
-                                    <constraint firstItem="2yh-yU-fr1" firstAttribute="top" secondItem="ohG-KP-wh8" secondAttribute="top" constant="70" id="gyb-ki-tK5"/>
-                                </constraints>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fVX-rS-So9">
                                 <rect key="frame" x="0.0" y="597" width="375" height="70"/>
@@ -1412,10 +1419,10 @@
         <image name="settingsIcon" width="115" height="113"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="ZiE-Dq-MKt"/>
-        <segue reference="N4L-tY-cc2"/>
-        <segue reference="2NH-Fi-qo3"/>
         <segue reference="Com-EP-1Te"/>
         <segue reference="uql-du-HUQ"/>
+        <segue reference="2NH-Fi-qo3"/>
+        <segue reference="ZiE-Dq-MKt"/>
+        <segue reference="5FO-LH-Ars"/>
     </inferredMetricsTieBreakers>
 </document>

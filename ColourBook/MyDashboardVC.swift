@@ -93,33 +93,6 @@ class MyDashboardVC: CustomVC, UIScrollViewDelegate {
         self.screenState = .personal
         self.pageCtrl.currentPage = 0
         
-        app.window?.rootViewController = self
-
-    }
-    
-    func locationAuthStatus() {
-        if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
-//            map.showsUserLocation = true
-        } else {
-            locationManager.requestWhenInUseAuthorization()
-        }
-    }
-  
-    
-    override func viewDidAppear(_ animated: Bool) {
-    
-        super.viewDidAppear(false)
-    
-        locationAuthStatus()
-        
-        self.backBtn.isHidden = true
-        
-        app.window?.rootViewController = self
-     
-        self.scanBtn.addTarget(self, action: #selector(MyDashboardVC.scanBtnPressed), for: .touchUpInside)
-        
-        self.viewBtn.addTarget(self, action: #selector(MyDashboardVC.viewBtnPressed), for: .touchUpInside)
-        
         let scrollViewWidth: CGFloat = self.scrollView.frame.width
         let scrollViewHeight: CGFloat = self.scrollView.frame.height
         
@@ -164,6 +137,35 @@ class MyDashboardVC: CustomVC, UIScrollViewDelegate {
         
         self.scrollView.contentSize = CGSize(width: self.scrollView.frame.width * 5, height: self.scrollView.frame.height)
         self.scrollView.delegate = self
+        
+        app.window?.rootViewController = self
+
+    }
+    
+    func locationAuthStatus() {
+        if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
+//            map.showsUserLocation = true
+        } else {
+            locationManager.requestWhenInUseAuthorization()
+        }
+    }
+  
+    
+    override func viewDidAppear(_ animated: Bool) {
+    
+        super.viewDidAppear(false)
+    
+        locationAuthStatus()
+        
+        self.backBtn.isHidden = true
+        
+        app.window?.rootViewController = self
+     
+        self.scanBtn.addTarget(self, action: #selector(MyDashboardVC.scanBtnPressed), for: .touchUpInside)
+        
+        self.viewBtn.addTarget(self, action: #selector(MyDashboardVC.viewBtnPressed), for: .touchUpInside)
+        
+      
         
         self.titleLbl.setSpacing(space: 4.0)
         self.viewBtn.setSpacing(space: 4.0)
