@@ -8,9 +8,7 @@
 
 import UIKit
 
-class SettingsVC: CustomVC, UIScrollViewDelegate {
-    
-    @IBOutlet weak var scrollView: UIScrollView!
+class SettingsVC: CustomVC {
  
     var selectedLocation: String?
     
@@ -20,27 +18,10 @@ class SettingsVC: CustomVC, UIScrollViewDelegate {
 
         // Do any additional setup after loading the view.
         
-        let scrollViewWidth: CGFloat = self.scrollView.frame.width
-        let scrollViewHeight: CGFloat = self.scrollView.frame.height
-        
-        self.scrollView.isScrollEnabled = true
-        self.scrollView.isPagingEnabled = true
-        self.scrollView.showsHorizontalScrollIndicator = false
-        self.scrollView?.showsVerticalScrollIndicator = false
-        
-        self.scrollView.contentSize = CGSize(width: self.scrollView.frame.width, height: self.scrollView.frame.height)
-        self.scrollView.delegate = self
         
 
     }
     
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        
-    }
-    
-    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
-        
-    }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         super.prepare(for: segue, sender: nil)
