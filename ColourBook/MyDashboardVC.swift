@@ -16,6 +16,8 @@ class MyDashboardVC: CustomVC, UIScrollViewDelegate {
     
     var btnPressed: Bool = false
     
+    var iconsLoaded: Bool = false
+    
     @IBOutlet weak var titleLbl: UILabel!
     
     @IBOutlet weak var topView: UIView!
@@ -39,6 +41,16 @@ class MyDashboardVC: CustomVC, UIScrollViewDelegate {
     @IBOutlet weak var pageCtrl: UIPageControl!
     
     let app = UIApplication.shared.delegate as! AppDelegate
+    
+    let pageOne = IconView(frame: CGRect(x: 0, y: 0, width: 129, height: 183))
+    
+    let pageTwo = IconView(frame: CGRect(x: 0, y: 0, width: 129, height: 183))
+    
+    let pageThree = IconView(frame: CGRect(x: 0, y: 0, width: 129, height: 183))
+    
+    let pageFour = IconView(frame: CGRect(x: 0, y: 0, width: 129, height: 183))
+    
+    let pageFive = IconView(frame: CGRect(x: 0, y: 0, width: 129, height: 183))
     
     @IBAction func viewBtnPressed(_ sender: AnyObject?) {
         
@@ -92,52 +104,7 @@ class MyDashboardVC: CustomVC, UIScrollViewDelegate {
         self.backButtonNeeded = false
         self.screenState = .personal
         self.pageCtrl.currentPage = 0
-        
-        let scrollViewWidth: CGFloat = self.scrollView.frame.width
-        let scrollViewHeight: CGFloat = self.scrollView.frame.height
-        
-        self.scrollView.isScrollEnabled = true
-        self.scrollView.isPagingEnabled = true
-        self.scrollView.showsHorizontalScrollIndicator = false
-        
-        let pageOne = IconView(frame: CGRect(x: 0, y: 0, width: 129, height: 183))
-        pageOne.frame.origin = CGPoint(x: scrollView.bounds.size.width/2 - pageOne.frame.width/2, y: scrollView.bounds.size.height/2 - pageOne.frame.height/2)
-        pageOne.imageView = UIImageView(frame: CGRect(x: 23, y: 56, width: 85.9, height: 75))
-        pageOne.addSubview(pageOne.imageView!)
-        pageOne.imageView?.image = UIImage(named: "personalIcon")
-        self.scrollView.addSubview(pageOne)
-        
-        let pageTwo = IconView(frame: CGRect(x: 0, y: 0, width: 129, height: 183))
-        pageTwo.frame.origin = CGPoint(x: pageOne.frame.origin.x + scrollViewWidth, y: scrollView.bounds.size.height/2 - pageTwo.frame.height/2)
-        pageTwo.imageView = UIImageView(frame: CGRect(x: 26, y: 33, width: 77, height: 126))
-        pageTwo.addSubview(pageTwo.imageView!)
-        pageTwo.imageView?.image = UIImage(named: "moneyIcon")
-        self.scrollView.addSubview(pageTwo)
-        
-        let pageThree = IconView(frame: CGRect(x: 0, y: 0, width: 129, height: 183))
-        pageThree.frame.origin = CGPoint(x: pageTwo.frame.origin.x + scrollViewWidth, y: scrollView.bounds.size.height/2 - pageThree.frame.height/2)
-        pageThree.imageView = UIImageView(frame: CGRect(x: 33, y: 48, width: 66, height: 94))
-        pageThree.addSubview(pageThree.imageView!)
-        pageThree.imageView?.image = UIImage(named: "homeIcon")
-        self.scrollView.addSubview(pageThree)
-        
-        let pageFour = IconView(frame: CGRect(x: 0, y: 0, width: 129, height: 183))
-        pageFour.frame.origin = CGPoint(x: pageThree.frame.origin.x + scrollViewWidth, y: scrollView.bounds.size.height/2 - pageFour.frame.height/2)
-        pageFour.imageView = UIImageView(frame: CGRect(x: 26, y: 56, width: 72, height: 81))
-        pageFour.addSubview(pageFour.imageView!)
-        pageFour.imageView?.image = UIImage(named: "search")
-        self.scrollView.addSubview(pageFour)
-        
-        let pageFive = IconView(frame: CGRect(x: 0, y: 0, width: 129, height: 183))
-        pageFive.frame.origin = CGPoint(x: pageFour.frame.origin.x + scrollViewWidth, y: scrollView.bounds.size.height/2 - pageFive.frame.height/2)
-        pageFive.imageView = UIImageView(frame: CGRect(x: 12.2, y: 40, width: 106.6, height: 104.3))
-        pageFive.addSubview(pageFive.imageView!)
-        pageFive.imageView?.image = UIImage(named: "settingsIcon")
-        self.scrollView.addSubview(pageFive)
-        
-        self.scrollView.contentSize = CGSize(width: self.scrollView.frame.width * 5, height: self.scrollView.frame.height)
-        self.scrollView.delegate = self
-        
+
         app.window?.rootViewController = self
 
     }
@@ -165,7 +132,70 @@ class MyDashboardVC: CustomVC, UIScrollViewDelegate {
         
         self.viewBtn.addTarget(self, action: #selector(MyDashboardVC.viewBtnPressed), for: .touchUpInside)
         
-      
+   
+        
+        self.scrollView.isScrollEnabled = true
+        self.scrollView.isPagingEnabled = true
+        self.scrollView.showsHorizontalScrollIndicator = false
+        
+        let scrollViewWidth: CGFloat = self.scrollView.frame.width
+        let scrollViewHeight: CGFloat = self.scrollView.frame.height
+        
+        self.scrollView.contentSize = CGSize(width: self.scrollView.frame.width * 5, height: self.scrollView.frame.height)
+        self.scrollView.delegate = self
+        
+        pageOne.frame.origin = CGPoint(x: scrollView.bounds.width/2 - pageOne.frame.width/2, y: scrollView.bounds.size.height/2 - pageOne.frame.height/2)
+        pageOne.imageView = UIImageView(frame: CGRect(x: 23, y: 56, width: 85.9, height: 75))
+        
+        pageOne.imageView?.image = UIImage(named: "personalIcon")
+        
+        
+        pageTwo.frame.origin = CGPoint(x: pageOne.frame.origin.x + scrollViewWidth, y: scrollView.bounds.size.height/2 - pageTwo.frame.height/2)
+        pageTwo.imageView = UIImageView(frame: CGRect(x: 26, y: 33, width: 77, height: 126))
+        pageTwo.imageView?.image = UIImage(named: "moneyIcon")
+        
+        
+        pageThree.frame.origin = CGPoint(x: pageTwo.frame.origin.x + scrollViewWidth, y: scrollView.bounds.size.height/2 - pageThree.frame.height/2)
+        pageThree.imageView = UIImageView(frame: CGRect(x: 33, y: 48, width: 66, height: 94))
+        pageThree.imageView?.image = UIImage(named: "homeIcon")
+        
+        
+        pageFour.frame.origin = CGPoint(x: pageThree.frame.origin.x + scrollViewWidth, y: scrollView.bounds.size.height/2 - pageFour.frame.height/2)
+        pageFour.imageView = UIImageView(frame: CGRect(x: 26, y: 56, width: 72, height: 81))
+        pageFour.imageView?.image = UIImage(named: "search")
+        
+        pageFive.frame.origin = CGPoint(x: pageFour.frame.origin.x + scrollViewWidth, y: scrollView.bounds.size.height/2 - pageFive.frame.height/2)
+        pageFive.imageView = UIImageView(frame: CGRect(x: 12.2, y: 40, width: 106.6, height: 104.3))
+        pageFive.imageView?.image = UIImage(named: "settingsIcon")
+
+        
+        if(iconsLoaded == false) {
+            
+        pageOne.addSubview(pageOne.imageView!)
+        
+        self.scrollView.addSubview(pageOne)
+        
+        pageTwo.addSubview(pageTwo.imageView!)
+    
+        self.scrollView.addSubview(pageTwo)
+        
+        pageThree.addSubview(pageThree.imageView!)
+
+        self.scrollView.addSubview(pageThree)
+        
+        pageFour.addSubview(pageFour.imageView!)
+    
+        self.scrollView.addSubview(pageFour)
+        
+        pageFive.addSubview(pageFive.imageView!)
+        
+   
+        self.scrollView.addSubview(pageFive)
+            
+        iconsLoaded = true
+ 
+
+        }
         
         self.titleLbl.setSpacing(space: 4.0)
         self.viewBtn.setSpacing(space: 4.0)
