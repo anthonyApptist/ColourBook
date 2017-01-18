@@ -91,7 +91,7 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ItemCell", for: indexPath) as! ItemCell
             
-        cell.titleLbl?.text = self.products[indexPath.row].upcCode
+        cell.titleLbl?.text = self.products[indexPath.row].productType
         
         return cell
     }
@@ -105,22 +105,20 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
     
     //DELETE ROWS
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        
         if editingStyle == .delete {
             
-            if editingStyle == .delete {
-                
-                let upcCode = self.products[indexPath.row].upcCode
-                
-                let locationName = selectedLocation
-                
-                // remove from database
-                DataService.instance.removeScannedProductFor(user: self.signedInUser, screeenState: self.screenState, barcode: upcCode, location: locationName)
-                
-                //remove from table view list
-                self.signedInUser.items.remove(at: (indexPath as NSIndexPath).row)
-                
-                tableView.deleteRows(at: [indexPath], with: .automatic)
-            }
+            let upcCode = self.products[indexPath.row].upcCode
+            
+            let locationName = selectedLocation
+            
+            // remove from database
+            DataService.instance.removeScannedProductFor(user: self.signedInUser, screeenState: self.screenState, barcode: upcCode, location: locationName)
+            
+            //remove from table view list
+            self.products.remove(at: (indexPath as NSIndexPath).row)
+            
+            tableView.deleteRows(at: [indexPath], with: .automatic)
         }
     }
  
@@ -195,7 +193,7 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
                             let paintProfile = child as! FIRDataSnapshot
                             
                             let profile = paintProfile.value as? NSDictionary
-                            let productType = profile?["product"] as! String
+                            let productType = profile?["productName"] as! String
                             let manufacturer = profile?["manufacturer"] as! String
                             let upcCode = paintProfile.key
                             let image = profile?["image"] as! String
@@ -226,7 +224,7 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
                             let paintProfile = child as! FIRDataSnapshot
                             
                             let profile = paintProfile.value as? NSDictionary
-                            let productType = profile?["product"] as! String
+                            let productType = profile?["productName"] as! String
                             let manufacturer = profile?["manufacturer"] as! String
                             let upcCode = paintProfile.key
                             let image = profile?["image"] as! String
@@ -256,7 +254,7 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
                         let paintProfile = child as! FIRDataSnapshot
                         
                         let profile = paintProfile.value as? NSDictionary
-                        let productType = profile?["product"] as! String
+                        let productType = profile?["productName"] as! String
                         let manufacturer = profile?["manufacturer"] as! String
                         let upcCode = paintProfile.key
                         let image = profile?["image"] as! String
@@ -273,12 +271,20 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
 
                 }
                 else if screenState == .homes {
+                    
+                    if snapshot.childSnapshot(forPath: AddressDashboard).childSnapshot(forPath: self.selectedLocation!).hasChild("name") {
+                        
+                    }
+                    else {
+                        
+                    }
+                    
                     // get items
                     for child in snapshot.childSnapshot(forPath: AddressDashboard).childSnapshot(forPath: self.selectedLocation!).childSnapshot(forPath: Barcodes).children.allObjects {
                         let paintProfile = child as! FIRDataSnapshot
                         
                         let profile = paintProfile.value as? NSDictionary
-                        let productType = profile?["product"] as! String
+                        let productType = profile?["productName"] as! String
                         let manufacturer = profile?["manufacturer"] as! String
                         let upcCode = paintProfile.key
                         let image = profile?["image"] as! String
