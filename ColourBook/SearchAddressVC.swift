@@ -9,39 +9,63 @@
 import UIKit
 import FirebaseDatabase
 
+protocol AddressResult {
+    func setResultsViewFor(location: Location)
+}
+
 class SearchAddressVC: CustomVC {
-  
-    var searchTextfield: UITextField!
+    
+    var addressSC: UISearchController?
+
     var resultTitleLabel: UILabel!
     var locationResultView: UIView!
     var searchButton: UIButton!
 
-    var searchImage: UIImage?
-    var resultLocation: String!
+    var currentLocation: Location?
     
     var viewButton: UIButton?
+
+    var addressDictionary: Dictionary<Location, String> = [:]
+    var allAddresses = [Location]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // search text field
-
-        let searchTextFieldOrigin = CGPoint(x: 0, y: 25)
-        let searchTextFieldSize = CGSize(width: view.frame.width, height: 40)
-        searchTextfield = UITextField(frame: CGRect(origin: searchTextFieldOrigin, size: searchTextFieldSize))
-        searchTextfield.placeholder = "Type in address"
-        searchTextfield.adjustsFontSizeToFitWidth = true
-        searchTextfield.textAlignment = .center
+        getDatabase()
+        
+        // Search Controller
+        let resultsUpdater = SearchResultsTableVC()
+        resultsUpdater.searchFor = .addresses
+        
+        addressSC = UISearchController(searchResultsController: resultsUpdater)
+        addressSC?.searchResultsUpdater = resultsUpdater
+        
+        // set results updater delegate link
+        resultsUpdater.addressResultDelegate = self
+        
+        let searchBar = addressSC?.searchBar
+        searchBar?.sizeToFit()
+        searchBar?.placeholder = "Find any address"
+        
+        addressSC?.hidesNavigationBarDuringPresentation = true
+        addressSC?.dimsBackgroundDuringPresentation = true
+        definesPresentationContext = true
+        searchBar?.backgroundColor = UIColor.black
+        
+        // MARK: - View
         
         // results title label
         
-        let resultTitleOrigin = CGPoint(x: 0, y: searchTextfield.frame.maxY)
+        let resultTitleOrigin = CGPoint(x: 0, y: self.backBtn.frame.maxY)
         let resultTitleSize = CGSize(width: view.frame.width, height: view.frame.height * 0.10)
         resultTitleLabel = UILabel(frame: CGRect(origin: resultTitleOrigin, size: resultTitleSize))
         resultTitleLabel.backgroundColor = UIColor.black
         resultTitleLabel.textColor = UIColor.white
         resultTitleLabel.textAlignment = .center
         resultTitleLabel.numberOfLines = 0
+        resultTitleLabel.adjustsFontSizeToFitWidth = true
+        resultTitleLabel.text = "Press Search"
+        resultTitleLabel.textColor = UIColor.clear
         
         // results view
         
@@ -71,9 +95,9 @@ class SearchAddressVC: CustomVC {
         searchButton.setTitleColor(UIColor.white, for: .normal)
         searchButton.titleLabel?.font = UIFont(name: "HelveticaNeue-Medium", size: searchButton.frame.height * 0.5)
         searchButton.titleLabel?.numberOfLines = 0
+        searchButton.isUserInteractionEnabled = false
         searchButton.addTarget(self, action: #selector(searchButtonFunction), for: .touchUpInside)
         
-        view.addSubview(searchTextfield)
         view.addSubview(resultTitleLabel)
         view.addSubview(locationResultView)
         view.addSubview(searchButton)
@@ -81,195 +105,213 @@ class SearchAddressVC: CustomVC {
         view.addSubview(viewButton!)
     }
     
-    func searchButtonFunction() {
-        
-        if (searchTextfield.text?.isEmpty)! {
-            let alertView = UIAlertController.init(title: "No address typed in", message: "", preferredStyle: .alert)
-            let alertAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-            alertView.addAction(alertAction)
-            self.present(alertView, animated: true, completion: nil)
-        }
-        else {
-            DataService.instance.mainRef.observeSingleEvent(of: .value, with: { (snapshot) in
-                
-                let addressQuery = self.searchTextfield.text?.capitalized
-                
-                var businessLocations: [String] = []
-                var homeLocations: [String] = []
-                
-                for child in snapshot.childSnapshot(forPath: "businesses").children.allObjects {
-                    
-                    let childSnapShot = child as! FIRDataSnapshot
-                    let location = childSnapShot.key
-                    businessLocations.append(location)
-                }
-                
-                for child in snapshot.childSnapshot(forPath: "addresses").children.allObjects {
-                    
-                    let childSnapShot = child as! FIRDataSnapshot
-                    let location = childSnapShot.key
-                    homeLocations.append(location)
-                }
-                
-                var childString: String = ""
-                
-                if businessLocations.contains(addressQuery!) {
-                    
-                    self.resultTitleLabel.font = UIFont(name: "HelveticaNeue-Medium", size: self.resultTitleLabel.frame.height * 0.50)
-                    self.resultTitleLabel.text = "Business"
-                    childString = "businesses"
-                    
-                    let locationData = snapshot.childSnapshot(forPath: childString).childSnapshot(forPath: addressQuery!)
-                    
-                    let profile = locationData.value as? NSDictionary
-                    
-                    let locationName = addressQuery
-                    
-                    let postalCode = profile?["postalCode"] as! String
-                    let image = profile?["image"] as? String
-                    
-                    if image == "" {
-                        // add default image
-                        self.searchImage = UIImage(named: "homeIcon")
-                    }
-                    else {
-                        self.searchImage = self.stringToImage(imageName: image!)
-                    }
-                    
-                    let location = Location(locationName: locationName!, postalCode: postalCode, image: image!)
-                    
-                    // result VC
-                    
-                    let addressVC = AddressVC(frame: self.locationResultView.bounds, location: location)
-                    
-                    addressVC.addressImageView.image = self.searchImage!
-                    addressVC.addressLocation.text = location.locationName
-                    
-                    self.resultLocation = location.locationName
-                    
-                    let name = profile?["name"] as? String
-                    
-                    if name == nil || name == "" {
-                        addressVC.addressName.text = location.postalCode
-                    }
-                    else {
-                        addressVC.addressName.text = name
-                    }
-                    
-                    self.locationResultView.addSubview(addressVC)
-                    
-                    if snapshot.childSnapshot(forPath: childString).childSnapshot(forPath: location.locationName).hasChild(Barcodes) {
-                        UIView.animate(withDuration: 1.0, animations: {
-                            self.viewButton?.titleLabel?.alpha = 1.0
-                            self.viewButton?.addTarget(self, action: #selector(self.viewButtonFunction), for: .touchUpInside)
-                        })
-                    }
-                    
-                    self.searchTextfield.text = ""
-                }
-                
-                else if homeLocations.contains(addressQuery!) {
-                    
-                    self.resultTitleLabel.font = UIFont(name: "HelveticaNeue-Medium", size: self.resultTitleLabel.frame.height * 0.50)
-                    self.resultTitleLabel.textAlignment = .center
-                    self.resultTitleLabel.text = "Address"
-                    
-                    self.resultTitleLabel.adjustsFontForContentSizeCategory = true
-                    childString = "addresses"
-                    
-                    let locationData = snapshot.childSnapshot(forPath: childString).childSnapshot(forPath: addressQuery!)
-                    
-                    let profile = locationData.value as? NSDictionary
-                    
-                    let locationName = addressQuery
-                    
-                    let postalCode = profile?["postalCode"] as! String
-                    let image = profile?["image"] as? String
-                    
-                    if image == "" {
-                        // add default image
-                        self.searchImage = UIImage(named: "homeIcon")
-                    }
-                    else {
-                        self.searchImage = self.stringToImage(imageName: image!)
-                    }
-                    
-                    let location = Location(locationName: locationName!, postalCode: postalCode, image: image!)
-                    
-                    // result VC
-                    
-                    let addressVC = AddressVC(frame: self.locationResultView.bounds, location: location)
-                    
-                    addressVC.addressImageView.image = self.searchImage!
-                    addressVC.addressLocation.text = location.locationName
-                    
-                    self.resultLocation = location.locationName
-                    
-                    let name = profile?["name"] as? String
-                    
-                    if name == nil || name == "" {
-                        addressVC.addressName.text = location.postalCode
-                    }
-                    else {
-                        addressVC.addressName.text = name
-                    }
-                    
-                    self.locationResultView.addSubview(addressVC)
-                    
-                    if snapshot.childSnapshot(forPath: childString).childSnapshot(forPath: location.locationName).hasChild(Barcodes) {
-                        UIView.animate(withDuration: 1.0, animations: {
-                            self.viewButton?.titleLabel?.alpha = 1.0
-                            self.viewButton?.addTarget(self, action: #selector(self.viewButtonFunction), for: .touchUpInside)
-                        })
-                    }
-                    
-                    self.searchTextfield.text = ""
-                }
-                else {
-                    
-                    let alertView = UIAlertController.init(title: "Not in database", message: "", preferredStyle: .alert)
-                    let alertAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-                    alertView.addAction(alertAction)
-                    self.present(alertView, animated: true, completion: nil)
-                }
-            })
-        }
-    
-    }
-
-    // add view button if location has barcodes
+    // Mark: - Button Functions
     
     func viewButtonFunction() {
         
-        if self.resultTitleLabel.text == "Business" {
-            let barcodes = AddressItemVC()
-            barcodes.screenState = .business
-            barcodes.selectedLocation = self.resultLocation
-            self.present(barcodes, animated: true, completion: {
+        let barcodes = AddressItemVC()
+        
+        barcodes.products = self.currentLocation?.items as! [ScannedProduct]
+            
+        barcodes.titleText = self.currentLocation?.locationName
+        
+        self.present(barcodes, animated: true, completion: {
+            
+        })
+    }
+    
+    func searchButtonFunction() {
+        
+        let resultsUpdater = self.addressSC?.searchResultsUpdater as! SearchResultsTableVC
+        
+        resultsUpdater.allAddresses = self.allAddresses
+        
+        present(self.addressSC!, animated: true) {
+            
+        }
+        
+    }
+    
+    func getDatabase() {
+            
+        // Get address database (both business and address)
+        
+        DataService.instance.mainRef.observeSingleEvent(of: .value, with: { (snapshot) in
+            
+            // businesses database check
+            
+            for child in snapshot.childSnapshot(forPath: "businesses").children.allObjects {
                 
+                let locationProfile = child as! FIRDataSnapshot
+                let locationData = locationProfile.value as? NSDictionary
+                let image = locationData?["image"] as? String
+                let name = locationData?["name"] as? String
+                let postalCode = locationData?["postalCode"] as! String
+                let locationName = locationProfile.key
+                
+                let location = Location(locationName: locationName, postalCode: postalCode, image: image, name: name)
+                
+                // if address has barcodes
+                if locationProfile.hasChild(Barcodes) {
+                    
+                    for barcode in snapshot.childSnapshot(forPath: "businesses").childSnapshot(forPath: location.locationName).childSnapshot(forPath: Barcodes).children.allObjects {
+                        let paintProfile = barcode as! FIRDataSnapshot
+                        
+                        let profile = paintProfile.value as? NSDictionary
+                        let productType = profile?["productName"] as! String
+                        let manufacturer = profile?["manufacturer"] as! String
+                        let upcCode = paintProfile.key
+                        let image = profile?["image"] as! String
+                        let timestamp = profile?["timestamp"] as! String
+                        
+                        // check for colour
+                        if paintProfile.hasChild("colour") {
+                            let colourProfile = profile?["colour"] as? NSDictionary
+                            let colourName = colourProfile?["colourName"] as! String
+                            let hexcode = colourProfile?["hexcode"] as! String
+                            let manufacturerID = colourProfile?["manufacturerID"] as! String
+                            let manufacturer = colourProfile?["manufacturer"] as! String
+                            let productCode = colourProfile?["productCode"] as! String
+                            
+                            let colour = Colour(manufacturerID: manufacturerID, productCode: productCode, colourName: colourName, colourHexCode: hexcode, manufacturer: manufacturer)
+                            
+                            let product = ScannedProduct(productType: productType, manufacturer: manufacturer, upcCode: upcCode, image: image, colour: colour, timestamp: timestamp)
+                            
+                            location.items = []
+                            location.items?.append(product)
+                            self.allAddresses.append(location)
+                            self.addressDictionary.updateValue("Business", forKey: location)
+                        }
+                        else {
+                            let product = ScannedProduct(productType: productType, manufacturer: manufacturer, upcCode: upcCode, image: image, colour: nil, timestamp: timestamp)
+                            
+                            location.items = []
+                            location.items?.append(product)
+                            self.allAddresses.append(location)
+                            self.addressDictionary.updateValue("Business", forKey: location)
+                        }
+                    }
+                }
+                    // if no items attached to address
+                else {
+                    location.items = []
+                    self.allAddresses.append(location)
+                    self.addressDictionary.updateValue("Business", forKey: location)
+                }
+            }
+            
+            // addresses database check
+            
+            for child in snapshot.childSnapshot(forPath: "addresses").children.allObjects {
+                
+                let locationProfile = child as! FIRDataSnapshot
+                let locationData = locationProfile.value as? NSDictionary
+                let postalCode = locationData?["postalCode"] as! String
+                let name = locationData?["name"] as? String
+                let image = locationData?["image"] as? String
+                let locationName = locationProfile.key
+                
+                let location = Location(locationName: locationName, postalCode: postalCode, image: image, name: name)
+                
+                // if address has barcodes
+                if locationProfile.hasChild(Barcodes) {
+                    
+                    for barcode in snapshot.childSnapshot(forPath: "addresses").childSnapshot(forPath: location.locationName).childSnapshot(forPath: Barcodes).children.allObjects {
+                        let paintProfile = barcode as! FIRDataSnapshot
+                        
+                        let profile = paintProfile.value as? NSDictionary
+                        let productType = profile?["productName"] as! String
+                        let manufacturer = profile?["manufacturer"] as! String
+                        let upcCode = paintProfile.key
+                        let image = profile?["image"] as! String
+                        let timestamp = profile?["timeStamp"] as! String
+                        
+                        // check for colour
+                        if paintProfile.hasChild("colour") {
+                            let colourProfile = profile?["colour"] as? NSDictionary
+                            let colourName = colourProfile?["colourName"] as! String
+                            let hexcode = colourProfile?["hexcode"] as! String
+                            let manufacturerID = colourProfile?["manufacturerID"] as! String
+                            let manufacturer = colourProfile?["manufacturer"] as! String
+                            let productCode = colourProfile?["productCode"] as! String
+                            
+                            let colour = Colour(manufacturerID: manufacturerID, productCode: productCode, colourName: colourName, colourHexCode: hexcode, manufacturer: manufacturer)
+                            
+                            let product = ScannedProduct(productType: productType, manufacturer: manufacturer, upcCode: upcCode, image: image, colour: colour, timestamp: timestamp)
+                            
+                            location.items = []
+                            location.items?.append(product)
+                            self.allAddresses.append(location)
+                            self.addressDictionary.updateValue("Address", forKey: location)
+                        }
+                        else {
+                            let product = ScannedProduct(productType: productType, manufacturer: manufacturer, upcCode: upcCode, image: image, colour: nil, timestamp: timestamp)
+                            
+                            location.items = []
+                            location.items?.append(product)
+                            self.allAddresses.append(location)
+                            self.addressDictionary.updateValue("Address", forKey: location)
+                        }
+                    }
+                }
+                // if no items attached to address
+                else {
+                    location.items = []
+                    self.allAddresses.append(location)
+                    self.addressDictionary.updateValue("Address", forKey: location)
+                }
+            }
+            UIView.animate(withDuration: 1.0, animations: { 
+                self.resultTitleLabel.textColor = UIColor.white
+            })
+            self.searchButton.isUserInteractionEnabled = true
+        })
+    }
+}
+
+extension SearchAddressVC: AddressResult {
+    func setResultsViewFor(location: Location) {
+        
+        // check location
+        let index = self.addressDictionary.index(forKey: location)
+        let resultTitle = self.addressDictionary[index!].value
+        
+        // set address or business result
+        self.resultTitleLabel.text = resultTitle
+        
+        // address result view
+        let addressVC = AddressView(frame: self.locationResultView.bounds, location: location)
+        
+        // check custom image
+        if location.image == nil || location.image == "" {
+            addressVC.addressImageView.image = UIImage(named: "homeIcon")
+        }
+        else {
+            addressVC.addressImageView.image = self.stringToImage(imageName: location.image!)
+        }
+        
+        addressVC.addressLocation.text = location.locationName
+        
+        // check custom name
+        if location.name == nil || location.name == "" {
+            addressVC.addressName.text = location.postalCode
+        }
+        else {
+            addressVC.addressName.text = location.name!
+        }
+        
+        // add result view
+        self.locationResultView.addSubview(addressVC)
+        
+        // view button if items attached
+        if (location.items?.count)! > 0 {
+            UIView.animate(withDuration: 1.0, animations: {
+                self.viewButton?.titleLabel?.alpha = 1.0
+                self.viewButton?.addTarget(self, action: #selector(self.viewButtonFunction), for: .touchUpInside)
             })
         }
-        if self.resultTitleLabel.text == "Address" {
-            let barcodes = AddressItemVC()
-            barcodes.screenState = .homes
-            barcodes.selectedLocation = self.resultLocation
-            self.present(barcodes, animated: true, completion: {
-                
-            })
-        }
+        
+        // set current location
+        self.currentLocation = location
     }
-    
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        searchTextfield.resignFirstResponder()
-    }
-    
-    // add to extensions
-    
-    func stringToImage(imageName: String) -> UIImage {
-        let imageDataString = imageName
-        let imageData = Data(base64Encoded: imageDataString)
-        let image = UIImage(data: imageData!)
-        return image!
-    }
-    
 }

@@ -19,7 +19,7 @@ extension DataService {
         
         if let locationRef = self.generalRef {
             
-            let locationProfile: Dictionary<String, String> = ["postalCode": location.postalCode, "image": location.image]
+            let locationProfile: Dictionary<String, String> = ["postalCode": location.postalCode, "image": location.image!]
             
             locationRef.child(location.locationName).setValue(locationProfile)
             
@@ -67,7 +67,7 @@ extension DataService {
     
     // MARK: Save Paint Can to Public Database
     
-    func saveProductFor(location: String?, screenState: ScreenState, barcode: String, value: Dictionary<String, String>) {
+    func saveProductFor(location: String?, screenState: ScreenState, barcode: String, value: Dictionary<String, Any>) {
         
         getPublicLocationRef(screenState: screenState, location: location)
         
@@ -91,15 +91,13 @@ extension DataService {
     
     // MARK: Save Paint Can to User Database
     
-    func saveProductFor(user: String, screenState: ScreenState, location: String?, barcode: String, value: Dictionary<String, String>) {
+    func saveProductFor(user: String, screenState: ScreenState, location: String?, barcode: String, value: Dictionary<String, Any>) {
         
+        // reference
         getDashboardRef(screenState: screenState, user: user, location: location)
-        
         let infoRef = self.generalRef
-        
+
         infoRef?.child(barcode).setValue(value)
-        
-        
     }
     
     func getDashboardRef(screenState: ScreenState, user: String, location: String?) {
@@ -126,7 +124,7 @@ extension DataService {
         
         if let locationRef = self.generalRef {
             
-            let locationProfile: Dictionary<String, String> = ["postalCode": location.postalCode, "image": location.image]
+            let locationProfile: Dictionary<String, String> = ["postalCode": location.postalCode, "image": location.image!]
         
             locationRef.child(location.locationName).setValue(locationProfile)
         

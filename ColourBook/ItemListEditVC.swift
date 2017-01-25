@@ -54,8 +54,6 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
     
     var products = [ScannedProduct]()
     
-    var colour: String?
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -136,6 +134,8 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         return .none
     }
     
+    // MARK: - Segue to Detail and Settings
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         super.prepare(for: segue, sender: nil)
         
@@ -149,7 +149,6 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
             
             if let detail = segue.destination as? ItemListDetailVC {
                 detail.detailItem = item
-                detail.colour = item.colour
                 detail.screenState = screenState
             }
         }
@@ -197,10 +196,29 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
                             let manufacturer = profile?["manufacturer"] as! String
                             let upcCode = paintProfile.key
                             let image = profile?["image"] as! String
-                            let colourForPaint = profile?["colour"] as! String
-                            let product = ScannedProduct(productType: productType, manufacturer: manufacturer, upcCode: upcCode, image: image, colour: colourForPaint)
+                            let timestamp = profile?["timestamp"] as! String
                             
-                            user.items.append(product)
+                            // check for colour
+                            if paintProfile.hasChild("colour") {
+                                let colourProfile = profile?["colour"] as? NSDictionary
+                                let colourName = colourProfile?["colourName"] as! String
+                                let hexcode = colourProfile?["hexcode"] as! String
+                                let manufacturerID = colourProfile?["manufacturerID"] as! String
+                                let manufacturer = colourProfile?["manufacturer"] as! String
+                                let productCode = colourProfile?["productCode"] as! String
+                                
+                                let colour = Colour(manufacturerID: manufacturerID, productCode: productCode, colourName: colourName, colourHexCode: hexcode, manufacturer: manufacturer)
+                                
+                                let product = ScannedProduct(productType: productType, manufacturer: manufacturer, upcCode: upcCode, image: image, colour: colour, timestamp: timestamp)
+                                
+                                user.items.append(product)
+                            }
+                            else {
+                                let product = ScannedProduct(productType: productType, manufacturer: manufacturer, upcCode: upcCode, image: image, colour: nil, timestamp: timestamp)
+                                
+                                user.items.append(product)
+                            }
+                            
                             
                         }
                         
@@ -229,7 +247,8 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
                             let upcCode = paintProfile.key
                             let image = profile?["image"] as! String
                             let colourForPaint = profile?["colour"] as! String
-                            let product = ScannedProduct(productType: productType, manufacturer: manufacturer, upcCode: upcCode, image: image, colour: colourForPaint)
+                            let timestamp = profile?["timestamp"] as! String
+                            let product = ScannedProduct(productType: productType, manufacturer: manufacturer, upcCode: upcCode, image: image, colour: nil, timestamp: timestamp)
                             
                             user.items.append(product)
                             
@@ -248,6 +267,14 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
             }
             else {
                 
+                if snapshot.childSnapshot(forPath: AddressDashboard).childSnapshot(forPath: self.selectedLocation!).hasChild("name") {
+                    let name = snapshot.childSnapshot(forPath: "name").value as! String
+                    self.titleLbl?.text = name
+                }
+                else {
+                    
+                }
+
                 if screenState == .business {
                     // get items
                     for child in snapshot.childSnapshot(forPath: BusinessDashboard).childSnapshot(forPath: self.selectedLocation!).childSnapshot(forPath: Barcodes).children.allObjects {
@@ -259,7 +286,8 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
                         let upcCode = paintProfile.key
                         let image = profile?["image"] as! String
                         let colourForPaint = profile?["colour"] as! String
-                        let product = ScannedProduct(productType: productType, manufacturer: manufacturer, upcCode: upcCode, image: image, colour: colourForPaint)
+                        let timestamp = profile?["timestamp"] as! String
+                        let product = ScannedProduct(productType: productType, manufacturer: manufacturer, upcCode: upcCode, image: image, colour: nil, timestamp: timestamp)
                         
                         user.items.append(product)
                     }
@@ -289,7 +317,8 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
                         let upcCode = paintProfile.key
                         let image = profile?["image"] as! String
                         let colourForPaint = profile?["colour"] as! String
-                        let product = ScannedProduct(productType: productType, manufacturer: manufacturer, upcCode: upcCode, image: image, colour: colourForPaint)
+                        let timestamp = profile?["timestamp"] as! String
+                        let product = ScannedProduct(productType: productType, manufacturer: manufacturer, upcCode: upcCode, image: image, colour: nil, timestamp: timestamp)
                         
                         user.items.append(product)
                     }

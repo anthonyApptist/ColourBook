@@ -8,6 +8,11 @@
 
 import UIKit
 
+protocol ColourAdded {
+    func setLabelFor(colour: String)
+    func set(colour: Colour)
+}
+
 class PostScanViewController: CustomVC {
     
     var barcode: String!
@@ -23,10 +28,10 @@ class PostScanViewController: CustomVC {
     var addToBusinessButton: UIButton!
     var addToHomeButton: UIButton!
     
+    // scanned product
     var product: Any?
-    var hexcode: String?
     
-    var colourView: ChooseColourVC?
+    var colour: Colour?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -121,60 +126,101 @@ class PostScanViewController: CustomVC {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        
-        if let colourView = self.colourView {
-            
-            // check if choose colour view is being dismissed
-            if colourView.isBeingDismissed {
-                self.product = colourView.paint
-                self.hexcode = colourView.paint?.colour
-                if self.hexcode == "" {
-                    
-                }
-                else {
-                    self.check(product: "Paint")
-                    self.addColourButton.setTitle("", for: .normal)
-                    self.addColourButton.backgroundColor = UIColor(hexString: self.hexcode!)
-                }
-            }
-        }
+        self.check(product: "Paint")
     }
+    
+    // MARK: - Save to Lists
+    
+    // personal
     
     func addToPersonalButtonFunction() {
         
+        // set to personal save
         self.screenState = .personal
         
         let paint = self.product as? Paint
         
-        let paintProfile: Dictionary<String, String> = ["manufacturer": paint!.manufacturer, "productName": paint!.productName, "category": paint!.category, "code": paint!.code, "image": paint!.image, "product": "Paint", "colour": paint!.colour]
-        
-        DataService.instance.saveProductFor(user: self.signedInUser.uid, screenState: self.screenState, location: "", barcode: self.barcode, value: paintProfile)
+        if let colour = self.colour {
+            let timestamp = createTimestamp()
+            
+            let colourProfile: Dictionary<String, String> = ["productCode": colour.productCode, "colourName": colour.colourName, "manufacturer": colour.manufacturer, "manufacturerID": colour.manufacturerID, "hexcode": colour.colourHexCode]
+            let paintProfile: Dictionary<String, Any> = ["manufacturer": paint!.manufacturer, "productName": paint!.productName, "category": paint!.category, "code": paint!.code, "image": paint!.image, "product": "Paint", "colour": colourProfile, "timestamp": timestamp]
+            DataService.instance.saveProductFor(user: self.signedInUser.uid, screenState: self.screenState, location: "", barcode: self.barcode, value:paintProfile)
+        }
+        else {
+            let timestamp = createTimestamp()
+            
+            let paintProfile: Dictionary<String, String> = ["manufacturer": paint!.manufacturer, "productName": paint!.productName, "category": paint!.category, "code": paint!.code, "image": paint!.image, "product": "Paint", "timestamp": timestamp]
+            DataService.instance.saveProductFor(user: self.signedInUser.uid, screenState: self.screenState, location: "", barcode: self.barcode, value: paintProfile)
+        }
         
         self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
-        
-        
     }
     
+    // business
+    
     func addToBusinessButtonFunction() {
-        
         let selectView = SelectAddressVC()
         selectView.screenState = .business
+        
+        let paint = self.product as? Paint
+        
+        if let colour = self.colour {
+            let timestamp = createTimestamp()
+            
+            // colour profile
+            let colourProfile: Dictionary<String, String> = ["productCode": colour.productCode, "colourName": colour.colourName, "manufacturer": colour.manufacturer, "manufacturerID": colour.manufacturerID, "hexcode": colour.colourHexCode]
+            
+            // paint profile
+            let paintProfile: Dictionary<String, Any> = ["manufacturer": paint!.manufacturer, "productName": paint!.productName, "category": paint!.category, "code": paint!.code, "image": paint!.image, "product": "Paint", "colour": colourProfile, "timestamp": timestamp]
+            
+            selectView.productProfile = paintProfile
+        }
+        else {
+            let timestamp = createTimestamp()
+            
+            let paintProfile: Dictionary<String, String> = ["manufacturer": paint!.manufacturer, "productName": paint!.productName, "category": paint!.category, "code": paint!.code, "image": paint!.image, "product": "Paint", "timestamp": timestamp]
+
+            selectView.productProfile = paintProfile
+        }
+        
         selectView.barcode = self.barcode
-        selectView.productProfile = self.product as? Paint
+        
         self.present(selectView, animated: true, completion: { (error) in
             
         })
-
-        
         
     }
     
+    // homes
+    
     func addToAddressButtonFunction() {
-        
         let selectView = SelectAddressVC()
         selectView.screenState = .homes
+        
+        let paint = self.product as? Paint
+        
+        if let colour = self.colour {
+            let timestamp = createTimestamp()
+            
+            // colour profile
+            let colourProfile: Dictionary<String, String> = ["productCode": colour.productCode, "colourName": colour.colourName, "manufacturer": colour.manufacturer, "manufacturerID": colour.manufacturerID, "hexcode": colour.colourHexCode]
+            
+            // paint profile
+            let paintProfile: Dictionary<String, Any> = ["manufacturer": paint!.manufacturer, "productName": paint!.productName, "category": paint!.category, "code": paint!.code, "image": paint!.image, "product": "Paint", "colour": colourProfile, "timestamp": timestamp]
+            
+            selectView.productProfile = paintProfile
+        }
+        else {
+            let timestamp = createTimestamp()
+            
+            let paintProfile: Dictionary<String, String> = ["manufacturer": paint!.manufacturer, "productName": paint!.productName, "category": paint!.category, "code": paint!.code, "image": paint!.image, "product": "Paint", "timestamp": timestamp]
+            
+            selectView.productProfile = paintProfile
+        }
+        
         selectView.barcode = self.barcode
-        selectView.productProfile = self.product as? Paint
+        
         self.present(selectView, animated: true, completion: { (error) in
             
         })
@@ -207,7 +253,6 @@ class PostScanViewController: CustomVC {
                 self.productTypeLabel.textAlignment = .center
                 
                 // product image
-                
                 
                 let image = self.showProductImage(url: paint.image)
                 self.productImageView.image = image
@@ -246,23 +291,15 @@ class PostScanViewController: CustomVC {
                 // check product type
                 
                 self.check(product: self.productTypeLabel.text!)
-                
             }
-                
             else {
-                
                 let alertView = UIAlertController.init(title: "Barcode not in database", message: "", preferredStyle: .alert)
-                
                 let alertAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-                
                 alertView.addAction(alertAction)
-                
+
                 self.present(alertView, animated: true, completion: nil)
-                
             }
-            
         })
-        
     }
     
     // check if paint can
@@ -270,32 +307,27 @@ class PostScanViewController: CustomVC {
     func check(product: String) {
         
         if product == "Paint" {
-            
             UIView.animate(withDuration: 1.0, animations: {
                 self.addColourButton.alpha = 1.0
             })
-
         }
-            
         else {
             
         }
-        
     }
 
-    
-    // add to colour function
+    // add colour function
     
     func addColourFunction() {
-        self.colourView = ChooseColourVC()
-        self.colourView?.paint = self.product as? Paint
-        self.present(self.colourView!, animated: true, completion: nil)
+        let colourView = ChooseColourVC()
+        // set colour added to paint delegate
+        colourView.colourAddedDelegate = self
+        self.present(colourView, animated: true, completion: nil)
     }
     
     // show product image
     
     func showProductImage(url: String?) -> UIImage {
-        
         if url == "N/A" {
             let image = UIImage(named: "darkgreen.jpg")
             return image!
@@ -306,8 +338,32 @@ class PostScanViewController: CustomVC {
             let image = UIImage(data: imageData as! Data)
             return image!
         }
-        
-        
+    }
+    
+    func createTimestamp() -> String {
+        // time
+        let date = Date()
+        let dateFormatter = DateFormatter()
+        // date
+        dateFormatter.dateStyle = .medium
+        let convertedDate = dateFormatter.string(from: date)
+        print(convertedDate)
+        // time
+        dateFormatter.dateFormat = "HH:mm"
+        let convertedTime = dateFormatter.string(from: date)
+        print(convertedTime)
+
+        return "\(convertedDate) \(convertedTime)"
+    }
+}
+
+extension PostScanViewController: ColourAdded {
+    func setLabelFor(colour: String) {
+        self.addColourButton.setTitle("", for: .normal)
+        self.addColourButton.backgroundColor = UIColor(hexString: colour)
+    }
+    func set(colour: Colour) {
+        self.colour = colour
     }
 
 }

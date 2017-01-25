@@ -28,7 +28,6 @@ class CSVViewController: UIViewController {
         view.backgroundColor = UIColor.brown
     
         
-/*
         //MARK: Paint Data
         
         do {
@@ -72,6 +71,8 @@ class CSVViewController: UIViewController {
             let productName = csvPaintFileArray?[2]
             
             var hexCode = csvPaintFileArray?[3]
+            
+            let manufacturer: String
             
             // fix hex code syntax
             
@@ -125,10 +126,18 @@ class CSVViewController: UIViewController {
 //                print("nothing found")
             }
             
-            let colour = Colour(manufacturerID: manufacturerID!, productCode: productCode!, colourName: productName!, colourHexCode: hexCode!)
+            if productCode!.contains("SW") {
+                manufacturer = "Sherwin-Williams"
+            }
+            
+            else {
+                manufacturer = "Benjamin Moore"
+            }
+            
+            let colour = Colour(manufacturerID: manufacturerID!, productCode: productCode!, colourName: productName!, colourHexCode: hexCode!, manufacturer: manufacturer)
             
             coloursArray?.append(colour)
-            
+
             csvPaintFileArray?.removeFirst(4)
             
         }
@@ -145,11 +154,11 @@ class CSVViewController: UIViewController {
         
         for colour in coloursArray! {
          
-            DataService.instance.savePaintData(manufacturerID: colour.manufacturerID, productCode: colour.productCode, colourName: colour.colourName, colourHexCode: colour.colourHexCode)
+            DataService.instance.savePaintData(manufacturerID: colour.manufacturerID, productCode: colour.productCode, colourName: colour.colourName, colourHexCode: colour.colourHexCode, manufacturer: colour.manufacturer)
          
         }
   
-*/
+/*
  
         //MARK: Paint Cans
         
@@ -288,7 +297,9 @@ class CSVViewController: UIViewController {
          
         }
         
+         */
 
     }
+ 
 
 }

@@ -121,24 +121,11 @@ class AddEditImageVC: CustomVC, UIImagePickerControllerDelegate, UINavigationCon
         
     }
     
-    func stringToImage(imageName: String) -> UIImage {
-        
-        let imageDataString = imageName
-        
-        let imageData = Data(base64Encoded: imageDataString)
-        
-        let image = UIImage(data: imageData!)
-        
-        return image!
-        
-    }
-    
-    // MARK: - Firebase location Info
+    // MARK: - Business/Address Info
     
     func getInfoFor(location: String?, user: String, screenState: ScreenState) {
         
         getLocationRefFor(location: location!, user: user, screenState: screenState)
-        
         let locationInfoRef = DataService.instance.generalRef
         
         locationInfoRef?.observeSingleEvent(of: .value, with: { (snapshot) in
@@ -248,8 +235,7 @@ class AddEditImageVC: CustomVC, UIImagePickerControllerDelegate, UINavigationCon
     
     func setLocationInfo() {
         
-        self.photoTitleLbl.adjustsFontForContentSizeCategory = true
-        self.photoTitleLbl.text = self.selectedLocation
+        
         
     }
     

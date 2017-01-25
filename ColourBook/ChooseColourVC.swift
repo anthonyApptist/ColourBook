@@ -9,43 +9,74 @@
 import UIKit
 import FirebaseDatabase
 
-class ChooseColourVC: CustomVC {
-    
-    var paint: Paint?
-    
-    var currentColour: String?
-    
-    var searchColourTextfield: UITextField!
-    
-    var searchColourButton: UIButton!
-    
-    var addToPaintButton: UIButton!
+protocol ColourResult {
+    func setResultFor(colour: Colour)
+}
 
-    var searchResultView: UIView!
+class ChooseColourVC: CustomVC, UISearchBarDelegate {
     
-    var colourView: ColourResultsVC?
+    var colourAddedDelegate: ColourAdded?
+    
+    var colourSC: UISearchController?
+    
+    var selectedColour: Colour?
+    
+    var hexcode: String?
+    
+    // view variables
+    var searchColourButton: UIButton!
+    var addToPaintButton: UIButton!
+    var searchResultView: UIView!
     
     var coloursArray: [Colour] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         view.backgroundColor = UIColor.white
         
+        // Search Controller
+        let resultsUpdater = SearchResultsTableVC()
+        resultsUpdater.searchFor = .colours
+        
+        colourSC = UISearchController(searchResultsController: resultsUpdater)
+        colourSC?.searchResultsUpdater = resultsUpdater
+        
+        // set results updater delegate link
+        resultsUpdater.colourResultDelegate = self
+        
+        let searchBar = colourSC?.searchBar
+        searchBar?.sizeToFit()
+        searchBar?.placeholder = "Search for colour"
+        
+        colourSC?.hidesNavigationBarDuringPresentation = true
+        colourSC?.dimsBackgroundDuringPresentation = true
+        definesPresentationContext = true
+        searchBar?.backgroundColor = UIColor.black
+        
+        DataService.instance.paintDataRef.observeSingleEvent(of: .value, with: { (snapshot) in
+            
+            for productCode in snapshot.children.allObjects {
+                let colourProfile = productCode as? FIRDataSnapshot
+                let paintData = colourProfile?.value as? NSDictionary
+                let manufacturerID = paintData?["manufacturerID"] as! String
+                let manufacturer = paintData?["manufacturer"] as! String
+                let colourName = paintData?["colourName"] as! String
+                let colourHexCode = paintData?["hexcode"] as! String
+                let productCode = colourProfile?.key
+                let colour = Colour(manufacturerID: manufacturerID, productCode: productCode!, colourName: colourName, colourHexCode: colourHexCode, manufacturer: manufacturer)
+                self.coloursArray.append(colour)
+            }
+            resultsUpdater.allColours = self.coloursArray
+            
+            self.searchColourButton.isUserInteractionEnabled = true
+        })
+        
+        
         //MARK: View
-
-        // search colour text field
-
-        searchColourTextfield = UITextField(frame: CGRect(x: 0, y: 25, width: view.frame.width, height: 40))
-        searchColourTextfield.placeholder = "Search for colour"
-        searchColourTextfield.adjustsFontSizeToFitWidth = true
-        searchColourTextfield.textColor = UIColor.black
-        searchColourTextfield.backgroundColor = UIColor.white
-        searchColourTextfield.textAlignment = .center
         
         // search results view
         
-        searchResultView = UIView(frame: CGRect(x: 0, y: searchColourTextfield.frame.maxY, width: view.frame.width, height: view.frame.height - (2 * (view.frame.height * 0.10)) - 65))
+        searchResultView = UIView(frame: CGRect(x: 0, y: self.backBtn.frame.maxY, width: view.frame.width, height: view.frame.height - (2 * (view.frame.height * 0.10)) - 65))
     
         // search colour button
         
@@ -63,105 +94,62 @@ class ChooseColourVC: CustomVC {
         searchColourButton.frame = CGRect(x: 0, y: view.frame.maxY - (view.frame.height * 0.10), width: view.frame.width, height: view.frame.height * 0.10)
         searchColourButton.setTitle("Search", for: .normal)
         searchColourButton.addTarget(self, action: #selector(searchColourButtonFunction), for: .touchUpInside)
-        searchColourButton.isUserInteractionEnabled = true
+        searchColourButton.isUserInteractionEnabled = false
         searchColourButton.setTitleColor(UIColor.white, for: .normal)
         searchColourButton.titleLabel?.font = UIFont(name: "HelveticaNeue-Medium", size: searchColourButton.frame.height * 0.4)
         searchColourButton.backgroundColor = UIColor.black
         
         // add to view
-        
-        view.addSubview(searchColourTextfield)
+    
         view.addSubview(searchResultView)
         view.addSubview(searchColourButton)
         view.addSubview(addToPaintButton)
         
     }
     
+    // Search
+    
     func searchColourButtonFunction() {
         
-        if searchColourTextfield.text != nil {
-            let colourQuery = searchColourTextfield.text?.capitalized
+        present(self.colourSC!, animated: true) {
             
-            // check database
-            DataService.instance.paintDataRef.observeSingleEvent(of: .value, with: { (snapshot) in
-                
-                for hexcode in snapshot.children.allObjects {
-                    let colourProfile = hexcode as? FIRDataSnapshot
-                    let paintData = colourProfile?.value as? NSDictionary
-                    let manufacturerID = paintData?["manufacturerID"] as! String
-                    let productCode = paintData?["productCode"] as! String
-                    let colourName = paintData?["colourName"] as! String
-                    let colourHexCode = colourProfile?.key
-                    let colour = Colour(manufacturerID: manufacturerID, productCode: productCode, colourName: colourName, colourHexCode: colourHexCode!)
-                    self.coloursArray.append(colour)
-                }
-                
-                for colour in self.coloursArray {
-                    if colour.colourName == colourQuery! {
-                        
-                        // set results VC
-                        self.colourView = ColourResultsVC(frame: self.searchResultView.bounds, colour: colour)
-                        self.currentColour = colour.colourHexCode // set current colour as hexcode
-                        self.searchResultView.addSubview(self.colourView!)
-                        self.searchColourTextfield.text = ""
-                        
-                        UIView.animate(withDuration: 1.0, animations: { 
-                            self.addToPaintButton.titleLabel?.alpha = 1.0
-                            self.addToPaintButton.addTarget(self, action: #selector(self.addToPaintFunction), for: .touchUpInside)
-                        })
-
-                        break
-                    }
-                    if colour.productCode == colourQuery! {
-                        
-                        self.colourView = ColourResultsVC(frame: self.searchResultView.bounds, colour: colour)
-                        self.currentColour = colour.colourHexCode
-                        self.searchResultView.addSubview(self.colourView!)
-                        self.searchColourTextfield.text = ""
-                        
-                        UIView.animate(withDuration: 1.0, animations: {
-                            self.addToPaintButton.titleLabel?.alpha = 1.0
-                            self.addToPaintButton.addTarget(self, action: #selector(self.addToPaintFunction), for: .touchUpInside)
-                        })
-                        
-                        break
-                    }
-                }
-            })
-        }
-        else {
-            let alertView = UIAlertController(title: "No colour to search for", message: "type in a colour", preferredStyle: .alert)
-            let alertAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-            alertView.addAction(alertAction)
-            
-            present(alertView, animated: true, completion: nil)
         }
     }
+    
+    // MARK: Add to Paint
     
     func addToPaintFunction() {
         
-        // if colour is in database
-        if self.currentColour == "" {
-            
-            let alertView = UIAlertController(title: "No colour searched", message: "type to search for a new colour", preferredStyle: .alert)
-            let alertAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-            alertView.addAction(alertAction)
-            
-            present(alertView, animated: true, completion: nil)
-        }
-        else {
-            // add to paint
-            self.paint?.colour = self.currentColour!
-            
-            dismiss(animated: true, completion: nil)
-        }
+        // sets label in post scan VC
+        colourAddedDelegate?.setLabelFor(colour: self.hexcode!)
+        // save selected colour to paint
+        colourAddedDelegate?.set(colour: self.selectedColour!)
+        
+        dismiss(animated: true, completion: nil)
     }
 
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        searchColourTextfield.resignFirstResponder()
+        
     }
     
-    func setResultsVC(colour: Colour) {
+}
+
+extension ChooseColourVC: ColourResult {
+    func setResultFor(colour: Colour) {
+        let colourView = ColourView(frame: self.searchResultView.bounds, colour: colour)
         
+        self.hexcode = colour.colourHexCode
+        print(self.hexcode)
+        
+        // current colour
+        self.selectedColour = colour
+        self.searchResultView.addSubview(colourView)
+        
+        // add to paint button
+        
+        UIView.animate(withDuration: 1.0, animations: {
+            self.addToPaintButton.titleLabel?.alpha = 1.0
+            self.addToPaintButton.addTarget(self, action: #selector(self.addToPaintFunction), for: .touchUpInside)
+        })
     }
 }

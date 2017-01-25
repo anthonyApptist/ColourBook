@@ -187,7 +187,7 @@ class AddEditAddressVC: CustomVC, MKMapViewDelegate, UISearchBarDelegate {
             
             let image = ""
             
-            self.setNewLocation(locationName: locationName!, postalCode: postalCode!, image: image)
+            self.setNewLocation(locationName: locationName!, postalCode: postalCode!, image: image, name: "")
             
             // add to business database
             DataService.instance.saveLocation(screenState: self.screenState, location: self.location!)
@@ -210,21 +210,14 @@ class AddEditAddressVC: CustomVC, MKMapViewDelegate, UISearchBarDelegate {
         let location = CLLocation(latitude: (currentLocation?.latitude)!, longitude: (currentLocation?.longitude)!)
         
         geoCoder.reverseGeocodeLocation(location, completionHandler: { (placemarks, error) in
-            
+    
             var placeMark: CLPlacemark!
-            
             placeMark = placemarks?[0]
-            
             let locationName = placeMark.name
-            
             let postalCode = placeMark.postalCode
-            
             let image = ""
-            
-            self.setNewLocation(locationName: locationName!, postalCode: postalCode!, image: image)
-            
+            self.setNewLocation(locationName: locationName!, postalCode: postalCode!, image: image, name: "")
             self.displayLocationAddAlertController(location: self.location!)
-            
         })
     }
     
@@ -241,11 +234,8 @@ class AddEditAddressVC: CustomVC, MKMapViewDelegate, UISearchBarDelegate {
             
             self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
         })
-        
         let alertCancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        
         alertView.addAction(alertAction)
-        
         alertView.addAction(alertCancel)
         
         self.present(alertView, animated: true) { 

@@ -19,7 +19,7 @@ class ScannedProduct: NSObject, NSCoding {
         case upcCodeKey
         case imageKey
         case colourKey
-//        case timeKey
+        case timeKey
     }
     
     enum Product: String {
@@ -33,18 +33,18 @@ class ScannedProduct: NSObject, NSCoding {
     let manufacturer: String
     let upcCode: String
     let image: String
-    let colour: String?
-//    let timestamp: DateFormatter
+    let colour: Colour?
+    let timestamp: String
     
     // MARK: - Initializers
     
-    init(productType: String, manufacturer: String, upcCode: String, image: String, colour: String) {
+    init(productType: String, manufacturer: String, upcCode: String, image: String, colour: Colour?, timestamp: String) {
         self.productType = productType
         self.manufacturer = manufacturer
         self.upcCode = upcCode
         self.image = image
         self.colour = colour
-//        self.timestamp = timeStamp
+        self.timestamp = timestamp
     }
     
     // MARK: - NSCoding
@@ -54,8 +54,8 @@ class ScannedProduct: NSObject, NSCoding {
         manufacturer = aDecoder.decodeObject(forKey: CoderKeys.manufacturerKey.rawValue) as! String
         upcCode = aDecoder.decodeObject(forKey: CoderKeys.upcCodeKey.rawValue) as! String
         image = aDecoder.decodeObject(forKey: CoderKeys.imageKey.rawValue) as! String
-        colour = aDecoder.decodeObject(forKey: CoderKeys.colourKey.rawValue) as! String
-//        timestamp = aDecoder.decodeObject(forKey: CoderKeys.timeKey.rawValue) as! DateFormatter
+        colour = aDecoder.decodeObject(forKey: CoderKeys.colourKey.rawValue) as? Colour
+        timestamp = aDecoder.decodeObject(forKey: CoderKeys.timeKey.rawValue) as! String
     }
     
     func encode(with aCoder: NSCoder) {
@@ -64,7 +64,7 @@ class ScannedProduct: NSObject, NSCoding {
         aCoder.encode(upcCode, forKey: CoderKeys.upcCodeKey.rawValue)
         aCoder.encode(image, forKey: CoderKeys.imageKey.rawValue)
         aCoder.encode(colour, forKey: CoderKeys.colourKey.rawValue)
-//        aCoder.encode(image, forKey: CoderKeys.timeKey.rawValue)
+        aCoder.encode(image, forKey: CoderKeys.timeKey.rawValue)
     }
     
 }
