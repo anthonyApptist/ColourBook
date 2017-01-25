@@ -118,22 +118,50 @@ class CustomVC: UIViewController, UITextFieldDelegate {
         }
     }
     
-    func setNewLocation(locationName: String, postalCode: String, image: String) {
+    func setNewLocation(locationName: String, postalCode: String, image: String, name: String) {
         
-        self.location = Location(locationName: locationName, postalCode: postalCode, image: image)
+        self.location = Location(locationName: locationName, postalCode: postalCode, image: image, name: name)
         
     }
+    
+    // url to image
     
     func setImageFrom(urlString: String) -> UIImage {
         
         let imageURL = NSURL(string: urlString)
-        
         let imageData = NSData(contentsOf: imageURL as! URL)
-        
         let image = UIImage(data: imageData as! Data)
-        
         return image!
-        
+    }
+    
+    // String to UIImage
+    
+    func stringToImage(imageName: String) -> UIImage { // add to extensions
+        let imageDataString = imageName
+        let imageData = Data(base64Encoded: imageDataString)
+        let image = UIImage(data: imageData!)
+        return image!
     }
 
+
+    func addTimeStamp() -> String {
+        
+        let date = Date()
+        let dateFormatter = DateFormatter()
+        
+        // date
+        dateFormatter.dateStyle = .medium
+        let convertedDate = dateFormatter.string(from: date)
+        print(convertedDate)
+        
+        // time
+        dateFormatter.dateFormat = "HH:mm"
+        let convertedTime = dateFormatter.string(from: date)
+        print(convertedTime)
+
+        let stamp = ("\(convertedDate) \(convertedTime)")
+        
+        return stamp
+        
+    }
 }

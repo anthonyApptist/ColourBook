@@ -21,20 +21,29 @@ class ItemListDetailVC: CustomVC {
 
     var detailItem: ScannedProduct?
     
-    var colour: String?
-    
     override func viewDidAppear(_ animated: Bool) {
         
         titleLbl?.text = detailItem?.productType
         nameLbl?.text = detailItem?.manufacturer
         productIdLbl?.text = detailItem?.upcCode
         
-        if self.colour == "" {
-            hexCodeLbl?.text = "No colour added"
+        if let colour = detailItem?.colour {
+            hexCodeLbl?.text = ""
+            hexCodeLbl?.backgroundColor = UIColor(hexString: colour.colourHexCode)
+            
+            /*
+            // set text for productCode and colourName label
+            colourProductCodeLabel.text = colour.productCode
+            colourNameLabel.text = colour.colourName
+            */
         }
         else {
-            hexCodeLbl?.text = ""
-            hexCodeLbl?.backgroundColor = UIColor(hexString: self.colour!)
+            hexCodeLbl?.text = "No colour added"
+            /*
+            // set text for productCode and colourName label
+            colourProductCodeLabel.text = ""
+            colourNameLabel.text = ""
+            */
         }
         
         self.imgView?.contentMode = .scaleAspectFill

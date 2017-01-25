@@ -238,25 +238,10 @@ class BarcodeScanner: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
         
         let postScanView = PostScanViewController()
         
-        postScanView.barcode = code
+        postScanView.barcode = "0755837385812" //code
         
         self.present(postScanView, animated: true)
         
     }
     
 }
-
-/*
-let date = Date()
-let dateFormatter = DateFormatter()
-
-// date
-dateFormatter.dateStyle = .medium
-let convertedDate = dateFormatter.string(from: date)
-print(convertedDate)
-
-// time
-dateFormatter.dateFormat = "HH:mm"
-let convertedTime = dateFormatter.string(from: date)
-print(convertedTime)
-*/

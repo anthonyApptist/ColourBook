@@ -143,42 +143,31 @@ class ItemListAddVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
     
     //DELETE ROWS
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
-        
         if (locations.count) > 0 {
             if(indexPath as NSIndexPath).row >= (locations.count) {
                 return .insert
             } else {
                 return .delete
             }
-            
         }
-        
         return .none
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         super.prepare(for: segue, sender: nil)
         
-        
         if segue.identifier == "ConnectToListItem" {
-            
             let row = tableView?.indexPathForSelectedRow?.row
-            
             let selectedLocation = locations[row!].locationName
-            
             if let detail = segue.destination as? ItemListEditVC {
-                
                 detail.selectedLocation = selectedLocation
-                
             }
         }
-        
     }
     
     func getLocationLists(screenState: ScreenState, user: User) {
         
         getLocationsRefFor(user: user, screenState: screenState)
-        
         let locationsRef = DataService.instance.generalRef
         
         locationsRef?.observeSingleEvent(of: .value, with: { (snapshot) in
@@ -186,18 +175,12 @@ class ItemListAddVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
             user.items = []
             
             for child in snapshot.children.allObjects {
-                
                 let addressProfile = child as! FIRDataSnapshot
-                
                 let profile = addressProfile.value as? NSDictionary
-                
                 let postalCode = profile?["postalCode"] as! String
-                
                 let image = profile?["image"] as! String
-                
                 let name = addressProfile.key
-                
-                let location = Location(locationName: name, postalCode: postalCode, image: image)
+                let location = Location(locationName: name, postalCode: postalCode, image: image, name: "")
                 
                 user.items.append(location)
                 

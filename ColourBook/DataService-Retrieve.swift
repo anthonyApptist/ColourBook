@@ -33,9 +33,11 @@ extension DataService {
                 
                 let image = profile?["image"] as! String
                 
-                let name = addressProfile.key 
+                let name = profile?["name"] as? String
                 
-                let location = Location(locationName: name, postalCode: postalCode, image: image)
+                let locationName = addressProfile.key
+                
+                let location = Location(locationName: locationName, postalCode: postalCode, image: image, name: name)
                 
                 user.items.append(location)
         
@@ -85,7 +87,9 @@ extension DataService {
                 
                 let colour = profile?["colour"] as? String
                 
-                let product = ScannedProduct(productType: productType, manufacturer: manufacturer, upcCode: upcCode, image: image, colour: "")
+                let timestamp = profile?["timestamp"] as! String
+                
+                let product = ScannedProduct(productType: productType, manufacturer: manufacturer, upcCode: upcCode, image: image, colour: nil, timestamp: timestamp)
                 
                 user.items.append(product)
                 

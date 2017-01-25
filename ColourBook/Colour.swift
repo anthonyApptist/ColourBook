@@ -17,4 +17,6 @@ struct Colour {
     var colourName: String
     
     var colourHexCode: String
+    
+    var manufacturer: String
 }

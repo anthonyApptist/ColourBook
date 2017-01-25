@@ -63,7 +63,7 @@ class DataService {
     // paint data reference
     
     var paintDataRef: FIRDatabaseReference {
-        return mainRef.child("paintData")
+        return mainRef.child("colours")
     }
     
     var generalRef: FIRDatabaseReference?
@@ -80,19 +80,17 @@ class DataService {
         
     }
     
-    
-    
     func saveRegisterUser(uid: String, email: String, name: String, image: String) {
         let profile: Dictionary<String, String> = ["email": email, "image": image]
     }
     
-    func savePaintData(manufacturerID: String, productCode: String, colourName: String, colourHexCode: String) {
+    // MARK: - Database Config
+    
+    func savePaintData(manufacturerID: String, productCode: String, colourName: String, colourHexCode: String, manufacturer: String) {
         
-        let paintProfile: Dictionary<String, AnyObject> = ["manufacturerID" : manufacturerID as AnyObject, "colourName" : colourName as AnyObject, "productCode": productCode as AnyObject]
+        let paintProfile: Dictionary<String, String> = ["manufacturerID" : manufacturerID, "colourName" : colourName, "hexcode": colourHexCode, "manufacturer": manufacturer]
         
-        let hexCode = colourHexCode
-        
-        paintDataRef.child(hexCode).setValue(paintProfile)
+        paintDataRef.child(productCode).setValue(paintProfile)
     }
     
     func savePaintCanData(manufacturer: String, productName: String, category: String, code: String, upcCode: String, image: String, colour: String) {

@@ -19,6 +19,7 @@ class ProductInfoView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
+        // view layout
         let wrapView = UIView(frame: CGRect(x: 0, y: 20, width: frame.width, height: frame.height - 20 - 20))
         
         let firstQuarter = UIView(frame: CGRect(x: 0, y: wrapView.frame.minY, width: frame.width, height: wrapView.frame.height * 0.25))
@@ -39,7 +40,7 @@ class ProductInfoView: UIView {
         
         let categoryLabelOrigin = CGPoint(x: secondQuarter.center.x - ((wrapView.frame.width * 0.6)/2), y: secondQuarter.center.y - ((secondQuarter.frame.height * 0.50)/2))
         let categoryLabelSize = CGSize(width: wrapView.frame.width * 0.6, height: secondQuarter.frame.height * 0.5)
-        category = UILabel.init(frame: CGRect(origin: categoryLabelOrigin, size: categoryLabelSize))
+        category = UILabel(frame: CGRect(origin: categoryLabelOrigin, size: categoryLabelSize))
         category.backgroundColor = UIColor.clear
         
         // product name label

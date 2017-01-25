@@ -13,9 +13,11 @@ class Location: NSObject, NSCoding {
     // MARK: - Types
     
     enum CoderKeys: String {
-        case nameKey
+        case locationNameKey
         case codeKey
         case imageKey
+        case nameKey
+        case itemsKey
     }
     
     enum Structure: String {
@@ -24,33 +26,46 @@ class Location: NSObject, NSCoding {
         case commercial = "commercial"
     }
     
+    enum Use: String {
+        case business = "Business"
+        case home = "Home"
+    }
+    
     
     // MARK: - Properties
     
     var locationName: String
     var postalCode: String
-    var image: String
+    var image: String?
+    var name: String?
+    var items: [Any]?
     
     // MARK: - Initializers
     
-    init(locationName: String, postalCode: String, image: String) {
+    init(locationName: String, postalCode: String, image: String?, name: String?) {
         self.locationName = locationName
         self.postalCode = postalCode
         self.image = image
+        self.name = name
+        self.items = []
     }
     
     // MARK: - NSCoding
     
     required init?(coder aDecoder: NSCoder) {
-        locationName = aDecoder.decodeObject(forKey: CoderKeys.nameKey.rawValue) as! String
+        locationName = aDecoder.decodeObject(forKey: CoderKeys.locationNameKey.rawValue) as! String
         postalCode = aDecoder.decodeObject(forKey: CoderKeys.codeKey.rawValue) as! String
-        image = aDecoder.decodeObject(forKey: CoderKeys.imageKey.rawValue) as! String
+        image = aDecoder.decodeObject(forKey: CoderKeys.imageKey.rawValue) as? String
+        name = aDecoder.decodeObject(forKey: CoderKeys.nameKey.rawValue) as? String
+        items = aDecoder.decodeObject(forKey: CoderKeys.itemsKey.rawValue) as? Array
     }
     
     func encode(with aCoder: NSCoder) {
-        aCoder.encode(locationName, forKey: CoderKeys.nameKey.rawValue)
+        aCoder.encode(locationName, forKey: CoderKeys.locationNameKey.rawValue)
         aCoder.encode(postalCode, forKey: CoderKeys.codeKey.rawValue)
         aCoder.encode(image, forKey: CoderKeys.imageKey.rawValue)
+        aCoder.encode(image, forKey: CoderKeys.nameKey.rawValue)
+        aCoder.encode(items, forKey: CoderKeys.itemsKey.rawValue)
     }
     
 }

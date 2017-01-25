@@ -1,36 +1,29 @@
 //
-//  ProductCell.swift
+//  LocationCell.swift
 //  ColourBook
 //
-//  Created by Anthony Ma on 9/1/2017.
+//  Created by Anthony Ma on 23/1/2017.
 //  Copyright © 2017 Apptist. All rights reserved.
 //
 
 import Foundation
 import UIKit
 
-class ProductCell: UITableViewCell {
+class LocationCell: UITableViewCell {
     
     var box1: UILabel?
     var box2: UILabel?
-    var box3: UILabel?
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        
-    }
+    var addressImageView: UIImageView?
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         box1 = UILabel()
         box2 = UILabel()
-        box3 = UILabel()
-        
+        addressImageView = UIImageView()
     }
     
     override func layoutSubviews() {
-        
         // box 1
         
         box1?.frame = CGRect(x: self.contentView.bounds.minX, y: self.contentView.bounds.minY, width: self.contentView.frame.width * 0.50, height: self.contentView.frame.height)
@@ -38,6 +31,7 @@ class ProductCell: UITableViewCell {
         box1?.textColor = UIColor.black
         box1?.textAlignment = .center
         box1?.adjustsFontSizeToFitWidth = true
+        box1?.font = UIFont(name: "HelveticaNeue-Medium", size: (box1?.frame.height)! * 0.3)
         
         // box 2
         
@@ -46,18 +40,20 @@ class ProductCell: UITableViewCell {
         box2?.textColor = UIColor.black
         box2?.textAlignment = .center
         box2?.adjustsFontSizeToFitWidth = true
+        box2?.font = UIFont(name: "HelveticaNeue-Medium", size: (box2?.frame.height)! * 0.3)
         
-        // box 3
+        // image view
         
-        box3?.frame = CGRect(x: (box2?.frame.maxX)!, y: self.contentView.bounds.minY, width: self.contentView.frame.width * 0.25, height: self.contentView.frame.height)
-
+        addressImageView?.frame = CGRect(x: (box2?.frame.maxX)!, y: self.contentView.bounds.minY, width: self.contentView.frame.width * 0.25, height: self.contentView.frame.height)
+        addressImageView?.contentMode = .scaleAspectFit
         
         self.contentView.addSubview(box1!)
         self.contentView.addSubview(box2!)
-        self.contentView.addSubview(box3!)
+        self.contentView.addSubview(addressImageView!)
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
+    
 }
