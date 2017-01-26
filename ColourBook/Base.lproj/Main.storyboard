@@ -234,7 +234,7 @@
                                                 <rect key="frame" x="0.0" y="28" width="375" height="80"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="BHQ-3w-4Cn" id="M3a-QN-wXD">
-                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="79"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="product name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TWo-lO-oo0">
@@ -596,8 +596,10 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="emailField" destination="UTq-MB-PCO" id="Vmb-Xp-pzp"/>
                         <outlet property="facebookBtn" destination="Df1-Vi-z3O" id="0TM-GP-Dpa"/>
                         <outlet property="logInBtn" destination="YFX-Jo-EEC" id="Z5i-FO-VGj"/>
+                        <outlet property="passwordField" destination="j89-PP-Kjn" id="LXl-RQ-g1Z"/>
                         <outlet property="signUpBtn" destination="QGz-tj-dCZ" id="ncf-sM-B1L"/>
                         <outlet property="titleLbl" destination="Atw-kM-YrQ" id="irA-gq-5Sk"/>
                         <outlet property="topBar" destination="cwo-6D-NeJ" id="T0N-1P-3UL"/>
@@ -1095,7 +1097,7 @@
                                                 <rect key="frame" x="0.0" y="28" width="375" height="80"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="50k-DH-85g" id="6Yz-BN-jgc">
-                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="79"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="address" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4EA-WB-cJY">
