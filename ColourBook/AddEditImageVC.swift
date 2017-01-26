@@ -31,13 +31,10 @@ class AddEditImageVC: CustomVC, UIImagePickerControllerDelegate, UINavigationCon
     
     let imagePicker = UIImagePickerController()
     
-    var selectedLocation: String?
+    var selectedLocation: Location?
     
     var image: String?
-    
     var resizedImg: UIImage?
-    
-    var postalCode: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,7 +55,7 @@ class AddEditImageVC: CustomVC, UIImagePickerControllerDelegate, UINavigationCon
         }
         if screenState == .business || screenState == .homes {
             DispatchQueue.global(qos: .background).async {
-                self.getInfoFor(location: self.selectedLocation, user: self.signedInUser.uid, screenState: self.screenState)
+                self.getInfoFor(location: self.selectedLocation!, user: self.signedInUser.uid, screenState: self.screenState)
             }
             
             DispatchQueue.main.async {
@@ -143,15 +140,15 @@ class AddEditImageVC: CustomVC, UIImagePickerControllerDelegate, UINavigationCon
         }
         if screenState == .business {
             
-            DataService.instance.saveInfoFor(user: self.signedInUser.uid, screenState: self.screenState, location: self.selectedLocation, image: self.image, name: self.textField?.text)
+            DataService.instance.saveInfoFor(user: self.signedInUser.uid, screenState: self.screenState, location: (self.selectedLocation?.locationName)!, image: self.image, name: self.textField?.text)
             
-            DataService.instance.businessRef.child(self.selectedLocation!).updateChildValues(["name" : self.textField?.text ?? "", "image" : self.image ?? ""])
+            DataService.instance.businessRef.child((self.selectedLocation?.locationName)!).updateChildValues(["name" : self.textField?.text ?? "", "image" : self.image ?? ""])
         }
         if screenState == .homes {
             
-            DataService.instance.saveInfoFor(user: self.signedInUser.uid, screenState: self.screenState, location: self.selectedLocation, image: self.image, name: self.textField?.text)
+            DataService.instance.saveInfoFor(user: self.signedInUser.uid, screenState: self.screenState, location: (self.selectedLocation?.locationName)!, image: self.image, name: self.textField?.text)
             
-            DataService.instance.addressRef.child(self.selectedLocation!).updateChildValues(["name" : self.textField?.text ?? "", "image" : self.image ?? ""])
+            DataService.instance.addressRef.child((self.selectedLocation?.locationName)!).updateChildValues(["name" : self.textField?.text ?? "", "image" : self.image ?? ""])
         }
         
         performSegue(withIdentifier: "BackToItemEdit", sender: self)
@@ -160,17 +157,16 @@ class AddEditImageVC: CustomVC, UIImagePickerControllerDelegate, UINavigationCon
     
     // MARK: - Business/Address Info
     
-    func getInfoFor(location: String?, user: String, screenState: ScreenState) {
+    func getInfoFor(location: Location, user: String, screenState: ScreenState) {
         
-        getLocationRefFor(location: location!, user: user, screenState: screenState)
+        getLocationRefFor(location: location.locationName, user: user, screenState: screenState)
+        
         let locationInfoRef = DataService.instance.generalRef
         
         locationInfoRef?.observeSingleEvent(of: .value, with: { (snapshot) in
             
             let profile = snapshot.value as? NSDictionary
-            
             let postalCode = profile?["postalCode"] as! String
-            
             let image = profile?["image"] as! String
             
             if let name = profile?["name"] as? String {
@@ -180,28 +176,18 @@ class AddEditImageVC: CustomVC, UIImagePickerControllerDelegate, UINavigationCon
                 self.textField?.text = ""
             }
             
-            self.postalCode = postalCode
+            
             
             self.image = image
             
             if self.image == nil || self.image == "" {
-                
                 let image = UIImage(named: "darkgreen.jpg")
-                
                 self.imgView.image = image
-                
             }
-            
             else {
-                
                 let locationImage = self.stringToImage(imageName: self.image!)
-    
                 self.imgView.image = locationImage
-                
             }
-            
-            
-            
         })
         
     }
@@ -220,35 +206,24 @@ class AddEditImageVC: CustomVC, UIImagePickerControllerDelegate, UINavigationCon
     // MARK: - Firebase Personal Info
     
     func getProfileFor(user: String) {
-        
         let uidRef = DataService.instance.usersRef.child(user)
         
         uidRef.observeSingleEvent(of: .value, with: { (snapshot) in
             
             let profile = snapshot.value as? NSDictionary
-            
             let image = profile?["image"] as! String
-            
+        
             self.image = image
             
             if self.image == nil || self.image == "" {
-                
                 let image = UIImage(named: "darkgreen.jpg")
-                
                 self.imgView.image = image
-                
             }
-                
             else {
-                
                 let locationImage = self.stringToImage(imageName: self.image!)
-                
                 self.imgView.image = locationImage
-                
             }
-            
         })
-        
     }
     
     // MARK: - Save Button Segue
@@ -257,15 +232,10 @@ class AddEditImageVC: CustomVC, UIImagePickerControllerDelegate, UINavigationCon
         if segue.identifier == "BackToItemEdit" {
             
             if let detail = segue.destination as? ItemListEditVC {
-                
                 detail.screenState = self.screenState
-                
                 detail.selectedLocation = self.selectedLocation
-                
             }
-        
         }
-        
     }
     
     // MARK: - Set UI data

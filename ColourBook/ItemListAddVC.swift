@@ -158,7 +158,7 @@ class ItemListAddVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         
         if segue.identifier == "ConnectToListItem" {
             let row = tableView?.indexPathForSelectedRow?.row
-            let selectedLocation = locations[row!].locationName
+            let selectedLocation = locations[row!]
             if let detail = segue.destination as? ItemListEditVC {
                 detail.selectedLocation = selectedLocation
             }
@@ -172,8 +172,6 @@ class ItemListAddVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         
         locationsRef?.observeSingleEvent(of: .value, with: { (snapshot) in
             
-            user.items = []
-            
             for child in snapshot.children.allObjects {
                 let addressProfile = child as! FIRDataSnapshot
                 let profile = addressProfile.value as? NSDictionary
@@ -182,16 +180,15 @@ class ItemListAddVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
                 let name = addressProfile.key
                 let location = Location(locationName: name, postalCode: postalCode, image: image, name: "")
                 
-                user.items.append(location)
+                self.locations.append(location)
                 
             }
             
-            self.locations = self.signedInUser.items as! [Location]
             self.tableView?.reloadData()
             
         }, withCancel: { (error) in
             print(error.localizedDescription)
-            user.items = []
+            
         })
         
     }
