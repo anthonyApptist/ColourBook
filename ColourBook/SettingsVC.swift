@@ -10,7 +10,7 @@ import UIKit
 
 class SettingsVC: CustomVC {
  
-    var selectedLocation: String?
+    var selectedLocation: Location?
     
     override func viewDidAppear(_ animated: Bool) {
         
