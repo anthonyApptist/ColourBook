@@ -23,6 +23,10 @@ class LogInViewController : UIViewController {
     @IBOutlet weak var signUpBtn: UIButton!
     
     let app = UIApplication.shared.delegate as! AppDelegate
+    
+    @IBAction func forgotPwButtonPressed() {
+        
+    }
 
     @IBAction func logInBtnPressed() {
         
