@@ -124,7 +124,7 @@ extension DataService {
     func getDashboardRef(screenState: ScreenState, user: String, location: String?) {
         
         if screenState == .personal {
-            self.generalRef = self.usersRef.child(user).child(PersonalDashboard)
+            self.generalRef = self.usersRef.child(user).child(PersonalDashboard).child(Barcodes)
         }
         else if screenState == .business {
             self.generalRef = self.usersRef.child(user).child(BusinessDashboard).child(location!).child("categories")

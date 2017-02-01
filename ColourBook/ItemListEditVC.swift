@@ -69,6 +69,8 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         
         self.showActivityIndicator()
         
+        products = []
+        
         if screenState == .personal {
             self.getPaint(screenState: self.screenState, user: self.signedInUser)
         }
@@ -88,8 +90,20 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ItemCell", for: indexPath) as! ItemCell
+        let product = self.products[indexPath.row]
+        cell.titleLbl?.text = product.timestamp
+        if product.image == "N/A" {
+            cell.imgView?.image = UIImage(named: "darkgreen")
+        }
+        else {
+            cell.imgView?.image = self.setImageFrom(urlString: product.image)
+        }
+        if let colour = product.colour {
+            cell.swatchView?.backgroundColor = UIColor(hexString: colour.colourHexCode)
+        }
+        else {
             
-        cell.titleLbl?.text = self.products[indexPath.row].productType
+        }
         
         return cell
     }
@@ -227,7 +241,7 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
                     
                     // no products
                 else {
-                    
+                    self.hideActivityIndicator()
                     
                 }
                 
@@ -270,13 +284,13 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
                         }
                     }
                     self.tableView?.reloadData()
-                    
                     self.hideActivityIndicator()
                 }
                 // no products
                 else {
-                    
+                    self.hideActivityIndicator()
                 }
+
             }
             // Error
         }, withCancel: { (error) in
