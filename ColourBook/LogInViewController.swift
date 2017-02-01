@@ -25,7 +25,19 @@ class LogInViewController : UIViewController {
     let app = UIApplication.shared.delegate as! AppDelegate
     
     @IBAction func forgotPwButtonPressed() {
-        
+        ErrorHandler.sharedInstance.errorMessageView.resetImagePosition()
+        if(!emailField.validate()) {
+            if(emailField.validationError == "blank") {
+                ErrorHandler.sharedInstance.show(message: "Email Field Cannot Be Blank", container: self)
+            }
+            if(emailField.validationError == "not_email") {
+                ErrorHandler.sharedInstance.show(message: "You should double-check that email address....", container: self)
+            }
+        }
+        else {
+            AuthService.instance.passwordReset(email: emailField.textField.text!)
+            self.displayPasswordResetSent(email: emailField.textField.text!)
+        }
     }
 
     @IBAction func logInBtnPressed() {
@@ -83,6 +95,19 @@ class LogInViewController : UIViewController {
             return false
         }
         return true
+    }
+    
+    func displayPasswordResetSent(email: String) {
+        let alertView = UIAlertController(title: "Password reset email sent to", message: email, preferredStyle: .alert)
+        
+        let alertCancel = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
+        
+        alertView.addAction(alertCancel)
+        
+        self.present(alertView, animated: true) {
+            
+        }
+
     }
     
     

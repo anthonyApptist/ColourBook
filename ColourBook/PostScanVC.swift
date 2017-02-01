@@ -38,6 +38,8 @@ class PostScanViewController: CustomVC {
         
         self.backButtonNeeded = true
         
+        self.showActivityIndicator()
+        
         view.backgroundColor = UIColor.white
         
         // MARK: - Buttons
@@ -290,11 +292,16 @@ class PostScanViewController: CustomVC {
                 // check product type
                 
                 self.check(product: self.productTypeLabel.text!)
+                
+                self.hideActivityIndicator()
             }
             else {
+                
                 let alertView = UIAlertController.init(title: "Barcode not in database", message: "", preferredStyle: .alert)
                 let alertAction = UIAlertAction(title: "OK", style: .default, handler: nil)
                 alertView.addAction(alertAction)
+                
+                self.hideActivityIndicator()
 
                 self.present(alertView, animated: true, completion: nil)
             }

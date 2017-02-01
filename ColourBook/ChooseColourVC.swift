@@ -32,6 +32,8 @@ class ChooseColourVC: CustomVC, UISearchBarDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.showActivityIndicator()
         view.backgroundColor = UIColor.white
         
         // Search Controller
@@ -67,7 +69,7 @@ class ChooseColourVC: CustomVC, UISearchBarDelegate {
                 self.coloursArray.append(colour)
             }
             resultsUpdater.allColours = self.coloursArray
-            
+            self.hideActivityIndicator()
             self.searchColourButton.isUserInteractionEnabled = true
         })
         

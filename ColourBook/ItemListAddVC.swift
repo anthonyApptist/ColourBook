@@ -47,13 +47,16 @@ class ItemListAddVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         tableView?.delegate = self
         tableView?.dataSource = self
 
-        self.getLocationLists(screenState: self.screenState, user: self.signedInUser)
     }
  
     
     override func viewDidAppear(_ animated: Bool) {
         
 //        super.viewDidAppear(false)
+        
+        self.showActivityIndicator()
+        
+        self.getLocationLists(screenState: self.screenState, user: self.signedInUser)
         
         if self.screenState == .business {
             self.subTitleLbl?.text = "my businesses"
@@ -159,10 +162,11 @@ class ItemListAddVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
                 self.locations.append(location)
             }
             self.tableView?.reloadData()
+            self.hideActivityIndicator()
             
         }, withCancel: { (error) in
             print(error.localizedDescription)
-            
+            self.hideActivityIndicator()
         })
         
     }

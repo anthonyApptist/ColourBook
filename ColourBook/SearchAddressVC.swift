@@ -31,6 +31,8 @@ class SearchAddressVC: CustomVC, UISearchBarDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.showActivityIndicator()
+        
         getDatabase()
         
         // Search Controller
@@ -51,8 +53,6 @@ class SearchAddressVC: CustomVC, UISearchBarDelegate {
         addressSC?.dimsBackgroundDuringPresentation = true
         definesPresentationContext = true
         searchBar?.backgroundColor = UIColor.black
-        
-        
         
         // MARK: - View
         
@@ -264,9 +264,9 @@ class SearchAddressVC: CustomVC, UISearchBarDelegate {
             })
             
             let resultsUpdater = self.addressSC?.searchResultsUpdater as! SearchResultsTableVC
-            
             resultsUpdater.allAddresses = self.allAddresses
 
+            self.hideActivityIndicator()
             self.searchButton.isUserInteractionEnabled = true
         })
     }

@@ -19,8 +19,6 @@ class CustomVC: UIViewController, UITextFieldDelegate {
     
     var signedInUser: User!
     
-    var location: Location?
-    
     var titleString: String?
     
     var screenState = ScreenState.none
@@ -116,12 +114,6 @@ class CustomVC: UIViewController, UITextFieldDelegate {
         else {
             return ""
         }
-    }
-    
-    func setNewLocation(locationName: String, postalCode: String, image: String, name: String) {
-        
-        self.location = Location(locationName: locationName, postalCode: postalCode, image: image, name: name)
-        
     }
     
     // url to image

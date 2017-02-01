@@ -227,13 +227,13 @@ class AddEditAddressVC: CustomVC, MKMapViewDelegate, UISearchBarDelegate, CLLoca
             
             let image = ""
             
-            self.setNewLocation(locationName: locationName!, postalCode: postalCode!, image: image, name: "")
+//            self.setNewLocation(locationName: locationName!, postalCode: postalCode!, image: image, name: "")
             
             // add to business database
-            DataService.instance.saveLocation(screenState: self.screenState, location: self.location!)
+//            DataService.instance.saveLocation(screenState: self.screenState, location: self.location!)
             
             // add to user business bucket list
-            DataService.instance.saveLocationTo(user: self.signedInUser, location: self.location!, screenState: self.screenState)
+//            DataService.instance.saveLocationTo(user: self.signedInUser, location: self.location!, screenState: self.screenState)
         
             self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
         })
@@ -257,8 +257,8 @@ class AddEditAddressVC: CustomVC, MKMapViewDelegate, UISearchBarDelegate, CLLoca
             let postalCode = placeMark.postalCode
             let image = ""
             let name = ""
-            self.setNewLocation(locationName: locationName!, postalCode: postalCode!, image: image, name: name)
-            self.displayLocationAddAlertController(location: self.location!)
+            let location = Location(locationName: locationName!, postalCode: postalCode!, image: image, name: name)
+            self.displayLocationAddAlertController(location: location)
         })
     }
     

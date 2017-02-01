@@ -35,7 +35,14 @@ extension DataService {
     
     // MARK: - Public Database (Apartment)
     
-    
+    func saveApartment(screenState: ScreenState, location: Location) {
+        getLocationRef(screenState: screenState)
+        
+        if let locationRef = self.generalRef {
+            let locationProfile: Dictionary<String, String> = ["postalCode": location.postalCode, "image": "", "name": ""]
+            locationRef.child(location.locationName).setValue(locationProfile)
+        }
+    }
     
     // MARK: Saving Profile Info
     
@@ -67,15 +74,41 @@ extension DataService {
     }
     
     func getPublicLocationRef(screenState: ScreenState, location: String?) {
-        
         if screenState == .business {
             self.generalRef = self.businessRef.child(location!).child(Barcodes)
         }
         else if screenState == .homes {
             self.generalRef = self.addressRef.child(location!).child(Barcodes)
         }
-        
     }
+    
+    func getPublicLocationCategoriesRef(screenState: ScreenState, location: String?) {
+        if screenState == .business {
+            self.generalRef = self.businessRef.child(location!).child("categories")
+        }
+        else if screenState == .homes {
+            self.generalRef = self.addressRef.child(location!).child("categories")
+        }
+    }
+    
+    // MARK: Save Paint Can to Public Database (w/ category)
+    
+    func saveProductIn(location: String?, screenState: ScreenState, barcode: String, value: Dictionary<String, Any>, category: String) {
+        getPublicLocationCategoriesRef(screenState: screenState, location: location)
+        let publicRef = self.generalRef?.child(category)
+        publicRef?.child(barcode).setValue(value)
+    }
+    
+    // MARK: Save Paint Can to User Database (w/ category)
+    
+    func saveProductIn(user: String, screenState: ScreenState, location: String?, barcode: String, value: Dictionary<String, Any>, category: String) {
+        // reference
+        getDashboardRef(screenState: screenState, user: user, location: location)
+        let infoRef = self.generalRef?.child(category)
+        
+        infoRef?.child(barcode).setValue(value)
+    }
+
     
     // MARK: Save Paint Can to User Database
     
@@ -91,13 +124,13 @@ extension DataService {
     func getDashboardRef(screenState: ScreenState, user: String, location: String?) {
         
         if screenState == .personal {
-            self.generalRef = self.usersRef.child(user).child(PersonalDashboard).child(Barcodes)
+            self.generalRef = self.usersRef.child(user).child(PersonalDashboard)
         }
         else if screenState == .business {
-            self.generalRef = self.usersRef.child(user).child(BusinessDashboard).child(location!).child(Barcodes)
+            self.generalRef = self.usersRef.child(user).child(BusinessDashboard).child(location!).child("categories")
         }
         else if screenState == .homes {
-            self.generalRef = self.usersRef.child(user).child(AddressDashboard).child(location!).child(Barcodes)
+            self.generalRef = self.usersRef.child(user).child(AddressDashboard).child(location!).child("categories")
         }
         
     }
@@ -107,11 +140,11 @@ extension DataService {
     func saveApartmentLocationTo(user: User, location: Location, screenState: ScreenState) {
         
         getUserlocationRef(screenState: screenState, user: user)
+        let locationRef = self.generalRef
+        let newCategories = self.startingCategories(screenState: screenState)
         
-        if let locationRef = self.generalRef {
-            let locationProfile: Dictionary<String, String> = ["postalCode": location.postalCode, "image": location.image!]
-            locationRef.child(location.locationName).setValue(locationProfile)
-        }
+        let locationProfile: Dictionary<String, Any> = ["postalCode": location.postalCode, "image": location.image!, "categories": newCategories ?? [:]]
+        locationRef?.child(location.locationName).setValue(locationProfile)
     }
     
     // MARK: User Database (House)
@@ -126,6 +159,18 @@ extension DataService {
             let locationProfile: Dictionary<String, String> = ["postalCode": location.postalCode, "image": location.image!]
             locationRef.child(location.locationName).setValue(locationProfile)
         }
+    }
+    
+    func startingCategories(screenState: ScreenState) -> Dictionary<String, String>? {
+        if screenState == .business {
+            let locationDefaultCategories: Dictionary<String, String> = ["Interior re-paint": "", "Exterior re-paint": "", "Commercial": "", "Homebuilders": "", "Renovations": ""]
+            return locationDefaultCategories
+        }
+        if screenState == .homes {
+            let locationDefaultCategories: Dictionary<String, String> = ["Kitchen": "", "Living Room": "", "Dining Room": "", "Bathroom": "", "Bedrooms": "", "Garage": "", "Garage": "", "Exterior": "", "Trim": "", "Hallway": ""]
+            return locationDefaultCategories
+        }
+        return nil
     }
     
     // get database reference user

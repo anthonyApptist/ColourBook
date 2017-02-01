@@ -74,9 +74,11 @@ class DataService {
     
     func createNewUser(uid: String, email: String, image: String) {
         
-        let profile: Dictionary<String, String> = ["email": email, "image": image]
+        let dashboardCats: Dictionary<String, String> = ["Kitchen": "", "Living Room": "", "Dining Room": "", "Bathroom": "", "Bedrooms": "", "Garage": "", "Garage": "", "Exterior": "", "Trim": "", "Hallway": ""]
         
-        usersRef.child(uid).setValue(profile)
+        let newProfile: Dictionary<String, Any> = ["email": email, "image": image, PersonalDashboard: dashboardCats]
+        
+        usersRef.child(uid).setValue(newProfile)
         
     }
     

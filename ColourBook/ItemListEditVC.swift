@@ -57,20 +57,17 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.showActivityIndicator()
-        
         titleLbl?.adjustsFontSizeToFitWidth = true
     
         tableView?.delegate = self
         tableView?.dataSource = self
-
     }
     
     override func viewWillAppear(_ animated: Bool) {
         
         super.viewWillAppear(false)
         
-        products = []
+        self.showActivityIndicator()
         
         if screenState == .personal {
             self.getPaint(screenState: self.screenState, user: self.signedInUser)
@@ -273,6 +270,8 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
                         }
                     }
                     self.tableView?.reloadData()
+                    
+                    self.hideActivityIndicator()
                 }
                 // no products
                 else {
@@ -282,7 +281,7 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
             // Error
         }, withCancel: { (error) in
             print(error.localizedDescription)
-            
+            self.hideActivityIndicator()
         })
     }
 
@@ -338,6 +337,7 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
                     }
                 }
                 self.tableView?.reloadData()
+                self.hideActivityIndicator()
             })
         }
         
@@ -393,9 +393,12 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
                 
                 self.tableView?.reloadData()
                 
+                self.hideActivityIndicator()
+                
                 // Error
             }, withCancel: { (error) in
                 print(error.localizedDescription)
+                self.hideActivityIndicator()
             })
             
         }

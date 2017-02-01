@@ -26,6 +26,7 @@ class AuthService {
             
             if error != nil {
                 if let errCode = FIRAuthErrorCode(rawValue: error!._code) {
+                    // if user not found error
                     if errCode == .errorCodeUserNotFound {
                         
                         // create user if it doesn't exist
@@ -40,15 +41,28 @@ class AuthService {
                                     DataService.instance.createNewUser(uid: user!.uid, email: email, image: "")
                                     
                                     FIRAuth.auth()!.signIn(withEmail: email, password: password, completion: { (user, error) in
-                                        
                                         if error != nil {
                                             print(error!.localizedDescription)
                                         }
                                         else {
-                                            let createdUser = User(uid: user!.uid, email: user!.email!, name: "", image: "")
-                                            print(createdUser.email)
-                                            print("signed in created user")
-                                            onComplete?(nil, user)
+                                            if user?.isEmailVerified == false {
+                                                print("not verified")
+                                                FIRAuth.auth()?.currentUser?.sendEmailVerification(completion: { (error) in
+                                                    if error != nil {
+                                                        print(error?.localizedDescription)
+                                                    }
+                                                    else {
+                                                        // do something now that it is sent
+                                                    }
+                                                })
+
+                                            }
+                                            else {
+                                                let createdUser = User(uid: user!.uid, email: user!.email!, name: "", image: "")
+                                                print(createdUser.email)
+                                                print("signed in created user")
+                                                onComplete?(nil, user)
+                                            }
                                         }
                                     })
                                     
@@ -66,20 +80,25 @@ class AuthService {
                 }
             }
             else {
-                if (user?.displayName != nil) {
-                    
+                if user?.isEmailVerified == false {
+                    print("not verified")
+                    FIRAuth.auth()?.currentUser?.sendEmailVerification(completion: { (error) in
+                        if error != nil {
+                            print(error?.localizedDescription)
+                        }
+                        else {
+                            // do something now that it is sent
+                        }
+                    })
+                }
+                else if (user?.displayName != nil) {
                     let signedInUser = User(uid: (user?.uid)!, email: (user?.email!)!, name: (user?.displayName!)!, image: "")
-                    
                     print(signedInUser.uid, signedInUser.email, user?.displayName!)
-                    
                 }
                     
                 else {
-                    
                     let signedInUser = User(uid: (user?.uid)!, email: (user?.email!)!, name: "", image: "")
-                    
                     print(signedInUser.uid, signedInUser.email, "")
-                    
                 }
             
                 print("signed in")
@@ -150,9 +169,9 @@ class AuthService {
         
         FIRAuth.auth()?.sendPasswordReset(withEmail: email) { error in
             if let error = error {
-                // An error happened.
+                
             } else {
-                // Password reset email sent.
+                
             }
         }
     }
