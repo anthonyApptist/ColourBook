@@ -403,6 +403,9 @@
                                 <state key="normal" title="forgot password?">
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="forgotPwButtonPressed" destination="AvE-t7-eD9" eventType="touchUpInside" id="FXR-dJ-Oe2"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zw1-rs-zbr">
                                 <rect key="frame" x="0.0" y="457" width="375" height="70"/>
@@ -1424,10 +1427,10 @@
         <image name="settingsIcon" width="115" height="113"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="kb9-hh-a3R"/>
-        <segue reference="5FO-LH-Ars"/>
-        <segue reference="2NH-Fi-qo3"/>
-        <segue reference="VHt-Bh-IiX"/>
         <segue reference="Com-EP-1Te"/>
+        <segue reference="VHt-Bh-IiX"/>
+        <segue reference="2NH-Fi-qo3"/>
+        <segue reference="ZiE-Dq-MKt"/>
+        <segue reference="5FO-LH-Ars"/>
     </inferredMetricsTieBreakers>
 </document>
