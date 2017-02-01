@@ -164,4 +164,13 @@ class CustomVC: UIViewController, UITextFieldDelegate {
         return stamp
         
     }
+    
+    func showActivityIndicator() {
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+    }
+    
+    func hideActivityIndicator() {
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false
+    }
+
 }

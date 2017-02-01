@@ -7,10 +7,12 @@
 //
 
 import UIKit
+import MapKit
 
 enum ResultsFor {
     case colours
     case addresses
+    case mapSearch
 }
 
 class SearchResultsTableVC: UITableViewController {
@@ -23,15 +25,15 @@ class SearchResultsTableVC: UITableViewController {
     // address search result delegate
     var addressResultDelegate: AddressResult?
     
+    // filtered data
     var filteredAddresses: [Location]?
-    
     var filteredColours: [Colour]?
+    var filteredMapItems: [MKMapItem]?
     
+    // all data
     var allColours: [Colour]?
-    
     var allAddresses: [Location]?
-    
-    var query: String?
+    var mapView: MKMapView?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,6 +48,11 @@ class SearchResultsTableVC: UITableViewController {
         if searchFor == .addresses {
             self.filteredAddresses = []
             self.tableView.register(LocationCell.self, forCellReuseIdentifier: "address")
+        }
+        
+        if searchFor == .mapSearch {
+            self.filteredMapItems = []
+            self.tableView.register(LocationCell.self, forCellReuseIdentifier: "mapResultCell")
         }
     }
 
@@ -62,13 +69,12 @@ class SearchResultsTableVC: UITableViewController {
         if searchFor == .addresses {
             return (filteredAddresses?.count)!
         }
+        if searchFor == .mapSearch {
+            return (filteredMapItems?.count)!
+        }
         return 0
     }
     
-    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        
-    }
-
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if searchFor == .colours {
             let cell = tableView.dequeueReusableCell(withIdentifier: "colour") as! ProductCell
@@ -78,7 +84,7 @@ class SearchResultsTableVC: UITableViewController {
             cell.box3?.backgroundColor = UIColor(hexString: (colour?.colourHexCode)!)
             return cell
         }
-        else if searchFor == .addresses {
+        if searchFor == .addresses {
             let cell = tableView.dequeueReusableCell(withIdentifier: "address") as! LocationCell
             let location = filteredAddresses?[indexPath.row]
             cell.box1?.text = location?.locationName
@@ -90,6 +96,12 @@ class SearchResultsTableVC: UITableViewController {
             else {
                 cell.addressImageView?.image = self.stringToImage(imageName: (location?.image)!)
             }
+            return cell
+        }
+        if searchFor == .mapSearch {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "mapResultCell") as! LocationCell
+            let mapItem = filteredMapItems?[indexPath.row].placemark
+            cell.box1?.text = mapItem?.name
             return cell
         }
         return UITableViewCell()
@@ -150,6 +162,23 @@ class SearchResultsTableVC: UITableViewController {
 extension SearchResultsTableVC: UISearchResultsUpdating {
     
     func updateSearchResults(for searchController: UISearchController) {
-        filterContentForSearchText(searchText: searchController.searchBar.text!.lowercased())
+        if searchFor == .mapSearch {
+            let request = MKLocalSearchRequest()
+            request.region = (mapView?.region)!
+            let searchRegion = MKLocalSearch(request: request)
+            request.naturalLanguageQuery = searchController.searchBar.text!.lowercased()
+            searchRegion.start(completionHandler: { (response, error) in
+                if let error = error {
+                    print(error.localizedDescription)
+                }
+                else if let mapItems = response?.mapItems {
+                    self.filteredMapItems = mapItems
+                    self.tableView?.reloadData()
+                }
+            })
+        }
+        else {
+            filterContentForSearchText(searchText: searchController.searchBar.text!.lowercased())
+        }
     }
 }

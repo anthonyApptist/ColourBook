@@ -31,19 +31,14 @@ class ItemListAddVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
     
     
     override func backBtnPressed(_ sender: AnyObject) {
-        
-        
         self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
-        
     }
     
     
     @IBAction func scanBtnPressed(_ sender: AnyObject) {
-        
         let scanView = storyboard?.instantiateViewController(withIdentifier: "BarcodeVC")
-        
+
         present(scanView!, animated: true, completion: nil)
-        
     }
     
     override func viewDidLoad() {
@@ -53,8 +48,6 @@ class ItemListAddVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         tableView?.dataSource = self
 
         self.getLocationLists(screenState: self.screenState, user: self.signedInUser)
-            
-
     }
  
     
@@ -62,28 +55,12 @@ class ItemListAddVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         
 //        super.viewDidAppear(false)
         
-        DispatchQueue.main.async {
-            print("This is run on the main queue, after the previous code in outer block")
-            
-//            self.tableView?.reloadData()
-            
-            print(self.locations)
-        }
-        
         if self.screenState == .business {
-            
             self.subTitleLbl?.text = "my businesses"
-            
         } else if self.screenState == .homes {
-            
             self.subTitleLbl?.text = "my addresses"
-            
         }
-        
         titleLbl?.text = titleString
-
-        
-        
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -105,15 +82,10 @@ class ItemListAddVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         print(locations[indexPath.row].locationName)
         
         if locations[indexPath.row].locationName.isEmpty {
-            
             cell.titleLbl?.text = locations[indexPath.row].postalCode
-            
         }
-            
         else {
-            
             cell.titleLbl?.text = locations[indexPath.row].locationName
-            
         }
         
         return cell
@@ -175,15 +147,17 @@ class ItemListAddVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
             for child in snapshot.children.allObjects {
                 let addressProfile = child as! FIRDataSnapshot
                 let profile = addressProfile.value as? NSDictionary
+                
                 let postalCode = profile?["postalCode"] as! String
-                let image = profile?["image"] as! String
-                let name = addressProfile.key
-                let location = Location(locationName: name, postalCode: postalCode, image: image, name: "")
+                let locationName = addressProfile.key
+                
+                let image = profile?["image"] as? String
+                let name = profile?["name"] as? String
+                
+                let location = Location(locationName: locationName, postalCode: postalCode, image: image, name: name)
                 
                 self.locations.append(location)
-                
             }
-            
             self.tableView?.reloadData()
             
         }, withCancel: { (error) in

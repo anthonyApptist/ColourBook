@@ -153,7 +153,6 @@ class PostScanViewController: CustomVC {
             let paintProfile: Dictionary<String, String> = ["manufacturer": paint!.manufacturer, "productName": paint!.productName, "category": paint!.category, "code": paint!.code, "image": paint!.image, "product": "Paint", "timestamp": timestamp]
             DataService.instance.saveProductFor(user: self.signedInUser.uid, screenState: self.screenState, location: "", barcode: self.barcode, value: paintProfile)
         }
-        
         self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
     }
     

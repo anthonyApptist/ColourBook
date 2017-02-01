@@ -12,6 +12,15 @@ import Firebase
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
+    
+    private static let _instance = AppDelegate()
+    
+    // public instance
+    
+    static var instance: AppDelegate {
+        return _instance
+    }
+
 
     var window: UIWindow?
     

@@ -95,7 +95,6 @@ class SelectAddressVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
             
             print(self.locations)
         }
-        
     }
 
     //MARK: tableview datasource

@@ -13,7 +13,7 @@ protocol AddressResult {
     func setResultsViewFor(location: Location)
 }
 
-class SearchAddressVC: CustomVC {
+class SearchAddressVC: CustomVC, UISearchBarDelegate {
     
     var addressSC: UISearchController?
 
@@ -51,6 +51,8 @@ class SearchAddressVC: CustomVC {
         addressSC?.dimsBackgroundDuringPresentation = true
         definesPresentationContext = true
         searchBar?.backgroundColor = UIColor.black
+        
+        
         
         // MARK: - View
         
@@ -122,11 +124,7 @@ class SearchAddressVC: CustomVC {
     
     func searchButtonFunction() {
         
-        let resultsUpdater = self.addressSC?.searchResultsUpdater as! SearchResultsTableVC
-        
-        resultsUpdater.allAddresses = self.allAddresses
-        
-        present(self.addressSC!, animated: true) {
+        self.present(self.addressSC!, animated: true) {
             
         }
         
@@ -154,6 +152,8 @@ class SearchAddressVC: CustomVC {
                 // if address has barcodes
                 if locationProfile.hasChild(Barcodes) {
                     
+                    location.items = []
+                    
                     for barcode in snapshot.childSnapshot(forPath: "businesses").childSnapshot(forPath: location.locationName).childSnapshot(forPath: Barcodes).children.allObjects {
                         let paintProfile = barcode as! FIRDataSnapshot
                         
@@ -177,7 +177,6 @@ class SearchAddressVC: CustomVC {
                             
                             let product = ScannedProduct(productType: productType, manufacturer: manufacturer, upcCode: upcCode, image: image, colour: colour, timestamp: timestamp)
                             
-                            location.items = []
                             location.items?.append(product)
                             self.allAddresses.append(location)
                             self.addressDictionary.updateValue("Business", forKey: location)
@@ -185,7 +184,6 @@ class SearchAddressVC: CustomVC {
                         else {
                             let product = ScannedProduct(productType: productType, manufacturer: manufacturer, upcCode: upcCode, image: image, colour: nil, timestamp: timestamp)
                             
-                            location.items = []
                             location.items?.append(product)
                             self.allAddresses.append(location)
                             self.addressDictionary.updateValue("Business", forKey: location)
@@ -216,6 +214,8 @@ class SearchAddressVC: CustomVC {
                 // if address has barcodes
                 if locationProfile.hasChild(Barcodes) {
                     
+                    location.items = []
+                    
                     for barcode in snapshot.childSnapshot(forPath: "addresses").childSnapshot(forPath: location.locationName).childSnapshot(forPath: Barcodes).children.allObjects {
                         let paintProfile = barcode as! FIRDataSnapshot
                         
@@ -224,7 +224,7 @@ class SearchAddressVC: CustomVC {
                         let manufacturer = profile?["manufacturer"] as! String
                         let upcCode = paintProfile.key
                         let image = profile?["image"] as! String
-                        let timestamp = profile?["timeStamp"] as! String
+                        let timestamp = profile?["timestamp"] as! String
                         
                         // check for colour
                         if paintProfile.hasChild("colour") {
@@ -239,7 +239,6 @@ class SearchAddressVC: CustomVC {
                             
                             let product = ScannedProduct(productType: productType, manufacturer: manufacturer, upcCode: upcCode, image: image, colour: colour, timestamp: timestamp)
                             
-                            location.items = []
                             location.items?.append(product)
                             self.allAddresses.append(location)
                             self.addressDictionary.updateValue("Address", forKey: location)
@@ -247,7 +246,6 @@ class SearchAddressVC: CustomVC {
                         else {
                             let product = ScannedProduct(productType: productType, manufacturer: manufacturer, upcCode: upcCode, image: image, colour: nil, timestamp: timestamp)
                             
-                            location.items = []
                             location.items?.append(product)
                             self.allAddresses.append(location)
                             self.addressDictionary.updateValue("Address", forKey: location)
@@ -264,6 +262,11 @@ class SearchAddressVC: CustomVC {
             UIView.animate(withDuration: 1.0, animations: { 
                 self.resultTitleLabel.textColor = UIColor.white
             })
+            
+            let resultsUpdater = self.addressSC?.searchResultsUpdater as! SearchResultsTableVC
+            
+            resultsUpdater.allAddresses = self.allAddresses
+
             self.searchButton.isUserInteractionEnabled = true
         })
     }

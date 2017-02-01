@@ -26,7 +26,6 @@ class AddEditImageVC: CustomVC, UIImagePickerControllerDelegate, UINavigationCon
         self.imagePicker.mediaTypes = UIImagePickerController.availableMediaTypes(for: .photoLibrary)!
         
         present(self.imagePicker, animated: true, completion: nil)
-        
     }
     
     let imagePicker = UIImagePickerController()

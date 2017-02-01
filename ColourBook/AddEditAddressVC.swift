@@ -9,7 +9,9 @@
 import UIKit
 import MapKit
 
-class AddEditAddressVC: CustomVC, MKMapViewDelegate, UISearchBarDelegate {
+class AddEditAddressVC: CustomVC, MKMapViewDelegate, UISearchBarDelegate, CLLocationManagerDelegate {
+    
+    var mapSC: UISearchController?
     
     var searchController:UISearchController!
     var annotation:MKAnnotation!
@@ -37,7 +39,30 @@ class AddEditAddressVC: CustomVC, MKMapViewDelegate, UISearchBarDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.backButtonNeeded = true
+        
         self.saveBtn.alpha = 0.0
+        
+        // Search Controller
+        let resultsUpdater = SearchResultsTableVC()
+        resultsUpdater.searchFor = .mapSearch
+        
+        mapSC = UISearchController(searchResultsController: resultsUpdater)
+        mapSC?.searchResultsUpdater = resultsUpdater
+        
+        let searchBar = mapSC?.searchBar
+        searchBar?.sizeToFit()
+        searchBar?.placeholder = "Type address name"
+        
+        mapSC?.hidesNavigationBarDuringPresentation = true
+        mapSC?.dimsBackgroundDuringPresentation = true
+        definesPresentationContext = true
+        searchBar?.backgroundColor = UIColor.black
+        
+        map.delegate = self
+        locationManager.delegate = self
+        
+        locationManager.requestLocation()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -52,18 +77,18 @@ class AddEditAddressVC: CustomVC, MKMapViewDelegate, UISearchBarDelegate {
 
         textField?.delegate = self
         
-        map.delegate = self
     
         displayCurrentLocation()
 
     }
     
     @IBAction func showSearchBar(_ sender: AnyObject) {
-        map.showsUserLocation = false
-        searchController = UISearchController(searchResultsController: nil)
-        searchController.hidesNavigationBarDuringPresentation = false
-        self.searchController.searchBar.delegate = self
-        present(searchController, animated: true, completion: nil)
+        
+        let results = self.mapSC?.searchResultsUpdater as! SearchResultsTableVC
+        
+        results.mapView = self.map
+        
+        present(self.mapSC!, animated: true, completion: nil)
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar){
@@ -131,6 +156,20 @@ class AddEditAddressVC: CustomVC, MKMapViewDelegate, UISearchBarDelegate {
 
     }
     
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        let locationCoordinates = manager.location?.coordinate
+        let pin = AnnotationPin(coordinate: locationCoordinates!)
+        map.addAnnotation(pin)
+        let span = MKCoordinateSpanMake(0.1, 0.1)
+        let coordinateRegion = MKCoordinateRegionMake(locationCoordinates!, span)
+        
+        map.setRegion(coordinateRegion, animated: true)
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print(error.localizedDescription)
+    }
+    
     func textFieldDidEndEditing(_ textField: UITextField) {
         textField.endEditing(true)
     }
@@ -159,6 +198,7 @@ class AddEditAddressVC: CustomVC, MKMapViewDelegate, UISearchBarDelegate {
             annoView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "Default")
             annoView.pinTintColor = UIColor.blue
             annoView.animatesDrop = true
+            
         } else if annotation.isKind(of: MKUserLocation.self) {
             return nil
         }
@@ -216,7 +256,8 @@ class AddEditAddressVC: CustomVC, MKMapViewDelegate, UISearchBarDelegate {
             let locationName = placeMark.name
             let postalCode = placeMark.postalCode
             let image = ""
-            self.setNewLocation(locationName: locationName!, postalCode: postalCode!, image: image, name: "")
+            let name = ""
+            self.setNewLocation(locationName: locationName!, postalCode: postalCode!, image: image, name: name)
             self.displayLocationAddAlertController(location: self.location!)
         })
     }
@@ -224,15 +265,10 @@ class AddEditAddressVC: CustomVC, MKMapViewDelegate, UISearchBarDelegate {
     func displayLocationAddAlertController(location: Location) {
         let alertView = UIAlertController(title: "Is this your current location", message: location.locationName, preferredStyle: .alert)
         
-        let alertAction = UIAlertAction(title: "Add", style: .destructive, handler: { (action) in
-            
-            // add to business database
-            DataService.instance.saveLocation(screenState: self.screenState, location: location)
-            
-            // add to user business bucket list
-            DataService.instance.saveLocationTo(user: self.signedInUser, location: location, screenState: self.screenState)
-            
-            self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
+        let alertAction = UIAlertAction(title: "Next", style: .destructive, handler: { (action) in
+
+            // ask if apartment
+            self.displayAddApartment(location: location)
         })
         let alertCancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         alertView.addAction(alertAction)
@@ -243,6 +279,91 @@ class AddEditAddressVC: CustomVC, MKMapViewDelegate, UISearchBarDelegate {
                 self.saveBtn.alpha = 1.0
             })
         }
+    }
+    
+    func displayAddApartment(location: Location) {
+        let alertView = UIAlertController(title: "Is this an apartment?", message: location.locationName, preferredStyle: .alert)
         
+        let alertAction = UIAlertAction(title: "Yes", style: .destructive, handler: { (action) in
+            
+            self.displayAddUnitToApartment(location: location)
+        })
+        let alertCancel = UIAlertAction(title: "Add", style: .cancel, handler: { (action) in
+            
+            // add to business database
+            DataService.instance.saveLocation(screenState: self.screenState, location: location)
+            
+            // add to user business bucket list
+            DataService.instance.saveLocationTo(user: self.signedInUser, location: location, screenState: self.screenState)
+        })
+        alertView.addAction(alertAction)
+        alertView.addAction(alertCancel)
+        
+        self.present(alertView, animated: true) { 
+            
+        }
+    }
+    
+    func displayAddUnitToApartment(location: Location) {
+        let alertView = UIAlertController(title: "Type in unit number for", message: location.locationName, preferredStyle: .alert)
+        
+        // unit number text field
+        alertView.addTextField { (textfield) in
+            textfield.keyboardType = .numberPad
+        }
+        
+        let alertAction = UIAlertAction(title: "Add", style: .destructive, handler: { (action) in
+            
+            let unitTextfield = alertView.textFields?[0]
+            
+            if let unitNumber = unitTextfield?.text {
+                
+                if unitNumber == "" {
+                    self.displayNoUnitNumber(location: location)
+                }
+                else {
+                    let streetName = location.locationName
+                    location.locationName = "\(streetName) - Unit \(unitNumber)"
+                    
+                    // add to business database
+                    DataService.instance.saveLocation(screenState: self.screenState, location: location)
+                    
+                    // add to user business bucket list
+                    DataService.instance.saveApartmentLocationTo(user: self.signedInUser, location: location, screenState: self.screenState)
+                    
+                    self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
+                }
+            }
+            else {
+                self.displayNoUnitNumber(location: location)
+            }
+            
+        })
+        
+        let alertCancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alertView.addAction(alertAction)
+        alertView.addAction(alertCancel)
+        
+        self.present(alertView, animated: true) { 
+            
+        }
+
+    }
+    
+    func displayNoUnitNumber(location: Location) {
+        let alertView = UIAlertController(title: "No unit number added for", message: location.locationName, preferredStyle: .alert)
+        
+        let alertAction = UIAlertAction(title: "Add", style: .destructive, handler: { (action) in
+            self.displayAddUnitToApartment(location: location)
+        })
+        
+        let alertCancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        alertView.addAction(alertAction)
+        alertView.addAction(alertCancel)
+        
+        self.present(alertView, animated: true) {
+            
+        }
     }
 }

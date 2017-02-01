@@ -95,6 +95,7 @@
 		920B52771E1066AB005D5B60 /* SaveButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920B52761E1066AB005D5B60 /* SaveButtons.swift */; };
 		920B52791E108DCD005D5B60 /* DataService-Retrieve.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920B52781E108DCD005D5B60 /* DataService-Retrieve.swift */; };
 		920B527B1E109421005D5B60 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920B527A1E109421005D5B60 /* Location.swift */; };
+		9224DA0C1E416E7B0058AD02 /* BMoore.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9224DA0B1E416E7B0058AD02 /* BMoore.jpg */; };
 		9235DFEC1E36B66A0041C0E6 /* LocationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9235DFEB1E36B66A0041C0E6 /* LocationCell.swift */; };
 		92367A201E16CD4A005B11F9 /* DataService-Delete.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92367A1F1E16CD4A005B11F9 /* DataService-Delete.swift */; };
 		924C00991E07AC1000C73C6A /* ColourView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924C00981E07AC1000C73C6A /* ColourView.swift */; };
@@ -219,6 +220,7 @@
 		920B52761E1066AB005D5B60 /* SaveButtons.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SaveButtons.swift; sourceTree = "<group>"; };
 		920B52781E108DCD005D5B60 /* DataService-Retrieve.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DataService-Retrieve.swift"; sourceTree = "<group>"; };
 		920B527A1E109421005D5B60 /* Location.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
+		9224DA0B1E416E7B0058AD02 /* BMoore.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = BMoore.jpg; sourceTree = "<group>"; };
 		9235DFEB1E36B66A0041C0E6 /* LocationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationCell.swift; sourceTree = "<group>"; };
 		92367A1F1E16CD4A005B11F9 /* DataService-Delete.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DataService-Delete.swift"; sourceTree = "<group>"; };
 		924C00981E07AC1000C73C6A /* ColourView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColourView.swift; sourceTree = "<group>"; };
@@ -466,6 +468,7 @@
 		920B52731E0E03A8005D5B60 /* SearchControllers */ = {
 			isa = PBXGroup;
 			children = (
+				9224DA0B1E416E7B0058AD02 /* BMoore.jpg */,
 				92CFEE2D1E00DF9A00F78C78 /* ChooseColourVC.swift */,
 				920B52711E0E0325005D5B60 /* SearchResultsTableVC.swift */,
 				924C00981E07AC1000C73C6A /* ColourView.swift */,
@@ -586,6 +589,7 @@
 				92FD3EAB1DE52A71009341C9 /* GoogleService-Info.plist in Resources */,
 				66242ADB1DF0F302000B651F /* barcode.png in Resources */,
 				66F942BC1DF8BDBB00C01DAF /* darkgreen.jpg in Resources */,
+				9224DA0C1E416E7B0058AD02 /* BMoore.jpg in Resources */,
 				66CB81BA1E0212D800190315 /* search@3x.png in Resources */,
 				6636469C1DE4921F00E6D719 /* facebookImg.png in Resources */,
 				663646A31DE4921F00E6D719 /* googleImg@2x.png in Resources */,

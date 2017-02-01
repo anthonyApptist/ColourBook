@@ -12,9 +12,8 @@ class ColourView: UIView {
     
     // properties
     var colourSwatch: UILabel!
-    var colourName: UILabel!
-    var productCode: UILabel!
-
+    var colourInfo: UILabel!
+    var manufacturerImageView: UIImageView!
     
     init(frame: CGRect, colour: Colour) {
         super.init(frame: frame)
@@ -25,8 +24,8 @@ class ColourView: UIView {
         let wrapView = CGRect(x: 0, y: 20, width: frame.width, height: frame.height - 20 - 20)
         let colourLabel = UIView(frame: CGRect(x: 0, y: wrapView.minY, width: frame.width, height: wrapView.height * 0.50))
         let remainingHeight: CGFloat = wrapView.height - (wrapView.height * 0.50)
-        let firstHalf = UIView(frame: CGRect(x: 0, y: colourLabel.frame.maxY, width: frame.width, height: remainingHeight/2))
-        let secondHalf = UIView(frame: CGRect(x: 0, y: firstHalf.frame.maxY, width: frame.width, height: remainingHeight/2))
+        let firstQuarter = UIView(frame: CGRect(x: 0, y: colourLabel.frame.maxY, width: frame.width, height: remainingHeight/4))
+        let rest = UIView(frame: CGRect(x: 0, y: firstQuarter.frame.maxY, width: frame.width, height: (remainingHeight/4) * 3))
         
         // MARK: View
         
@@ -35,27 +34,32 @@ class ColourView: UIView {
         colourSwatch.backgroundColor = UIColor(hexString: colour.colourHexCode)
         
         // colour name label
-        let colourNameOrigin = CGPoint(x: firstHalf.center.x - ((firstHalf.frame.width * 0.6)/2), y: firstHalf.center.y - ((firstHalf.frame.height * 0.50)/2))
-        let colourNameSize = CGSize(width: firstHalf.frame.width * 0.6, height: firstHalf.frame.height * 0.50)
-        colourName = UILabel(frame: CGRect(origin: colourNameOrigin, size: colourNameSize))
-        colourName.backgroundColor = UIColor.white
-        colourName.textColor = UIColor.black
-        colourName.textAlignment = .center
-        colourName.text = colour.colourName
+        let colourInfoOrigin = CGPoint(x: firstQuarter.frame.minX + 20, y: firstQuarter.frame.minY)
+        let colourInfoSize = CGSize(width: firstQuarter.frame.width - 20, height: firstQuarter.frame.height)
+        colourInfo = UILabel(frame: CGRect(origin: colourInfoOrigin, size: colourInfoSize))
+        colourInfo.backgroundColor = UIColor.white
+        colourInfo.textColor = UIColor.black
+        colourInfo.textAlignment = .left
+        colourInfo.numberOfLines = 0
+        let colourName: String = colour.colourName
+        let productCode: String = colour.productCode
+        colourInfo.text = "\(colourName)\n\(productCode)"
         
-        // product code label
-        let productCodeOrigin = CGPoint(x: secondHalf.center.x - ((secondHalf.frame.width * 0.6)/2), y: secondHalf.center.y - ((secondHalf.frame.height * 0.50)/2))
-        let productCodeSize = CGSize(width: secondHalf.frame.width * 0.6, height: secondHalf.frame.height * 0.50)
-        productCode = UILabel(frame: CGRect(origin: productCodeOrigin, size: productCodeSize))
-        productCode.backgroundColor = UIColor.white
-        productCode.textColor = UIColor.black
-        productCode.textAlignment = .center
-        productCode.text = colour.productCode
+        let imageViewOrigin = CGPoint(x: rest.frame.minX, y: rest.frame.minY)
+        let imageVIewSize = CGSize(width: rest.frame.width, height: rest.frame.height)
+        manufacturerImageView = UIImageView(frame: CGRect(origin: imageViewOrigin, size: imageVIewSize))
+        manufacturerImageView.contentMode = .scaleAspectFit
+        if colour.manufacturer == "Benjamin Moore" {
+            manufacturerImageView.image = UIImage(named: "BMoore.jpg")
+        }
+        if colour.manufacturer == "Sherwin Williams" {
+            
+        }
         
         // add to view
         addSubview(colourSwatch)
-        addSubview(colourName)
-        addSubview(productCode)
+        addSubview(colourInfo)
+        addSubview(manufacturerImageView)
         
     }
     

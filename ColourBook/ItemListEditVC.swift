@@ -57,6 +57,8 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.showActivityIndicator()
+        
         titleLbl?.adjustsFontSizeToFitWidth = true
     
         tableView?.delegate = self
@@ -71,7 +73,6 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         products = []
         
         if screenState == .personal {
-            // access user database
             self.getPaint(screenState: self.screenState, user: self.signedInUser)
         }
         if screenState == .business || screenState == .homes {
@@ -186,7 +187,8 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
             
             if snapshot.hasChild("name") {
                 let name = snapshot.childSnapshot(forPath: "name").value as! String
-                self.titleLbl?.text = name
+                self.signedInUser.name = name
+                
                 
                 if snapshot.hasChild(PersonalDashboard) {
                     for child in snapshot.childSnapshot(forPath: PersonalDashboard).childSnapshot(forPath: Barcodes).children.allObjects {
@@ -222,6 +224,8 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
                     }
                     
                     self.tableView?.reloadData()
+                    
+                    self.hideActivityIndicator()
                 }
                     
                     // no products
@@ -231,7 +235,7 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
                 }
                 
             }
-                // no display name
+            // no display name
             else {
                 
                 self.titleLbl?.text = ""
@@ -268,11 +272,9 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
                             self.products.append(product)
                         }
                     }
-                    
                     self.tableView?.reloadData()
-                    
                 }
-                    // no products
+                // no products
                 else {
                     
                 }
@@ -335,12 +337,10 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
                         }
                     }
                 }
-                
                 self.tableView?.reloadData()
-                
             })
-            
         }
+        
         else if screenState == .homes {
             
             let productsRef = DataService.instance.usersRef.child(self.signedInUser.uid)
