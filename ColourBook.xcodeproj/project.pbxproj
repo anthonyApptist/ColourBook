@@ -58,6 +58,7 @@
 		665E637C1DE82F99002BA868 /* arrowBack.png in Resources */ = {isa = PBXBuildFile; fileRef = 665E63791DE82F99002BA868 /* arrowBack.png */; };
 		665E637D1DE82F99002BA868 /* arrowBack@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 665E637A1DE82F99002BA868 /* arrowBack@2x.png */; };
 		665E637E1DE82F99002BA868 /* arrowBack@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 665E637B1DE82F99002BA868 /* arrowBack@3x.png */; };
+		6692C3F81E4076FF00A18D07 /* CategoriesListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6692C3F71E4076FF00A18D07 /* CategoriesListVC.swift */; };
 		66A5AD561DFD040C0090226B /* AnnotationPin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A5AD551DFD040C0090226B /* AnnotationPin.swift */; };
 		66C771401DE8331700E4810A /* MyDashboardVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C7713F1DE8331700E4810A /* MyDashboardVC.swift */; };
 		66C7714A1DE83EB300E4810A /* homeIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 66C771411DE83EB300E4810A /* homeIcon.png */; };
@@ -184,6 +185,7 @@
 		665E63791DE82F99002BA868 /* arrowBack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrowBack.png; sourceTree = "<group>"; };
 		665E637A1DE82F99002BA868 /* arrowBack@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrowBack@2x.png"; sourceTree = "<group>"; };
 		665E637B1DE82F99002BA868 /* arrowBack@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrowBack@3x.png"; sourceTree = "<group>"; };
+		6692C3F71E4076FF00A18D07 /* CategoriesListVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoriesListVC.swift; sourceTree = "<group>"; };
 		66A5AD551DFD040C0090226B /* AnnotationPin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnotationPin.swift; sourceTree = "<group>"; };
 		66C7713F1DE8331700E4810A /* MyDashboardVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyDashboardVC.swift; sourceTree = "<group>"; };
 		66C771411DE83EB300E4810A /* homeIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = homeIcon.png; sourceTree = "<group>"; };
@@ -329,6 +331,7 @@
 				661A47FF1DF6AA3800B56028 /* SettingsVC.swift */,
 				66F942C51DF92CA500C01DAF /* CustomVC.swift */,
 				66CB81BB1E02175300190315 /* SearchViewController.swift */,
+				6692C3F71E4076FF00A18D07 /* CategoriesListVC.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -723,6 +726,7 @@
 				66242AE81DF46F30000B651F /* LabelCustomSpacing.swift in Sources */,
 				9277E0C01DFA8323001E0B9B /* AddressView.swift in Sources */,
 				66CB81BC1E02175300190315 /* SearchViewController.swift in Sources */,
+				6692C3F81E4076FF00A18D07 /* CategoriesListVC.swift in Sources */,
 				92F6B6F41E2352BE00643AD0 /* AddressItemsVC.swift in Sources */,
 				6636465C1DE0C3EA00E6D719 /* TutorialVC.swift in Sources */,
 				6636465A1DE0C3EA00E6D719 /* AppDelegate.swift in Sources */,
