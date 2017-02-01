@@ -11,6 +11,10 @@ import UIKit
 class ItemCell: UITableViewCell {
     
     @IBOutlet weak var titleLbl: UILabel?
+    
+    @IBOutlet weak var imgView: UIImageView?
+    
+    @IBOutlet weak var swatchView: UIView?
 
     override func awakeFromNib() {
         super.awakeFromNib()
