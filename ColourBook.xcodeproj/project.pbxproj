@@ -58,6 +58,11 @@
 		665E637C1DE82F99002BA868 /* arrowBack.png in Resources */ = {isa = PBXBuildFile; fileRef = 665E63791DE82F99002BA868 /* arrowBack.png */; };
 		665E637D1DE82F99002BA868 /* arrowBack@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 665E637A1DE82F99002BA868 /* arrowBack@2x.png */; };
 		665E637E1DE82F99002BA868 /* arrowBack@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 665E637B1DE82F99002BA868 /* arrowBack@3x.png */; };
+		668A4B121E434DCD004167BD /* flag.png in Resources */ = {isa = PBXBuildFile; fileRef = 668A4B0F1E434DCD004167BD /* flag.png */; };
+		668A4B131E434DCD004167BD /* flag@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 668A4B101E434DCD004167BD /* flag@2x.png */; };
+		668A4B141E434DCD004167BD /* flag@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 668A4B111E434DCD004167BD /* flag@3x.png */; };
+		668A4B161E434E37004167BD /* FlagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668A4B151E434E37004167BD /* FlagView.swift */; };
+		668A4B181E435B0D004167BD /* ReportHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668A4B171E435B0D004167BD /* ReportHandler.swift */; };
 		6692C3F81E4076FF00A18D07 /* CategoriesListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6692C3F71E4076FF00A18D07 /* CategoriesListVC.swift */; };
 		66A5AD561DFD040C0090226B /* AnnotationPin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A5AD551DFD040C0090226B /* AnnotationPin.swift */; };
 		66C771401DE8331700E4810A /* MyDashboardVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C7713F1DE8331700E4810A /* MyDashboardVC.swift */; };
@@ -185,6 +190,11 @@
 		665E63791DE82F99002BA868 /* arrowBack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrowBack.png; sourceTree = "<group>"; };
 		665E637A1DE82F99002BA868 /* arrowBack@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrowBack@2x.png"; sourceTree = "<group>"; };
 		665E637B1DE82F99002BA868 /* arrowBack@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrowBack@3x.png"; sourceTree = "<group>"; };
+		668A4B0F1E434DCD004167BD /* flag.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = flag.png; sourceTree = "<group>"; };
+		668A4B101E434DCD004167BD /* flag@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "flag@2x.png"; sourceTree = "<group>"; };
+		668A4B111E434DCD004167BD /* flag@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "flag@3x.png"; sourceTree = "<group>"; };
+		668A4B151E434E37004167BD /* FlagView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlagView.swift; sourceTree = "<group>"; };
+		668A4B171E435B0D004167BD /* ReportHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportHandler.swift; sourceTree = "<group>"; };
 		6692C3F71E4076FF00A18D07 /* CategoriesListVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoriesListVC.swift; sourceTree = "<group>"; };
 		66A5AD551DFD040C0090226B /* AnnotationPin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnotationPin.swift; sourceTree = "<group>"; };
 		66C7713F1DE8331700E4810A /* MyDashboardVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyDashboardVC.swift; sourceTree = "<group>"; };
@@ -303,6 +313,7 @@
 				66242AE51DF46DD0000B651F /* CustomTextFieldContainer.swift */,
 				66242AE71DF46F30000B651F /* LabelCustomSpacing.swift */,
 				66D7834A1DF4DD2100BACC2C /* CustomAnimatedButton.swift */,
+				668A4B151E434E37004167BD /* FlagView.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -352,6 +363,7 @@
 			children = (
 				66242AE11DF24ED8000B651F /* Validator.swift */,
 				66242AE31DF24FE4000B651F /* ErrorHandler.swift */,
+				668A4B171E435B0D004167BD /* ReportHandler.swift */,
 				66A5AD551DFD040C0090226B /* AnnotationPin.swift */,
 				92874DE01E0BB1E400A3D6BC /* UIColourExtension.swift */,
 			);
@@ -395,6 +407,9 @@
 		6636466B1DE16A4300E6D719 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				668A4B0F1E434DCD004167BD /* flag.png */,
+				668A4B101E434DCD004167BD /* flag@2x.png */,
+				668A4B111E434DCD004167BD /* flag@3x.png */,
 				66CB81B51E0212D800190315 /* search.png */,
 				66CB81B61E0212D800190315 /* search@2x.png */,
 				66CB81B71E0212D800190315 /* search@3x.png */,
@@ -591,12 +606,15 @@
 				66C7714F1DE83EB300E4810A /* moneyIcon@3x.png in Resources */,
 				663646AC1DE4921F00E6D719 /* purpleCBlogo@2x.png in Resources */,
 				663646AD1DE4921F00E6D719 /* purpleCBlogo@3x.png in Resources */,
+				668A4B121E434DCD004167BD /* flag.png in Resources */,
+				668A4B131E434DCD004167BD /* flag@2x.png in Resources */,
 				6636469E1DE4921F00E6D719 /* facebookImg@3x.png in Resources */,
 				66D783501DF4E3CE00BACC2C /* iconCheck@2x.png in Resources */,
 				9262ECDA1E00FA8A005FD5AC /* FinalizedPaint.csv in Resources */,
 				663646AB1DE4921F00E6D719 /* purpleCBlogo.png in Resources */,
 				92FD3EAB1DE52A71009341C9 /* GoogleService-Info.plist in Resources */,
 				66242ADB1DF0F302000B651F /* barcode.png in Resources */,
+				668A4B141E434DCD004167BD /* flag@3x.png in Resources */,
 				66F942BC1DF8BDBB00C01DAF /* darkgreen.jpg in Resources */,
 				9224DA0C1E416E7B0058AD02 /* BMoore.jpg in Resources */,
 				66CB81BA1E0212D800190315 /* search@3x.png in Resources */,
@@ -713,8 +731,10 @@
 				92FD3EAF1DE52D26009341C9 /* BarcodeScanner.swift in Sources */,
 				92874DE11E0BB1E400A3D6BC /* UIColourExtension.swift in Sources */,
 				66C771401DE8331700E4810A /* MyDashboardVC.swift in Sources */,
+				668A4B161E434E37004167BD /* FlagView.swift in Sources */,
 				929AD0031E03C56E00AB9C63 /* SelectAddressVC.swift in Sources */,
 				920B52771E1066AB005D5B60 /* SaveButtons.swift in Sources */,
+				668A4B181E435B0D004167BD /* ReportHandler.swift in Sources */,
 				92B4A6391DEBB8E500F35DED /* User.swift in Sources */,
 				92B4A61F1DEA94D300F35DED /* Paint.swift in Sources */,
 				92F6B6F61E2354A100643AD0 /* ProductCell.swift in Sources */,

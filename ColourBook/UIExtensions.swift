@@ -57,6 +57,58 @@ extension UIView {
         
         return bottomViewConstraint
     }
+    
+    func animateToScale(scale: CGFloat) {
+        
+        UIView.animate(withDuration: 0.5) { 
+            self.transform = CGAffineTransform.identity.scaledBy(x: scale, y: scale)
+
+        }
+                       
+        
+    }
+    
+
+    func animateRadius(scale: CGFloat) {
+        
+        UIView.animate(withDuration: 0.5, animations: {
+            
+            self.transform = CGAffineTransform.identity.scaledBy(x: scale, y: scale)
+            
+        }, completion: { (finish) in
+            UIView.animate(withDuration: 0.5, animations: {
+                self.transform = CGAffineTransform.identity
+                
+            })
+        })
+    }
+    
+    func addblurView(on: Bool, blurEffect: UIBlurEffect, blurview: UIVisualEffectView) {
+        
+
+    blurview.frame = self.bounds
+    blurview.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        
+        if(on) {
+            self.addSubview(blurview)
+        }else if(!on) {
+            blurview.removeFromSuperview()
+        }
+        
+    }
+    
+    func animateViewToCoordinates(newX: CGFloat, newY: CGFloat) {
+        
+        let height = self.frame.height
+        let width = self.frame.width
+        
+        UIView.animate(withDuration: 1.0, delay: 0.2, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.5, options: UIViewAnimationOptions.curveEaseIn, animations: {
+            self.frame = CGRect(x: newX, y: newY, width: width, height: height)
+        }, completion: { (complete: Bool) in
+        })
+        
+    }
+    
 }
 
 
@@ -92,10 +144,16 @@ extension UIImageView {
 
 extension UIButton {
     
+    
+    
     func setBorderWidth() {
         
         self.layer.borderWidth = 2
-        self.layer.borderColor = UIColor.white.cgColor
+        self.layer.borderColor = UIColor.black.cgColor
+        
+        let radius = self.frame.width/8
+        self.layer.cornerRadius = radius
+        self.clipsToBounds = true
         
     }
     

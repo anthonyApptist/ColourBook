@@ -21,6 +21,10 @@ class ItemListDetailVC: CustomVC {
 
     var detailItem: ScannedProduct?
     
+    @IBAction func flagBtnPressed() {
+        ReportHandler.sharedInstance.show(container: self)
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         
         titleLbl?.text = detailItem?.productType
