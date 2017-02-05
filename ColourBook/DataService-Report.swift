@@ -7,3 +7,10 @@
 //
 
 import Foundation
+import FirebaseDatabase
+
+extension DataService {
+    func reportPressedFor(item: ScannedProduct) {
+        
+    }
+}

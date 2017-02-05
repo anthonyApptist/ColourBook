@@ -123,6 +123,8 @@
 		92B4A6371DEBB8B400F35DED /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B4A6361DEBB8B400F35DED /* AuthService.swift */; };
 		92B4A6391DEBB8E500F35DED /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B4A6381DEBB8E500F35DED /* User.swift */; };
 		92BDF7BB1E24130E00BE9673 /* ProductInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92BDF7BA1E24130E00BE9673 /* ProductInfoView.swift */; };
+		92C65CD01E4592F8006F1905 /* GoogleMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C65CCF1E4592F8006F1905 /* GoogleMap.swift */; };
+		92C65CD21E466DAF006F1905 /* DataService-Report.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C65CD11E466DAF006F1905 /* DataService-Report.swift */; };
 		92C6A1AE1DF5CE6100B2D6C4 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92C6A1AD1DF5CE6100B2D6C4 /* FBSDKLoginKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		92CFEE2E1E00DF9A00F78C78 /* ChooseColourVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92CFEE2D1E00DF9A00F78C78 /* ChooseColourVC.swift */; };
 		92F6B6F41E2352BE00643AD0 /* AddressItemsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92F6B6F31E2352BE00643AD0 /* AddressItemsVC.swift */; };
@@ -257,6 +259,8 @@
 		92B4A6361DEBB8B400F35DED /* AuthService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		92B4A6381DEBB8E500F35DED /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		92BDF7BA1E24130E00BE9673 /* ProductInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductInfoView.swift; sourceTree = "<group>"; };
+		92C65CCF1E4592F8006F1905 /* GoogleMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoogleMap.swift; sourceTree = "<group>"; };
+		92C65CD11E466DAF006F1905 /* DataService-Report.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DataService-Report.swift"; sourceTree = "<group>"; };
 		92C6A1AD1DF5CE6100B2D6C4 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		92CFEE2D1E00DF9A00F78C78 /* ChooseColourVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseColourVC.swift; sourceTree = "<group>"; };
 		92F6B6F31E2352BE00643AD0 /* AddressItemsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressItemsVC.swift; sourceTree = "<group>"; };
@@ -290,6 +294,7 @@
 				92B4A61C1DEA5B1C00F35DED /* Colour.swift */,
 				92B4A6341DEBB8A100F35DED /* DataService.swift */,
 				920B52781E108DCD005D5B60 /* DataService-Retrieve.swift */,
+				92C65CD11E466DAF006F1905 /* DataService-Report.swift */,
 				92A7D3EE1E15823800345D94 /* DataService-Save.swift */,
 				92367A1F1E16CD4A005B11F9 /* DataService-Delete.swift */,
 				92A7A7EC1E1EECA800070FE0 /* DataService-Query.swift */,
@@ -323,6 +328,7 @@
 			children = (
 				925106DE1E313B5D00C987B3 /* Database Config */,
 				6636465B1DE0C3EA00E6D719 /* TutorialVC.swift */,
+				92C65CCF1E4592F8006F1905 /* GoogleMap.swift */,
 				92FD3EAE1DE52D26009341C9 /* BarcodeScanner.swift */,
 				9277E0B41DF75022001E0B9B /* PostScanVC.swift */,
 				929AD0021E03C56E00AB9C63 /* SelectAddressVC.swift */,
@@ -746,6 +752,7 @@
 				66242AE81DF46F30000B651F /* LabelCustomSpacing.swift in Sources */,
 				9277E0C01DFA8323001E0B9B /* AddressView.swift in Sources */,
 				66CB81BC1E02175300190315 /* SearchViewController.swift in Sources */,
+				92C65CD01E4592F8006F1905 /* GoogleMap.swift in Sources */,
 				6692C3F81E4076FF00A18D07 /* CategoriesListVC.swift in Sources */,
 				92F6B6F41E2352BE00643AD0 /* AddressItemsVC.swift in Sources */,
 				6636465C1DE0C3EA00E6D719 /* TutorialVC.swift in Sources */,
@@ -755,6 +762,7 @@
 				92B4A61B1DE8FD9300F35DED /* CSVViewController.swift in Sources */,
 				924C00991E07AC1000C73C6A /* ColourView.swift in Sources */,
 				661A47F81DF6A97700B56028 /* ItemListDetailVC.swift in Sources */,
+				92C65CD21E466DAF006F1905 /* DataService-Report.swift in Sources */,
 				66242AE41DF24FE4000B651F /* ErrorHandler.swift in Sources */,
 				920B52751E0F2478005D5B60 /* ScannedProduct.swift in Sources */,
 				92CFEE2E1E00DF9A00F78C78 /* ChooseColourVC.swift in Sources */,

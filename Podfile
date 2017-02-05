@@ -10,5 +10,7 @@ target 'ColourBook' do
 pod 'Firebase/Core'
 pod 'Firebase/Auth'
 pod 'Firebase/Database'
+pod 'GoogleMaps'
+pod 'GooglePlaces'
 
 end

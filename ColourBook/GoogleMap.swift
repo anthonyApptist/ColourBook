@@ -7,3 +7,21 @@
 //
 
 import Foundation
+import UIKit
+import CoreLocation
+import GoogleMaps
+
+class GoogleMap: UIViewController {
+    
+    
+    
+    override func loadView() {
+        
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        
+    }
+}
