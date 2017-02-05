@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6609E2B61E46FCFB00F547A9 /* listButtonDark.png in Resources */ = {isa = PBXBuildFile; fileRef = 6609E2B31E46FCFB00F547A9 /* listButtonDark.png */; };
+		6609E2B71E46FCFB00F547A9 /* listButtonDark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6609E2B41E46FCFB00F547A9 /* listButtonDark@2x.png */; };
+		6609E2B81E46FCFB00F547A9 /* listButtonDark@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6609E2B51E46FCFB00F547A9 /* listButtonDark@3x.png */; };
+		6609E2BA1E47015B00F547A9 /* CategoryItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6609E2B91E47015B00F547A9 /* CategoryItemCell.swift */; };
 		661A47F61DF6A95700B56028 /* AddEditImageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661A47F51DF6A95700B56028 /* AddEditImageVC.swift */; };
 		661A47F81DF6A97700B56028 /* ItemListDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661A47F71DF6A97700B56028 /* ItemListDetailVC.swift */; };
 		661A47FA1DF6A9B400B56028 /* AddEditAddressVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661A47F91DF6A9B400B56028 /* AddEditAddressVC.swift */; };
@@ -63,6 +67,9 @@
 		668A4B141E434DCD004167BD /* flag@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 668A4B111E434DCD004167BD /* flag@3x.png */; };
 		668A4B161E434E37004167BD /* FlagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668A4B151E434E37004167BD /* FlagView.swift */; };
 		668A4B181E435B0D004167BD /* ReportHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668A4B171E435B0D004167BD /* ReportHandler.swift */; };
+		668A4B1C1E45CE00004167BD /* listButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 668A4B191E45CE00004167BD /* listButton.png */; };
+		668A4B1D1E45CE00004167BD /* listButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 668A4B1A1E45CE00004167BD /* listButton@2x.png */; };
+		668A4B1E1E45CE00004167BD /* listButton@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 668A4B1B1E45CE00004167BD /* listButton@3x.png */; };
 		6692C3F81E4076FF00A18D07 /* CategoriesListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6692C3F71E4076FF00A18D07 /* CategoriesListVC.swift */; };
 		66A5AD561DFD040C0090226B /* AnnotationPin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A5AD551DFD040C0090226B /* AnnotationPin.swift */; };
 		66C771401DE8331700E4810A /* MyDashboardVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C7713F1DE8331700E4810A /* MyDashboardVC.swift */; };
@@ -137,6 +144,10 @@
 /* Begin PBXFileReference section */
 		0C899EA646F9D6392D10F289 /* Pods_ColourBook.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ColourBook.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		582541D0C63B9F68DF683CF9 /* Pods-ColourBook.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ColourBook.release.xcconfig"; path = "Pods/Target Support Files/Pods-ColourBook/Pods-ColourBook.release.xcconfig"; sourceTree = "<group>"; };
+		6609E2B31E46FCFB00F547A9 /* listButtonDark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = listButtonDark.png; sourceTree = "<group>"; };
+		6609E2B41E46FCFB00F547A9 /* listButtonDark@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "listButtonDark@2x.png"; sourceTree = "<group>"; };
+		6609E2B51E46FCFB00F547A9 /* listButtonDark@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "listButtonDark@3x.png"; sourceTree = "<group>"; };
+		6609E2B91E47015B00F547A9 /* CategoryItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryItemCell.swift; sourceTree = "<group>"; };
 		661A47F51DF6A95700B56028 /* AddEditImageVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddEditImageVC.swift; sourceTree = "<group>"; };
 		661A47F71DF6A97700B56028 /* ItemListDetailVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemListDetailVC.swift; sourceTree = "<group>"; };
 		661A47F91DF6A9B400B56028 /* AddEditAddressVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddEditAddressVC.swift; sourceTree = "<group>"; };
@@ -195,6 +206,9 @@
 		668A4B111E434DCD004167BD /* flag@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "flag@3x.png"; sourceTree = "<group>"; };
 		668A4B151E434E37004167BD /* FlagView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlagView.swift; sourceTree = "<group>"; };
 		668A4B171E435B0D004167BD /* ReportHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportHandler.swift; sourceTree = "<group>"; };
+		668A4B191E45CE00004167BD /* listButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = listButton.png; sourceTree = "<group>"; };
+		668A4B1A1E45CE00004167BD /* listButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "listButton@2x.png"; sourceTree = "<group>"; };
+		668A4B1B1E45CE00004167BD /* listButton@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "listButton@3x.png"; sourceTree = "<group>"; };
 		6692C3F71E4076FF00A18D07 /* CategoriesListVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoriesListVC.swift; sourceTree = "<group>"; };
 		66A5AD551DFD040C0090226B /* AnnotationPin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnotationPin.swift; sourceTree = "<group>"; };
 		66C7713F1DE8331700E4810A /* MyDashboardVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyDashboardVC.swift; sourceTree = "<group>"; };
@@ -314,6 +328,7 @@
 				66242AE71DF46F30000B651F /* LabelCustomSpacing.swift */,
 				66D7834A1DF4DD2100BACC2C /* CustomAnimatedButton.swift */,
 				668A4B151E434E37004167BD /* FlagView.swift */,
+				6609E2B91E47015B00F547A9 /* CategoryItemCell.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -407,6 +422,12 @@
 		6636466B1DE16A4300E6D719 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				6609E2B31E46FCFB00F547A9 /* listButtonDark.png */,
+				6609E2B41E46FCFB00F547A9 /* listButtonDark@2x.png */,
+				6609E2B51E46FCFB00F547A9 /* listButtonDark@3x.png */,
+				668A4B191E45CE00004167BD /* listButton.png */,
+				668A4B1A1E45CE00004167BD /* listButton@2x.png */,
+				668A4B1B1E45CE00004167BD /* listButton@3x.png */,
 				668A4B0F1E434DCD004167BD /* flag.png */,
 				668A4B101E434DCD004167BD /* flag@2x.png */,
 				668A4B111E434DCD004167BD /* flag@3x.png */,
@@ -586,6 +607,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				665E63761DE82833002BA868 /* iconFacebook@3x.png in Resources */,
+				6609E2B71E46FCFB00F547A9 /* listButtonDark@2x.png in Resources */,
 				66D783511DF4E3CE00BACC2C /* iconCheck@3x.png in Resources */,
 				66C7714B1DE83EB300E4810A /* homeIcon@2x.png in Resources */,
 				663646711DE16A4300E6D719 /* effects@3x.png in Resources */,
@@ -601,6 +623,7 @@
 				66F942BE1DF8BDBB00C01DAF /* green.jpg in Resources */,
 				66CB81B91E0212D800190315 /* search@2x.png in Resources */,
 				66C7714E1DE83EB300E4810A /* moneyIcon@2x.png in Resources */,
+				668A4B1E1E45CE00004167BD /* listButton@3x.png in Resources */,
 				665E637E1DE82F99002BA868 /* arrowBack@3x.png in Resources */,
 				663646611DE0C3EA00E6D719 /* Assets.xcassets in Resources */,
 				66C7714F1DE83EB300E4810A /* moneyIcon@3x.png in Resources */,
@@ -609,12 +632,14 @@
 				668A4B121E434DCD004167BD /* flag.png in Resources */,
 				668A4B131E434DCD004167BD /* flag@2x.png in Resources */,
 				6636469E1DE4921F00E6D719 /* facebookImg@3x.png in Resources */,
+				6609E2B61E46FCFB00F547A9 /* listButtonDark.png in Resources */,
 				66D783501DF4E3CE00BACC2C /* iconCheck@2x.png in Resources */,
 				9262ECDA1E00FA8A005FD5AC /* FinalizedPaint.csv in Resources */,
 				663646AB1DE4921F00E6D719 /* purpleCBlogo.png in Resources */,
 				92FD3EAB1DE52A71009341C9 /* GoogleService-Info.plist in Resources */,
 				66242ADB1DF0F302000B651F /* barcode.png in Resources */,
 				668A4B141E434DCD004167BD /* flag@3x.png in Resources */,
+				668A4B1D1E45CE00004167BD /* listButton@2x.png in Resources */,
 				66F942BC1DF8BDBB00C01DAF /* darkgreen.jpg in Resources */,
 				9224DA0C1E416E7B0058AD02 /* BMoore.jpg in Resources */,
 				66CB81BA1E0212D800190315 /* search@3x.png in Resources */,
@@ -649,6 +674,8 @@
 				66CB81B81E0212D800190315 /* search.png in Resources */,
 				66F942BF1DF8BDBB00C01DAF /* lightblue.jpg in Resources */,
 				66F942BD1DF8BDBB00C01DAF /* darkred.jpg in Resources */,
+				668A4B1C1E45CE00004167BD /* listButton.png in Resources */,
+				6609E2B81E46FCFB00F547A9 /* listButtonDark@3x.png in Resources */,
 				663646A61DE4921F00E6D719 /* greenCBlogo@2x.png in Resources */,
 				66C7714D1DE83EB300E4810A /* moneyIcon.png in Resources */,
 			);
@@ -739,6 +766,7 @@
 				92B4A61F1DEA94D300F35DED /* Paint.swift in Sources */,
 				92F6B6F61E2354A100643AD0 /* ProductCell.swift in Sources */,
 				66242AE21DF24ED8000B651F /* Validator.swift in Sources */,
+				6609E2BA1E47015B00F547A9 /* CategoryItemCell.swift in Sources */,
 				9277E0BE1DFA7D94001E0B9B /* SearchAddressVC.swift in Sources */,
 				92BDF7BB1E24130E00BE9673 /* ProductInfoView.swift in Sources */,
 				9224DA0E1E418FE60058AD02 /* SelectCategoryVC.swift in Sources */,

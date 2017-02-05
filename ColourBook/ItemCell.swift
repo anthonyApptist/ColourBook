@@ -22,9 +22,21 @@ class ItemCell: UITableViewCell {
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
+        let img = self.imgView?.image
+        let colour = self.swatchView?.backgroundColor
+        let title = self.titleLbl?.text
+        
         super.setSelected(selected, animated: animated)
-
+        
+      
+   
         // Configure the view for the selected state
+        
+        if(selected) {
+            self.titleLbl?.text = title
+            self.swatchView?.backgroundColor = colour
+            self.imgView?.image = img
+        }
     }
 
 }

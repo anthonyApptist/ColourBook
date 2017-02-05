@@ -20,6 +20,27 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet var subTitleLbl: UILabel?
     
+    @IBOutlet var transferItemBtn: UIButton!
+    
+    @IBOutlet var selectItemBtn: UIButton!
+    
+    var selectionOn: Bool = false
+    
+    @IBAction func selectItemBtnPressed(_ sender: AnyObject) {
+        
+        if(!selectionOn) {
+        selectionOn = true
+        self.transferItemBtn.isHidden = false
+        self.selectItemBtn.isSelected = true
+        
+        } else if(selectionOn) {
+            selectionOn = false
+            self.transferItemBtn.isHidden = true
+            self.selectItemBtn.isSelected = false
+        }
+        
+    }
+    
     @IBAction func settingsBtnPressed(_ sender: AnyObject) {
         
         if screenState == ScreenState.personal {
@@ -61,6 +82,10 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
     
         tableView?.delegate = self
         tableView?.dataSource = self
+        
+        self.transferItemBtn.isHidden = true
+        
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -105,15 +130,31 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
             
         }
         
+        
+        cell.selectionStyle = .blue
+
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ItemCell", for: indexPath) as! ItemCell
+        
         let row = indexPath.row
         
+        if(!selectionOn) {
         performSegue(withIdentifier: "ShowListDetail", sender: nil)
+        } else {
+
+            cell.isSelected = true
+
+        }
+        
+     //   tableView.deselectRow(at: indexPath, animated: true)
+
         
     }
+    
     
     //DELETE ROWS
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {

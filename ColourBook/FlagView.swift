@@ -43,7 +43,7 @@ class FlagView: UIView {
         }
         
         /*
-         REPORT FIREBASE CODE SHOULD GO HERE 
+         REPORT FIREBASE CODE SHOULD GO HERE
         */
         
     }
@@ -223,18 +223,6 @@ class FlagView: UIView {
     
   
     
-    func setUpConstraints(imgView: UIImageView?) {
-        let trailingConstraint = superview?.trailingAnchor.constraint(equalTo: self.trailingAnchor)
-        let leadingConstraint = self.leadingAnchor.constraint(equalTo: (superview?.leadingAnchor)!)
-        let topConstraint = self.topAnchor.constraint(equalTo: (superview?.topAnchor)!, constant: -70)
-        let bottomConstraint = imgView?.topAnchor.constraint(equalTo: self.bottomAnchor, constant: 105)
-        
-        let labelTrailingConstraint = superview?.trailingAnchor.constraint(equalTo: messageContent.trailingAnchor, constant: 67)
-        let labelLeadingConstraint = messageContent.leadingAnchor.constraint(equalTo: (superview?.leadingAnchor)!, constant: 68)
-        let labelTopConstraint = messageContent.topAnchor.constraint(equalTo: (superview?.topAnchor)!, constant: 16)
-        
-        NSLayoutConstraint.activate([trailingConstraint!, leadingConstraint, topConstraint, bottomConstraint!, labelTrailingConstraint!, labelLeadingConstraint, labelTopConstraint])
-        
-    }
+   
 
 }
