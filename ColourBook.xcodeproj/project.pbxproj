@@ -11,6 +11,11 @@
 		6609E2B71E46FCFB00F547A9 /* listButtonDark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6609E2B41E46FCFB00F547A9 /* listButtonDark@2x.png */; };
 		6609E2B81E46FCFB00F547A9 /* listButtonDark@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6609E2B51E46FCFB00F547A9 /* listButtonDark@3x.png */; };
 		6609E2BA1E47015B00F547A9 /* CategoryItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6609E2B91E47015B00F547A9 /* CategoryItemCell.swift */; };
+		6609E2BE1E48061500F547A9 /* arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 6609E2BB1E48061500F547A9 /* arrow.png */; };
+		6609E2BF1E48061500F547A9 /* arrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6609E2BC1E48061500F547A9 /* arrow@2x.png */; };
+		6609E2C01E48061500F547A9 /* arrow@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6609E2BD1E48061500F547A9 /* arrow@3x.png */; };
+		6609E2C21E480DCA00F547A9 /* TransferToTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6609E2C11E480DCA00F547A9 /* TransferToTableViewController.swift */; };
+		6609E2C41E480E0A00F547A9 /* TransferToTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6609E2C31E480E0A00F547A9 /* TransferToTableViewCell.swift */; };
 		661A47F61DF6A95700B56028 /* AddEditImageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661A47F51DF6A95700B56028 /* AddEditImageVC.swift */; };
 		661A47F81DF6A97700B56028 /* ItemListDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661A47F71DF6A97700B56028 /* ItemListDetailVC.swift */; };
 		661A47FA1DF6A9B400B56028 /* AddEditAddressVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661A47F91DF6A9B400B56028 /* AddEditAddressVC.swift */; };
@@ -148,6 +153,11 @@
 		6609E2B41E46FCFB00F547A9 /* listButtonDark@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "listButtonDark@2x.png"; sourceTree = "<group>"; };
 		6609E2B51E46FCFB00F547A9 /* listButtonDark@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "listButtonDark@3x.png"; sourceTree = "<group>"; };
 		6609E2B91E47015B00F547A9 /* CategoryItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryItemCell.swift; sourceTree = "<group>"; };
+		6609E2BB1E48061500F547A9 /* arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow.png; sourceTree = "<group>"; };
+		6609E2BC1E48061500F547A9 /* arrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrow@2x.png"; sourceTree = "<group>"; };
+		6609E2BD1E48061500F547A9 /* arrow@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrow@3x.png"; sourceTree = "<group>"; };
+		6609E2C11E480DCA00F547A9 /* TransferToTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransferToTableViewController.swift; sourceTree = "<group>"; };
+		6609E2C31E480E0A00F547A9 /* TransferToTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransferToTableViewCell.swift; sourceTree = "<group>"; };
 		661A47F51DF6A95700B56028 /* AddEditImageVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddEditImageVC.swift; sourceTree = "<group>"; };
 		661A47F71DF6A97700B56028 /* ItemListDetailVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemListDetailVC.swift; sourceTree = "<group>"; };
 		661A47F91DF6A9B400B56028 /* AddEditAddressVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddEditAddressVC.swift; sourceTree = "<group>"; };
@@ -329,6 +339,7 @@
 				66D7834A1DF4DD2100BACC2C /* CustomAnimatedButton.swift */,
 				668A4B151E434E37004167BD /* FlagView.swift */,
 				6609E2B91E47015B00F547A9 /* CategoryItemCell.swift */,
+				6609E2C31E480E0A00F547A9 /* TransferToTableViewCell.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -358,6 +369,7 @@
 				66F942C51DF92CA500C01DAF /* CustomVC.swift */,
 				66CB81BB1E02175300190315 /* SearchViewController.swift */,
 				6692C3F71E4076FF00A18D07 /* CategoriesListVC.swift */,
+				6609E2C11E480DCA00F547A9 /* TransferToTableViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -422,6 +434,9 @@
 		6636466B1DE16A4300E6D719 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				6609E2BB1E48061500F547A9 /* arrow.png */,
+				6609E2BC1E48061500F547A9 /* arrow@2x.png */,
+				6609E2BD1E48061500F547A9 /* arrow@3x.png */,
 				6609E2B31E46FCFB00F547A9 /* listButtonDark.png */,
 				6609E2B41E46FCFB00F547A9 /* listButtonDark@2x.png */,
 				6609E2B51E46FCFB00F547A9 /* listButtonDark@3x.png */,
@@ -662,11 +677,14 @@
 				66D7834F1DF4E3CE00BACC2C /* iconCheck.png in Resources */,
 				663646AA1DE4921F00E6D719 /* pinkCBLogo@3x.png in Resources */,
 				66C771521DE83EB300E4810A /* personalIcon@3x.png in Resources */,
+				6609E2C01E48061500F547A9 /* arrow@3x.png in Resources */,
 				66C771581DE83EEF00E4810A /* settingsIcon@3x.png in Resources */,
+				6609E2BE1E48061500F547A9 /* arrow.png in Resources */,
 				66C771511DE83EB300E4810A /* personalIcon@2x.png in Resources */,
 				6636469D1DE4921F00E6D719 /* facebookImg@2x.png in Resources */,
 				663646A71DE4921F00E6D719 /* greenCBlogo@3x.png in Resources */,
 				66D783491DF49B4F00BACC2C /* check.png in Resources */,
+				6609E2BF1E48061500F547A9 /* arrow@2x.png in Resources */,
 				66242ADD1DF0F302000B651F /* barcode@3x.png in Resources */,
 				6636465F1DE0C3EA00E6D719 /* Main.storyboard in Resources */,
 				9262ECDB1E00FA8A005FD5AC /* productlist.csv in Resources */,
@@ -770,6 +788,7 @@
 				9277E0BE1DFA7D94001E0B9B /* SearchAddressVC.swift in Sources */,
 				92BDF7BB1E24130E00BE9673 /* ProductInfoView.swift in Sources */,
 				9224DA0E1E418FE60058AD02 /* SelectCategoryVC.swift in Sources */,
+				6609E2C21E480DCA00F547A9 /* TransferToTableViewController.swift in Sources */,
 				92B4A61D1DEA5B1C00F35DED /* Colour.swift in Sources */,
 				66242AE81DF46F30000B651F /* LabelCustomSpacing.swift in Sources */,
 				9277E0C01DFA8323001E0B9B /* AddressView.swift in Sources */,
@@ -790,6 +809,7 @@
 				661A48001DF6AA3800B56028 /* SettingsVC.swift in Sources */,
 				9235DFEC1E36B66A0041C0E6 /* LocationCell.swift in Sources */,
 				92B4A6371DEBB8B400F35DED /* AuthService.swift in Sources */,
+				6609E2C41E480E0A00F547A9 /* TransferToTableViewCell.swift in Sources */,
 				92367A201E16CD4A005B11F9 /* DataService-Delete.swift in Sources */,
 				66242AD51DF0EDAE000B651F /* ItemListAddVC.swift in Sources */,
 			);

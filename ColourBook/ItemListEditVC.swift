@@ -26,6 +26,19 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
     
     var selectionOn: Bool = false
     
+    var cellSelectedCount: Int = 0
+    
+    @IBAction func transferItemsBtnPressed(_ sender: AnyObject) {
+        
+        print(self.cellSelectedCount)
+        
+        if(self.cellSelectedCount > 0) {
+            performSegue(withIdentifier: "ConnectToTransferPage", sender: nil)
+        } else if(self.cellSelectedCount == 0) {
+            
+        }
+    }
+    
     @IBAction func selectItemBtnPressed(_ sender: AnyObject) {
         
         if(!selectionOn) {
@@ -140,19 +153,32 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "ItemCell", for: indexPath) as! ItemCell
         
-        let row = indexPath.row
-        
         if(!selectionOn) {
         performSegue(withIdentifier: "ShowListDetail", sender: nil)
         } else {
-
+            
+            self.cellSelectedCount += 1
             cell.isSelected = true
 
         }
         
-     //   tableView.deselectRow(at: indexPath, animated: true)
 
         
+    }
+    
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ItemCell", for: indexPath) as! ItemCell
+        
+        if(!selectionOn) {
+            performSegue(withIdentifier: "ShowListDetail", sender: nil)
+        } else {
+            
+            self.cellSelectedCount -= 1
+            cell.isSelected = true
+            
+        }
+
     }
     
     

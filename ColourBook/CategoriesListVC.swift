@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class CategoriesListVC: CustomVC, UICollectionViewDelegate, UICollectionViewDataSource {
+class CategoriesListVC: CustomVC, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     @IBOutlet weak var collectionView: UICollectionView!
     
@@ -19,6 +19,10 @@ class CategoriesListVC: CustomVC, UICollectionViewDelegate, UICollectionViewData
     
     @IBOutlet weak var bottomView: UIView!
     
+    
+    let categories = ["Kitchen", "Livingroom", "Dining Room", "Bathroom", "Bedroom", "Garage", "Exterior", "Trim", "Hallway", "Interior re-paint", "Exterior re-paint", "Commercial", "Homebuilders", "Renovations"]
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -27,8 +31,22 @@ class CategoriesListVC: CustomVC, UICollectionViewDelegate, UICollectionViewData
         
     }
     
+    @IBAction func scanBtnPressed(_ sender: AnyObject) {
+        
+        let scanView = storyboard?.instantiateViewController(withIdentifier: "BarcodeVC")
+        
+        present(scanView!, animated: true, completion: nil)
+        
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewWillAppear(false)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
+        let kWhateverHeightYouWant = 150
+        return CGSize(width: collectionView.bounds.size.width, height: CGFloat(kWhateverHeightYouWant))
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -36,11 +54,16 @@ class CategoriesListVC: CustomVC, UICollectionViewDelegate, UICollectionViewData
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 1
+      return categories.count
     }
+    
+    
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CategoryItemCell", for: indexPath) as! CategoryItemCell
+        
+            cell.titleLbl.text = categories[indexPath.row]
+        
         
         return cell
     }
