@@ -72,6 +72,6 @@ class ItemListDetailVC: CustomVC {
 
 extension ItemListDetailVC: ReportDelegate {
     func didPressReport() {
-        // report on firebase
+        DataService.instance.reportPressedFor(item: detailItem!, user: self.signedInUser)
     }
 }

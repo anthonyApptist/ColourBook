@@ -20,6 +20,27 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet var subTitleLbl: UILabel?
     
+    @IBOutlet var transferItemBtn: UIButton!
+    
+    @IBOutlet var selectItemBtn: UIButton!
+    
+    var selectionOn: Bool = false
+    
+    @IBAction func selectItemBtnPressed(_ sender: AnyObject) {
+        
+        if(!selectionOn) {
+        selectionOn = true
+        self.transferItemBtn.isHidden = false
+        self.selectItemBtn.isSelected = true
+        
+        } else if(selectionOn) {
+            selectionOn = false
+            self.transferItemBtn.isHidden = true
+            self.selectItemBtn.isSelected = false
+        }
+        
+    }
+    
     @IBAction func settingsBtnPressed(_ sender: AnyObject) {
         
         if screenState == ScreenState.personal {
@@ -54,6 +75,8 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
     
     var products = [ScannedProduct]()
     
+    var selectedProducts = [Int:ScannedProduct]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -61,6 +84,18 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
     
         tableView?.delegate = self
         tableView?.dataSource = self
+        
+        if screenState == .personal {
+            selectItemBtn.isHidden = false
+        }
+        else {
+            selectItemBtn.isHidden = true
+            selectItemBtn.isUserInteractionEnabled = false
+        }
+        
+        self.transferItemBtn.isHidden = true
+        
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -90,31 +125,32 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ItemCell", for: indexPath) as! ItemCell
+        cell.selectionStyle = UITableViewCellSelectionStyle.none    
         let product = self.products[indexPath.row]
-        cell.titleLbl?.text = product.timestamp
-        if product.image == "N/A" {
-            cell.imgView?.image = UIImage(named: "darkgreen")
-        }
-        else {
-            cell.imgView?.image = self.setImageFrom(urlString: product.image)
-        }
-        if let colour = product.colour {
-            cell.swatchView?.backgroundColor = UIColor(hexString: colour.colourHexCode)
-        }
-        else {
-            
-        }
-        
+        cell.setViewFor(product: product)
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let row = indexPath.row
-        
-        performSegue(withIdentifier: "ShowListDetail", sender: nil)
-        
+        if(!selectionOn) {
+            performSegue(withIdentifier: "ShowListDetail", sender: nil)
+        } else {
+            let cell = tableView.cellForRow(at: indexPath)
+            let product = self.products[indexPath.row]
+            
+            if cell?.contentView.layer.borderWidth == 0 {
+                cell?.contentView.layer.borderWidth = 2.0
+                cell?.contentView.layer.borderColor = UIColor.blue.cgColor
+                self.selectedProducts.updateValue(product, forKey: indexPath.row)
+            }
+            else {
+                cell?.contentView.layer.borderWidth = 0.0
+                self.selectedProducts.removeValue(forKey: indexPath.row)
+                
+            }
+        }
     }
-    
+
     //DELETE ROWS
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         

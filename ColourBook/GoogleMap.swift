@@ -11,9 +11,9 @@ import UIKit
 import CoreLocation
 import GoogleMaps
 
-class GoogleMap: UIViewController {
+class GoogleMap: CustomVC {
     
-    
+    let locationManager = CLLocationManager()
     
     override func loadView() {
         
@@ -22,6 +22,6 @@ class GoogleMap: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
+        self.backButtonNeeded = true
     }
 }

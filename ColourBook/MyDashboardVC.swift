@@ -58,7 +58,7 @@ class MyDashboardVC: CustomVC, UIScrollViewDelegate {
         
         if self.titleLbl.text == "personal" {
 
-            performSegue(withIdentifier: "ConnectToPersonal", sender: self)
+            performSegue(withIdentifier: "ConnectToCategories", sender: self)
             
         }
         
