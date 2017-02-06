@@ -10,6 +10,6 @@ import UIKit
 
 class CategoryItemCell: UICollectionViewCell {
     
-    @IBOutlet var categoryBtn: UIButton!
+    @IBOutlet var titleLbl: UILabel!
     
 }

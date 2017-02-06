@@ -26,6 +26,19 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
     
     var selectionOn: Bool = false
     
+    var cellSelectedCount: Int = 0
+    
+    @IBAction func transferItemsBtnPressed(_ sender: AnyObject) {
+        
+        print(self.cellSelectedCount)
+        
+        if(self.cellSelectedCount > 0) {
+            performSegue(withIdentifier: "ConnectToTransferPage", sender: nil)
+        } else if(self.cellSelectedCount == 0) {
+            
+        }
+    }
+    
     @IBAction func selectItemBtnPressed(_ sender: AnyObject) {
         
         if(!selectionOn) {
@@ -132,6 +145,7 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+
         if(!selectionOn) {
             performSegue(withIdentifier: "ShowListDetail", sender: nil)
         } else {
@@ -150,6 +164,7 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
             }
         }
     }
+
 
     //DELETE ROWS
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {

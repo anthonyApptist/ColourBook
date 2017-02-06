@@ -317,7 +317,7 @@ class MyDashboardVC: CustomVC, UIScrollViewDelegate {
         } else if Int(page) == 3 {
             self.titleString = "search"
             self.titleLbl.text = self.titleString
-            self.descString = "find any list"
+            self.descString = "find any list in the world"
             self.descLbl.text = self.descString
             self.titleLbl.setSpacing(space: 4.0)
             self.screenState = .homes
