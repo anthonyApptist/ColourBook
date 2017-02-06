@@ -123,7 +123,6 @@ extension UIImage{
         return newImage!
         
     }
-    
 }
 
 extension UIImageView {

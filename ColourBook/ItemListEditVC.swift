@@ -88,6 +88,8 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
     
     var products = [ScannedProduct]()
     
+    var selectedProducts = [Int:ScannedProduct]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -95,6 +97,14 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
     
         tableView?.delegate = self
         tableView?.dataSource = self
+        
+        if screenState == .personal {
+            selectItemBtn.isHidden = false
+        }
+        else {
+            selectItemBtn.isHidden = true
+            selectItemBtn.isUserInteractionEnabled = false
+        }
         
         self.transferItemBtn.isHidden = true
         
@@ -128,60 +138,34 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ItemCell", for: indexPath) as! ItemCell
+        cell.selectionStyle = UITableViewCellSelectionStyle.none    
         let product = self.products[indexPath.row]
-        cell.titleLbl?.text = product.timestamp
-        if product.image == "N/A" {
-            cell.imgView?.image = UIImage(named: "darkgreen")
-        }
-        else {
-            cell.imgView?.image = self.setImageFrom(urlString: product.image)
-        }
-        if let colour = product.colour {
-            cell.swatchView?.backgroundColor = UIColor(hexString: colour.colourHexCode)
-        }
-        else {
-            
-        }
-        
-        
-        cell.selectionStyle = .blue
-
+        cell.setViewFor(product: product)
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ItemCell", for: indexPath) as! ItemCell
-        
-        if(!selectionOn) {
-        performSegue(withIdentifier: "ShowListDetail", sender: nil)
-        } else {
-            
-            self.cellSelectedCount += 1
-            cell.isSelected = true
 
-        }
-        
-
-        
-    }
-    
-    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ItemCell", for: indexPath) as! ItemCell
-        
         if(!selectionOn) {
             performSegue(withIdentifier: "ShowListDetail", sender: nil)
         } else {
+            let cell = tableView.cellForRow(at: indexPath)
+            let product = self.products[indexPath.row]
             
-            self.cellSelectedCount -= 1
-            cell.isSelected = true
-            
+            if cell?.contentView.layer.borderWidth == 0 {
+                cell?.contentView.layer.borderWidth = 2.0
+                cell?.contentView.layer.borderColor = UIColor.blue.cgColor
+                self.selectedProducts.updateValue(product, forKey: indexPath.row)
+            }
+            else {
+                cell?.contentView.layer.borderWidth = 0.0
+                self.selectedProducts.removeValue(forKey: indexPath.row)
+                
+            }
         }
-
     }
-    
-    
+
+
     //DELETE ROWS
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         

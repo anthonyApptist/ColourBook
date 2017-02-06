@@ -10,6 +10,8 @@ import UIKit
 
 class FlagView: UIView {
     
+    var reportDelegate: ReportDelegate?
+    
     var titleContent: LabelCustomSpacing!
     
     var messageContent: LabelCustomSpacing!
@@ -41,11 +43,9 @@ class FlagView: UIView {
        }) { (true) in
         self.hideView(sender)
         }
-        
-        /*
-         REPORT FIREBASE CODE SHOULD GO HERE
-        */
-        
+
+        reportDelegate?.didPressReport()
+
     }
 
     override func draw(_ rect: CGRect) {

@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol ReportDelegate {
+    func didPressReport()
+}
+
 class ItemListDetailVC: CustomVC {
     @IBOutlet var imgView: UIImageView?
  
@@ -23,6 +27,7 @@ class ItemListDetailVC: CustomVC {
     
     @IBAction func flagBtnPressed() {
         ReportHandler.sharedInstance.show(container: self)
+        ReportHandler.sharedInstance.reportView.reportDelegate = self
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -63,4 +68,10 @@ class ItemListDetailVC: CustomVC {
         
     }
 
+}
+
+extension ItemListDetailVC: ReportDelegate {
+    func didPressReport() {
+        DataService.instance.reportPressedFor(item: detailItem!, user: self.signedInUser)
+    }
 }

@@ -15,28 +15,35 @@ class ItemCell: UITableViewCell {
     @IBOutlet weak var imgView: UIImageView?
     
     @IBOutlet weak var swatchView: UIView?
-
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        let img = self.imgView?.image
-        let colour = self.swatchView?.backgroundColor
-        let title = self.titleLbl?.text
-        
-        super.setSelected(selected, animated: animated)
-        
-      
-   
-        // Configure the view for the selected state
-        
-        if(selected) {
-            self.titleLbl?.text = title
-            self.swatchView?.backgroundColor = colour
-            self.imgView?.image = img
+    
+    func setViewFor(product: ScannedProduct) {
+        self.titleLbl?.text = product.timestamp
+        if product.image == "N/A" {
+            self.imgView?.image = UIImage(named: "darkgreen")
+        }
+        else {
+            self.imgView?.image = self.setImageFrom(urlString: product.image)
+            self.imgView?.contentMode = .scaleAspectFit
+        }
+        if let colour = product.colour {
+            self.swatchView?.backgroundColor = UIColor(hexString: colour.colourHexCode)
+        }
+        else {
+            
         }
     }
-
+    
+    func setImageFrom(urlString: String) -> UIImage {
+        
+        let imageURL = NSURL(string: urlString)
+        let imageData = NSData(contentsOf: imageURL as! URL)
+        let image = UIImage(data: imageData as! Data)
+        return image!
+    }
+    
 }
