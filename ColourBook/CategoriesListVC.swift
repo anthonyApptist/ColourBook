@@ -19,9 +19,10 @@ class CategoriesListVC: CustomVC, UICollectionViewDelegate, UICollectionViewData
     
     @IBOutlet weak var bottomView: UIView!
     
-    
-    let categories = ["Kitchen", "Livingroom", "Dining Room", "Bathroom", "Bedroom", "Garage", "Exterior", "Trim", "Hallway", "Interior re-paint", "Exterior re-paint", "Commercial", "Homebuilders", "Renovations"]
-    
+    // data
+    var selectedLocation: Location? = nil
+    var categoriesItems = [String:[ScannedProduct]]()
+    var categories = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,6 +30,12 @@ class CategoriesListVC: CustomVC, UICollectionViewDelegate, UICollectionViewData
         collectionView.delegate = self
         collectionView.dataSource = self
         
+        self.showActivityIndicator()
+        
+//        DataService.instance.usersRef.child(self.signedInUser.uid).child(PersonalDashboard).child("Living Room").setValue("")
+        
+        self.getCategoriesFor(screenState: self.screenState, user: self.signedInUser, location: selectedLocation)
+
     }
     
     @IBAction func scanBtnPressed(_ sender: AnyObject) {
@@ -41,6 +48,7 @@ class CategoriesListVC: CustomVC, UICollectionViewDelegate, UICollectionViewData
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewWillAppear(false)
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -54,25 +62,50 @@ class CategoriesListVC: CustomVC, UICollectionViewDelegate, UICollectionViewData
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-      return categories.count
+      return self.categories.count
     }
     
     
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CategoryItemCell", for: indexPath) as! CategoryItemCell
-        
-            cell.titleLbl.text = categories[indexPath.row]
-        
-        
+        let categoryName: String = self.categories[indexPath.row]
+        cell.titleLbl.text = categoryName
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if self.screenState == .personal {
-            performSegue(withIdentifier: "ConnectToPersonal", sender: nil)
+            
+            let cell = collectionView.cellForItem(at: indexPath)
+            
+            performSegue(withIdentifier: "ConnectToPersonal", sender: cell)
+            
         }
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if self.screenState == .personal {
+            if let categoryItemCell = sender as? CategoryItemCell {
+                if segue.destination is ItemListEditVC {
+                    let category = categoryItemCell.titleLbl.text!
+                    let editList = segue.destination as! ItemListEditVC
+                    let items = self.categoriesItems[category]
+                    editList.products = items!
+                    editList.selectedCategory = category
+                    editList.screenState = self.screenState
+                }
+            }
+        }
+    }
+    
+    func displayErrorMessage(error: Error) {
+        let alert = UIAlertController(title: "Error", message: "\(error.localizedDescription)", preferredStyle: .alert)
+        let action = UIAlertAction(title: "OK", style: .cancel) { (action) in
+            self.dismiss(animated: true, completion: nil)
+        }
+        alert.addAction(action)
+        self.present(alert, animated: true, completion: nil)
+    }
     
 }

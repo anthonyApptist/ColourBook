@@ -157,6 +157,22 @@ class CustomVC: UIViewController, UITextFieldDelegate {
         
     }
     
+    func createTimestamp() -> String {
+        // time
+        let date = Date()
+        let dateFormatter = DateFormatter()
+        // date
+        dateFormatter.dateStyle = .medium
+        let convertedDate = dateFormatter.string(from: date)
+        print(convertedDate)
+        // time
+        dateFormatter.dateFormat = "HH:mm"
+        let convertedTime = dateFormatter.string(from: date)
+        print(convertedTime)
+        
+        return "\(convertedDate) \(convertedTime)"
+    }
+    
     func showActivityIndicator() {
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
     }

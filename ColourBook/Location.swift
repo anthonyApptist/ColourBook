@@ -26,12 +26,6 @@ class Location: NSObject, NSCoding {
         case commercial = "commercial"
     }
     
-    enum Use: String {
-        case business = "Business"
-        case home = "Home"
-    }
-    
-    
     // MARK: - Properties
     
     var locationName: String

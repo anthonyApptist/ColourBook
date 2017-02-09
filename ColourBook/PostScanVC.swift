@@ -147,22 +147,22 @@ class PostScanViewController: CustomVC {
             
             let colourProfile: Dictionary<String, String> = ["productCode": colour.productCode, "colourName": colour.colourName, "manufacturer": colour.manufacturer, "manufacturerID": colour.manufacturerID, "hexcode": colour.colourHexCode]
             let paintProfile: Dictionary<String, Any> = ["manufacturer": paint!.manufacturer, "productName": paint!.productName, "category": paint!.category, "code": paint!.code, "image": paint!.image, "product": "Paint", "colour": colourProfile, "timestamp": timestamp]
-            DataService.instance.saveProductFor(user: self.signedInUser.uid, screenState: self.screenState, location: "", barcode: self.barcode, value:paintProfile)
+            
+            self.goToSelectCategory(product: paintProfile, screenState: self.screenState)
         }
         else {
             let timestamp = createTimestamp()
             
             let paintProfile: Dictionary<String, String> = ["manufacturer": paint!.manufacturer, "productName": paint!.productName, "category": paint!.category, "code": paint!.code, "image": paint!.image, "product": "Paint", "timestamp": timestamp]
-            DataService.instance.saveProductFor(user: self.signedInUser.uid, screenState: self.screenState, location: "", barcode: self.barcode, value: paintProfile)
+
+            self.goToSelectCategory(product: paintProfile, screenState: self.screenState)
         }
-        self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
     }
     
-    // business
+    // business (should check whether user branch BusinessDashboard has (Business Profile) child and then check if there are address else display alert
     
     func addToBusinessButtonFunction() {
-        let selectView = SelectAddressVC()
-        selectView.screenState = .business
+
         
         let paint = self.product as? Paint
         
@@ -175,16 +175,16 @@ class PostScanViewController: CustomVC {
             // paint profile
             let paintProfile: Dictionary<String, Any> = ["manufacturer": paint!.manufacturer, "productName": paint!.productName, "category": paint!.category, "code": paint!.code, "image": paint!.image, "product": "Paint", "colour": colourProfile, "timestamp": timestamp]
             
-            selectView.productProfile = paintProfile
         }
         else {
             let timestamp = createTimestamp()
             
             let paintProfile: Dictionary<String, String> = ["manufacturer": paint!.manufacturer, "productName": paint!.productName, "category": paint!.category, "code": paint!.code, "image": paint!.image, "product": "Paint", "timestamp": timestamp]
 
-            selectView.productProfile = paintProfile
+            
         }
-        
+        let selectView = SelectAddressVC()
+        selectView.screenState = .business
         selectView.barcode = self.barcode
         
         self.present(selectView, animated: true, completion: { (error) in
@@ -308,7 +308,7 @@ class PostScanViewController: CustomVC {
         })
     }
     
-    // check if paint can
+    // Check product
     
     func check(product: String) {
         
@@ -322,7 +322,7 @@ class PostScanViewController: CustomVC {
         }
     }
 
-    // add colour function
+    // MARK: - Add Colour
     
     func addColourFunction() {
         let colourView = ChooseColourVC()
@@ -330,6 +330,35 @@ class PostScanViewController: CustomVC {
         colourView.colourAddedDelegate = self
         self.present(colourView, animated: true, completion: nil)
     }
+    
+    // MARK: - Select Category VC
+    
+    func goToSelectCategory(product: Dictionary<String, Any>, screenState: ScreenState) {
+        let selectCategoryVC = SelectCategoryVC()
+        
+        selectCategoryVC.screenState = screenState
+        selectCategoryVC.productProfile = product
+        selectCategoryVC.barcode = self.barcode
+        
+        self.present(selectCategoryVC, animated: true, completion: {
+            
+        })
+    }
+    
+    // MARK: - Select Address VC
+    
+    func goToSelectAddress(product: Dictionary<String, Any>, screenState: ScreenState) {
+        let selectAddressVC = SelectAddressVC()
+        
+        selectAddressVC.screenState = screenState
+        selectAddressVC.productProfile = product
+        selectAddressVC.barcode = self.barcode
+        
+        self.present(selectAddressVC, animated: true, completion: {
+            
+        })
+    }
+
     
     // show product image
     
@@ -345,22 +374,7 @@ class PostScanViewController: CustomVC {
             return image!
         }
     }
-    
-    func createTimestamp() -> String {
-        // time
-        let date = Date()
-        let dateFormatter = DateFormatter()
-        // date
-        dateFormatter.dateStyle = .medium
-        let convertedDate = dateFormatter.string(from: date)
-        print(convertedDate)
-        // time
-        dateFormatter.dateFormat = "HH:mm"
-        let convertedTime = dateFormatter.string(from: date)
-        print(convertedTime)
 
-        return "\(convertedDate) \(convertedTime)"
-    }
 }
 
 extension PostScanViewController: ColourAdded {

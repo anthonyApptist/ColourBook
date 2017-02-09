@@ -82,12 +82,12 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
     
     // selected location 
     
-    var selectedLocation: Location?
+    var selectedLocation: Location? = nil
+    var selectedCategory: String? = nil
     
     // products
     
     var products = [ScannedProduct]()
-    
     var selectedProducts = [Int:ScannedProduct]()
     
     override func viewDidLoad() {
@@ -115,16 +115,6 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         
         super.viewWillAppear(false)
         
-        self.showActivityIndicator()
-        
-        products = []
-        
-        if screenState == .personal {
-            self.getPaint(screenState: self.screenState, user: self.signedInUser)
-        }
-        if screenState == .business || screenState == .homes {
-            self.getPaintFor(location: self.selectedLocation!, screenState: self.screenState)
-        }
     }
 
     
@@ -160,7 +150,6 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
             else {
                 cell?.contentView.layer.borderWidth = 0.0
                 self.selectedProducts.removeValue(forKey: indexPath.row)
-                
             }
         }
     }
@@ -176,7 +165,7 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
             let location = self.selectedLocation
             
             // remove from database
-            DataService.instance.removeScannedProductFor(user: self.signedInUser, screeenState: self.screenState, barcode: upcCode, location: location?.locationName)
+            DataService.instance.removeScannedProductFor(user: self.signedInUser, screenState: self.screenState, barcode: upcCode, location: location?.locationName, category: self.selectedCategory!)
             
             //remove from table view list
             self.products.remove(at: (indexPath as NSIndexPath).row)
@@ -237,236 +226,6 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
             
         }
         
-    }
-    
-    // MARK: - Get Barcodes
-    
-    func getPaint(screenState: ScreenState, user: User) {
-        
-        let productsRef = DataService.instance.usersRef.child(user.uid)
-        
-        productsRef.observeSingleEvent(of: .value, with: { (snapshot) in
-            
-            if snapshot.hasChild("name") {
-                let name = snapshot.childSnapshot(forPath: "name").value as! String
-                self.signedInUser.name = name
-                
-                
-                if snapshot.hasChild(PersonalDashboard) {
-                    for child in snapshot.childSnapshot(forPath: PersonalDashboard).childSnapshot(forPath: Barcodes).children.allObjects {
-                        let paintProfile = child as! FIRDataSnapshot
-                        
-                        let profile = paintProfile.value as? NSDictionary
-                        let productType = profile?["productName"] as! String
-                        let manufacturer = profile?["manufacturer"] as! String
-                        let upcCode = paintProfile.key
-                        let image = profile?["image"] as! String
-                        let timestamp = profile?["timestamp"] as! String
-                        
-                        // check for colour
-                        if paintProfile.hasChild("colour") {
-                            let colourProfile = profile?["colour"] as? NSDictionary
-                            let colourName = colourProfile?["colourName"] as! String
-                            let hexcode = colourProfile?["hexcode"] as! String
-                            let manufacturerID = colourProfile?["manufacturerID"] as! String
-                            let manufacturer = colourProfile?["manufacturer"] as! String
-                            let productCode = colourProfile?["productCode"] as! String
-                            
-                            let colour = Colour(manufacturerID: manufacturerID, productCode: productCode, colourName: colourName, colourHexCode: hexcode, manufacturer: manufacturer)
-                            
-                            let product = ScannedProduct(productType: productType, manufacturer: manufacturer, upcCode: upcCode, image: image, colour: colour, timestamp: timestamp)
-                            
-                            self.products.append(product)
-                        }
-                        else {
-                            let product = ScannedProduct(productType: productType, manufacturer: manufacturer, upcCode: upcCode, image: image, colour: nil, timestamp: timestamp)
-                            
-                            self.products.append(product)
-                        }
-                    }
-                    
-                    self.tableView?.reloadData()
-                    
-                    self.hideActivityIndicator()
-                }
-                    
-                    // no products
-                else {
-                    self.hideActivityIndicator()
-                    
-                }
-                
-            }
-            // no display name
-            else {
-                
-                self.titleLbl?.text = ""
-                
-                if snapshot.hasChild(PersonalDashboard) {
-                    for child in snapshot.childSnapshot(forPath: PersonalDashboard).childSnapshot(forPath: Barcodes).children.allObjects {
-                        let paintProfile = child as! FIRDataSnapshot
-                        
-                        let profile = paintProfile.value as? NSDictionary
-                        let productType = profile?["productName"] as! String
-                        let manufacturer = profile?["manufacturer"] as! String
-                        let upcCode = paintProfile.key
-                        let image = profile?["image"] as! String
-                        let timestamp = profile?["timestamp"] as! String
-                        
-                        // check for colour
-                        if paintProfile.hasChild("colour") {
-                            let colourProfile = profile?["colour"] as? NSDictionary
-                            let colourName = colourProfile?["colourName"] as! String
-                            let hexcode = colourProfile?["hexcode"] as! String
-                            let manufacturerID = colourProfile?["manufacturerID"] as! String
-                            let manufacturer = colourProfile?["manufacturer"] as! String
-                            let productCode = colourProfile?["productCode"] as! String
-                            
-                            let colour = Colour(manufacturerID: manufacturerID, productCode: productCode, colourName: colourName, colourHexCode: hexcode, manufacturer: manufacturer)
-                            
-                            let product = ScannedProduct(productType: productType, manufacturer: manufacturer, upcCode: upcCode, image: image, colour: colour, timestamp: timestamp)
-                            
-                            self.products.append(product)
-                        }
-                        else {
-                            let product = ScannedProduct(productType: productType, manufacturer: manufacturer, upcCode: upcCode, image: image, colour: nil, timestamp: timestamp)
-                            
-                            self.products.append(product)
-                        }
-                    }
-                    self.tableView?.reloadData()
-                    self.hideActivityIndicator()
-                }
-                // no products
-                else {
-                    self.hideActivityIndicator()
-                }
-
-            }
-            // Error
-        }, withCancel: { (error) in
-            print(error.localizedDescription)
-            self.hideActivityIndicator()
-        })
-    }
-
-    func getPaintFor(location: Location, screenState: ScreenState) {
-        
-        if screenState == .business {
-            
-            let productsRef = DataService.instance.usersRef.child(self.signedInUser.uid)
-            
-            productsRef.observeSingleEvent(of: .value, with: { (snapshot) in
-                
-                if snapshot.childSnapshot(forPath: BusinessDashboard).childSnapshot(forPath: location.locationName).hasChild("name") {
-                    let name = snapshot.childSnapshot(forPath: "name").value as! String
-                    self.titleLbl?.text = name
-                }
-                else {
-                    self.titleLbl?.text = location.locationName
-                }
-                
-                if snapshot.childSnapshot(forPath: BusinessDashboard).childSnapshot(forPath: location.locationName).hasChild(Barcodes) {
-                    
-                    // get items
-                    for child in snapshot.childSnapshot(forPath: BusinessDashboard).childSnapshot(forPath: location.locationName).childSnapshot(forPath: Barcodes).children.allObjects {
-                        let paintProfile = child as! FIRDataSnapshot
-                        
-                        let profile = paintProfile.value as? NSDictionary
-                        let productType = profile?["productName"] as! String
-                        let manufacturer = profile?["manufacturer"] as! String
-                        let upcCode = paintProfile.key
-                        let image = profile?["image"] as! String
-                        let timestamp = profile?["timestamp"] as! String
-
-                        // check for colour
-                        if paintProfile.hasChild("colour") {
-                            let colourProfile = profile?["colour"] as? NSDictionary
-                            let colourName = colourProfile?["colourName"] as! String
-                            let hexcode = colourProfile?["hexcode"] as! String
-                            let manufacturerID = colourProfile?["manufacturerID"] as! String
-                            let manufacturer = colourProfile?["manufacturer"] as! String
-                            let productCode = colourProfile?["productCode"] as! String
-                            
-                            let colour = Colour(manufacturerID: manufacturerID, productCode: productCode, colourName: colourName, colourHexCode: hexcode, manufacturer: manufacturer)
-                            
-                            let product = ScannedProduct(productType: productType, manufacturer: manufacturer, upcCode: upcCode, image: image, colour: colour, timestamp: timestamp)
-                            
-                            self.products.append(product)
-                        }
-                        else {
-                            let product = ScannedProduct(productType: productType, manufacturer: manufacturer, upcCode: upcCode, image: image, colour: nil, timestamp: timestamp)
-                            
-                            self.products.append(product)
-                        }
-                    }
-                }
-                self.tableView?.reloadData()
-                self.hideActivityIndicator()
-            })
-        }
-        
-        else if screenState == .homes {
-            
-            let productsRef = DataService.instance.usersRef.child(self.signedInUser.uid)
-            
-            productsRef.observeSingleEvent(of: .value, with: { (snapshot) in
-                
-                if snapshot.childSnapshot(forPath: AddressDashboard).childSnapshot(forPath: location.locationName).hasChild("name") {
-                    let name = snapshot.childSnapshot(forPath: "name").value as! String
-                    self.titleLbl?.text = name
-                }
-                else {
-                    self.titleLbl?.text = location.locationName
-                }
-                
-                if snapshot.childSnapshot(forPath: AddressDashboard).childSnapshot(forPath: location.locationName).hasChild(Barcodes) {
-                    
-                    // get items
-                    for child in snapshot.childSnapshot(forPath: BusinessDashboard).childSnapshot(forPath: location.locationName).childSnapshot(forPath: Barcodes).children.allObjects {
-                        let paintProfile = child as! FIRDataSnapshot
-                        
-                        let profile = paintProfile.value as? NSDictionary
-                        let productType = profile?["productName"] as! String
-                        let manufacturer = profile?["manufacturer"] as! String
-                        let upcCode = paintProfile.key
-                        let image = profile?["image"] as! String
-                        let timestamp = profile?["timestamp"] as! String
-                        
-                        // check for colour
-                        if paintProfile.hasChild("colour") {
-                            let colourProfile = profile?["colour"] as? NSDictionary
-                            let colourName = colourProfile?["colourName"] as! String
-                            let hexcode = colourProfile?["hexcode"] as! String
-                            let manufacturerID = colourProfile?["manufacturerID"] as! String
-                            let manufacturer = colourProfile?["manufacturer"] as! String
-                            let productCode = colourProfile?["productCode"] as! String
-                            
-                            let colour = Colour(manufacturerID: manufacturerID, productCode: productCode, colourName: colourName, colourHexCode: hexcode, manufacturer: manufacturer)
-                            
-                            let product = ScannedProduct(productType: productType, manufacturer: manufacturer, upcCode: upcCode, image: image, colour: colour, timestamp: timestamp)
-                            
-                            self.products.append(product)
-                        }
-                        else {
-                            let product = ScannedProduct(productType: productType, manufacturer: manufacturer, upcCode: upcCode, image: image, colour: nil, timestamp: timestamp)
-                            
-                            self.products.append(product)
-                        }
-                    }
-                }
-                
-                self.tableView?.reloadData()
-                
-                self.hideActivityIndicator()
-                
-                // Error
-            }, withCancel: { (error) in
-                print(error.localizedDescription)
-                self.hideActivityIndicator()
-            })
-            
-        }
     }
 
 }

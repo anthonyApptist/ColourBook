@@ -43,9 +43,9 @@ extension DataService {
     
     // MARK: - Remove Product
     
-    func removeScannedProductFor(user: User, screeenState: ScreenState, barcode: String, location: String?) {
+    func removeScannedProductFor(user: User, screenState: ScreenState, barcode: String, location: String?, category: String) {
         
-        getBarcodeRefFor(user: user, screenState: screeenState, location: location)
+        self.getBarcodeRefFor(user: user, screenState: screenState, location: location, category: category)
         
         let locationRef = self.generalRef
         
@@ -55,21 +55,34 @@ extension DataService {
             if error != nil {
                 print(error?.localizedDescription ?? "")
             }
+            else {
+                self.checkPath(reference: locationRef!.parent!, category: category, location: location)
+            }
         })
-
         
     }
     
-    func getBarcodeRefFor(user: User, screenState: ScreenState, location: String?) {
+    func checkPath(reference: FIRDatabaseReference, category: String, location: String?) {
+        reference.observeSingleEvent(of: .value, with: { (snapshot) in
+            if snapshot.exists() {
+                
+            }
+            else {
+                reference.setValue("")
+            }
+        })
+    }
+    
+    func getBarcodeRefFor(user: User, screenState: ScreenState, location: String?, category: String) {
         
         if screenState == .personal {
-            self.generalRef = self.usersRef.child(user.uid).child(PersonalDashboard).child(Barcodes)
+            self.generalRef = self.usersRef.child(user.uid).child(PersonalDashboard).child(category).child(Barcodes)
         }
         if screenState == .business {
-            self.generalRef = self.usersRef.child(user.uid).child(BusinessDashboard).child(location!).child(Barcodes)
+            self.generalRef = self.usersRef.child(user.uid).child(BusinessDashboard).child("addresses").child(location!).child("categories").child(category).child(Barcodes)
         }
         if screenState == .homes {
-            self.generalRef = self.usersRef.child(user.uid).child(AddressDashboard).child(location!).child(Barcodes)
+            self.generalRef = self.usersRef.child(user.uid).child(AddressDashboard).child(location!).child("categories").child(category).child(Barcodes)
         }
 
     }

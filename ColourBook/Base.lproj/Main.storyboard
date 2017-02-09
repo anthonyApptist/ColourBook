@@ -699,7 +699,7 @@
                                             <rect key="frame" x="30" y="0.0" width="315" height="82.5"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="xZf-1K-0iP">
-                                                    <rect key="frame" x="0.0" y="20.5" width="34" height="41.5"/>
+                                                    <rect key="frame" x="0.0" y="21" width="34" height="41"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="41.5" id="i7e-LH-YMw"/>
                                                         <constraint firstAttribute="width" constant="34" id="qzF-yZ-dP9"/>
@@ -1246,7 +1246,7 @@
                                                 <rect key="frame" x="0.0" y="28" width="375" height="80"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="50k-DH-85g" id="6Yz-BN-jgc">
-                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="79"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="address" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4EA-WB-cJY">
@@ -1714,6 +1714,6 @@
         <segue reference="ZiE-Dq-MKt"/>
         <segue reference="5FO-LH-Ars"/>
         <segue reference="kiL-Md-CF2"/>
-        <segue reference="uql-du-HUQ"/>
+        <segue reference="VHt-Bh-IiX"/>
     </inferredMetricsTieBreakers>
 </document>
