@@ -19,6 +19,8 @@ class CategoriesListVC: CustomVC, UICollectionViewDelegate, UICollectionViewData
     
     @IBOutlet weak var bottomView: UIView!
     
+    let app = UIApplication.shared.delegate as! AppDelegate
+    
     
     let categories = ["Kitchen", "Livingroom", "Dining Room", "Bathroom", "Bedroom", "Garage", "Exterior", "Trim", "Hallway", "Interior re-paint", "Exterior re-paint", "Commercial", "Homebuilders", "Renovations"]
     
@@ -41,6 +43,9 @@ class CategoriesListVC: CustomVC, UICollectionViewDelegate, UICollectionViewData
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewWillAppear(false)
+        
+        app.window?.rootViewController = self
+
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -71,6 +76,12 @@ class CategoriesListVC: CustomVC, UICollectionViewDelegate, UICollectionViewData
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if self.screenState == .personal {
             performSegue(withIdentifier: "ConnectToPersonal", sender: nil)
+        }
+        if self.screenState == .homes {
+            performSegue(withIdentifier: "ConnectToAddresses", sender: nil)
+        }
+        if self.screenState == .business {
+            performSegue(withIdentifier: "ConnectToBusiness", sender: nil)
         }
     }
     

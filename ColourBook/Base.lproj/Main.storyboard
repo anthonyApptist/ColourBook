@@ -1246,7 +1246,7 @@
                                                 <rect key="frame" x="0.0" y="28" width="375" height="80"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="50k-DH-85g" id="6Yz-BN-jgc">
-                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="79"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="address" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4EA-WB-cJY">
@@ -1694,6 +1694,8 @@
                         <outlet property="titleLbl" destination="1Hp-5U-GrB" id="xw1-8A-0nX"/>
                         <outlet property="topView" destination="KXb-PY-NYv" id="enb-43-9po"/>
                         <segue destination="DTf-Rp-moZ" kind="show" identifier="ConnectToPersonal" id="kiL-Md-CF2"/>
+                        <segue destination="bAy-6h-cnr" kind="show" identifier="ConnectToBusiness" id="w3B-cP-Sbd"/>
+                        <segue destination="bAy-6h-cnr" kind="show" identifier="ConnectToAddresses" id="Ojw-7e-nwA"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="F7c-7a-QKz" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1710,10 +1712,10 @@
         <image name="settingsIcon" width="115" height="113"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="2NH-Fi-qo3"/>
-        <segue reference="ZiE-Dq-MKt"/>
         <segue reference="5FO-LH-Ars"/>
+        <segue reference="ZiE-Dq-MKt"/>
         <segue reference="kiL-Md-CF2"/>
+        <segue reference="Ojw-7e-nwA"/>
         <segue reference="uql-du-HUQ"/>
     </inferredMetricsTieBreakers>
 </document>

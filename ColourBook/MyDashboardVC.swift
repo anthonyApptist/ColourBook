@@ -64,12 +64,12 @@ class MyDashboardVC: CustomVC, UIScrollViewDelegate {
         
         if self.titleLbl.text == "business" {
             
-            performSegue(withIdentifier: "ConnectToBusiness", sender: self)
+            performSegue(withIdentifier: "ConnectToCategories", sender: self)
         }
         
         if self.titleLbl.text == "my homes" {
             
-            performSegue(withIdentifier: "ConnectToAddresses", sender: self)
+            performSegue(withIdentifier: "ConnectToCategories", sender: self)
         }
         
         if self.titleLbl.text == "search" {
