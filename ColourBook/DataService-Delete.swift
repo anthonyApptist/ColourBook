@@ -30,14 +30,12 @@ extension DataService {
     }
     
     func getAddressRefFor(user: User, screenState: ScreenState) {
-        
         if screenState == .business {
             self.generalRef = self.usersRef.child(user.uid).child(BusinessDashboard)
         }
         if screenState == .homes {
             self.generalRef = self.usersRef.child(user.uid).child(AddressDashboard)
         }
-        
     }
     
     
@@ -46,11 +44,9 @@ extension DataService {
     func removeScannedProductFor(user: User, screenState: ScreenState, barcode: String, location: String?, category: String) {
         
         self.getBarcodeRefFor(user: user, screenState: screenState, location: location, category: category)
-        
         let locationRef = self.generalRef
         
         // remove product from user list
-        
         locationRef?.child(barcode).removeValue(completionBlock: { (error, ref) in
             if error != nil {
                 print(error?.localizedDescription ?? "")
@@ -59,22 +55,21 @@ extension DataService {
                 self.checkPath(reference: locationRef!.parent!, category: category, location: location)
             }
         })
-        
     }
     
     func checkPath(reference: FIRDatabaseReference, category: String, location: String?) {
         reference.observeSingleEvent(of: .value, with: { (snapshot) in
             if snapshot.exists() {
-                
+                // do nothing
             }
             else {
+                // add empty to category branch
                 reference.setValue("")
             }
         })
     }
     
     func getBarcodeRefFor(user: User, screenState: ScreenState, location: String?, category: String) {
-        
         if screenState == .personal {
             self.generalRef = self.usersRef.child(user.uid).child(PersonalDashboard).child(category).child(Barcodes)
         }
@@ -84,7 +79,6 @@ extension DataService {
         if screenState == .homes {
             self.generalRef = self.usersRef.child(user.uid).child(AddressDashboard).child(location!).child("categories").child(category).child(Barcodes)
         }
-
     }
     
 }

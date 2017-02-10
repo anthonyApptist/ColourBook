@@ -6,7 +6,6 @@
 //  Copyright © 2016 Apptist. All rights reserved.
 //
 import UIKit
-import FirebaseDatabase
 
 class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
     
@@ -26,16 +25,13 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
     
     var selectionOn: Bool = false
     
-    var cellSelectedCount: Int = 0
-    
     @IBAction func transferItemsBtnPressed(_ sender: AnyObject) {
         
-        print(self.cellSelectedCount)
-        
-        if(self.cellSelectedCount > 0) {
+        if selectedProducts.isEmpty {
+            displayNoItemSelected()
+        }
+        else {
             performSegue(withIdentifier: "ConnectToTransferPage", sender: nil)
-        } else if(self.cellSelectedCount == 0) {
-            
         }
     }
     
@@ -193,12 +189,14 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         super.prepare(for: segue, sender: nil)
         
+        if segue.identifier == "ConnectToTransferPage" {
+            if let detail = segue.destination as? TransferToTableViewController {
+                detail
+            }
+        }
         if segue.identifier == "ShowListDetail" {
-            
             var item: ScannedProduct
-            
             let row = tableView?.indexPathForSelectedRow?.row
-                
             item = self.products[row!]
             
             if let detail = segue.destination as? ItemListDetailVC {
@@ -207,25 +205,26 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
             }
         }
         if segue.identifier == "ConnectToMenuSettings" {
-            
             if let detail = segue.destination as? SettingsVC {
-                
                 detail.selectedLocation = self.selectedLocation
                 detail.screenState = screenState
             }
         }
-        
         if segue.identifier == "ConnectToImageSettings" {
-            
             if let detail = segue.destination as? AddEditImageVC {
-            
                 detail.selectedLocation = self.selectedLocation
                 detail.screenState = screenState
-                
             }
-            
         }
-        
+    }
+    
+    func displayNoItemSelected() {
+        let alert = UIAlertController(title: "No item selected", message: "select at least one item", preferredStyle: .alert)
+        let action = UIAlertAction(title: "OK", style: .cancel) { (action) in
+            self.dismiss(animated: true, completion: nil)
+        }
+        alert.addAction(action)
+        self.present(alert, animated: true, completion: nil)
     }
 
 }

@@ -76,11 +76,8 @@ class CategoriesListVC: CustomVC, UICollectionViewDelegate, UICollectionViewData
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if self.screenState == .personal {
-            
             let cell = collectionView.cellForItem(at: indexPath)
-            
             performSegue(withIdentifier: "ConnectToPersonal", sender: cell)
-            
         }
     }
     

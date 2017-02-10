@@ -140,6 +140,8 @@
 		92CFEE2E1E00DF9A00F78C78 /* ChooseColourVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92CFEE2D1E00DF9A00F78C78 /* ChooseColourVC.swift */; };
 		92E9B5121E4A8655005DD4C5 /* Business.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E9B5111E4A8655005DD4C5 /* Business.swift */; };
 		92E9B5141E4AA3A5005DD4C5 /* SaveBusinessProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E9B5131E4AA3A5005DD4C5 /* SaveBusinessProfile.swift */; };
+		92E9B5161E4C19BA005DD4C5 /* ItemListEdit - Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E9B5151E4C19BA005DD4C5 /* ItemListEdit - Data.swift */; };
+		92E9B5181E4C204F005DD4C5 /* ItemListAdd - Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E9B5171E4C204F005DD4C5 /* ItemListAdd - Data.swift */; };
 		92F6B6F41E2352BE00643AD0 /* AddressItemsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92F6B6F31E2352BE00643AD0 /* AddressItemsVC.swift */; };
 		92F6B6F61E2354A100643AD0 /* ProductCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92F6B6F51E2354A100643AD0 /* ProductCell.swift */; };
 		92F8D92C1E41A17700E26601 /* CategoryList - Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92F8D92B1E41A17600E26601 /* CategoryList - Data.swift */; };
@@ -289,6 +291,8 @@
 		92CFEE2D1E00DF9A00F78C78 /* ChooseColourVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseColourVC.swift; sourceTree = "<group>"; };
 		92E9B5111E4A8655005DD4C5 /* Business.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Business.swift; sourceTree = "<group>"; };
 		92E9B5131E4AA3A5005DD4C5 /* SaveBusinessProfile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SaveBusinessProfile.swift; sourceTree = "<group>"; };
+		92E9B5151E4C19BA005DD4C5 /* ItemListEdit - Data.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ItemListEdit - Data.swift"; sourceTree = "<group>"; };
+		92E9B5171E4C204F005DD4C5 /* ItemListAdd - Data.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ItemListAdd - Data.swift"; sourceTree = "<group>"; };
 		92F6B6F31E2352BE00643AD0 /* AddressItemsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressItemsVC.swift; sourceTree = "<group>"; };
 		92F6B6F51E2354A100643AD0 /* ProductCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductCell.swift; sourceTree = "<group>"; };
 		92F8D92B1E41A17600E26601 /* CategoryList - Data.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CategoryList - Data.swift"; sourceTree = "<group>"; };
@@ -367,8 +371,10 @@
 				665E63771DE8293A002BA868 /* SignUpViewController.swift */,
 				66C7713F1DE8331700E4810A /* MyDashboardVC.swift */,
 				66242AD41DF0EDAE000B651F /* ItemListAddVC.swift */,
+				92E9B5171E4C204F005DD4C5 /* ItemListAdd - Data.swift */,
 				661A47F91DF6A9B400B56028 /* AddEditAddressVC.swift */,
 				66F942C31DF9241E00C01DAF /* ItemListEditVC.swift */,
+				92E9B5151E4C19BA005DD4C5 /* ItemListEdit - Data.swift */,
 				661A47F51DF6A95700B56028 /* AddEditImageVC.swift */,
 				661A47F71DF6A97700B56028 /* ItemListDetailVC.swift */,
 				661A47FF1DF6AA3800B56028 /* SettingsVC.swift */,
@@ -538,8 +544,8 @@
 			isa = PBXGroup;
 			children = (
 				9224DA0B1E416E7B0058AD02 /* BMoore.jpg */,
-				92CFEE2D1E00DF9A00F78C78 /* ChooseColourVC.swift */,
 				920B52711E0E0325005D5B60 /* SearchResultsTableVC.swift */,
+				92CFEE2D1E00DF9A00F78C78 /* ChooseColourVC.swift */,
 				924C00981E07AC1000C73C6A /* ColourView.swift */,
 				9277E0BD1DFA7D94001E0B9B /* SearchAddressVC.swift */,
 				9277E0BF1DFA8323001E0B9B /* AddressView.swift */,
@@ -773,12 +779,14 @@
 				92B4A6351DEBB8A100F35DED /* DataService.swift in Sources */,
 				661A47F61DF6A95700B56028 /* AddEditImageVC.swift in Sources */,
 				66F942C61DF92CA500C01DAF /* CustomVC.swift in Sources */,
+				92E9B5161E4C19BA005DD4C5 /* ItemListEdit - Data.swift in Sources */,
 				920B527B1E109421005D5B60 /* Location.swift in Sources */,
 				66D7834B1DF4DD2100BACC2C /* CustomAnimatedButton.swift in Sources */,
 				92E9B5141E4AA3A5005DD4C5 /* SaveBusinessProfile.swift in Sources */,
 				66242ADF1DF1123E000B651F /* ItemCell.swift in Sources */,
 				66242AE61DF46DD1000B651F /* CustomTextFieldContainer.swift in Sources */,
 				665E63701DE6B573002BA868 /* UIColours.swift in Sources */,
+				92E9B5181E4C204F005DD4C5 /* ItemListAdd - Data.swift in Sources */,
 				66F942C41DF9241E00C01DAF /* ItemListEditVC.swift in Sources */,
 				665E63781DE8293A002BA868 /* SignUpViewController.swift in Sources */,
 				663646891DE3E93A00E6D719 /* LogInViewController.swift in Sources */,
