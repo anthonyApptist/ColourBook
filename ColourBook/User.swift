@@ -10,19 +10,14 @@ import UIKit
 
 class User {
     
-    var items: [Any]
-    
     var uid: String
     var email: String
-    var name: String
+    var name: String?
     var image: String?
     
-    init(uid: String, email: String, name: String, image: String) {
+    init(uid: String, email: String) {
         self.uid = uid
         self.email = email
-        self.name = name
-        self.image = image
-        self.items = []
     }
 
 

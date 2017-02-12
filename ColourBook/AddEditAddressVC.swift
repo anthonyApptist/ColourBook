@@ -38,9 +38,7 @@ class AddEditAddressVC: CustomVC, MKMapViewDelegate, UISearchBarDelegate, CLLoca
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.backButtonNeeded = true
-        
+                
         self.saveBtn.alpha = 0.0
         
         // Search Controller
@@ -66,7 +64,8 @@ class AddEditAddressVC: CustomVC, MKMapViewDelegate, UISearchBarDelegate, CLLoca
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        
+        super.viewWillAppear(false)
+    
         titleLbl?.text = setAddEditAddressTitle(screenState: screenState)
         
         self.saveBtn.addTarget(self, action: #selector(self.saveBtnPressed(_:)), for: .touchUpInside)
@@ -231,7 +230,7 @@ class AddEditAddressVC: CustomVC, MKMapViewDelegate, UISearchBarDelegate, CLLoca
             
             // add to business database
 //            DataService.instance.saveLocation(screenState: self.screenState, location: self.location!)
-            
+             
             // add to user business bucket list
 //            DataService.instance.saveLocationTo(user: self.signedInUser, location: self.location!, screenState: self.screenState)
         
@@ -255,9 +254,7 @@ class AddEditAddressVC: CustomVC, MKMapViewDelegate, UISearchBarDelegate, CLLoca
             placeMark = placemarks?[0]
             let locationName = placeMark.name
             let postalCode = placeMark.postalCode
-            let image = ""
-            let name = ""
-            let location = Location(locationName: locationName!, postalCode: postalCode!, image: image, name: name)
+            let location = Location(locationName: locationName!, postalCode: postalCode!)
             self.displayLocationAddAlertController(location: location)
         })
     }

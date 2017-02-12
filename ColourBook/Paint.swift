@@ -8,19 +8,22 @@
 
 import UIKit
 
-struct Paint {
+class Paint: NSObject {
     
     var manufacturer: String
-    
     var productName: String
-    
     var category: String
-    
     var code: String
-    
     var upcCode: String
-    
     var image: String
-
-    var colour: String
+    var colour: Colour?
+    
+    init(manufacturer: String, productName: String, category: String, code: String, upcCode: String, image: String) {
+        self.manufacturer = manufacturer
+        self.productName = productName
+        self.category = category
+        self.code = code
+        self.upcCode = upcCode
+        self.image = image
+    }
 }

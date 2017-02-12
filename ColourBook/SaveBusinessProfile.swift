@@ -20,7 +20,7 @@ extension DataService {
             case 2?: // location
                 business.location = property
             case 3?: // phoneNumber
-                business.location = property
+                business.phoneNumber = property
             case 4?: // website
                 business.website = property
             case 5?: // postalCode
@@ -33,6 +33,9 @@ extension DataService {
         }
         
         // save with dataservice
+        let profile = ["name": business.name, "location": business.location, "phoneNumber": business.phoneNumber, "website": business.website, "postalCode": business.postalCode, "image": business.image]
+        
+        
     }
     
 }

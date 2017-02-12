@@ -26,7 +26,9 @@ class SelectCategoryVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
     var addButton: UIButton?
     
     // if business or homes
-    var location: Location?
+    var locationName: String?
+    
+    var transferProducts = [Paint:String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,7 +54,9 @@ class SelectCategoryVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         if screenState == .homes {
             name.text = "My addresses"
         }
-        
+        if screenState == .transfer {
+            name.text = "Transfer to Category"
+        }
         
         // table view
         tableView = UITableView(frame: CGRect(x: 0, y: 70, width: view.frame.width, height: view.frame.maxY - (view.frame.height * 0.1) - 70))
@@ -66,18 +70,25 @@ class SelectCategoryVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         
         // add button
         addButton = UIButton(frame: CGRect(x: view.center.x - ((view.frame.width)/2), y: view.frame.maxY - (view.frame.height * 0.1), width: view.frame.width, height: view.frame.height * 0.10))
-        addButton?.setTitle("Add", for: .normal)
         addButton?.setTitleColor(UIColor.white, for: .normal)
         addButton?.titleLabel?.font = UIFont(name: "HelveticaNeue-Medium", size: (addButton?.frame.height)! * 0.4)
         addButton?.backgroundColor = UIColor.black
-        addButton?.addTarget(self, action: #selector(addToSelectedRow), for: .touchUpInside)
+        
+        if screenState == .transfer {
+            addButton?.setTitle("Transfer", for: .normal)
+            addButton?.addTarget(self, action: #selector(addToSelectedRow), for: .touchUpInside)
+        }
+        else {
+            addButton?.setTitle("Add", for: .normal)
+            addButton?.addTarget(self, action: #selector(addToSelectedRow), for: .touchUpInside)
+        }
         
         // add to view
         view.addSubview(name)
         view.addSubview(tableView)
         view.addSubview(addButton!)
 
-        self.getCategoriesFor(screenState: self.screenState, user: self.signedInUser, location: self.location)
+        self.getCategoriesFor(screenState: self.screenState, user: self.signedInUser, location: self.locationName)
             
     }
     
@@ -120,6 +131,23 @@ class SelectCategoryVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         self.selectedCategory = ""
     }
     
+    func transferFunction() {
+        if self.selectedCategory == "" {
+            self.displayNoneSelected()
+        }
+        else {
+            if self.screenState == .personal {
+                // selected category
+                let category = self.selectedCategory
+                
+                // save to selected personal category
+                DataService.instance.transfer(products: self.transferProducts, user: self.signedInUser, location: self.locationName, category: category)
+                
+                self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
+            }
+        }
+    }
+    
     // MARK: - Add button function
     
     func addToSelectedRow() {
@@ -133,12 +161,10 @@ class SelectCategoryVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
                 let category = self.selectedCategory
                 
                 // save to selected personal category
-                DataService.instance.saveProductIn(user: self.signedInUser.uid, screenState: self.screenState, location: self.location?.locationName, barcode: self.barcode!, value: self.productProfile, category: category)
+                DataService.instance.saveProductIn(user: self.signedInUser.uid, screenState: self.screenState, location: self.locationName, barcode: self.barcode!, value: self.productProfile, category: category)
                 
                 self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
             }
-            
-            
         }
     }
     
@@ -149,7 +175,7 @@ class SelectCategoryVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         self.present(alert, animated: true, completion: nil)
     }
     
-    func getCategoriesFor(screenState: ScreenState, user: User, location: Location?) {
+    func getCategoriesFor(screenState: ScreenState, user: User, location: String?) {
         
         getCategoriesFrom(user: user, screenState: screenState, location: location)
         
@@ -169,15 +195,15 @@ class SelectCategoryVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         })
     }
     
-    func getCategoriesFrom(user: User, screenState: ScreenState, location: Location?) {
+    func getCategoriesFrom(user: User, screenState: ScreenState, location: String?) {
         if screenState == .personal {
             DataService.instance.generalRef = DataService.instance.usersRef.child(user.uid).child(PersonalDashboard)
         }
         if screenState == .business {
-            DataService.instance.generalRef = DataService.instance.usersRef.child(user.uid).child(BusinessDashboard).child((location?.locationName)!).child("categories")
+            DataService.instance.generalRef = DataService.instance.usersRef.child(user.uid).child(BusinessDashboard).child("addresses").child(locationName!).child("categories")
         }
-        else if screenState == .homes {
-            DataService.instance.generalRef = DataService.instance.usersRef.child(user.uid).child(AddressDashboard).child((location?.locationName)!).child("categories")
+        else if screenState == .homes || screenState == .transfer {
+            DataService.instance.generalRef = DataService.instance.usersRef.child(user.uid).child(AddressDashboard).child(locationName!).child("categories")
         }
         
     }

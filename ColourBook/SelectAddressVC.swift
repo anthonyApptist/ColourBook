@@ -24,6 +24,9 @@ class SelectAddressVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
     var name: UILabel!
     var addButton: UIButton?
     
+    // products to be transferred
+    var transferProducts = [Paint:String]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -36,23 +39,20 @@ class SelectAddressVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         self.view.backgroundColor = UIColor.white
         
         // title label
-        
         name = UILabel(frame: CGRect(x: 0, y: 20, width: view.frame.width, height: 50))
-        
         name.textColor = UIColor.black
-        
         name.textAlignment = .center
-        
         name.backgroundColor = UIColor.white
         
         if screenState == .business {
             name.text = "My businesses"
         }
-        
         if screenState == .homes {
             name.text = "My addresses"
         }
-        
+        if screenState == .transfer {
+            name.text = "Transfer To..."
+        }
         
         // table view
         tableView = UITableView(frame: CGRect(x: 0, y: 70, width: view.frame.width, height: view.frame.maxY - (view.frame.height * 0.1) - 70))
@@ -62,15 +62,22 @@ class SelectAddressVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         
         tableView.delegate = self
         tableView.dataSource = self
- 
         
         // add button
         addButton = UIButton(frame: CGRect(x: view.center.x - ((view.frame.width)/2), y: view.frame.maxY - (view.frame.height * 0.1), width: view.frame.width, height: view.frame.height * 0.10))
-        addButton?.setTitle("Add", for: .normal)
         addButton?.setTitleColor(UIColor.white, for: .normal)
         addButton?.titleLabel?.font = UIFont(name: "HelveticaNeue-Medium", size: (addButton?.frame.height)! * 0.4)
         addButton?.backgroundColor = UIColor.black
-        addButton?.addTarget(self, action: #selector(addToSelectedRow), for: .touchUpInside)
+        
+        if screenState == .transfer {
+            addButton?.setTitle("Transfer to Category", for: .normal)
+            addButton?.addTarget(self, action: #selector(transferTo), for: .touchUpInside)
+
+        }
+        else {
+            addButton?.setTitle("Add", for: .normal)
+            addButton?.addTarget(self, action: #selector(addToSelectedRow), for: .touchUpInside)
+        }
         
         // add to view
         view.addSubview(name)
@@ -78,6 +85,7 @@ class SelectAddressVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         view.addSubview(addButton!)
         
         self.getLocationLists(screenState: self.screenState, user: self.signedInUser)
+        self.showActivityIndicator()
     
     }
     
@@ -116,6 +124,21 @@ class SelectAddressVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         cell?.accessoryType = UITableViewCellAccessoryType.none
         self.selectedLocation = ""
     }
+    
+    // MARK: - Transfer function
+    
+    func transferTo() {
+        
+        if self.selectedLocation == "" {
+            self.displayNoAddressSelected()
+        }
+        else {
+            let selectCategory = SelectCategoryVC()
+            selectCategory.screenState = self.screenState
+            selectCategory.locationName = self.selectedLocation
+            selectCategory.transferProducts = self.transferProducts 
+        }
+    }
 
     // MARK: - Add button function
 
@@ -125,18 +148,9 @@ class SelectAddressVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
             self.displayNoAddressSelected()
         }
         else {
-            if screenState == .business {
-                // business location
-                let location = self.selectedLocation
-                
-                // save to the address in selected list
-                
-                
-                // save barcodes to public business entry
-                DataService.instance.saveProductFor(location: location, screenState: self.screenState, barcode: self.barcode!, value: self.productProfile)
-                
-                self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
-            }
+            let selectCategory = SelectCategoryVC()
+            selectCategory.screenState = self.screenState
+            selectCategory.locationName = self.selectedLocation
         }
     }
     
@@ -183,20 +197,24 @@ class SelectAddressVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
                 if snapshot.hasChild("BusinessProfile") {
                     
                     // add the business
-                    
+                
                     if snapshot.hasChild("addresses") {
+                        
                         for child in snapshot.childSnapshot(forPath: "addresses").children.allObjects {
                             let addressProfile = child as! FIRDataSnapshot
                             let profile = addressProfile.value as? NSDictionary
                             let postalCode = profile?["postalCode"] as! String
-                            let image = profile?["image"] as! String
-                            let name = addressProfile.key
-                            let location = Location(locationName: name, postalCode: postalCode, image: image, name: "")
+                            let image = profile?["image"] as? String
+                            let name = profile?["name"] as? String
+                            let locationName = addressProfile.key
+                            let location = Location(locationName: locationName, postalCode: postalCode)
+                            location.image = image
+                            location.name = name
                             
                             self.locations.append(location)
-                            self.tableView.reloadData()
-                            self.hideActivityIndicator()
                         }
+                        self.tableView.reloadData()
+                        self.hideActivityIndicator()
                         
                     }
                     else {
@@ -207,6 +225,33 @@ class SelectAddressVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
                     self.displayNoBusinessPage()
                 }
             }
+            if screenState == .homes || screenState == .transfer {
+                
+                if snapshot.hasChildren() {
+                    
+                    for child in snapshot.children.allObjects {
+                        let addressProfile = child as! FIRDataSnapshot
+                        let profile = addressProfile.value as? NSDictionary
+                        let postalCode = profile?["postalCode"] as! String
+                        let image = profile?["image"] as? String
+                        let name = profile?["name"] as? String
+                        let locationName = addressProfile.key
+                        let location = Location(locationName: locationName, postalCode: postalCode)
+                        
+                        location.image = image
+                        location.name = name
+                        
+                        self.locations.append(location)
+                    }
+                    self.tableView.reloadData()
+                    self.hideActivityIndicator()
+                    
+                }
+                else {
+                    self.displayNoAddresses()
+                }
+            }
+            
             
         }, withCancel: { (error) in
             print(error.localizedDescription)

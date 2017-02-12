@@ -244,7 +244,7 @@ class PostScanViewController: CustomVC {
                 let profile = barcodeDatabase?[self.barcode] as? NSDictionary
                 let paintCanProfile = profile?["profile"] as? NSDictionary
                 
-                let paint = Paint(manufacturer: paintCanProfile?["manufacturer"] as! String, productName: paintCanProfile?["productName"] as! String, category: paintCanProfile?["category"] as! String, code: paintCanProfile?["code"] as! String, upcCode: self.barcode, image: paintCanProfile?["image"] as! String, colour: paintCanProfile?["colour"] as! String)
+                let paint = Paint(manufacturer: paintCanProfile?["manufacturer"] as! String, productName: paintCanProfile?["productName"] as! String, category: paintCanProfile?["category"] as! String, code: paintCanProfile?["code"] as! String, upcCode: self.barcode, image: paintCanProfile?["image"] as! String)
 
                 self.product = paint
                 

@@ -1,5 +1,5 @@
 //
-//  DataService-Save.swift
+//  DataService - Save.swift
 //  ColourBook
 //
 //  Created by Anthony Ma on 29/12/2016.
@@ -22,11 +22,11 @@ extension DataService {
         let locationRef = self.generalRef
         
         if screenState == .business {
-            let businessProfile: Dictionary<String, Any> = ["postalCode": business!.postalCode ?? "", "image": "", "name": ""]
+            let businessProfile: Dictionary<String, Any> = ["postalCode": business!.postalCode ?? ""]
             locationRef?.setValue(businessProfile)
         }
         if screenState == .homes {
-            let locationProfile: Dictionary<String, Any> = ["postalCode": location!.postalCode, "image": "", "name": "", "categories": newCategories ?? ""]
+            let locationProfile: Dictionary<String, Any> = ["postalCode": location!.postalCode, "categories": newCategories ?? ""]
             locationRef?.setValue(locationProfile)
         }
     }
@@ -136,9 +136,7 @@ extension DataService {
         let locationRef = self.generalRef
         let newCategories = self.startingCategories(screenState: screenState)
         
-        
-        
-        let locationProfile: Dictionary<String, Any> = ["postalCode": location.postalCode, "image": location.image!, "categories": newCategories ?? [:]]
+        let locationProfile: Dictionary<String, Any> = ["postalCode": location.postalCode, "categories": newCategories ?? [:]]
         locationRef?.child(location.locationName).setValue(locationProfile)
     }
     
@@ -161,7 +159,7 @@ extension DataService {
         
         let dashboardCats: Dictionary<String, String> = ["Kitchen": "", "Living Room": "", "Dining Room": "", "Bathroom": "", "Bedrooms": "", "Garage": "", "Exterior": "", "Trim": "", "Hallway": "", "Unsorted": ""]
         
-        let newProfile: Dictionary<String, Any> = ["email": email, "image": image, PersonalDashboard: dashboardCats]
+        let newProfile: Dictionary<String, Any> = ["email": email, PersonalDashboard: dashboardCats]
         
         usersRef.child(uid).setValue(newProfile)
         

@@ -13,6 +13,7 @@ enum ScreenState {
     case personal
     case business
     case homes
+    case transfer
 }
 
 class CustomVC: UIViewController, UITextFieldDelegate {

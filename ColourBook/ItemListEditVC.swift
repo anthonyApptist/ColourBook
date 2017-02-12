@@ -31,7 +31,21 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
             displayNoItemSelected()
         }
         else {
+            
+            let selectAddress = SelectAddressVC()
+            selectAddress.screenState = .homes
+            
+            for index in self.selectedProducts.keys {
+                let timestamp = self.selectedProducts[index]?.timestamp
+                let paint = self.paintProducts[index]
+                self.selectedPaint.updateValue(timestamp!, forKey: paint)
+            }
+            
+            selectAddress.transferProducts = self.selectedPaint
+            selectAddress.screenState = .transfer
+            /*
             performSegue(withIdentifier: "ConnectToTransferPage", sender: nil)
+            */
         }
     }
     
@@ -81,6 +95,11 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
     var selectedLocation: Location? = nil
     var selectedCategory: String? = nil
     
+    // paint products
+    
+    var paintProducts = [Paint]()
+    var selectedPaint = [Paint:String]()
+    
     // products
     
     var products = [ScannedProduct]()
@@ -111,6 +130,8 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         
         super.viewWillAppear(false)
         
+        self.getInfo(user: self.signedInUser, screenState: self.screenState, location: self.selectedLocation?.locationName)
+        self.showActivityIndicator()
     }
 
     
@@ -189,11 +210,13 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         super.prepare(for: segue, sender: nil)
         
+        /*
         if segue.identifier == "ConnectToTransferPage" {
             if let detail = segue.destination as? TransferToTableViewController {
-                detail
+                
             }
         }
+ */
         if segue.identifier == "ShowListDetail" {
             var item: ScannedProduct
             let row = tableView?.indexPathForSelectedRow?.row
@@ -214,6 +237,7 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
             if let detail = segue.destination as? AddEditImageVC {
                 detail.selectedLocation = self.selectedLocation
                 detail.screenState = screenState
+                detail.signedInUser = self.signedInUser
             }
         }
     }

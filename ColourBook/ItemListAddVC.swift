@@ -54,9 +54,8 @@ class ItemListAddVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         
 //        super.viewDidAppear(false)
         
-        self.showActivityIndicator()
-        
         self.getLocationLists(screenState: self.screenState, user: self.signedInUser)
+        self.showActivityIndicator()
         
         if self.screenState == .business {
             self.subTitleLbl?.text = "my businesses"
@@ -80,16 +79,7 @@ class ItemListAddVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "ItemCell", for: indexPath) as! ItemCell
         
-        print(cell)
-        
-        print(locations[indexPath.row].locationName)
-        
-        if locations[indexPath.row].locationName.isEmpty {
-            cell.titleLbl?.text = locations[indexPath.row].postalCode
-        }
-        else {
-            cell.titleLbl?.text = locations[indexPath.row].locationName
-        }
+        cell.titleLbl?.text = locations[indexPath.row].postalCode
         
         return cell
     }

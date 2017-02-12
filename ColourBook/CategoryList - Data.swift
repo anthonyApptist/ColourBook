@@ -32,6 +32,8 @@ extension CategoriesListVC {
                         
                         let productType = itemProfile?["productName"] as! String
                         let manufacturer = itemProfile?["manufacturer"] as! String
+                        let category = itemProfile?["category"] as! String
+                        let code = itemProfile?["code"] as! String
                         let upcCode = product.key
                         let image = itemProfile?["image"] as! String
                         let timestamp = itemProfile?["timestamp"] as! String
@@ -41,19 +43,28 @@ extension CategoriesListVC {
                             let colourProfile = itemProfile?["colour"] as? NSDictionary
                             let colourName = colourProfile?["colourName"] as! String
                             let hexcode = colourProfile?["hexcode"] as! String
-                            let manufacturerID = colourProfile?["manufacturerID"] as! String
-                            let manufacturer = colourProfile?["manufacturer"] as! String
+                            let colourManufacturerID = colourProfile?["manufacturerID"] as! String
+                            let colourManufacturer = colourProfile?["manufacturer"] as! String
                             let productCode = colourProfile?["productCode"] as! String
                             
-                            let colour = Colour(manufacturerID: manufacturerID, productCode: productCode, colourName: colourName, colourHexCode: hexcode, manufacturer: manufacturer)
+                            let colour = Colour(manufacturerID: colourManufacturerID, productCode: productCode, colourName: colourName, colourHexCode: hexcode, manufacturer: colourManufacturer)
                             
                             let product = ScannedProduct(productType: productType, manufacturer: manufacturer, upcCode: upcCode, image: image, colour: colour, timestamp: timestamp)
+                            
+                            let paint = Paint(manufacturer: manufacturer, productName: productType, category: category, code: code, upcCode: upcCode, image: image)
+                            paint.colour = colour
+                            
+                            self.paintProducts.append(paint)
                             
                             itemsArray.append(product)
                         }
                         else {
                             let product = ScannedProduct(productType: productType, manufacturer: manufacturer, upcCode: upcCode, image: image, colour: nil, timestamp: timestamp)
                             
+                            let paint = Paint(manufacturer: manufacturer, productName: productType, category: category, code: code, upcCode: upcCode, image: image)
+                            
+                            self.paintProducts.append(paint)
+
                             itemsArray.append(product)
                         }
                         
@@ -80,7 +91,7 @@ extension CategoriesListVC {
             DataService.instance.generalRef = DataService.instance.usersRef.child(user.uid).child(PersonalDashboard)
         }
         if screenState == .business {
-            DataService.instance.generalRef = DataService.instance.usersRef.child(user.uid).child(BusinessDashboard).child("address").child((location?.locationName)!).child("categories")
+            DataService.instance.generalRef = DataService.instance.usersRef.child(user.uid).child(BusinessDashboard).child("addresses").child((location?.locationName)!).child("categories")
         }
         else if screenState == .homes {
             DataService.instance.generalRef = DataService.instance.usersRef.child(user.uid).child(AddressDashboard).child((location?.locationName)!).child("categories")

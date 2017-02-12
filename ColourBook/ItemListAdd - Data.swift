@@ -27,7 +27,9 @@ extension ItemListAddVC {
                 let image = profile?["image"] as? String
                 let name = profile?["name"] as? String
                 
-                let location = Location(locationName: locationName, postalCode: postalCode, image: image, name: name)
+                let location = Location(locationName: locationName, postalCode: postalCode)
+                location.image = image
+                location.name = name
                 
                 self.locations.append(location)
             }

@@ -147,7 +147,7 @@ class SearchAddressVC: CustomVC, UISearchBarDelegate {
                 let postalCode = locationData?["postalCode"] as! String
                 let locationName = locationProfile.key
                 
-                let location = Location(locationName: locationName, postalCode: postalCode, image: image, name: name)
+                let location = Location(locationName: locationName, postalCode: postalCode)
                 
                 // if address has barcodes
                 if locationProfile.hasChild(Barcodes) {
@@ -209,7 +209,7 @@ class SearchAddressVC: CustomVC, UISearchBarDelegate {
                 let image = locationData?["image"] as? String
                 let locationName = locationProfile.key
                 
-                let location = Location(locationName: locationName, postalCode: postalCode, image: image, name: name)
+                let location = Location(locationName: locationName, postalCode: postalCode)
                 
                 // if address has barcodes
                 if locationProfile.hasChild(Barcodes) {

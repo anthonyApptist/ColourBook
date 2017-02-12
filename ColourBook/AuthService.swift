@@ -58,7 +58,7 @@ class AuthService {
 
                                             }
                                             else {
-                                                let createdUser = User(uid: user!.uid, email: user!.email!, name: "", image: "")
+                                                let createdUser = User(uid: user!.uid, email: user!.email!)
                                                 print(createdUser.email)
                                                 print("signed in created user")
                                                 onComplete?(nil, user)
@@ -92,12 +92,12 @@ class AuthService {
                     })
                 }
                 else if (user?.displayName != nil) {
-                    let signedInUser = User(uid: (user?.uid)!, email: (user?.email!)!, name: (user?.displayName!)!, image: "")
+                    let signedInUser = User(uid: (user?.uid)!, email: (user?.email!)!)
                     print(signedInUser.uid, signedInUser.email, user?.displayName!)
                 }
                     
                 else {
-                    let signedInUser = User(uid: (user?.uid)!, email: (user?.email!)!, name: "", image: "")
+                    let signedInUser = User(uid: (user?.uid)!, email: (user?.email!)!)
                     print(signedInUser.uid, signedInUser.email, "")
                 }
             
@@ -107,8 +107,7 @@ class AuthService {
         })
     }
     
-    func handleFirebaseError(error: NSError, onComplete: Completion?) {
-        print(error.debugDescription)
+    func handleFirebaseError(error: Error, onComplete: Completion?) {
         if let errorCode = FIRAuthErrorCode(rawValue: error._code) {
             switch errorCode {
             case .errorCodeInvalidEmail:
@@ -128,48 +127,32 @@ class AuthService {
     
     func getSignedInUser() -> User {
         if let user = FIRAuth.auth()?.currentUser {
-            
             if user.displayName != nil {
-                
-                let signedInUser = User(uid: user.uid, email: user.email!, name: user.displayName!, image: "")
-                
+                let signedInUser = User(uid: user.uid, email: user.email!)
                 print(signedInUser.uid, signedInUser.email, user.displayName!)
-                
                 return signedInUser
-                
             }
-                
             else {
-                
-                let signedInUser = User(uid: user.uid, email: user.email!, name: "", image: "")
-                
+                let signedInUser = User(uid: user.uid, email: user.email!)
                 print(signedInUser.uid, signedInUser.email, "")
-                
                 return signedInUser
-
             }
         }
-        
         else {
-            
-            let noUserSignedIn = User(uid: "", email: "", name: "", image: "")
-            
+            let noUserSignedIn = User(uid: "", email: "")
             return noUserSignedIn
-            
         }
     }
     
     func performSignOut() {
         try! FIRAuth.auth()!.signOut()
         self.app.userDefaults.set(false, forKey: "userLoggedIn")
-
     }
     
     func passwordReset(email: String) {
-        
         FIRAuth.auth()?.sendPasswordReset(withEmail: email) { error in
             if let error = error {
-                
+                self.handleFirebaseError(error: error, onComplete: nil)
             } else {
                 
             }
@@ -177,7 +160,6 @@ class AuthService {
     }
     
     func saveDisplay(name: String) {
-        
         if let changeRequest = FIRAuth.auth()?.currentUser?.profileChangeRequest() {
             changeRequest.displayName = name
             changeRequest.commitChanges(completion: { (error) in

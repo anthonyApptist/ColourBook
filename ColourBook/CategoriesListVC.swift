@@ -24,18 +24,15 @@ class CategoriesListVC: CustomVC, UICollectionViewDelegate, UICollectionViewData
     var categoriesItems = [String:[ScannedProduct]]()
     var categories = [String]()
     
+    var paintProducts = [Paint]()
+
+    let app = UIApplication.shared.delegate as! AppDelegate
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         collectionView.delegate = self
         collectionView.dataSource = self
-        
-        self.showActivityIndicator()
-        
-//        DataService.instance.usersRef.child(self.signedInUser.uid).child(PersonalDashboard).child("Living Room").setValue("")
-        
-        self.getCategoriesFor(screenState: self.screenState, user: self.signedInUser, location: selectedLocation)
-
     }
     
     @IBAction func scanBtnPressed(_ sender: AnyObject) {
@@ -49,6 +46,12 @@ class CategoriesListVC: CustomVC, UICollectionViewDelegate, UICollectionViewData
     override func viewDidAppear(_ animated: Bool) {
         super.viewWillAppear(false)
         
+        categories = []
+        paintProducts = []
+        self.getCategoriesFor(screenState: self.screenState, user: self.signedInUser, location: selectedLocation)
+        self.showActivityIndicator()
+        
+        app.window?.rootViewController = self
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -79,6 +82,12 @@ class CategoriesListVC: CustomVC, UICollectionViewDelegate, UICollectionViewData
             let cell = collectionView.cellForItem(at: indexPath)
             performSegue(withIdentifier: "ConnectToPersonal", sender: cell)
         }
+        if self.screenState == .homes {
+            performSegue(withIdentifier: "ConnectToAddresses", sender: nil)
+        }
+        if self.screenState == .business {
+            performSegue(withIdentifier: "ConnectToBusiness", sender: nil)
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -91,6 +100,7 @@ class CategoriesListVC: CustomVC, UICollectionViewDelegate, UICollectionViewData
                     editList.products = items!
                     editList.selectedCategory = category
                     editList.screenState = self.screenState
+                    editList.paintProducts = self.paintProducts
                 }
             }
         }

@@ -1046,7 +1046,7 @@
                                                 <rect key="frame" x="37" y="86" width="301" height="334"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Profile Picture" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o4C-X3-Ick">
-                                                        <rect key="frame" x="0.0" y="0.0" width="162.5" height="30"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="163" height="30"/>
                                                         <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="25"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
@@ -1694,6 +1694,8 @@
                         <outlet property="titleLbl" destination="1Hp-5U-GrB" id="xw1-8A-0nX"/>
                         <outlet property="topView" destination="KXb-PY-NYv" id="enb-43-9po"/>
                         <segue destination="DTf-Rp-moZ" kind="show" identifier="ConnectToPersonal" id="kiL-Md-CF2"/>
+                        <segue destination="bAy-6h-cnr" kind="show" identifier="ConnectToBusiness" id="w3B-cP-Sbd"/>
+                        <segue destination="bAy-6h-cnr" kind="show" identifier="ConnectToAddresses" id="Ojw-7e-nwA"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="F7c-7a-QKz" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1710,10 +1712,10 @@
         <image name="settingsIcon" width="115" height="113"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="2NH-Fi-qo3"/>
+        <segue reference="kiL-Md-CF2"/>
         <segue reference="ZiE-Dq-MKt"/>
         <segue reference="5FO-LH-Ars"/>
-        <segue reference="kiL-Md-CF2"/>
-        <segue reference="VHt-Bh-IiX"/>
+        <segue reference="Ojw-7e-nwA"/>
+        <segue reference="uql-du-HUQ"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -18,17 +18,52 @@ extension ItemListEditVC {
         ref?.observeSingleEvent(of: .value, with: { (snapshot) in
             
             if snapshot.hasChild("name") {
-                
+                let name = snapshot.childSnapshot(forPath: "name").value as! String
+                if name != "" {
+                    if screenState == .personal {
+                        self.signedInUser.name = name
+                        self.titleLbl?.text = name
+                    }
+                    if screenState == .business || screenState == .homes {
+                        self.titleLbl?.text = name
+                        self.selectedLocation?.name = name
+                    }
+                    self.subTitleLbl?.text = self.selectedCategory
+                }
+                else {
+                    self.titleLbl?.text = ""
+                    if screenState == .personal {
+                        self.signedInUser.name = ""
+                    }
+                    if screenState == .business || screenState == .homes {
+                        self.selectedLocation?.name = ""
+                    }
+                }
             }
             if snapshot.hasChild("image") {
-                let imageString = snapshot.childSnapshot(forPath: "image").value as! String
-                
+                let imageString = snapshot.childSnapshot(forPath: "image").value as? String
+                if imageString != "" {
+                    if screenState == .personal {
+                        self.signedInUser.image = imageString
+                    }
+                    if screenState == .business || screenState == .homes {
+                        self.selectedLocation?.image = imageString
+                    }
+                }
+                else {
+                    if screenState == .personal {
+                        self.signedInUser.image = ""
+                    }
+                    if screenState == .business || screenState == .homes {
+                        self.selectedLocation?.image = ""
+                    }
+                }
             }
-            
-            
+            self.hideActivityIndicator()
             
         }, withCancel: { (error) in
             print(error.localizedDescription)
+            self.hideActivityIndicator()
         })
     }
     
