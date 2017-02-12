@@ -19,6 +19,8 @@ class CategoriesListVC: CustomVC, UICollectionViewDelegate, UICollectionViewData
     
     @IBOutlet weak var bottomView: UIView!
     
+    var selectedLocation: Location?
+    
     let app = UIApplication.shared.delegate as! AppDelegate
     
     
@@ -44,7 +46,7 @@ class CategoriesListVC: CustomVC, UICollectionViewDelegate, UICollectionViewData
     override func viewDidAppear(_ animated: Bool) {
         super.viewWillAppear(false)
         
-        app.window?.rootViewController = self
+     //   app.window?.rootViewController = self
 
     }
     
@@ -82,6 +84,28 @@ class CategoriesListVC: CustomVC, UICollectionViewDelegate, UICollectionViewData
         }
         if self.screenState == .business {
             performSegue(withIdentifier: "ConnectToBusiness", sender: nil)
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        super.prepare(for: segue, sender: nil)
+        
+        if segue.identifier == "ConnectToAddresses" {
+            
+            if let destVC = segue.destination as? ItemListEditVC {
+                destVC.screenState = .homes
+                destVC.selectedLocation = self.selectedLocation
+            }
+            
+        }
+        
+        if segue.identifier == "ConnectToBusiness" {
+            
+            if let destVC = segue.destination as? ItemListEditVC {
+                destVC.screenState = .business
+                destVC.selectedLocation = self.selectedLocation
+            }
+            
         }
     }
     

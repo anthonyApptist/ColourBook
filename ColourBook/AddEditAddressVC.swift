@@ -133,16 +133,7 @@ class AddEditAddressVC: CustomVC, MKMapViewDelegate, UISearchBarDelegate, CLLoca
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ShowInfo" {
             
-            
-            if self.screenState == .business {
-                
-                if let detail = segue.destination as? AddEditImageVC {
-                    /*
-                    detail.businessItem = businessItem
-                    detail.screenState = screenState
-                    */
-                }
-            } else if self.screenState == .homes {
+             if self.screenState == .homes {
                 
                 if let detail = segue.destination as? AddEditImageVC {
                     /*
@@ -151,6 +142,20 @@ class AddEditAddressVC: CustomVC, MKMapViewDelegate, UISearchBarDelegate, CLLoca
                     */
                 }
             }
+        }
+        
+        if segue.identifier == "ShowInfoBusiness" {
+            
+            if self.screenState == .business {
+                
+                if let detail = segue.destination as? AddEditImageVCBusiness {
+                    /*
+                     detail.addressItem = addressItem
+                     detail.screenState = screenState
+                     */
+                }
+            }
+            
         }
 
     }

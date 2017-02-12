@@ -46,15 +46,18 @@ class ItemListAddVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         
         tableView?.delegate = self
         tableView?.dataSource = self
+    
 
     }
  
     
     override func viewDidAppear(_ animated: Bool) {
         
-//        super.viewDidAppear(false)
+        super.viewDidAppear(false)
         
         self.showActivityIndicator()
+        
+        locations = []
         
         self.getLocationLists(screenState: self.screenState, user: self.signedInUser)
         
@@ -96,7 +99,7 @@ class ItemListAddVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     
-        performSegue(withIdentifier: "ConnectToListItem", sender: self)
+        performSegue(withIdentifier: "ConnectToCategories", sender: self)
     
     }
 
@@ -138,6 +141,16 @@ class ItemListAddVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
                 detail.selectedLocation = selectedLocation
             }
         }
+        
+        if segue.identifier == "ConnectToCategories" {
+            let row = tableView?.indexPathForSelectedRow?.row
+            let selectedLocation = locations[row!]
+
+            if let detail = segue.destination as? CategoriesListVC {
+                detail.selectedLocation = selectedLocation
+        }
+    }
+        
     }
     
     func getLocationLists(screenState: ScreenState, user: User) {
@@ -181,7 +194,8 @@ class ItemListAddVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         }
         
     }
+    }
+    
+ 
+    
 
-    
-    
-}

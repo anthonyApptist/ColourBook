@@ -58,8 +58,10 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         
         if screenState == ScreenState.personal {
             performSegue(withIdentifier: "ConnectToImageSettings", sender: self)
-        } else if screenState == ScreenState.business || screenState == ScreenState.homes {
-            performSegue(withIdentifier: "ConnectToMenuSettings", sender: self)
+        } else if screenState == ScreenState.business {
+            performSegue(withIdentifier: "ConnectToImageSettingsBusiness", sender: self)
+        } else if screenState == ScreenState.homes {
+            performSegue(withIdentifier: "ConnectToImageSettings", sender: self)
         }
         
     }
@@ -230,6 +232,17 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
             
             if let detail = segue.destination as? AddEditImageVC {
             
+                detail.selectedLocation = self.selectedLocation
+                detail.screenState = screenState
+                
+            }
+            
+        }
+        
+        if segue.identifier == "ConnectToImageSettingsBusiness" {
+            
+            if let detail = segue.destination as? AddEditImageVCBusiness {
+                
                 detail.selectedLocation = self.selectedLocation
                 detail.screenState = screenState
                 

@@ -14,15 +14,24 @@ protocol ReportDelegate {
 
 class ItemListDetailVC: CustomVC {
     @IBOutlet var imgView: UIImageView?
+    
+    @IBOutlet var bannerImgView: UIImageView?
  
-    @IBOutlet var nameLbl: UILabel?
+    @IBOutlet var barcodeLbl: UILabel?
     
     @IBOutlet weak var titleLbl: UILabel?
 
     @IBOutlet var productIdLbl: UILabel?
     
+    @IBOutlet var colourNameLbl: UILabel?
+    
     @IBOutlet var hexCodeLbl: UILabel?
+    
+    @IBOutlet var reportBtn: UIButton?
 
+    @IBOutlet weak var colourSwatch: SwatchView!
+    
+    
     var detailItem: ScannedProduct?
     
     @IBAction func flagBtnPressed() {
@@ -33,13 +42,20 @@ class ItemListDetailVC: CustomVC {
     override func viewDidAppear(_ animated: Bool) {
         
         titleLbl?.text = detailItem?.productType
-        nameLbl?.text = detailItem?.manufacturer
+        barcodeLbl?.text = detailItem?.manufacturer
         productIdLbl?.text = detailItem?.upcCode
         
+        if(screenState == .searching) {
+            reportBtn?.isHidden = false
+        } else {
+            reportBtn?.isHidden = true
+        }
+        
+        
         if let colour = detailItem?.colour {
-            hexCodeLbl?.text = ""
+            hexCodeLbl?.text = "HEX"
             hexCodeLbl?.backgroundColor = UIColor(hexString: colour.colourHexCode)
-            
+            colourSwatch.backgroundColor = UIColor(hexString: colour.colourHexCode)
             /*
             // set text for productCode and colourName label
             colourProductCodeLabel.text = colour.productCode
