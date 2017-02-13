@@ -39,18 +39,24 @@ class ItemListDetailVC: CustomVC {
         ReportHandler.sharedInstance.reportView.reportDelegate = self
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        
-        titleLbl?.text = detailItem?.productType
-        barcodeLbl?.text = detailItem?.manufacturer
-        productIdLbl?.text = detailItem?.upcCode
+    override func viewDidLoad() {
+        super.viewDidLoad()
         
         if(screenState == .searching) {
             reportBtn?.isHidden = false
         } else {
             reportBtn?.isHidden = true
         }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(false)
         
+        titleLbl?.text = detailItem?.productType
+        barcodeLbl?.text = detailItem?.manufacturer
+        productIdLbl?.text = detailItem?.upcCode
+        
+   
         
         if let colour = detailItem?.colour {
             hexCodeLbl?.text = "HEX"
