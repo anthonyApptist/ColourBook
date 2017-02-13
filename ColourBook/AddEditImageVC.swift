@@ -47,7 +47,7 @@ class AddEditImageVC: CustomVC, UIImagePickerControllerDelegate, UINavigationCon
         
         if screenState == .personal {
             self.textField?.text = self.signedInUser.name
-            if self.signedInUser.image == "" {
+            if self.signedInUser.image == "" || self.signedInUser.image == nil {
                 let image = UIImage(named: "darkgreen.jpg")
                 self.imgView.image = image
             }
@@ -58,7 +58,7 @@ class AddEditImageVC: CustomVC, UIImagePickerControllerDelegate, UINavigationCon
         }
         if screenState == .business || screenState == .homes {
             self.textField?.text = self.selectedLocation?.name
-            if self.selectedLocation!.image == "" {
+            if self.selectedLocation!.image == "" || self.selectedLocation!.image == nil {
                 let image = UIImage(named: "darkgreen.jpg")
                 self.imgView.image = image
             }

@@ -222,7 +222,7 @@ extension SearchAddressVC: AddressResult {
         self.locationResultView.addSubview(addressVC)
         
         // view button is active
-        self.viewButton?.isUserInteractionEnabled = false
+        self.viewButton?.isUserInteractionEnabled = true
         
         // set current location
         self.currentLocation = location
