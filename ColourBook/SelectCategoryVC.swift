@@ -167,6 +167,19 @@ class SelectCategoryVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
                 
                 self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
             }
+            if self.screenState == .homes {
+                // selected category
+                let category = self.transferCategory
+                
+                // save to selected address category
+                DataService.instance.saveProductIn(user: self.signedInUser.uid, screenState: self.screenState, location: self.locationName, barcode: self.barcode!, value: self.productProfile, category: category)
+                
+                // save to public address category
+                DataService.instance.saveProductFor(location: self.locationName, screenState: self.screenState, barcode: self.barcode!, value: self.productProfile, category: category)
+                
+                self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
+
+            }
         }
     }
     

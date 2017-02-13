@@ -24,11 +24,15 @@ extension DataService {
                 let paintProfile: Dictionary<String, Any> = ["manufacturer": paint.manufacturer, "productName": paint.productName, "category": paint.category, "code": paint.code, "image": paint.image, "product": "Paint", "colour": colourProfile, "timestamp": timestamp ?? ""]
                 
                 self.saveProductIn(user: user.uid, screenState: .homes, location: location, barcode: paint.upcCode, value: paintProfile, category: destination)
+                
+                self.saveProductFor(location: location, screenState: .homes, barcode: paint.upcCode, value: paintProfile, category: destination)
             }
             else {
                 let paintProfile: Dictionary<String, Any> = ["manufacturer": paint.manufacturer, "productName": paint.productName, "category": paint.category, "code": paint.code, "image": paint.image, "product": "Paint", "timestamp": timestamp ?? ""]
                 
                 self.saveProductIn(user: user.uid, screenState: .homes, location: location, barcode: paint.upcCode, value: paintProfile, category: destination)
+                
+                self.saveProductFor(location: location, screenState: .homes, barcode: paint.upcCode, value: paintProfile, category: destination)
             }
             
         }

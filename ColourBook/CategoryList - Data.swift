@@ -39,6 +39,13 @@ extension CategoriesListVC {
                         let image = itemProfile?["image"] as! String
                         let timestamp = itemProfile?["timestamp"] as! String
                         
+                        // check whether the product has been flagged more or equal to 5 times
+                        if product.hasChild("flagged") {
+                            if product.childSnapshot(forPath: "flagged").childrenCount >= 5 {
+                                continue
+                            }
+                        }
+                        
                         // check for colour
                         if product.hasChild("colour") {
                             let colourProfile = itemProfile?["colour"] as? NSDictionary
@@ -66,10 +73,9 @@ extension CategoriesListVC {
                             paintArray.append(paint)
                             itemsArray.append(product)
                         }
-                        
                     }
                     self.paintProducts.updateValue(paintArray, forKey: category)
-                    
+                
                     self.categoriesItems.updateValue(itemsArray, forKey: category)
                 }
                 else {
