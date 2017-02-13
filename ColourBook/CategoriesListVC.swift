@@ -79,7 +79,7 @@ class CategoriesListVC: CustomVC, UICollectionViewDelegate, UICollectionViewData
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let cell = collectionView.cellForItem(at: indexPath)
+        let cell = collectionView.cellForItem(at: indexPath) as? CategoryItemCell
         if self.screenState == .personal {
             performSegue(withIdentifier: "ConnectToPersonal", sender: cell)
         }
@@ -88,6 +88,15 @@ class CategoriesListVC: CustomVC, UICollectionViewDelegate, UICollectionViewData
         }
         if self.screenState == .business {
             performSegue(withIdentifier: "ConnectToBusiness", sender: cell)
+        }
+        if self.screenState == .searching {
+            let itemsList = storyboard?.instantiateViewController(withIdentifier: "ListEditVC") as! ItemListEditVC
+            let category = cell?.titleLbl.text
+            itemsList.products = self.categoriesItems[category!]!
+            itemsList.selectedLocation = self.selectedLocation
+            self.present(itemsList, animated: true, completion: { 
+                
+            })
         }
     }
     

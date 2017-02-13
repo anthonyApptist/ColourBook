@@ -42,6 +42,8 @@ class ItemListDetailVC: CustomVC {
 
     override func viewDidAppear(_ animated: Bool) {
         
+        titleLbl?.adjustsFontSizeToFitWidth = true
+        
         titleLbl?.text = detailItem?.productType
         barcodeLbl?.text = detailItem?.upcCode
         
@@ -51,7 +53,7 @@ class ItemListDetailVC: CustomVC {
             reportBtn?.isHidden = true
             reportBtn?.isUserInteractionEnabled = false
         }
-    
+
         if let colour = detailItem?.colour {
             hexCodeLbl?.backgroundColor = UIColor(hexString: colour.colourHexCode)
             colourSwatch.backgroundColor = UIColor(hexString: colour.colourHexCode)
@@ -83,7 +85,6 @@ class ItemListDetailVC: CustomVC {
         if detailItem?.manufacturer == "Sherwin Williams" {
             self.bannerImgView?.image = UIImage(named: "Sherwin Williams Photo")
         }
-       
         
     }
 

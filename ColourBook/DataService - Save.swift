@@ -69,38 +69,21 @@ extension DataService {
         }
     }
     
-    // MARK: Save Paint Can to Public Database
+    // MARK: Save Paint Can to Location (Public)
     
-    func saveProductFor(location: String?, screenState: ScreenState, barcode: String, value: Dictionary<String, Any>) {
-        getPublicLocationRef(screenState: screenState, location: location)
+    func saveProductFor(location: String?, screenState: ScreenState, barcode: String, value: Dictionary<String, Any>, category: String) {
+        getPublicLocationCategoriesRef(screenState: screenState, location: location, category: category)
         let publicRef = self.generalRef
         publicRef?.child(barcode).setValue(value)
-    }
-    
-    func getPublicLocationRef(screenState: ScreenState, location: String?) {
-        if screenState == .business {
-            self.generalRef = self.businessRef.child(location!).child(Barcodes)
-        }
-        else if screenState == .homes {
-            self.generalRef = self.addressRef.child(location!).child(Barcodes)
-        }
     }
     
     func getPublicLocationCategoriesRef(screenState: ScreenState, location: String?, category: String) {
         if screenState == .business {
-            self.generalRef = self.businessRef.child(location!).child("categories").child(category)
+            self.generalRef = self.businessRef.child("addresses").child(location!).child("categories").child(category).child(Barcodes)
         }
         else if screenState == .homes {
-            self.generalRef = self.addressRef.child(location!).child("categories").child(category)
+            self.generalRef = self.addressRef.child(location!).child("categories").child(category).child(Barcodes)
         }
-    }
-    
-    // MARK: Save Paint Can to Location (Public)
-    
-    func saveProductIn(location: String?, screenState: ScreenState, barcode: String, value: Dictionary<String, Any>, category: String) {
-        getPublicLocationCategoriesRef(screenState: screenState, location: location, category: category)
-        let publicRef = self.generalRef
-        publicRef?.child(barcode).setValue(value)
     }
     
     // MARK: Save Paint Can to User Database (Personal)

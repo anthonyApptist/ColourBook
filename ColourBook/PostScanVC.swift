@@ -67,6 +67,7 @@ class PostScanViewController: CustomVC {
         addToBusinessButton.backgroundColor = UIColor.black
         addToBusinessButton.titleLabel?.font = UIFont(name: "HelveticaNeue-Medium", size: addToBusinessButton.frame.height * 0.4)
         addToBusinessButton.addTarget(self, action: #selector(addToBusinessButtonFunction), for: .touchUpInside)
+        addToBusinessButton.isUserInteractionEnabled = false
         
         // add to home list button
         
@@ -193,7 +194,7 @@ class PostScanViewController: CustomVC {
         
     }
     
-    // homes
+    // MARK: - Homes
     
     func addToAddressButtonFunction() {
         let selectView = SelectAddressVC()

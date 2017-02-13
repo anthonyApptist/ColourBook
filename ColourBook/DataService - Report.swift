@@ -22,7 +22,7 @@ extension DataService {
             }
             
         }) { (error) in
-            userItemRef.child("flagged").setValue([user.uid:"flag"])
+            // error
         }
     }
 }
