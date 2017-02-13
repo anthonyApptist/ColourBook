@@ -184,7 +184,6 @@ class SearchAddressVC: CustomVC, UISearchBarDelegate {
 
             self.hideActivityIndicator()
             self.searchButton.isUserInteractionEnabled = true
-            self.viewButton?.isUserInteractionEnabled = true
         })
     }
 }
@@ -221,6 +220,9 @@ extension SearchAddressVC: AddressResult {
         
         // add result view
         self.locationResultView.addSubview(addressVC)
+        
+        // view button is active
+        self.viewButton?.isUserInteractionEnabled = false
         
         // set current location
         self.currentLocation = location
