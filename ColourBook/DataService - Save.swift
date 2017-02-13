@@ -118,10 +118,10 @@ extension DataService {
             self.generalRef = self.usersRef.child(user).child(PersonalDashboard).child(category).child(Barcodes)
         }
         else if screenState == .business {
-            self.generalRef = self.usersRef.child(user).child(BusinessDashboard).child(location!).child("categories").child(category)
+            self.generalRef = self.usersRef.child(user).child(BusinessDashboard).child(location!).child("categories").child(category).child(Barcodes)
         }
         else if screenState == .homes {
-            self.generalRef = self.usersRef.child(user).child(AddressDashboard).child(location!).child("categories").child(category)
+            self.generalRef = self.usersRef.child(user).child(AddressDashboard).child(location!).child("categories").child(category).child(Barcodes)
         }
         
     }

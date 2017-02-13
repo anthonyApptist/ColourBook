@@ -68,6 +68,17 @@ extension UIView {
         
     }
     
+    func animateToScale(scaleX: CGFloat, scaleY: CGFloat) {
+        
+        UIView.animate(withDuration: 0.5) {
+            self.transform = CGAffineTransform.identity.scaledBy(x: scaleX, y: scaleY)
+            
+        }
+        
+        
+    }
+    
+    
 
     func animateRadius(scale: CGFloat) {
         

@@ -14,15 +14,24 @@ protocol ReportDelegate {
 
 class ItemListDetailVC: CustomVC {
     @IBOutlet var imgView: UIImageView?
+    
+    @IBOutlet var bannerImgView: UIImageView?
  
-    @IBOutlet var nameLbl: UILabel?
+    @IBOutlet var barcodeLbl: UILabel?
     
     @IBOutlet weak var titleLbl: UILabel?
 
     @IBOutlet var productIdLbl: UILabel?
     
+    @IBOutlet var colourNameLbl: UILabel?
+    
     @IBOutlet var hexCodeLbl: UILabel?
+    
+    @IBOutlet var reportBtn: UIButton?
 
+    @IBOutlet weak var colourSwatch: SwatchView!
+    
+    
     var detailItem: ScannedProduct?
     
     @IBAction func flagBtnPressed() {
@@ -33,26 +42,27 @@ class ItemListDetailVC: CustomVC {
     override func viewDidAppear(_ animated: Bool) {
         
         titleLbl?.text = detailItem?.productType
-        nameLbl?.text = detailItem?.manufacturer
-        productIdLbl?.text = detailItem?.upcCode
+        barcodeLbl?.text = detailItem?.upcCode
+        
+        if(screenState == .searching) {
+            reportBtn?.isHidden = false
+        } else {
+            reportBtn?.isHidden = true
+            reportBtn?.isUserInteractionEnabled = false
+        }
         
         if let colour = detailItem?.colour {
-            hexCodeLbl?.text = ""
             hexCodeLbl?.backgroundColor = UIColor(hexString: colour.colourHexCode)
+            colourSwatch.backgroundColor = UIColor(hexString: colour.colourHexCode)
             
-            /*
-            // set text for productCode and colourName label
-            colourProductCodeLabel.text = colour.productCode
-            colourNameLabel.text = colour.colourName
-            */
+            productIdLbl?.text = colour.productCode
+            colourNameLbl?.text = colour.colourName
         }
         else {
             hexCodeLbl?.text = "No colour added"
-            /*
-            // set text for productCode and colourName label
-            colourProductCodeLabel.text = ""
-            colourNameLabel.text = ""
-            */
+        
+            productIdLbl?.text = ""
+            colourNameLbl?.text = ""
         }
         
         self.imgView?.contentMode = .scaleAspectFill
@@ -64,6 +74,16 @@ class ItemListDetailVC: CustomVC {
         else {
             let image = self.setImageFrom(urlString: (detailItem?.image)!)
             self.imgView?.image = image
+        }
+        
+        if detailItem?.manufacturer == "Benjamin Moore" {
+            self.bannerImgView?.image = UIImage(named: "BenjaminMoorePhoto.jpg")
+        }
+        if detailItem?.manufacturer == "Sherwin Williams" {
+            self.bannerImgView?.image = UIImage(named: "Sherwin Williams Photo")
+        }
+        else {
+            self.bannerImgView?.image = nil
         }
         
     }

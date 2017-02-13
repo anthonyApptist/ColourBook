@@ -18,6 +18,7 @@ class SelectAddressVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
     // model
     var locations = [Location]()
     var selectedLocation: String = ""
+    var selectedCategory: String = ""
     
     // view
     var tableView: UITableView!
@@ -136,7 +137,13 @@ class SelectAddressVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
             let selectCategory = SelectCategoryVC()
             selectCategory.screenState = self.screenState
             selectCategory.locationName = self.selectedLocation
-            selectCategory.transferProducts = self.transferProducts 
+            selectCategory.selectedCategory = self.selectedCategory
+            
+            selectCategory.transferProducts = self.transferProducts
+            
+            self.present(selectCategory, animated: true, completion: { 
+                
+            })
         }
     }
 
@@ -232,10 +239,10 @@ class SelectAddressVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
                     for child in snapshot.children.allObjects {
                         let addressProfile = child as! FIRDataSnapshot
                         let profile = addressProfile.value as? NSDictionary
+                        let locationName = addressProfile.key
                         let postalCode = profile?["postalCode"] as! String
                         let image = profile?["image"] as? String
                         let name = profile?["name"] as? String
-                        let locationName = addressProfile.key
                         let location = Location(locationName: locationName, postalCode: postalCode)
                         
                         location.image = image
@@ -256,6 +263,7 @@ class SelectAddressVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         }, withCancel: { (error) in
             print(error.localizedDescription)
             self.hideActivityIndicator()
+            self.displayNoAddresses()
         })
     }
     
@@ -264,7 +272,7 @@ class SelectAddressVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         if screenState == .business {
             DataService.instance.generalRef = DataService.instance.usersRef.child(user.uid).child(BusinessDashboard)
         }
-        else if screenState == .homes {
+        else if screenState == .homes || screenState == .transfer {
             DataService.instance.generalRef = DataService.instance.usersRef.child(user.uid).child(AddressDashboard)
         }
     }

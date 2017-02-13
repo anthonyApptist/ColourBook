@@ -36,6 +36,16 @@ class SettingsVC: CustomVC {
 
         }
         
+        if segue.identifier == "ShowInfoBusiness" {
+            
+            if let detail = segue.destination as? AddEditImageVCBusiness {
+                
+                detail.selectedLocation = selectedLocation
+                detail.screenState = screenState
+            }
+            
+        }
+        
     
         
     }

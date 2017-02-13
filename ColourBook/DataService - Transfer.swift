@@ -10,7 +10,9 @@ import Foundation
 
 extension DataService {
     
-    func transfer(products: Dictionary<Paint, String>, user: User, location: String?, category: String) {
+    // transfer to a home in address list
+    
+    func transfer(products: Dictionary<Paint, String>, user: User, location: String?, category: String, destination: String) {
         for paint in products.keys {
             self.removeScannedProductFor(user: user, screenState: .personal, barcode: paint.upcCode, location: nil, category: category)
             
@@ -21,12 +23,12 @@ extension DataService {
                 
                 let paintProfile: Dictionary<String, Any> = ["manufacturer": paint.manufacturer, "productName": paint.productName, "category": paint.category, "code": paint.code, "image": paint.image, "product": "Paint", "colour": colourProfile, "timestamp": timestamp ?? ""]
                 
-                self.saveProductFor(location: location, screenState: .homes, barcode: paint.upcCode, value: paintProfile)
+                self.saveProductIn(user: user.uid, screenState: .homes, location: location, barcode: paint.upcCode, value: paintProfile, category: destination)
             }
             else {
                 let paintProfile: Dictionary<String, Any> = ["manufacturer": paint.manufacturer, "productName": paint.productName, "category": paint.category, "code": paint.code, "image": paint.image, "product": "Paint", "timestamp": timestamp ?? ""]
                 
-                self.saveProductFor(location: location, screenState: .homes, barcode: paint.upcCode, value: paintProfile)
+                self.saveProductIn(user: user.uid, screenState: .homes, location: location, barcode: paint.upcCode, value: paintProfile, category: destination)
             }
             
         }

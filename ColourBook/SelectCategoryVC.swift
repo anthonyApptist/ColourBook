@@ -19,6 +19,7 @@ class SelectCategoryVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
     // model
     var categories = [String]()
     var selectedCategory: String = ""
+    var transferCategory: String = ""
 
     // view
     var tableView: UITableView!
@@ -76,7 +77,7 @@ class SelectCategoryVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         
         if screenState == .transfer {
             addButton?.setTitle("Transfer", for: .normal)
-            addButton?.addTarget(self, action: #selector(addToSelectedRow), for: .touchUpInside)
+            addButton?.addTarget(self, action: #selector(transferFunction), for: .touchUpInside)
         }
         else {
             addButton?.setTitle("Add", for: .normal)
@@ -120,7 +121,7 @@ class SelectCategoryVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         
         cell?.accessoryType = UITableViewCellAccessoryType.checkmark
         
-        self.selectedCategory = category!
+        self.transferCategory = category!
     }
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
@@ -128,20 +129,21 @@ class SelectCategoryVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         
         cell?.accessoryType = UITableViewCellAccessoryType.none
         
-        self.selectedCategory = ""
+        self.transferCategory = ""
     }
     
     func transferFunction() {
-        if self.selectedCategory == "" {
+        if self.transferCategory == "" {
             self.displayNoneSelected()
         }
         else {
-            if self.screenState == .personal {
+            if self.screenState == .transfer {
                 // selected category
-                let category = self.selectedCategory
+                let personalCategory = self.selectedCategory
+                let transferCategory = self.transferCategory
                 
-                // save to selected personal category
-                DataService.instance.transfer(products: self.transferProducts, user: self.signedInUser, location: self.locationName, category: category)
+                // save to selected address category
+                DataService.instance.transfer(products: self.transferProducts, user: self.signedInUser, location: self.locationName, category: personalCategory, destination: transferCategory)
                 
                 self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
             }
@@ -152,13 +154,13 @@ class SelectCategoryVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
     
     func addToSelectedRow() {
         
-        if self.selectedCategory == "" {
+        if self.transferCategory == "" {
             self.displayNoneSelected()
         }
         else {
             if self.screenState == .personal {
                 // selected category
-                let category = self.selectedCategory
+                let category = self.transferCategory
                 
                 // save to selected personal category
                 DataService.instance.saveProductIn(user: self.signedInUser.uid, screenState: self.screenState, location: self.locationName, barcode: self.barcode!, value: self.productProfile, category: category)

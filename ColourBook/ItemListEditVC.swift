@@ -43,6 +43,11 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
             
             selectAddress.transferProducts = self.selectedPaint
             selectAddress.screenState = .transfer
+            selectAddress.selectedCategory = self.selectedCategory!
+            
+            self.present(selectAddress, animated: true, completion: { 
+                
+            })
             /*
             performSegue(withIdentifier: "ConnectToTransferPage", sender: nil)
             */
@@ -68,8 +73,10 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         
         if screenState == ScreenState.personal {
             performSegue(withIdentifier: "ConnectToImageSettings", sender: self)
-        } else if screenState == ScreenState.business || screenState == ScreenState.homes {
-            performSegue(withIdentifier: "ConnectToMenuSettings", sender: self)
+        } else if screenState == ScreenState.business {
+            performSegue(withIdentifier: "ConnectToImageSettingsBusiness", sender: self)
+        } else if screenState == ScreenState.homes {
+            performSegue(withIdentifier: "ConnectToImageSettings", sender: self)
         }
         
     }
@@ -240,12 +247,21 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
                 detail.signedInUser = self.signedInUser
             }
         }
+        if segue.identifier == "ConnectToImageSettingsBusiness" {
+            
+            if let detail = segue.destination as? AddEditImageVCBusiness {
+                
+                detail.selectedLocation = self.selectedLocation
+                detail.screenState = screenState
+                
+            }
+        }
     }
     
     func displayNoItemSelected() {
         let alert = UIAlertController(title: "No item selected", message: "select at least one item", preferredStyle: .alert)
         let action = UIAlertAction(title: "OK", style: .cancel) { (action) in
-            self.dismiss(animated: true, completion: nil)
+            
         }
         alert.addAction(action)
         self.present(alert, animated: true, completion: nil)

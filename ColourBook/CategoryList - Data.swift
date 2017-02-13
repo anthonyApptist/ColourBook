@@ -26,13 +26,14 @@ extension CategoriesListVC {
                 
                 if categoryName.hasChildren() {
                     var itemsArray: [ScannedProduct] = []
+                    var paintArray: [Paint] = []
                     for items in categoryName.childSnapshot(forPath: Barcodes).children.allObjects {
                         let product = items as! FIRDataSnapshot
                         let itemProfile = product.value as? NSDictionary
                         
                         let productType = itemProfile?["productName"] as! String
                         let manufacturer = itemProfile?["manufacturer"] as! String
-                        let category = itemProfile?["category"] as! String
+                        let productCategory = itemProfile?["category"] as! String
                         let code = itemProfile?["code"] as! String
                         let upcCode = product.key
                         let image = itemProfile?["image"] as! String
@@ -51,11 +52,10 @@ extension CategoriesListVC {
                             
                             let product = ScannedProduct(productType: productType, manufacturer: manufacturer, upcCode: upcCode, image: image, colour: colour, timestamp: timestamp)
                             
-                            let paint = Paint(manufacturer: manufacturer, productName: productType, category: category, code: code, upcCode: upcCode, image: image)
+                            let paint = Paint(manufacturer: manufacturer, productName: productType, category: productCategory, code: code, upcCode: upcCode, image: image)
                             paint.colour = colour
                             
-                            self.paintProducts.append(paint)
-                            
+                            paintArray.append(paint)
                             itemsArray.append(product)
                         }
                         else {
@@ -63,16 +63,19 @@ extension CategoriesListVC {
                             
                             let paint = Paint(manufacturer: manufacturer, productName: productType, category: category, code: code, upcCode: upcCode, image: image)
                             
-                            self.paintProducts.append(paint)
-
+                            paintArray.append(paint)
                             itemsArray.append(product)
                         }
                         
                     }
+                    self.paintProducts.updateValue(paintArray, forKey: category)
+                    
                     self.categoriesItems.updateValue(itemsArray, forKey: category)
                 }
                 else {
                     self.categoriesItems.updateValue([], forKey: category)
+                    
+                    self.paintProducts.updateValue([], forKey: category)
                 }
             }
             
