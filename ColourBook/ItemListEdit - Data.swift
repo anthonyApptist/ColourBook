@@ -77,5 +77,8 @@ extension ItemListEditVC {
         if screenState == .homes {
             DataService.instance.generalRef = DataService.instance.usersRef.child(user.uid).child(AddressDashboard).child(location!)
         }
+        if screenState == .searching {
+            DataService.instance.generalRef = DataService.instance.addressRef.child(location!)
+        }
     }
 }

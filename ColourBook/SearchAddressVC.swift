@@ -27,7 +27,7 @@ class SearchAddressVC: CustomVC, UISearchBarDelegate {
 
     var addressDictionary: Dictionary<Location, String> = [:]
     var allAddresses = [Location]()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -81,11 +81,13 @@ class SearchAddressVC: CustomVC, UISearchBarDelegate {
         let viewButtonSize = CGSize(width: view.frame.width, height: view.frame.height * 0.10)
         viewButton?.frame = CGRect(origin: viewButtonOrigin, size: viewButtonSize)
         viewButton?.backgroundColor = UIColor.black
-        viewButton?.setTitle("View", for: .normal)
+        viewButton?.setTitle("View Categories", for: .normal)
         viewButton?.setTitleColor(UIColor.white, for: .normal)
-        viewButton?.titleLabel?.font = UIFont(name: "HelveticaNeue-Medium", size: viewButton!.frame.height * 0.5)
+        viewButton?.titleLabel?.font = UIFont(name: "HelveticaNeue-Medium", size: viewButton!.frame.height * 0.4)
+        viewButton?.titleLabel?.adjustsFontSizeToFitWidth = true
         viewButton?.titleLabel?.numberOfLines = 0
-        viewButton?.titleLabel?.alpha = 0.0
+        viewButton?.titleLabel?.alpha = 1.0
+        self.viewButton?.addTarget(self, action: #selector(self.viewButtonFunction), for: .touchUpInside)
         
         // search button
         searchButton = UIButton(type: .system)
@@ -95,7 +97,7 @@ class SearchAddressVC: CustomVC, UISearchBarDelegate {
         searchButton.backgroundColor = UIColor.black
         searchButton.setTitle("Search", for: .normal)
         searchButton.setTitleColor(UIColor.white, for: .normal)
-        searchButton.titleLabel?.font = UIFont(name: "HelveticaNeue-Medium", size: searchButton.frame.height * 0.5)
+        searchButton.titleLabel?.font = UIFont(name: "HelveticaNeue-Medium", size: searchButton.frame.height * 0.4)
         searchButton.titleLabel?.numberOfLines = 0
         searchButton.isUserInteractionEnabled = false
         searchButton.addTarget(self, action: #selector(searchButtonFunction), for: .touchUpInside)
@@ -111,13 +113,13 @@ class SearchAddressVC: CustomVC, UISearchBarDelegate {
     
     func viewButtonFunction() {
         
-        let barcodes = AddressItemVC()
+        let categories = storyboard?.instantiateViewController(withIdentifier: "CategoriesListVC") as! CategoriesListVC
         
-        barcodes.products = self.currentLocation?.items as! [ScannedProduct]
-            
-        barcodes.titleText = self.currentLocation?.locationName
+        categories.screenState = .searching
         
-        self.present(barcodes, animated: true, completion: {
+        categories.selectedLocation = self.currentLocation
+        
+        self.present(categories, animated: true, completion: {
             
         })
     }
@@ -142,60 +144,18 @@ class SearchAddressVC: CustomVC, UISearchBarDelegate {
                 
                 let locationProfile = child as! FIRDataSnapshot
                 let locationData = locationProfile.value as? NSDictionary
-                let image = locationData?["image"] as? String
-                let name = locationData?["name"] as? String
                 let postalCode = locationData?["postalCode"] as! String
+                let name = locationData?["name"] as? String
+                let image = locationData?["image"] as? String
                 let locationName = locationProfile.key
                 
                 let location = Location(locationName: locationName, postalCode: postalCode)
                 
-                // if address has barcodes
-                if locationProfile.hasChild(Barcodes) {
-                    
-                    location.items = []
-                    
-                    for barcode in snapshot.childSnapshot(forPath: "businesses").childSnapshot(forPath: location.locationName).childSnapshot(forPath: Barcodes).children.allObjects {
-                        let paintProfile = barcode as! FIRDataSnapshot
-                        
-                        let profile = paintProfile.value as? NSDictionary
-                        let productType = profile?["productName"] as! String
-                        let manufacturer = profile?["manufacturer"] as! String
-                        let upcCode = paintProfile.key
-                        let image = profile?["image"] as! String
-                        let timestamp = profile?["timestamp"] as! String
-                        
-                        // check for colour
-                        if paintProfile.hasChild("colour") {
-                            let colourProfile = profile?["colour"] as? NSDictionary
-                            let colourName = colourProfile?["colourName"] as! String
-                            let hexcode = colourProfile?["hexcode"] as! String
-                            let manufacturerID = colourProfile?["manufacturerID"] as! String
-                            let manufacturer = colourProfile?["manufacturer"] as! String
-                            let productCode = colourProfile?["productCode"] as! String
-                            
-                            let colour = Colour(manufacturerID: manufacturerID, productCode: productCode, colourName: colourName, colourHexCode: hexcode, manufacturer: manufacturer)
-                            
-                            let product = ScannedProduct(productType: productType, manufacturer: manufacturer, upcCode: upcCode, image: image, colour: colour, timestamp: timestamp)
-                            
-                            location.items?.append(product)
-                            self.allAddresses.append(location)
-                            self.addressDictionary.updateValue("Business", forKey: location)
-                        }
-                        else {
-                            let product = ScannedProduct(productType: productType, manufacturer: manufacturer, upcCode: upcCode, image: image, colour: nil, timestamp: timestamp)
-                            
-                            location.items?.append(product)
-                            self.allAddresses.append(location)
-                            self.addressDictionary.updateValue("Business", forKey: location)
-                        }
-                    }
-                }
-                    // if no items attached to address
-                else {
-                    location.items = []
-                    self.allAddresses.append(location)
-                    self.addressDictionary.updateValue("Business", forKey: location)
-                }
+                location.name = name
+                location.image = image
+                
+                self.addressDictionary.updateValue("Address", forKey: location)
+                self.allAddresses.append(location)
             }
             
             // addresses database check
@@ -211,57 +171,12 @@ class SearchAddressVC: CustomVC, UISearchBarDelegate {
                 
                 let location = Location(locationName: locationName, postalCode: postalCode)
                 
-                // if address has barcodes
-                if locationProfile.hasChild(Barcodes) {
-                    
-                    location.items = []
-                    
-                    for barcode in snapshot.childSnapshot(forPath: "addresses").childSnapshot(forPath: location.locationName).childSnapshot(forPath: Barcodes).children.allObjects {
-                        let paintProfile = barcode as! FIRDataSnapshot
-                        
-                        let profile = paintProfile.value as? NSDictionary
-                        let productType = profile?["productName"] as! String
-                        let manufacturer = profile?["manufacturer"] as! String
-                        let upcCode = paintProfile.key
-                        let image = profile?["image"] as! String
-                        let timestamp = profile?["timestamp"] as! String
-                        
-                        // check for colour
-                        if paintProfile.hasChild("colour") {
-                            let colourProfile = profile?["colour"] as? NSDictionary
-                            let colourName = colourProfile?["colourName"] as! String
-                            let hexcode = colourProfile?["hexcode"] as! String
-                            let manufacturerID = colourProfile?["manufacturerID"] as! String
-                            let manufacturer = colourProfile?["manufacturer"] as! String
-                            let productCode = colourProfile?["productCode"] as! String
-                            
-                            let colour = Colour(manufacturerID: manufacturerID, productCode: productCode, colourName: colourName, colourHexCode: hexcode, manufacturer: manufacturer)
-                            
-                            let product = ScannedProduct(productType: productType, manufacturer: manufacturer, upcCode: upcCode, image: image, colour: colour, timestamp: timestamp)
-                            
-                            location.items?.append(product)
-                            self.allAddresses.append(location)
-                            self.addressDictionary.updateValue("Address", forKey: location)
-                        }
-                        else {
-                            let product = ScannedProduct(productType: productType, manufacturer: manufacturer, upcCode: upcCode, image: image, colour: nil, timestamp: timestamp)
-                            
-                            location.items?.append(product)
-                            self.allAddresses.append(location)
-                            self.addressDictionary.updateValue("Address", forKey: location)
-                        }
-                    }
-                }
-                // if no items attached to address
-                else {
-                    location.items = []
-                    self.allAddresses.append(location)
-                    self.addressDictionary.updateValue("Address", forKey: location)
-                }
+                location.name = name
+                location.image = image
+
+                self.addressDictionary.updateValue("Address", forKey: location)
+                self.allAddresses.append(location)
             }
-            UIView.animate(withDuration: 1.0, animations: { 
-                self.resultTitleLabel.textColor = UIColor.white
-            })
             
             let resultsUpdater = self.addressSC?.searchResultsUpdater as! SearchResultsTableVC
             resultsUpdater.allAddresses = self.allAddresses
@@ -276,8 +191,7 @@ extension SearchAddressVC: AddressResult {
     func setResultsViewFor(location: Location) {
         
         // check location
-        let index = self.addressDictionary.index(forKey: location)
-        let resultTitle = self.addressDictionary[index!].value
+        let resultTitle = self.addressDictionary[location]
         
         // set address or business result
         self.resultTitleLabel.text = resultTitle
@@ -305,14 +219,6 @@ extension SearchAddressVC: AddressResult {
         
         // add result view
         self.locationResultView.addSubview(addressVC)
-        
-        // view button if items attached
-        if (location.items?.count)! > 0 {
-            UIView.animate(withDuration: 1.0, animations: {
-                self.viewButton?.titleLabel?.alpha = 1.0
-                self.viewButton?.addTarget(self, action: #selector(self.viewButtonFunction), for: .touchUpInside)
-            })
-        }
         
         // set current location
         self.currentLocation = location

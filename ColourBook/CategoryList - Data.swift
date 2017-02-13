@@ -102,8 +102,11 @@ extension CategoriesListVC {
         if screenState == .business {
             DataService.instance.generalRef = DataService.instance.usersRef.child(user.uid).child(BusinessDashboard).child("addresses").child((location?.locationName)!).child("categories")
         }
-        else if screenState == .homes {
+        if screenState == .homes {
             DataService.instance.generalRef = DataService.instance.usersRef.child(user.uid).child(AddressDashboard).child((location?.locationName)!).child("categories")
+        }
+        if screenState == .searching {
+            DataService.instance.generalRef = DataService.instance.addressRef.child((location?.locationName)!).child("categories")
         }
         
     }
