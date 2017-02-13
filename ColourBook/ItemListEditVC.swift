@@ -137,8 +137,14 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         
         super.viewWillAppear(false)
         
-        self.getInfo(user: self.signedInUser, screenState: self.screenState, location: self.selectedLocation?.locationName)
-        self.showActivityIndicator()
+        if self.screenState == .searching {
+            self.titleLbl?.text = self.selectedLocation?.locationName
+            self.subTitleLbl?.text = self.selectedCategory
+        }
+        else {
+            self.getInfo(user: self.signedInUser, screenState: self.screenState, location: self.selectedLocation?.locationName)
+            self.showActivityIndicator()
+        }
     }
 
     
