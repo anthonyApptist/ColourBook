@@ -366,20 +366,10 @@
 		66242AD21DEF7524000B651F /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				661A47F91DF6A9B400B56028 /* AddEditAddressVC.swift */,
-				661A47F51DF6A95700B56028 /* AddEditImageVC.swift */,
 				662D48DA1E4E27B400B715C9 /* AddEditImageVCBusiness.swift */,
 				92FD3EAE1DE52D26009341C9 /* BarcodeScanner.swift */,
-				6692C3F71E4076FF00A18D07 /* CategoriesListVC.swift */,
-				66F942C51DF92CA500C01DAF /* CustomVC.swift */,
 				925106DE1E313B5D00C987B3 /* Database Config */,
 				92C65CCF1E4592F8006F1905 /* GoogleMap.swift */,
-				66242AD41DF0EDAE000B651F /* ItemListAddVC.swift */,
-				661A47F71DF6A97700B56028 /* ItemListDetailVC.swift */,
-				92F8D92B1E41A17600E26601 /* ItemListEdit-Category.swift */,
-				66F942C31DF9241E00C01DAF /* ItemListEditVC.swift */,
-				663646881DE3E93A00E6D719 /* LogInViewController.swift */,
-				66C7713F1DE8331700E4810A /* MyDashboardVC.swift */,
 				9277E0B41DF75022001E0B9B /* PostScanVC.swift */,
 				92BDF7BA1E24130E00BE9673 /* ProductInfoView.swift */,
 				920B52731E0E03A8005D5B60 /* SearchControllers */,
