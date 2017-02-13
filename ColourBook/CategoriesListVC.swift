@@ -94,6 +94,7 @@ class CategoriesListVC: CustomVC, UICollectionViewDelegate, UICollectionViewData
             let category = cell?.titleLbl.text
             itemsList.products = self.categoriesItems[category!]!
             itemsList.selectedLocation = self.selectedLocation
+            itemsList.screenState = self.screenState
             self.present(itemsList, animated: true, completion: { 
                 
             })

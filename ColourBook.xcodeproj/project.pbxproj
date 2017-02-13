@@ -59,6 +59,7 @@
 		663646AB1DE4921F00E6D719 /* purpleCBlogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 663646991DE4921F00E6D719 /* purpleCBlogo.png */; };
 		663646AC1DE4921F00E6D719 /* purpleCBlogo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6636469A1DE4921F00E6D719 /* purpleCBlogo@2x.png */; };
 		663646AD1DE4921F00E6D719 /* purpleCBlogo@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6636469B1DE4921F00E6D719 /* purpleCBlogo@3x.png */; };
+		665E331C1E52744900299C06 /* logoBlack.png in Resources */ = {isa = PBXBuildFile; fileRef = 665E331B1E52744900299C06 /* logoBlack.png */; };
 		665E636E1DE6B55C002BA868 /* IconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665E636D1DE6B55C002BA868 /* IconView.swift */; };
 		665E63701DE6B573002BA868 /* UIColours.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665E636F1DE6B573002BA868 /* UIColours.swift */; };
 		665E63741DE82833002BA868 /* iconFacebook.png in Resources */ = {isa = PBXBuildFile; fileRef = 665E63711DE82833002BA868 /* iconFacebook.png */; };
@@ -211,6 +212,7 @@
 		663646991DE4921F00E6D719 /* purpleCBlogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = purpleCBlogo.png; sourceTree = "<group>"; };
 		6636469A1DE4921F00E6D719 /* purpleCBlogo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "purpleCBlogo@2x.png"; sourceTree = "<group>"; };
 		6636469B1DE4921F00E6D719 /* purpleCBlogo@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "purpleCBlogo@3x.png"; sourceTree = "<group>"; };
+		665E331B1E52744900299C06 /* logoBlack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logoBlack.png; sourceTree = "<group>"; };
 		665E636D1DE6B55C002BA868 /* IconView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IconView.swift; sourceTree = "<group>"; };
 		665E636F1DE6B573002BA868 /* UIColours.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColours.swift; sourceTree = "<group>"; };
 		665E63711DE82833002BA868 /* iconFacebook.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iconFacebook.png; sourceTree = "<group>"; };
@@ -366,20 +368,10 @@
 		66242AD21DEF7524000B651F /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				661A47F91DF6A9B400B56028 /* AddEditAddressVC.swift */,
-				661A47F51DF6A95700B56028 /* AddEditImageVC.swift */,
 				662D48DA1E4E27B400B715C9 /* AddEditImageVCBusiness.swift */,
 				92FD3EAE1DE52D26009341C9 /* BarcodeScanner.swift */,
-				6692C3F71E4076FF00A18D07 /* CategoriesListVC.swift */,
-				66F942C51DF92CA500C01DAF /* CustomVC.swift */,
 				925106DE1E313B5D00C987B3 /* Database Config */,
 				92C65CCF1E4592F8006F1905 /* GoogleMap.swift */,
-				66242AD41DF0EDAE000B651F /* ItemListAddVC.swift */,
-				661A47F71DF6A97700B56028 /* ItemListDetailVC.swift */,
-				92F8D92B1E41A17600E26601 /* ItemListEdit-Category.swift */,
-				66F942C31DF9241E00C01DAF /* ItemListEditVC.swift */,
-				663646881DE3E93A00E6D719 /* LogInViewController.swift */,
-				66C7713F1DE8331700E4810A /* MyDashboardVC.swift */,
 				9277E0B41DF75022001E0B9B /* PostScanVC.swift */,
 				92BDF7BA1E24130E00BE9673 /* ProductInfoView.swift */,
 				920B52731E0E03A8005D5B60 /* SearchControllers */,
@@ -468,6 +460,7 @@
 		6636466B1DE16A4300E6D719 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				665E331B1E52744900299C06 /* logoBlack.png */,
 				6609E2BB1E48061500F547A9 /* arrow.png */,
 				6609E2BC1E48061500F547A9 /* arrow@2x.png */,
 				6609E2BD1E48061500F547A9 /* arrow@3x.png */,
@@ -701,6 +694,7 @@
 				663646A91DE4921F00E6D719 /* pinkCBLogo@2x.png in Resources */,
 				66C771501DE83EB300E4810A /* personalIcon.png in Resources */,
 				663646A51DE4921F00E6D719 /* greenCBlogo.png in Resources */,
+				665E331C1E52744900299C06 /* logoBlack.png in Resources */,
 				663646A11DE4921F00E6D719 /* goldCBlogo@3x.png in Resources */,
 				663646A21DE4921F00E6D719 /* googleImg.png in Resources */,
 				66C771561DE83EEF00E4810A /* settingsIcon.png in Resources */,
