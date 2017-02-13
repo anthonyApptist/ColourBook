@@ -88,6 +88,7 @@ class SearchAddressVC: CustomVC, UISearchBarDelegate {
         viewButton?.titleLabel?.numberOfLines = 0
         viewButton?.titleLabel?.alpha = 1.0
         self.viewButton?.addTarget(self, action: #selector(self.viewButtonFunction), for: .touchUpInside)
+        self.viewButton?.isUserInteractionEnabled = false
         
         // search button
         searchButton = UIButton(type: .system)
@@ -183,6 +184,7 @@ class SearchAddressVC: CustomVC, UISearchBarDelegate {
 
             self.hideActivityIndicator()
             self.searchButton.isUserInteractionEnabled = true
+            self.viewButton?.isUserInteractionEnabled = true
         })
     }
 }
