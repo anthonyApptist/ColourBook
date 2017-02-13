@@ -259,6 +259,9 @@ class AddEditImageVCBusiness: CustomVC, UIImagePickerControllerDelegate, UINavig
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         nameTextField?.resignFirstResponder()
+        siteTextField.resignFirstResponder()
+        phoneTextField.resignFirstResponder()
+        postalCodeTextField.resignFirstResponder()
     }
     
 
