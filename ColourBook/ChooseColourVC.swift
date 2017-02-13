@@ -112,7 +112,6 @@ class ChooseColourVC: CustomVC, UISearchBarDelegate {
     // Search
     
     func searchColourButtonFunction() {
-        
         present(self.colourSC!, animated: true) {
             
         }
@@ -133,7 +132,6 @@ class ChooseColourVC: CustomVC, UISearchBarDelegate {
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         
     }
-    
 }
 
 extension ChooseColourVC: ColourResult {

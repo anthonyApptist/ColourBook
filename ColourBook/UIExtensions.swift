@@ -70,10 +70,11 @@ extension UIView {
     
     func animateToScale(scaleX: CGFloat, scaleY: CGFloat) {
         
-        UIView.animate(withDuration: 0.5) {
+        UIView.animate(withDuration: 1.5, delay: 0.3, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.3, options: .curveEaseOut, animations: {
             self.transform = CGAffineTransform.identity.scaledBy(x: scaleX, y: scaleY)
-            
-        }
+        }, completion: nil)
+        
+        
         
         
     }

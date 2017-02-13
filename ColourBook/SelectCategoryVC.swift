@@ -16,17 +16,20 @@ class SelectCategoryVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
     var barcode: String?
     var productProfile: [String:Any] = [:]
     
+    // model
     var categories = [String]()
+    var selectedCategory: String = ""
+    var transferCategory: String = ""
 
+    // view
     var tableView: UITableView!
-    
     var name: UILabel!
-    
     var addButton: UIButton?
     
-    var selectedItems: [Int:String] = [:]
+    // if business or homes
+    var locationName: String?
     
-    var location: Location?
+    var transferProducts = [Paint:String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,12 +43,10 @@ class SelectCategoryVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         // title label
         
         name = UILabel(frame: CGRect(x: 0, y: 20, width: view.frame.width, height: 50))
-        
         name.textColor = UIColor.black
-        
         name.textAlignment = .center
-        
         name.backgroundColor = UIColor.white
+        
         
         if screenState == .business {
             name.text = "My businesses"
@@ -54,12 +55,15 @@ class SelectCategoryVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         if screenState == .homes {
             name.text = "My addresses"
         }
-        
+        if screenState == .transfer {
+            name.text = "Transfer to Category"
+        }
         
         // table view
         tableView = UITableView(frame: CGRect(x: 0, y: 70, width: view.frame.width, height: view.frame.maxY - (view.frame.height * 0.1) - 70))
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "item")
         tableView.alwaysBounceVertical = false
+        tableView.allowsMultipleSelection = false
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -67,17 +71,25 @@ class SelectCategoryVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         
         // add button
         addButton = UIButton(frame: CGRect(x: view.center.x - ((view.frame.width)/2), y: view.frame.maxY - (view.frame.height * 0.1), width: view.frame.width, height: view.frame.height * 0.10))
-        addButton?.setTitle("Add", for: .normal)
         addButton?.setTitleColor(UIColor.white, for: .normal)
+        addButton?.titleLabel?.font = UIFont(name: "HelveticaNeue-Medium", size: (addButton?.frame.height)! * 0.4)
         addButton?.backgroundColor = UIColor.black
-        addButton?.addTarget(self, action: #selector(addToSelectedRow), for: .touchUpInside)
+        
+        if screenState == .transfer {
+            addButton?.setTitle("Transfer", for: .normal)
+            addButton?.addTarget(self, action: #selector(transferFunction), for: .touchUpInside)
+        }
+        else {
+            addButton?.setTitle("Add", for: .normal)
+            addButton?.addTarget(self, action: #selector(addToSelectedRow), for: .touchUpInside)
+        }
         
         // add to view
         view.addSubview(name)
         view.addSubview(tableView)
         view.addSubview(addButton!)
 
-        self.getCategoriesFor(screenState: self.screenState, user: self.signedInUser, location: self.location)
+        self.getCategoriesFor(screenState: self.screenState, user: self.signedInUser, location: self.locationName)
             
     }
     
@@ -99,26 +111,42 @@ class SelectCategoryVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         let cell = UITableViewCell(style: .default, reuseIdentifier: "item")
         cell.textLabel?.text = self.categories[indexPath.row]
         return cell
-        
     }
     
     //MARK: tableview delegate
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
         let cell = tableView.cellForRow(at: indexPath)
-        if cell?.accessoryType == UITableViewCellAccessoryType.checkmark {
-            tableView.deselectRow(at: indexPath, animated: true)
-            cell?.accessoryType = .none
-            self.selectedItems.removeValue(forKey: indexPath.row)
-            print(self.selectedItems)
+        let category = cell?.textLabel?.text!
+        
+        cell?.accessoryType = UITableViewCellAccessoryType.checkmark
+        
+        self.transferCategory = category!
+    }
+    
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath)
+        
+        cell?.accessoryType = UITableViewCellAccessoryType.none
+        
+        self.transferCategory = ""
+    }
+    
+    func transferFunction() {
+        if self.transferCategory == "" {
+            self.displayNoneSelected()
         }
         else {
-            tableView.selectRow(at: indexPath, animated: true, scrollPosition: .none)
-            let selectedItems = self.categories[indexPath.row]
-            cell?.accessoryType = .checkmark
-            self.selectedItems.updateValue(selectedItems, forKey: indexPath.row)
-            print(self.selectedItems)
+            if self.screenState == .transfer {
+                // selected category
+                let personalCategory = self.selectedCategory
+                let transferCategory = self.transferCategory
+                
+                // save to selected address category
+                DataService.instance.transfer(products: self.transferProducts, user: self.signedInUser, location: self.locationName, category: personalCategory, destination: transferCategory)
+                
+                self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
+            }
         }
     }
     
@@ -126,23 +154,30 @@ class SelectCategoryVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
     
     func addToSelectedRow() {
         
-        // add to each business
-        
-        for value in self.selectedItems.values {
-            // business location
-            let category = value
-            
-            // save to the address in selected list
-            DataService.instance.saveProductIn(user: self.signedInUser.uid, screenState: self.screenState, location: self.location?.locationName, barcode: self.barcode!, value: self.productProfile, category: category)
-            
-            // save barcodes to public business entry
-            DataService.instance.saveProductIn(location: self.location?.locationName, screenState: self.screenState, barcode: self.barcode!, value: self.productProfile, category: category)
-            
-            self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
+        if self.transferCategory == "" {
+            self.displayNoneSelected()
+        }
+        else {
+            if self.screenState == .personal {
+                // selected category
+                let category = self.transferCategory
+                
+                // save to selected personal category
+                DataService.instance.saveProductIn(user: self.signedInUser.uid, screenState: self.screenState, location: self.locationName, barcode: self.barcode!, value: self.productProfile, category: category)
+                
+                self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
+            }
         }
     }
     
-    func getCategoriesFor(screenState: ScreenState, user: User, location: Location?) {
+    func displayNoneSelected() {
+        let alert = UIAlertController(title: "No category selected", message: "select a category", preferredStyle: .alert)
+        let action = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+        alert.addAction(action)
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    func getCategoriesFor(screenState: ScreenState, user: User, location: String?) {
         
         getCategoriesFrom(user: user, screenState: screenState, location: location)
         
@@ -155,21 +190,22 @@ class SelectCategoryVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
                 
                 self.categories.append(category)
             }
+            self.tableView.reloadData()
         }, withCancel: { (error) in
             print(error.localizedDescription)
             
         })
     }
     
-    func getCategoriesFrom(user: User, screenState: ScreenState, location: Location?) {
+    func getCategoriesFrom(user: User, screenState: ScreenState, location: String?) {
         if screenState == .personal {
             DataService.instance.generalRef = DataService.instance.usersRef.child(user.uid).child(PersonalDashboard)
         }
         if screenState == .business {
-            DataService.instance.generalRef = DataService.instance.usersRef.child(user.uid).child(BusinessDashboard).child((location?.locationName)!).child("categories")
+            DataService.instance.generalRef = DataService.instance.usersRef.child(user.uid).child(BusinessDashboard).child("addresses").child(locationName!).child("categories")
         }
-        else if screenState == .homes {
-            DataService.instance.generalRef = DataService.instance.usersRef.child(user.uid).child(AddressDashboard).child((location?.locationName)!).child("categories")
+        else if screenState == .homes || screenState == .transfer {
+            DataService.instance.generalRef = DataService.instance.usersRef.child(user.uid).child(AddressDashboard).child(locationName!).child("categories")
         }
         
     }

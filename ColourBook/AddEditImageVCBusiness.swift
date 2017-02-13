@@ -246,7 +246,7 @@ class AddEditImageVCBusiness: CustomVC, UIImagePickerControllerDelegate, UINavig
     
     func setPersonalInfo() {
         
-        if self.signedInUser.name.isEmpty {
+        if (self.signedInUser.name?.isEmpty)! {
             self.nameTextField?.text = ""
         }
         else {

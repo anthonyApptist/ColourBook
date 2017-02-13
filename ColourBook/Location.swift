@@ -26,12 +26,6 @@ class Location: NSObject, NSCoding {
         case commercial = "commercial"
     }
     
-    enum Use: String {
-        case business = "Business"
-        case home = "Home"
-    }
-    
-    
     // MARK: - Properties
     
     var locationName: String
@@ -42,12 +36,9 @@ class Location: NSObject, NSCoding {
     
     // MARK: - Initializers
     
-    init(locationName: String, postalCode: String, image: String?, name: String?) {
+    init(locationName: String, postalCode: String) {
         self.locationName = locationName
         self.postalCode = postalCode
-        self.image = image
-        self.name = name
-        self.items = []
     }
     
     // MARK: - NSCoding

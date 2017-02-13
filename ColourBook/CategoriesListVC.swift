@@ -19,20 +19,20 @@ class CategoriesListVC: CustomVC, UICollectionViewDelegate, UICollectionViewData
     
     @IBOutlet weak var bottomView: UIView!
     
-    var selectedLocation: Location?
+    // data
+    var selectedLocation: Location? = nil
+    var categoriesItems = [String:[ScannedProduct]]()
+    var categories = [String]()
     
+    var paintProducts = [String:[Paint]]()
+
     let app = UIApplication.shared.delegate as! AppDelegate
-    
-    
-    let categories = ["Kitchen", "Livingroom", "Dining Room", "Bathroom", "Bedroom", "Garage", "Exterior", "Trim", "Hallway", "Interior re-paint", "Exterior re-paint", "Commercial", "Homebuilders", "Renovations"]
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         collectionView.delegate = self
         collectionView.dataSource = self
-        
     }
     
     @IBAction func scanBtnPressed(_ sender: AnyObject) {
@@ -46,6 +46,11 @@ class CategoriesListVC: CustomVC, UICollectionViewDelegate, UICollectionViewData
     override func viewDidAppear(_ animated: Bool) {
         super.viewWillAppear(false)
         
+        categories = []
+        paintProducts = [:]
+        self.getCategoriesFor(screenState: self.screenState, user: self.signedInUser, location: selectedLocation)
+        self.showActivityIndicator()
+
      //   app.window?.rootViewController = self
 
     }
@@ -61,53 +66,86 @@ class CategoriesListVC: CustomVC, UICollectionViewDelegate, UICollectionViewData
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-      return categories.count
+      return self.categories.count
     }
     
     
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CategoryItemCell", for: indexPath) as! CategoryItemCell
-        
-            cell.titleLbl.text = categories[indexPath.row]
-        
-        
+        let categoryName: String = self.categories[indexPath.row]
+        cell.titleLbl.text = categoryName
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath)
         if self.screenState == .personal {
-            performSegue(withIdentifier: "ConnectToPersonal", sender: nil)
+            performSegue(withIdentifier: "ConnectToPersonal", sender: cell)
         }
         if self.screenState == .homes {
-            performSegue(withIdentifier: "ConnectToAddresses", sender: nil)
+            performSegue(withIdentifier: "ConnectToAddresses", sender: cell)
         }
         if self.screenState == .business {
-            performSegue(withIdentifier: "ConnectToBusiness", sender: nil)
+            performSegue(withIdentifier: "ConnectToBusiness", sender: cell)
         }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        super.prepare(for: segue, sender: nil)
+//        super.prepare(for: segue, sender: nil)
         
-        if segue.identifier == "ConnectToAddresses" {
-            
-            if let destVC = segue.destination as? ItemListEditVC {
-                destVC.screenState = .homes
-                destVC.selectedLocation = self.selectedLocation
+        if self.screenState == .personal {
+            if let categoryItemCell = sender as? CategoryItemCell {
+                if segue.destination is ItemListEditVC {
+                    let category = categoryItemCell.titleLbl.text!
+                    let editList = segue.destination as! ItemListEditVC
+                    let items = self.categoriesItems[category]
+                    editList.products = items!
+                    editList.selectedCategory = category
+                    editList.screenState = self.screenState
+                    editList.paintProducts = self.paintProducts[category]!
+                }
             }
-            
         }
         
-        if segue.identifier == "ConnectToBusiness" {
-            
-            if let destVC = segue.destination as? ItemListEditVC {
-                destVC.screenState = .business
-                destVC.selectedLocation = self.selectedLocation
+        if self.screenState == .business {
+            if let categoryItemCell = sender as? CategoryItemCell {
+                if segue.destination is ItemListEditVC {
+                    let category = categoryItemCell.titleLbl.text!
+                    let editList = segue.destination as! ItemListEditVC
+                    let items = self.categoriesItems[category]
+                    editList.products = items!
+                    editList.selectedCategory = category
+                    editList.screenState = self.screenState
+                    editList.selectedLocation = self.selectedLocation
+                    editList.paintProducts = self.paintProducts[category]!
+                }
             }
-            
+        }
+        if self.screenState == .homes {
+            if let categoryItemCell = sender as? CategoryItemCell {
+                if segue.destination is ItemListEditVC {
+                    let category = categoryItemCell.titleLbl.text!
+                    let editList = segue.destination as! ItemListEditVC
+                    let items = self.categoriesItems[category]
+                    editList.products = items!
+                    editList.selectedCategory = category
+                    editList.screenState = self.screenState
+                    editList.selectedLocation = self.selectedLocation
+                    editList.paintProducts = self.paintProducts[category]!
+                }
+            }
         }
     }
-    
+
+    func displayErrorMessage(error: Error) {
+        let alert = UIAlertController(title: "Error", message: "\(error.localizedDescription)", preferredStyle: .alert)
+        let action = UIAlertAction(title: "OK", style: .cancel) { (action) in
+            self.dismiss(animated: true, completion: nil)
+        }
+        alert.addAction(action)
+        self.present(alert, animated: true, completion: nil)
+    }
+
     
 }

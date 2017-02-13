@@ -55,11 +55,9 @@ class ItemListAddVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         
         super.viewDidAppear(false)
         
-        self.showActivityIndicator()
-        
         locations = []
-        
         self.getLocationLists(screenState: self.screenState, user: self.signedInUser)
+        self.showActivityIndicator()
         
         if self.screenState == .business {
             self.subTitleLbl?.text = "my businesses"
@@ -83,16 +81,7 @@ class ItemListAddVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "ItemCell", for: indexPath) as! ItemCell
         
-        print(cell)
-        
-        print(locations[indexPath.row].locationName)
-        
-        if locations[indexPath.row].locationName.isEmpty {
-            cell.titleLbl?.text = locations[indexPath.row].postalCode
-        }
-        else {
-            cell.titleLbl?.text = locations[indexPath.row].locationName
-        }
+        cell.titleLbl?.text = locations[indexPath.row].locationName
         
         return cell
     }
@@ -152,50 +141,6 @@ class ItemListAddVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
     }
         
     }
-    
-    func getLocationLists(screenState: ScreenState, user: User) {
-        
-        getLocationsRefFor(user: user, screenState: screenState)
-        let locationsRef = DataService.instance.generalRef
-        
-        locationsRef?.observeSingleEvent(of: .value, with: { (snapshot) in
-            
-            for child in snapshot.children.allObjects {
-                let addressProfile = child as! FIRDataSnapshot
-                let profile = addressProfile.value as? NSDictionary
-                
-                let postalCode = profile?["postalCode"] as! String
-                let locationName = addressProfile.key
-                
-                let image = profile?["image"] as? String
-                let name = profile?["name"] as? String
-                
-                let location = Location(locationName: locationName, postalCode: postalCode, image: image, name: name)
-                
-                self.locations.append(location)
-            }
-            self.tableView?.reloadData()
-            self.hideActivityIndicator()
-            
-        }, withCancel: { (error) in
-            print(error.localizedDescription)
-            self.hideActivityIndicator()
-        })
-        
-    }
-    
-    func getLocationsRefFor(user: User, screenState: ScreenState) {
-        
-        if screenState == .business {
-            DataService.instance.generalRef = DataService.instance.usersRef.child(user.uid).child(BusinessDashboard)
-        }
-        else if screenState == .homes {
-            DataService.instance.generalRef = DataService.instance.usersRef.child(user.uid).child(AddressDashboard)
-        }
-        
-    }
-    }
-    
- 
-    
+
+}
 

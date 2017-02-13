@@ -10,6 +10,11 @@ import UIKit
 
 class SwatchView: UIView {
 
+    var productIdLbl: UILabel?
+    
+    var colourNameLbl: UILabel?
+    
+    var hexCodeLbl: UILabel?
     
     // Only override draw() if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.
@@ -22,6 +27,7 @@ class SwatchView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        self.alpha = 0.5
         
     }
     
@@ -34,12 +40,17 @@ class SwatchView: UIView {
         if(isExpanded == false) {
             
             isExpanded = true
-            self.animateToScale(scaleX: 1.0, scaleY: 10.0)
+            self.animateToScale(scaleX: 1.0, scaleY: 15.0)
+            UIView.animate(withDuration: 1.0, animations: { 
+                self.alpha = 1.0
+            })
         } else if(isExpanded == true) {
             
             isExpanded = false
             self.animateToScale(scaleX: 1.0, scaleY: 1.0)
-            
+            UIView.animate(withDuration: 1.0, animations: {
+                self.alpha = 0.5
+            })
         }
         
     }

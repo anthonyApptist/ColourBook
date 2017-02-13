@@ -39,42 +39,31 @@ class ItemListDetailVC: CustomVC {
         ReportHandler.sharedInstance.reportView.reportDelegate = self
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+
+    override func viewDidAppear(_ animated: Bool) {
+        
+        titleLbl?.text = detailItem?.productType
+        barcodeLbl?.text = detailItem?.upcCode
         
         if(screenState == .searching) {
             reportBtn?.isHidden = false
         } else {
             reportBtn?.isHidden = true
+            reportBtn?.isUserInteractionEnabled = false
         }
-    }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(false)
-        
-        titleLbl?.text = detailItem?.productType
-        barcodeLbl?.text = detailItem?.manufacturer
-        productIdLbl?.text = detailItem?.upcCode
-        
-   
-        
         if let colour = detailItem?.colour {
-            hexCodeLbl?.text = "HEX"
             hexCodeLbl?.backgroundColor = UIColor(hexString: colour.colourHexCode)
             colourSwatch.backgroundColor = UIColor(hexString: colour.colourHexCode)
-            /*
-            // set text for productCode and colourName label
-            colourProductCodeLabel.text = colour.productCode
-            colourNameLabel.text = colour.colourName
-            */
+            
+            productIdLbl?.text = colour.productCode
+            colourNameLbl?.text = colour.colourName
         }
         else {
             hexCodeLbl?.text = "No colour added"
-            /*
-            // set text for productCode and colourName label
-            colourProductCodeLabel.text = ""
-            colourNameLabel.text = ""
-            */
+        
+            productIdLbl?.text = ""
+            colourNameLbl?.text = ""
         }
         
         self.imgView?.contentMode = .scaleAspectFill
@@ -87,6 +76,14 @@ class ItemListDetailVC: CustomVC {
             let image = self.setImageFrom(urlString: (detailItem?.image)!)
             self.imgView?.image = image
         }
+        
+        if detailItem?.manufacturer == "Benjamin Moore" {
+            self.bannerImgView?.image = UIImage(named: "BenjaminMoorePhoto.jpg")
+        }
+        if detailItem?.manufacturer == "Sherwin Williams" {
+            self.bannerImgView?.image = UIImage(named: "Sherwin Williams Photo")
+        }
+       
         
     }
 
