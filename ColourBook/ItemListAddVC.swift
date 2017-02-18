@@ -21,9 +21,18 @@ class ItemListAddVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet var subTitleLbl: UILabel?
     
-    @IBAction func addBtnPressed(_ sender: AnyObject) {
+    var selectedLocation: Location? = nil
 
-            performSegue(withIdentifier: "ConnectToNewItem", sender: self)
+    
+    @IBAction func addAddressBtnPressed(_ sender: AnyObject) {
+        
+        performSegue(withIdentifier: "ConnectToNewItem", sender: self)
+        
+    }
+    
+    @IBAction func settingsBtnPressed(_ sender: AnyObject) {
+
+        performSegue(withIdentifier: "ConnectToBusinessSettings", sender: self)
         
     }
     
@@ -139,6 +148,16 @@ class ItemListAddVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
                 detail.selectedLocation = selectedLocation
         }
     }
+        if segue.identifier == "ConnectToImageSettingsBusiness" {
+            
+            if let detail = segue.destination as? AddEditImageVCBusiness {
+                
+                detail.selectedLocation = self.selectedLocation
+                detail.screenState = screenState
+                
+            }
+        }
+
         
     }
 
