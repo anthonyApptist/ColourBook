@@ -29,6 +29,7 @@ class ItemListAddVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
     
     var locations = [Location]()
     
+    var businessImages = [String:String]()
     
     override func backBtnPressed(_ sender: AnyObject) {
         self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)

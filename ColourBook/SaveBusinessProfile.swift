@@ -10,7 +10,7 @@ import Foundation
 
 extension DataService {
     
-    func saveBusinessProfile(profile: Array<String>) {
+    func saveBusinessProfile(profile: Array<String>, user: User) {
         let business = Business(name: "", location: "", phoneNumber: "", website: "", postalCode: "", image: "")
         
         for property in profile {
@@ -32,9 +32,11 @@ extension DataService {
             }
         }
         
-        // save with dataservice
-        let profile = ["name": business.name, "location": business.location, "phoneNumber": business.phoneNumber, "website": business.website, "postalCode": business.postalCode, "image": business.image]
+        // new business profile
+        let newBusinessProfile = ["name": business.name, "location": business.location, "phoneNumber": business.phoneNumber, "website": business.website, "postalCode": business.postalCode, "image": business.image]
         
+        // save to user businesss dashboard
+        self.usersRef.child(user.uid).child(BusinessDashboard).child("Business").child("profile").setValue(newBusinessProfile)
         
     }
     

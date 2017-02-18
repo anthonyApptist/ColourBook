@@ -43,7 +43,6 @@ class AddEditAddressVC: CustomVC, MKMapViewDelegate, UISearchBarDelegate, CLLoca
         
         // Search Controller
         let resultsUpdater = SearchResultsTableVC()
-        resultsUpdater.searchFor = .mapSearch
         
         mapSC = UISearchController(searchResultsController: resultsUpdater)
         mapSC?.searchResultsUpdater = resultsUpdater
@@ -84,8 +83,6 @@ class AddEditAddressVC: CustomVC, MKMapViewDelegate, UISearchBarDelegate, CLLoca
     @IBAction func showSearchBar(_ sender: AnyObject) {
         
         let results = self.mapSC?.searchResultsUpdater as! SearchResultsTableVC
-        
-        results.mapView = self.map
         
         present(self.mapSC!, animated: true, completion: nil)
     }

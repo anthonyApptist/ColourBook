@@ -24,6 +24,10 @@ class CategoriesListVC: CustomVC, UICollectionViewDelegate, UICollectionViewData
     var categoriesItems = [String:[ScannedProduct]]()
     var categories = [String]()
     
+    // products with added by
+    var businessImages = [Business:String]()
+    var locationItems = [Location: [ScannedProduct]]()
+    
     var paintProducts = [String:[Paint]]()
 
     let app = UIApplication.shared.delegate as! AppDelegate

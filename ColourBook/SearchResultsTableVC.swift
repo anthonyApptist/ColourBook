@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import MapKit
+import GooglePlaces
 
 enum ResultsFor {
     case colours
@@ -25,15 +25,19 @@ class SearchResultsTableVC: UITableViewController {
     // address search result delegate
     var addressResultDelegate: AddressResult?
     
+    // location search result delegate
+    
+    
     // filtered data
     var filteredAddresses: [Location]?
     var filteredColours: [Colour]?
-    var filteredMapItems: [MKMapItem]?
     
     // all data
     var allColours: [Colour]?
     var allAddresses: [Location]?
-    var mapView: MKMapView?
+    
+    // google map data
+    var allLocations: [String]?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,11 +53,11 @@ class SearchResultsTableVC: UITableViewController {
             self.filteredAddresses = []
             self.tableView.register(LocationCell.self, forCellReuseIdentifier: "address")
         }
-        
         if searchFor == .mapSearch {
-            self.filteredMapItems = []
-            self.tableView.register(LocationCell.self, forCellReuseIdentifier: "mapResultCell")
+            self.allLocations = []
+            self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "searchCell")
         }
+        
     }
 
     // MARK: - Table view data source
@@ -70,7 +74,7 @@ class SearchResultsTableVC: UITableViewController {
             return (filteredAddresses?.count)!
         }
         if searchFor == .mapSearch {
-            return (filteredMapItems?.count)!
+            return (allLocations?.count)!
         }
         return 0
     }
@@ -98,12 +102,12 @@ class SearchResultsTableVC: UITableViewController {
             }
             return cell
         }
-        if searchFor == .mapSearch {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "mapResultCell") as! LocationCell
-            let mapItem = filteredMapItems?[indexPath.row].placemark
-            cell.box1?.text = mapItem?.name
-            return cell
+        if searchFor == .colours {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "searchCell")
+            cell?.textLabel?.text = self.allLocations?[indexPath.row]
+            return cell!
         }
+
         return UITableViewCell()
     }
     
@@ -146,6 +150,22 @@ class SearchResultsTableVC: UITableViewController {
             }
             tableView.reloadData()
         }
+        if searchFor == .mapSearch {
+            
+            GMSPlacesClient.shared().autocompleteQuery(searchText, bounds: nil, filter: nil, callback: { (results, error) in
+                self.allLocations?.removeAll()
+                if results == nil {
+                    return
+                }
+                for result in results! {
+                    if let results = result as? GMSAutocompletePrediction {
+                        self.allLocations?.append(results.attributedFullText.string)
+                    }
+                    self.tableView.reloadData()
+                }
+            })
+            
+        }
     }
 
     // String to UIImage
@@ -162,23 +182,6 @@ class SearchResultsTableVC: UITableViewController {
 extension SearchResultsTableVC: UISearchResultsUpdating {
     
     func updateSearchResults(for searchController: UISearchController) {
-        if searchFor == .mapSearch {
-            let request = MKLocalSearchRequest()
-            request.region = (mapView?.region)!
-            let searchRegion = MKLocalSearch(request: request)
-            request.naturalLanguageQuery = searchController.searchBar.text!.lowercased()
-            searchRegion.start(completionHandler: { (response, error) in
-                if let error = error {
-                    print(error.localizedDescription)
-                }
-                else if let mapItems = response?.mapItems {
-                    self.filteredMapItems = mapItems
-                    self.tableView?.reloadData()
-                }
-            })
-        }
-        else {
-            filterContentForSearchText(searchText: searchController.searchBar.text!.lowercased())
-        }
+        filterContentForSearchText(searchText: searchController.searchBar.text!.lowercased())
     }
 }
