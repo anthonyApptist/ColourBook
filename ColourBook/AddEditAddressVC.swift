@@ -26,8 +26,6 @@ class AddEditAddressVC: CustomVC, MKMapViewDelegate, UISearchBarDelegate, CLLoca
     
     @IBOutlet weak var saveBtn: UIButton!
     
-    @IBOutlet weak var textField: UITextField?
-    
     @IBOutlet weak var map: MKMapView!
     
     let regionRadius: CLLocationDistance = 1000
@@ -73,9 +71,6 @@ class AddEditAddressVC: CustomVC, MKMapViewDelegate, UISearchBarDelegate, CLLoca
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(false)
-
-        textField?.delegate = self
-        
     
         displayCurrentLocation()
 
@@ -179,7 +174,6 @@ class AddEditAddressVC: CustomVC, MKMapViewDelegate, UISearchBarDelegate, CLLoca
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        textField?.resignFirstResponder()
     }
 
  
