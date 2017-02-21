@@ -2,8 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Allow ColourBook to use your location</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleExecutable</key>
@@ -17,7 +15,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.35</string>
+	<string>1.36</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -49,6 +47,8 @@
 	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>Need Camera to Scan</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Allow ColourBook to use your location</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Location needed to add home address</string>
 	<key>NSPhotoLibraryUsageDescription</key>
