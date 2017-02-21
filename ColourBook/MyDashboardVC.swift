@@ -82,9 +82,9 @@ class MyDashboardVC: CustomVC, UIScrollViewDelegate {
     
     @IBAction func scanBtnPressed(_ sender: AnyObject?) {
         
-        let scanView = GoogleMap() // storyboard?.instantiateViewController(withIdentifier: "BarcodeVC")
+        let scanView = storyboard?.instantiateViewController(withIdentifier: "BarcodeVC")
         
-        present(scanView, animated: true, completion: nil)
+        present(scanView!, animated: true, completion: nil)
         
     }
     

@@ -17,24 +17,38 @@ extension ItemListAddVC {
         
         locationsRef?.observeSingleEvent(of: .value, with: { (snapshot) in
             
-            for child in snapshot.children.allObjects {
-                let addressProfile = child as! FIRDataSnapshot
-                let profile = addressProfile.value as? NSDictionary
+            if snapshot.exists() {
                 
-                let postalCode = profile?["postalCode"] as! String
-                let locationName = addressProfile.key
-                
-                let image = profile?["image"] as? String
-                let name = profile?["name"] as? String
-                
-                let location = Location(locationName: locationName, postalCode: postalCode)
-                location.image = image
-                location.name = name
-                
-                self.locations.append(location)
+                if snapshot.hasChild("addresses") {
+                    
+                    for child in snapshot.children.allObjects {
+                        let addressProfile = child as! FIRDataSnapshot
+                        let profile = addressProfile.value as? NSDictionary
+                        
+                        let postalCode = profile?["postalCode"] as! String
+                        let locationName = addressProfile.key
+                        
+                        let image = profile?["image"] as? String
+                        let name = profile?["name"] as? String
+                        
+                        let location = Location(locationName: locationName, postalCode: postalCode)
+                        location.image = image
+                        location.name = name
+                        
+                        self.locations.append(location)
+                    }
+                    self.tableView?.reloadData()
+                    self.hideActivityIndicator()
+                    
+                }
+                else {
+                    self.hideActivityIndicator()
+                }
             }
-            self.tableView?.reloadData()
-            self.hideActivityIndicator()
+            
+            else {
+                self.hideActivityIndicator()
+            }
             
         }, withCancel: { (error) in
             print(error.localizedDescription)

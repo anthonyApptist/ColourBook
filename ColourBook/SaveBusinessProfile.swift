@@ -15,18 +15,24 @@ extension DataService {
         
         for property in profile {
             switch profile.index(of: property) {
-            case 1?: // name
+            case 0?: // name
                 business.name = property
-            case 2?: // location
+                continue
+            case 1?: // location
                 business.location = property
-            case 3?: // phoneNumber
+                continue
+            case 2?: // phoneNumber
                 business.phoneNumber = property
-            case 4?: // website
+                continue
+            case 3?: // website
                 business.website = property
-            case 5?: // postalCode
+                continue
+            case 4?: // postalCode
                 business.postalCode = property
-            case 6?: // image
+                continue
+            case 5?: // image
                 business.image = property
+                continue
             default:
                 break
             }
@@ -37,6 +43,11 @@ extension DataService {
         
         // save to user businesss dashboard
         self.usersRef.child(user.uid).child(BusinessDashboard).child("Business").child("profile").setValue(newBusinessProfile)
+        
+        let pubBusinessProfile = ["name": business.name, "phoneNumber": business.phoneNumber, "website": business.website, "postalCode": business.postalCode, "image": business.image]
+        
+        // save to public entry
+        self.businessRef.child("businesses").child(business.location).setValue(pubBusinessProfile)
         
     }
     

@@ -26,7 +26,12 @@ class ItemListAddVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
     
     @IBAction func addAddressBtnPressed(_ sender: AnyObject) {
         
-        performSegue(withIdentifier: "ConnectToNewItem", sender: self)
+        let map = GoogleMap()
+        map.screenState = self.screenState
+        
+        self.present(map, animated: true, completion: nil)
+        
+//        performSegue(withIdentifier: "ConnectToNewItem", sender: self)
         
     }
     

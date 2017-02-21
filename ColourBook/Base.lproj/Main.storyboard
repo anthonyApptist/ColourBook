@@ -2103,12 +2103,12 @@
         <image name="settingsIcon" width="115" height="113"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="uql-du-HUQ"/>
-        <segue reference="MRZ-gX-R33"/>
-        <segue reference="2NH-Fi-qo3"/>
-        <segue reference="ZiE-Dq-MKt"/>
         <segue reference="5FO-LH-Ars"/>
+        <segue reference="ZiE-Dq-MKt"/>
+        <segue reference="2NH-Fi-qo3"/>
         <segue reference="72x-eM-pG5"/>
-        <segue reference="2Rt-b8-Nhr"/>
+        <segue reference="DEd-us-ln8"/>
+        <segue reference="Mh2-rc-EEm"/>
+        <segue reference="VHt-Bh-IiX"/>
     </inferredMetricsTieBreakers>
 </document>

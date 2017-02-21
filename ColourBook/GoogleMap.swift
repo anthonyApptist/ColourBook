@@ -28,7 +28,7 @@ class GoogleMap: CustomVC, CLLocationManagerDelegate, GMSMapViewDelegate {
     
     // location name (key), location profile dictionary 
     
-    var databaseAddresses = [String:[String:String]]()
+    var databaseAddresses = [String:[[String:[Paint]]]]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -91,15 +91,21 @@ class GoogleMap: CustomVC, CLLocationManagerDelegate, GMSMapViewDelegate {
             
             let gmsAddress = response?.firstResult()
             
-            let locationName = gmsAddress?.thoroughfare
-            let postalCode = gmsAddress?.postalCode
-            let currentLocation = Location(locationName: locationName!, postalCode: postalCode!)
+            let currentLocation = Location(locationName: "", postalCode: "")
+            
+            if let locationName = gmsAddress?.thoroughfare {
+                currentLocation.locationName = locationName
+            }
+            if let postalCode = gmsAddress?.postalCode {
+                currentLocation.postalCode = postalCode
+            }
+            
             self.currentLocation = currentLocation
             
             self.marker = GMSMarker()
             self.marker?.position = CLLocationCoordinate2DMake(location.coordinate.latitude, location.coordinate.longitude)
-            self.marker?.title = locationName
-            self.marker?.snippet = postalCode
+            self.marker?.title = self.currentLocation?.locationName
+            self.marker?.snippet = self.currentLocation?.postalCode 
             
             self.displayLocationAddAlertController(location: currentLocation)
             

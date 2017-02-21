@@ -39,31 +39,20 @@ class AddEditImageVCBusiness: CustomVC, UIImagePickerControllerDelegate, UINavig
     
     var selectedLocation: Location?
     
-    var image: String?
+    var image: String? = ""
     var resizedImg: UIImage?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+    
         self.imagePicker.delegate = self
-        
         siteTextField.delegate = self
-        
         phoneTextField.delegate = self
+        postalCodeTextField.delegate = self
         
-        postalCodeTextField.delegate = self 
+        self.getBusinessInfo(user: self.signedInUser)
         
         self.saveBtn.addTarget(self, action: #selector(self.saveBtnPressed(_:)), for: .touchUpInside)
-
-        if screenState == .business || screenState == .homes {
-            DispatchQueue.global(qos: .background).async {
-                self.getInfoFor(location: self.selectedLocation!, user: self.signedInUser.uid, screenState: self.screenState)
-            }
-            
-            DispatchQueue.main.async {
-                self.setLocationInfo()
-            }
-        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -134,93 +123,14 @@ class AddEditImageVCBusiness: CustomVC, UIImagePickerControllerDelegate, UINavig
     
     func saveBtnPressed(_ sender: Any?) {
         
-
-        if screenState == .business {
-            
-            DataService.instance.saveInfoFor(user: self.signedInUser.uid, screenState: self.screenState, location: (self.selectedLocation?.locationName)!, image: self.image, name: self.nameTextField?.text)
-            
-            DataService.instance.businessRef.child((self.selectedLocation?.locationName)!).updateChildValues(["name" : self.nameTextField?.text ?? "", "image" : self.image ?? ""])
-        }
-        if screenState == .homes {
-            
-            DataService.instance.saveInfoFor(user: self.signedInUser.uid, screenState: self.screenState, location: (self.selectedLocation?.locationName)!, image: self.image, name: self.nameTextField?.text)
-            
-            DataService.instance.addressRef.child((self.selectedLocation?.locationName)!).updateChildValues(["name" : self.nameTextField?.text ?? "", "image" : self.image ?? ""])
-        }
+        let businessArray: [String] = [(self.nameTextField?.text!)!, "" ,self.phoneTextField!.text!, (self.siteTextField?.text!)!, (self.postalCodeTextField?.text!)!, self.image!]
         
-        performSegue(withIdentifier: "BackToItemEdit", sender: self)
+        DataService.instance.saveBusinessProfile(profile: businessArray, user: self.signedInUser)
         
-    }
-    
-    // MARK: - Business/Address Info
-    
-    func getInfoFor(location: Location, user: String, screenState: ScreenState) {
+        self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
         
-        getLocationRefFor(location: location.locationName, user: user, screenState: screenState)
+//        performSegue(withIdentifier: "BackToItemEdit", sender: self) // change to back to ItemListAdd
         
-        let locationInfoRef = DataService.instance.generalRef
-        
-        locationInfoRef?.observeSingleEvent(of: .value, with: { (snapshot) in
-            
-            let profile = snapshot.value as? NSDictionary
-            let postalCode = profile?["postalCode"] as! String
-            let image = profile?["image"] as! String
-            
-            if let name = profile?["name"] as? String {
-                self.nameTextField?.text = name
-            }
-            else {
-                self.nameTextField?.text = ""
-            }
-            
-            
-            
-            self.image = image
-            
-            if self.image == nil || self.image == "" {
-                let image = UIImage(named: "darkgreen.jpg")
-                self.imgView.image = image
-            }
-            else {
-                let locationImage = self.stringToImage(imageName: self.image!)
-                self.imgView.image = locationImage
-            }
-        })
-        
-    }
-    
-    func getLocationRefFor(location: String?, user: String, screenState: ScreenState) {
-        
-        if screenState == .business {
-            DataService.instance.generalRef = DataService.instance.usersRef.child(user).child(BusinessDashboard).child(location!)
-        }
-        else if screenState == .homes {
-            DataService.instance.generalRef = DataService.instance.usersRef.child(user).child(AddressDashboard).child(location!)
-        }
-        
-    }
-    
-    // MARK: - Firebase Personal Info
-    
-    func getProfileFor(user: String) {
-        let uidRef = DataService.instance.usersRef.child(user)
-        
-        uidRef.observeSingleEvent(of: .value, with: { (snapshot) in
-            
-            let profile = snapshot.value as? NSDictionary
-            let image = profile?["image"] as! String
-            
-            self.image = image
-            
-            if self.image == nil || self.image == "" {
-                let image = UIImage(named: "darkgreen.jpg")
-                self.imgView.image = image
-            }
-            else {
-                let locationImage = self.stringToImage(imageName: self.image!)
-                self.imgView.image = locationImage
-            }
-        })
     }
     
     // MARK: - Save Button Segue
@@ -229,32 +139,11 @@ class AddEditImageVCBusiness: CustomVC, UIImagePickerControllerDelegate, UINavig
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "BackToItemEdit" {
             
-            if let detail = segue.destination as? ItemListEditVC {
+            if let detail = segue.destination as? ItemListEditVC { // change to ItemListAdd
                 detail.screenState = self.screenState
                 detail.selectedLocation = self.selectedLocation
             }
         }
-    }
-    
-    // MARK: - Set UI data
-    
-    func setLocationInfo() {
-        
-        
-        
-    }
-    
-    func setPersonalInfo() {
-        
-        if (self.signedInUser.name?.isEmpty)! {
-            self.nameTextField?.text = ""
-        }
-        else {
-            self.nameTextField?.text = self.signedInUser.name
-        }
-        
-        self.photoTitleLbl.text = self.signedInUser.email
-        
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
