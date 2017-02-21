@@ -159,7 +159,7 @@ class FlagView: UIView {
     
   
     override init(frame: CGRect) {
-        super.init(frame: CGRect(x: UIScreen.main.bounds.width - UIScreen.main.bounds.height/2, y: UIScreen.main.bounds.height/6 - UIScreen.main.bounds.height, width: 300, height: 430))
+        super.init(frame: CGRect(x: frame.maxX - frame.width * 0.10, y: UIScreen.main.bounds.height/6 - UIScreen.main.bounds.height, width: 300, height: 430))
         self.backgroundColor = UIColor.white
         let radius = self.frame.width/8
         self.layer.cornerRadius = radius

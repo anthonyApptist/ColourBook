@@ -20,6 +20,7 @@
 		661A47F81DF6A97700B56028 /* ItemListDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661A47F71DF6A97700B56028 /* ItemListDetailVC.swift */; };
 		661A47FA1DF6A9B400B56028 /* AddEditAddressVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661A47F91DF6A9B400B56028 /* AddEditAddressVC.swift */; };
 		661A48001DF6AA3800B56028 /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661A47FF1DF6AA3800B56028 /* SettingsVC.swift */; };
+		66237F441E5CB8C60021527C /* ContractorItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66237F431E5CB8C60021527C /* ContractorItemCell.swift */; };
 		66242AD51DF0EDAE000B651F /* ItemListAddVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66242AD41DF0EDAE000B651F /* ItemListAddVC.swift */; };
 		66242AD71DF0F0F4000B651F /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66242AD61DF0F0F4000B651F /* MessageView.swift */; };
 		66242ADB1DF0F302000B651F /* barcode.png in Resources */ = {isa = PBXBuildFile; fileRef = 66242AD81DF0F302000B651F /* barcode.png */; };
@@ -174,6 +175,7 @@
 		661A47F71DF6A97700B56028 /* ItemListDetailVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemListDetailVC.swift; sourceTree = "<group>"; };
 		661A47F91DF6A9B400B56028 /* AddEditAddressVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddEditAddressVC.swift; sourceTree = "<group>"; };
 		661A47FF1DF6AA3800B56028 /* SettingsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
+		66237F431E5CB8C60021527C /* ContractorItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContractorItemCell.swift; sourceTree = "<group>"; };
 		66242AD41DF0EDAE000B651F /* ItemListAddVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemListAddVC.swift; sourceTree = "<group>"; };
 		66242AD61DF0F0F4000B651F /* MessageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
 		66242AD81DF0F302000B651F /* barcode.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = barcode.png; sourceTree = "<group>"; };
@@ -359,6 +361,7 @@
 				668A4B151E434E37004167BD /* FlagView.swift */,
 				665E636D1DE6B55C002BA868 /* IconView.swift */,
 				66242ADE1DF1123E000B651F /* ItemCell.swift */,
+				66237F431E5CB8C60021527C /* ContractorItemCell.swift */,
 				66242AE71DF46F30000B651F /* LabelCustomSpacing.swift */,
 				663646621DE0C3EA00E6D719 /* LaunchScreen.storyboard */,
 				6636465D1DE0C3EA00E6D719 /* Main.storyboard */,
@@ -799,6 +802,7 @@
 				920B52721E0E0325005D5B60 /* SearchResultsTableVC.swift in Sources */,
 				665E636E1DE6B55C002BA868 /* IconView.swift in Sources */,
 				926F736E1E57B52200B8A2EC /* GoogleMap - Data.swift in Sources */,
+				66237F441E5CB8C60021527C /* ContractorItemCell.swift in Sources */,
 				92B4A6351DEBB8A100F35DED /* DataService.swift in Sources */,
 				926F736C1E5799D400B8A2EC /* CategoryListBusiness.swift in Sources */,
 				661A47F61DF6A95700B56028 /* AddEditImageVC.swift in Sources */,

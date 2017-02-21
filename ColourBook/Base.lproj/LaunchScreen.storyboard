@@ -7,6 +7,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -25,16 +26,17 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logoBlack.png" translatesAutoresizingMaskIntoConstraints="NO" id="KXv-Ya-dol">
                                 <rect key="frame" x="70" y="282" width="235" height="118"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" secondItem="KXv-Ya-dol" secondAttribute="height" multiplier="375:667" constant="168.65817091454272" id="XEm-VK-tva"/>
+                                    <constraint firstAttribute="width" constant="235" id="TRv-Jr-wkH"/>
+                                    <constraint firstAttribute="height" constant="118" id="bhD-TR-fIF"/>
+                                    <constraint firstAttribute="width" secondItem="KXv-Ya-dol" secondAttribute="height" multiplier="235:118" id="y30-gu-25d"/>
                                 </constraints>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="KXv-Ya-dol" secondAttribute="trailing" constant="70" id="52B-c9-7ma"/>
-                            <constraint firstItem="KXv-Ya-dol" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" constant="282" id="7sy-Oj-xfg"/>
-                            <constraint firstItem="KXv-Ya-dol" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" constant="70" id="Rv5-kP-r10"/>
-                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="KXv-Ya-dol" secondAttribute="bottom" constant="267" id="gfi-wz-i2Q"/>
+                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="KXv-Ya-dol" secondAttribute="bottom" constant="267" id="2Sv-E6-BBQ"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="KXv-Ya-dol" secondAttribute="trailing" constant="54" id="gSb-gf-Zvz"/>
+                            <constraint firstItem="KXv-Ya-dol" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" constant="54" id="gng-Ii-Svc"/>
                         </constraints>
                     </view>
                 </viewController>

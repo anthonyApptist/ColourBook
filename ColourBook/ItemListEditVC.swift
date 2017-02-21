@@ -157,7 +157,11 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "ItemCell", for: indexPath) as! ItemCell
+   //     let cell = tableView.dequeueReusableCell(withIdentifier: "ContactorItemCell", for: indexPath) as! ContractorItemCell
         cell.selectionStyle = UITableViewCellSelectionStyle.none    
         let product = self.products[indexPath.row]
         cell.setViewFor(product: product)
