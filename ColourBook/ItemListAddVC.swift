@@ -23,6 +23,7 @@ class ItemListAddVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
     
     var selectedLocation: Location? = nil
 
+    @IBOutlet var settingsBtn: UIButton!
     
     @IBAction func addAddressBtnPressed(_ sender: AnyObject) {
         
@@ -44,11 +45,12 @@ class ItemListAddVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
     var locations = [Location]()
     
     var businessImages = [String:String]()
-    
+    /*
     override func backBtnPressed(_ sender: AnyObject) {
         self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
     }
     
+    */
     
     @IBAction func scanBtnPressed(_ sender: AnyObject) {
         let scanView = storyboard?.instantiateViewController(withIdentifier: "BarcodeVC")
@@ -61,6 +63,12 @@ class ItemListAddVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         
         tableView?.delegate = self
         tableView?.dataSource = self
+        
+        if self.screenState == .homes {
+            self.settingsBtn.isHidden = true
+        } else {
+            self.settingsBtn.isHidden = false
+        }
     
 
     }
