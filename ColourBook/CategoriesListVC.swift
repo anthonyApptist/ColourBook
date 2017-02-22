@@ -61,7 +61,7 @@ class CategoriesListVC: CustomVC, UICollectionViewDelegate, UICollectionViewData
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        let kWhateverHeightYouWant = 150
+        let kWhateverHeightYouWant = 100
         return CGSize(width: collectionView.bounds.size.width, height: CGFloat(kWhateverHeightYouWant))
     }
     
