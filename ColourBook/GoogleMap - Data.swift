@@ -32,17 +32,18 @@ extension GoogleMap {
                 
                 let categories = addressProfile?["categories"] as? NSDictionary
                 
-                // data model
-                var categoriesItems: [String:[Paint]] = [:]
-                var categoriesItemsArray: [[String:[Paint]]] = []
-                var paintArray: [Paint] = []
-                
                 
                 for category in (categories?.allKeys)! {
                     let categoryString = category as! String
                     if snapshot.childSnapshot(forPath: "categories").childSnapshot(forPath: categoryString).hasChildren() {
                         
+                        self.paintTimestampArray = []
+                        self.categoriesItems = [:]
+                        
                         for items in snapshot.childSnapshot(forPath: "categories").childSnapshot(forPath: categoryString).childSnapshot(forPath: Barcodes).children.allObjects {
+                            
+                            self.paintTimestamp = [:]
+                            
                             let product = items as! FIRDataSnapshot
                             let itemProfile = product.value as? NSDictionary
                             
@@ -75,27 +76,31 @@ extension GoogleMap {
                                 let paint = Paint(manufacturer: manufacturer, productName: productType, category: productCategory, code: code, upcCode: upcCode, image: image)
                                 paint.colour = colour
                                 
-                                paintArray.append(paint)
+                                self.paintTimestamp.updateValue(timestamp, forKey: paint)
+                                self.paintTimestampArray.append(self.paintTimestamp)
+                                
                             }
                             else {
                                 let paint = Paint(manufacturer: manufacturer, productName: productType, category: productCategory, code: code, upcCode: upcCode, image: image)
                                 
-                                paintArray.append(paint)
+                                self.paintTimestamp.updateValue(timestamp, forKey: paint)
+                                self.paintTimestampArray.append(self.paintTimestamp)
+                                
                             }
-                            categoriesItems.updateValue(paintArray, forKey: categoryString)
-                            categoriesItemsArray.append(categoriesItems)
+                            self.categoriesItems.updateValue(self.paintTimestampArray, forKey: categoryString)
+                            self.categoriesItemsArray.append(self.categoriesItems)
                         }
                         
-                        self.databaseAddresses.updateValue(categoriesItemsArray, forKey: location.locationName)
+                        self.databaseAddresses.updateValue(self.categoriesItemsArray, forKey: location.locationName)
                         
                     }
                     // no items
                     else {
-                        categoriesItems.updateValue(paintArray, forKey: categoryString)
-                        categoriesItemsArray.append(categoriesItems)
+                        self.categoriesItems.updateValue(self.paintTimestampArray, forKey: categoryString)
+                        self.categoriesItemsArray.append(self.categoriesItems)
                     }
                     
-                    self.databaseAddresses.updateValue(categoriesItemsArray, forKey: location.locationName)
+                    self.databaseAddresses.updateValue(self.categoriesItemsArray, forKey: location.locationName)
                 }
                 
             }

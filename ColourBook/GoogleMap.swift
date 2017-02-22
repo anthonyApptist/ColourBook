@@ -28,7 +28,22 @@ class GoogleMap: CustomVC, CLLocationManagerDelegate, GMSMapViewDelegate {
     
     // location name (key), location profile dictionary 
     
-    var databaseAddresses = [String:[[String:[Paint]]]]()
+    // model (location name, category, array of paint and timestamp value)
+    var databaseAddresses = [String:[[String:[[Paint:String]]]]]()
+    
+    // data model
+    
+    // paint timestamp value
+    var paintTimestamp = [Paint:String]()
+    
+    // array paint timestamp value
+    var paintTimestampArray = [[Paint:String]]()
+    
+    // category and array paint timestamp value
+    var categoriesItems = [String:[[Paint:String]]]()
+    
+    // array category and array paint timestamp value
+    var categoriesItemsArray = [[String:[[Paint:String]]]]()
     
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -19,8 +19,6 @@ extension ItemListAddVC {
             
             if snapshot.exists() {
                 
-                if snapshot.hasChild("addresses") {
-                    
                     for child in snapshot.children.allObjects {
                         let addressProfile = child as! FIRDataSnapshot
                         let profile = addressProfile.value as? NSDictionary
@@ -39,11 +37,6 @@ extension ItemListAddVC {
                     }
                     self.tableView?.reloadData()
                     self.hideActivityIndicator()
-                    
-                }
-                else {
-                    self.hideActivityIndicator()
-                }
             }
             
             else {
