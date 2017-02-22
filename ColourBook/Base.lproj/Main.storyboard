@@ -1429,6 +1429,7 @@
                     </view>
                     <connections>
                         <outlet property="bottomView" destination="0C5-70-IVg" id="orU-9J-J3z"/>
+                        <outlet property="settingsBtn" destination="chG-o1-bfc" id="Max-dn-F0y"/>
                         <outlet property="subTitleLbl" destination="2yV-Nc-pLQ" id="qV4-Mz-vZU"/>
                         <outlet property="tableView" destination="o5y-vl-PtG" id="QTF-Wu-ABg"/>
                         <outlet property="titleLbl" destination="F21-Gd-3qI" id="7Gr-a9-sUU"/>

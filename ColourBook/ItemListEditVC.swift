@@ -89,13 +89,13 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         present(scanView!, animated: true, completion: nil)
         
     }
-    
-    override func backBtnPressed(_ sender: AnyObject) {
+    /*    override func backBtnPressed(_ sender: AnyObject) {
         
         
         self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
         
     }
+ */
     
     // selected location 
     
