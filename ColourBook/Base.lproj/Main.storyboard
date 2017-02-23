@@ -2005,8 +2005,18 @@
                                                                         </connections>
                                                                     </button>
                                                                 </subviews>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="width" constant="301" id="A5x-f3-qgq"/>
+                                                                    <constraint firstAttribute="width" secondItem="cxc-Zp-1VH" secondAttribute="height" multiplier="301:241" id="sad-Ep-PaU"/>
+                                                                </constraints>
                                                             </stackView>
                                                         </subviews>
+                                                        <constraints>
+                                                            <constraint firstAttribute="trailing" secondItem="cxc-Zp-1VH" secondAttribute="trailing" id="9CC-gv-nEN"/>
+                                                            <constraint firstItem="cxc-Zp-1VH" firstAttribute="leading" secondItem="aA1-63-h85" secondAttribute="leading" id="9hk-K7-vVR"/>
+                                                            <constraint firstItem="cxc-Zp-1VH" firstAttribute="top" secondItem="6xy-HW-DDH" secondAttribute="bottom" id="IOp-AS-MrD"/>
+                                                            <constraint firstAttribute="bottom" secondItem="cxc-Zp-1VH" secondAttribute="bottom" id="foz-a4-Mgt"/>
+                                                        </constraints>
                                                     </stackView>
                                                 </subviews>
                                                 <constraints>
