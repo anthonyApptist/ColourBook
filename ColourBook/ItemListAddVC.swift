@@ -32,8 +32,6 @@ class ItemListAddVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         
         self.present(map, animated: true, completion: nil)
         
-//        performSegue(withIdentifier: "ConnectToNewItem", sender: self)
-        
     }
     
     @IBAction func settingsBtnPressed(_ sender: AnyObject) {
@@ -42,9 +40,19 @@ class ItemListAddVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         
     }
     
+    // model
     var locations = [Location]()
     
+    // business data
     var businessImages = [String:String]()
+    
+    // address data
+    var userLocationItems = [Location:[[String:[[ScannedProduct:String]]]]]()
+    var databaseLocations = [Location:[[String:[[ScannedProduct:String]]]]]()
+    
+    // list for category lists
+    var categoryItems = [String:[ScannedProduct]]()
+    
     /*
     override func backBtnPressed(_ sender: AnyObject) {
         self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
