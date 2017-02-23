@@ -158,8 +158,6 @@ class SelectAddressVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
             let selectCategory = SelectCategoryVC()
             selectCategory.screenState = self.screenState
             selectCategory.locationName = self.selectedLocation
-            selectCategory.barcode = self.barcode
-            selectCategory.productProfile = self.productProfile
             
             self.present(selectCategory, animated: true, completion: {
                 
