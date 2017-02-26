@@ -15,9 +15,7 @@ class ContractorItemCell: UITableViewCell {
     @IBOutlet weak var imgView: UIImageView?
     
     @IBOutlet weak var logoImgView: UIImageView?
-    
-    @IBOutlet weak var swatchView: UIView?
-    
+        
     var businessImage: String?
     
     override func awakeFromNib() {
@@ -45,7 +43,7 @@ class ContractorItemCell: UITableViewCell {
             self.imgView?.contentMode = .scaleAspectFit
         }
         if let colour = product.colour {
-            self.swatchView?.backgroundColor = UIColor(hexString: colour.colourHexCode)
+          //  self.swatchView?.backgroundColor = UIColor(hexString: colour.colourHexCode)
         }
         else {
             

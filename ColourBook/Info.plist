@@ -15,11 +15,9 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-<<<<<<< HEAD
+	
 	<string>1.42</string>
-=======
-	<string>1.36</string>
->>>>>>> 7cc4d4c3f5e499528500b8b43f985570c3c66acb
+
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
