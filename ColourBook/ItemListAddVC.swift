@@ -32,6 +32,8 @@ class ItemListAddVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         
         self.present(map, animated: true, completion: nil)
         
+//        performSegue(withIdentifier: "ConnectToNewItem", sender: self)
+        
     }
     
     @IBAction func settingsBtnPressed(_ sender: AnyObject) {

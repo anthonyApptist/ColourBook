@@ -13,12 +13,12 @@ extension ItemListAddVC {
     
     func getLocationLists(screenState: ScreenState, user: User) {
         getLocationsRefFor(user: user, screenState: screenState)
-        let dataRef = DataService.instance.generalRef
+        let databaseRef = DataService.instance.mainRef
         
-        dataRef?.observeSingleEvent(of: .value, with: { (snapshot) in
+        databaseRef.observeSingleEvent(of: .value, with: { (snapshot) in
             
-            // get business lists and images
             for business in snapshot.childSnapshot(forPath: "businesses").children.allObjects {
+                
                 let businessProfile = business as! FIRDataSnapshot
                 let businessData = businessProfile.value as? NSDictionary
                 
@@ -39,6 +39,7 @@ extension ItemListAddVC {
                 else {
                     self.businessImages.updateValue(newBusiness.image!, forKey: newBusiness.location)
                 }
+                
             }
             
             if screenState == .homes {
@@ -49,7 +50,7 @@ extension ItemListAddVC {
                         let addressProfile = address as! FIRDataSnapshot
                         let addressData = addressProfile.value as? NSDictionary
                         
-                        // location 
+                        // location
                         let postalCode = addressData?["postalCode"] as! String
                         let locationName = addressProfile.key
                         
@@ -65,79 +66,79 @@ extension ItemListAddVC {
                         // get public items
                         for categoryProfile in snapshot.childSnapshot(forPath: "addresses").childSnapshot(forPath: location.locationName).childSnapshot(forPath: "businessAdded").childSnapshot(forPath: "categories").children.allObjects {
                             
-                                let categoryName = categoryProfile as! FIRDataSnapshot
-                                let category = categoryName.key
+                            let categoryName = categoryProfile as! FIRDataSnapshot
+                            let category = categoryName.key
                             
-                                if categoryName.hasChildren() {
+                            if categoryName.hasChildren() {
+                                
+                                var itemsArray: [ScannedProduct] = []
+                                
+                                for item in categoryName.childSnapshot(forPath: Barcodes).children.allObjects {
                                     
-                                    var itemsArray: [ScannedProduct] = []
+                                    // default value
+                                    var addedBy = ""
                                     
-                                    for item in categoryName.childSnapshot(forPath: Barcodes).children.allObjects {
-                                        
-                                        // default value
-                                        var addedBy = ""
-                                        
-                                        let product = item as! FIRDataSnapshot
-                                        let itemProfile = product.value as? NSDictionary
-                                        
-                                        // get scanned product
-                                        
-                                        let productType = itemProfile?["productName"] as! String
-                                        let manufacturer = itemProfile?["manufacturer"] as! String
-                                        let upcCode = product.key
-                                        let image = itemProfile?["image"] as! String
-                                        let timestamp = itemProfile?["timestamp"] as! String
-                                        
-                                        // check whether the product has been flagged more or equal to 5 times
-                                        if product.hasChild("flagged") {
-                                            if product.childSnapshot(forPath: "flagged").childrenCount >= 5 {
-                                                continue
-                                            }
-                                        }
-                                        
-                                        // check for business added item
-                                        if product.hasChild("addedBy") {
-                                            
-                                            // get image string of business
-                                            let businessLocation = itemProfile?["addedBy"] as! String
-                                            
-                                            addedBy = businessLocation
-                                        }
-                                        
-                                        // check for colour
-                                        if product.hasChild("colour") {
-                                            let colourProfile = itemProfile?["colour"] as? NSDictionary
-                                            let colourName = colourProfile?["colourName"] as! String
-                                            let hexcode = colourProfile?["hexcode"] as! String
-                                            let colourManufacturerID = colourProfile?["manufacturerID"] as! String
-                                            let colourManufacturer = colourProfile?["manufacturer"] as! String
-                                            let productCode = colourProfile?["productCode"] as! String
-                                            
-                                            let colour = Colour(manufacturerID: colourManufacturerID, productCode: productCode, colourName: colourName, colourHexCode: hexcode, manufacturer: colourManufacturer)
-                                            
-                                            let product = ScannedProduct(productType: productType, manufacturer: manufacturer, upcCode: upcCode, image: image, colour: colour, timestamp: timestamp)
-                                            
-                                            product.addedBy = addedBy
-                                            
-                                            itemsArray.append(product)
-                                        }
-                                        else {
-                                            let product = ScannedProduct(productType: productType, manufacturer: manufacturer, upcCode: upcCode, image: image, colour: nil, timestamp: timestamp)
-                                            
-                                            product.addedBy = addedBy
-                                            
-                                            itemsArray.append(product)
+                                    let product = item as! FIRDataSnapshot
+                                    let itemProfile = product.value as? NSDictionary
+                                    
+                                    // get scanned product
+                                    
+                                    let productType = itemProfile?["productName"] as! String
+                                    let manufacturer = itemProfile?["manufacturer"] as! String
+                                    let upcCode = product.key
+                                    let image = itemProfile?["image"] as! String
+                                    let timestamp = itemProfile?["timestamp"] as! String
+                                    
+                                    // check whether the product has been flagged more or equal to 5 times
+                                    if product.hasChild("flagged") {
+                                        if product.childSnapshot(forPath: "flagged").childrenCount >= 5 {
+                                            continue
                                         }
                                     }
                                     
-                                    self.databaseLocationItems.updateValue(itemsArray, forKey: category)
-                                }
-                                else {
-                                    self.databaseLocationItems.updateValue([], forKey: category)
+                                    // check for business added item
+                                    if product.hasChild("addedBy") {
+                                        
+                                        // get image string of business
+                                        let businessLocation = itemProfile?["addedBy"] as! String
+                                        
+                                        addedBy = businessLocation
+                                    }
                                     
+                                    // check for colour
+                                    if product.hasChild("colour") {
+                                        let colourProfile = itemProfile?["colour"] as? NSDictionary
+                                        let colourName = colourProfile?["colourName"] as! String
+                                        let hexcode = colourProfile?["hexcode"] as! String
+                                        let colourManufacturerID = colourProfile?["manufacturerID"] as! String
+                                        let colourManufacturer = colourProfile?["manufacturer"] as! String
+                                        let productCode = colourProfile?["productCode"] as! String
+                                        
+                                        let colour = Colour(manufacturerID: colourManufacturerID, productCode: productCode, colourName: colourName, colourHexCode: hexcode, manufacturer: colourManufacturer)
+                                        
+                                        let product = ScannedProduct(productType: productType, manufacturer: manufacturer, upcCode: upcCode, image: image, colour: colour, timestamp: timestamp)
+                                        
+                                        product.addedBy = addedBy
+                                        
+                                        itemsArray.append(product)
+                                    }
+                                    else {
+                                        let product = ScannedProduct(productType: productType, manufacturer: manufacturer, upcCode: upcCode, image: image, colour: nil, timestamp: timestamp)
+                                        
+                                        product.addedBy = addedBy
+                                        
+                                        itemsArray.append(product)
+                                    }
                                 }
-                            
+                                
+                                self.databaseLocationItems.updateValue(itemsArray, forKey: category)
                             }
+                            else {
+                                self.databaseLocationItems.updateValue([], forKey: category)
+                                
+                            }
+                            
+                        }
                         
                         // locations in database
                         self.allDatabaseLocation.append(location.locationName)
@@ -161,7 +162,7 @@ extension ItemListAddVC {
                         let location = Location(locationName: locationName, postalCode: postalCode)
                         location.image = image
                         location.name = name
-                     
+                        
                         self.databaseLocationItems = [:]
                         
                         // get user address items
@@ -247,22 +248,23 @@ extension ItemListAddVC {
                         
                         // location with items
                         self.userLocations.updateValue(self.userLocationItems, forKey: location.locationName)
-
+                        
                     }
                     
                     self.tableView?.reloadData()
-                    self.hideActivityIndicator()   
+                    self.hideActivityIndicator()
                     
                 }
                 else {
                     self.hideActivityIndicator()
                 }
             }
-            // else business screen state
+                // else business screen state
             else {
                 
                 // user business address list
                 if snapshot.exists() {
+                    
                     for child in snapshot.children.allObjects {
                         let addressProfile = child as! FIRDataSnapshot
                         let profile = addressProfile.value as? NSDictionary
@@ -282,24 +284,21 @@ extension ItemListAddVC {
                     self.tableView?.reloadData()
                     self.hideActivityIndicator()
                 }
-                // no addresses
+                    
                 else {
                     self.hideActivityIndicator()
                 }
+                
             }
-            
-        }, withCancel: { (error) in
-            print(error.localizedDescription)
-            self.hideActivityIndicator()
         })
     }
     
     func getLocationsRefFor(user: User, screenState: ScreenState) {
         if screenState == .business {
-            DataService.instance.generalRef = DataService.instance.usersRef.child(user.uid).child(BusinessDashboard).child("addresses")
+            DataService.instance.generalRef = DataService.instance.usersRef.child(user.uid).child(BusinessDashboard)
         }
         else if screenState == .homes {
-            DataService.instance.generalRef = DataService.instance.mainRef
+            DataService.instance.generalRef = DataService.instance.usersRef.child(user.uid).child(AddressDashboard)
         }
     }
 
