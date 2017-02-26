@@ -198,6 +198,7 @@ class ItemListAddVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
                     detail.databaseLocationItems = databaseDictionaryOfItems!
                     detail.categories = self.categories
                     detail.categoriesItems = self.categoryItems
+                    detail.businessImages = self.businessImages
                 }
                 else {
                     self.categoryItems = self.userLocations[selectedLocation.locationName]!
