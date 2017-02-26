@@ -30,7 +30,7 @@ extension AddEditImageVCBusiness {
                 let postalCode = businessProfile?["postalCode"] as? String
                 let image = businessProfile?["image"] as? String
                 
-                let business = Business(name: name, location: "", phoneNumber: phoneNumber, website: website, postalCode: postalCode, image: image)
+                let business = Business(name: name, location    : "", phoneNumber: phoneNumber, website: website, postalCode: postalCode, image: image)
                 
                 self.nameTextField?.text = business.name
                 self.siteTextField?.text = business.website

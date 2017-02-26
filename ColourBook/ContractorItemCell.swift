@@ -18,13 +18,25 @@ class ContractorItemCell: UITableViewCell {
     
     @IBOutlet weak var swatchView: UIView?
     
+    var businessImage: String?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
     
     func setViewFor(product: ScannedProduct) {
+        
+        self.logoImgView?.contentMode = .scaleAspectFit
+        
+        if businessImage == "" || businessImage == nil {
+            self.logoImgView?.image = UIImage(named: "darkgreen")
+        }
+        else {
+            self.logoImgView?.image = self.stringToImage(imageName: businessImage!)
+        }
         self.titleLbl?.text = product.timestamp
+        
         if product.image == "N/A" {
             self.imgView?.image = UIImage(named: "darkgreen")
         }
@@ -38,6 +50,13 @@ class ContractorItemCell: UITableViewCell {
         else {
             
         }
+    }
+    
+    func stringToImage(imageName: String) -> UIImage {
+        let imageDataString = imageName
+        let imageData = Data(base64Encoded: imageDataString)
+        let image = UIImage(data: imageData!)
+        return image!
     }
     
     func setImageFrom(urlString: String) -> UIImage {

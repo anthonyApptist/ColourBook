@@ -17,6 +17,11 @@ extension CategoriesListVC {
         
         let categoriesRef = DataService.instance.generalRef
         
+        self.categories = []
+        self.paintProducts = [:]
+        
+        self.collectionView.reloadData()
+        
         categoriesRef?.observeSingleEvent(of: .value, with: { (snapshot) in
             for child in snapshot.children.allObjects {
                 let categoryName = child as! FIRDataSnapshot

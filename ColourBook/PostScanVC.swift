@@ -67,7 +67,6 @@ class PostScanViewController: CustomVC {
         addToBusinessButton.backgroundColor = UIColor.black
         addToBusinessButton.titleLabel?.font = UIFont(name: "HelveticaNeue-Medium", size: addToBusinessButton.frame.height * 0.4)
         addToBusinessButton.addTarget(self, action: #selector(addToBusinessButtonFunction), for: .touchUpInside)
-        addToBusinessButton.isUserInteractionEnabled = false
         
         // add to home list button
         
@@ -163,8 +162,9 @@ class PostScanViewController: CustomVC {
     // business (should check whether user branch BusinessDashboard has (Business Profile) child and then check if there are address else display alert
     
     func addToBusinessButtonFunction() {
+        let selectView = SelectAddressVC()
+        selectView.screenState = .business
 
-        
         let paint = self.product as? Paint
         
         if let colour = self.colour {
@@ -175,17 +175,16 @@ class PostScanViewController: CustomVC {
             
             // paint profile
             let paintProfile: Dictionary<String, Any> = ["manufacturer": paint!.manufacturer, "productName": paint!.productName, "category": paint!.category, "code": paint!.code, "image": paint!.image, "product": "Paint", "colour": colourProfile, "timestamp": timestamp]
-            
+         
+            selectView.productProfile = paintProfile
         }
         else {
             let timestamp = createTimestamp()
             
             let paintProfile: Dictionary<String, String> = ["manufacturer": paint!.manufacturer, "productName": paint!.productName, "category": paint!.category, "code": paint!.code, "image": paint!.image, "product": "Paint", "timestamp": timestamp]
 
-            
+            selectView.productProfile = paintProfile
         }
-        let selectView = SelectAddressVC()
-        selectView.screenState = .business
         selectView.barcode = self.barcode
         
         self.present(selectView, animated: true, completion: { (error) in

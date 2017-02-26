@@ -15,31 +15,33 @@ extension DataService {
     
     // Save a business or address
     
-    func saveAddress(screenState: ScreenState, location: Location?, business: Business?) {
-        getLocationRef(screenState: screenState, location: location, business: business)
+    func saveAddress(screenState: ScreenState, location: Location?) {
+        getLocationRef(screenState: screenState, location: location)
         
         let newCategories = self.startingCategories(screenState: screenState)
         let locationRef = self.generalRef
         
         if screenState == .business {
-            let businessProfile: Dictionary<String, Any> = ["postalCode": business!.postalCode ?? ""]
-            locationRef?.setValue(businessProfile)
+            let categories: [String:Any] = ["categories": newCategories ?? ""]
+            let locationProfile: [String:Any] = ["postalCode": location!.postalCode, "businessAdded": categories]
+            locationRef?.updateChildValues(locationProfile)
         }
         if screenState == .homes {
             let locationProfile: Dictionary<String, Any> = ["postalCode": location!.postalCode, "categories": newCategories ?? ""]
-            locationRef?.setValue(locationProfile)
+            locationRef?.updateChildValues(locationProfile)
         }
     }
     
     // Public Database refs
     
-    func getLocationRef(screenState: ScreenState, location: Location?, business: Business?) {
+    func getLocationRef(screenState: ScreenState, location: Location?) {
         if screenState == .business {
-            self.generalRef = self.businessRef.child(business!.location)
+            self.generalRef = self.addressRef.child(location!.locationName)
         }
         if screenState == .homes {
             self.generalRef = self.addressRef.child(location!.locationName)
         }
+
     }
     
     // MARK: Saving Profile Infos
@@ -79,9 +81,9 @@ extension DataService {
     
     func getPublicLocationCategoriesRef(screenState: ScreenState, location: String?, category: String) {
         if screenState == .business {
-            self.generalRef = self.businessRef.child("addresses").child(location!).child("categories").child(category).child(Barcodes)
+            self.generalRef = self.addressRef.child(location!).child("businessAdded").child("categories").child(category).child(Barcodes)
         }
-        else if screenState == .homes {
+        if screenState == .homes {
             self.generalRef = self.addressRef.child(location!).child("categories").child(category).child(Barcodes)
         }
     }
@@ -101,7 +103,7 @@ extension DataService {
             self.generalRef = self.usersRef.child(user).child(PersonalDashboard).child(category).child(Barcodes)
         }
         else if screenState == .business {
-            self.generalRef = self.usersRef.child(user).child(BusinessDashboard).child(location!).child("categories").child(category).child(Barcodes)
+            self.generalRef = self.usersRef.child(user).child(BusinessDashboard).child("addresses").child(location!).child("categories").child(category).child(Barcodes)
         }
         else if screenState == .homes {
             self.generalRef = self.usersRef.child(user).child(AddressDashboard).child(location!).child("categories").child(category).child(Barcodes)
@@ -113,7 +115,7 @@ extension DataService {
     
     // Save Address
     
-    func saveAddressTo(user: User, location: Location, business: Business?, screenState: ScreenState) {
+    func saveAddressTo(user: User, location: Location, screenState: ScreenState) {
         
         getUserlocationRef(screenState: screenState, user: user)
         let locationRef = self.generalRef
@@ -152,11 +154,11 @@ extension DataService {
     
     func startingCategories(screenState: ScreenState) -> Dictionary<String, String>? {
         if screenState == .business {
-            let locationDefaultCategories: Dictionary<String, String> = ["Interior re-paint": "", "Exterior re-paint": "", "Commercial": "", "Homebuilders": "", "Renovations": "", "Unsorted": ""]
+            let locationDefaultCategories: Dictionary<String, String> = ["Kitchen": "", "Living Room": "", "Dining Room": "", "Bathroom": "", "Bedrooms": "", "Interior re-paint": "", "Exterior re-paint": "", "Garage":"", "Trim": "", "Hallway": "", "Renovations": "", "Unsorted": ""]
             return locationDefaultCategories
         }
         if screenState == .homes {
-            let locationDefaultCategories: Dictionary<String, String> = ["Kitchen": "", "Living Room": "", "Dining Room": "", "Bathroom": "", "Bedrooms": "", "Garage": "", "Exterior": "", "Trim": "", "Hallway": "", "Unsorted": ""]
+            let locationDefaultCategories: Dictionary<String, String> = ["Kitchen": "", "Living Room": "", "Dining Room": "", "Bathroom": "", "Bedrooms": "", "Interior re-paint": "", "Exterior re-paint": "", "Garage":"", "Trim": "", "Hallway": "", "Renovations": "", "Unsorted": ""]
             return locationDefaultCategories
         }
         return nil

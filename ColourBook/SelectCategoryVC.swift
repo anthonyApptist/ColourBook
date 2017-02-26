@@ -19,14 +19,17 @@ class SelectCategoryVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
     // model
     var categories = [String]()
     var selectedCategory: String = ""
-    var transferCategory: String = ""
+    var saveCategory: String = ""
 
     // view
     var tableView: UITableView!
     var name: UILabel!
     var addButton: UIButton?
     
-    // if business or homes
+    // business location name
+    var business: Business?
+    
+    // address name
     var locationName: String?
     
     var transferProducts = [Paint:String]()
@@ -121,7 +124,7 @@ class SelectCategoryVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         
         cell?.accessoryType = UITableViewCellAccessoryType.checkmark
         
-        self.transferCategory = category!
+        self.saveCategory = category!
     }
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
@@ -129,18 +132,18 @@ class SelectCategoryVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         
         cell?.accessoryType = UITableViewCellAccessoryType.none
         
-        self.transferCategory = ""
+        self.saveCategory = ""
     }
     
     func transferFunction() {
-        if self.transferCategory == "" {
+        if self.saveCategory == "" {
             self.displayNoneSelected()
         }
         else {
             if self.screenState == .transfer {
                 // selected category
                 let personalCategory = self.selectedCategory
-                let transferCategory = self.transferCategory
+                let transferCategory = self.saveCategory
                 
                 // save to selected address category
                 DataService.instance.transfer(products: self.transferProducts, user: self.signedInUser, location: self.locationName, category: personalCategory, destination: transferCategory)
@@ -154,13 +157,13 @@ class SelectCategoryVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
     
     func addToSelectedRow() {
         
-        if self.transferCategory == "" {
+        if self.saveCategory == "" {
             self.displayNoneSelected()
         }
         else {
             if self.screenState == .personal {
                 // selected category
-                let category = self.transferCategory
+                let category = self.saveCategory
                 
                 // save to selected personal category
                 DataService.instance.saveProductIn(user: self.signedInUser.uid, screenState: self.screenState, location: self.locationName, barcode: self.barcode!, value: self.productProfile, category: category)
@@ -169,7 +172,7 @@ class SelectCategoryVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
             }
             if self.screenState == .homes {
                 // selected category
-                let category = self.transferCategory
+                let category = self.saveCategory
                 
                 // save to selected address category
                 DataService.instance.saveProductIn(user: self.signedInUser.uid, screenState: self.screenState, location: self.locationName, barcode: self.barcode!, value: self.productProfile, category: category)
@@ -179,6 +182,17 @@ class SelectCategoryVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
                 
                 self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
 
+            }
+            if self.screenState == .business {
+                let category = self.saveCategory
+                
+                self.productProfile.updateValue(business?.location ?? "", forKey: "addedBy")
+                
+                DataService.instance.saveProductIn(user: self.signedInUser.uid, screenState: self.screenState, location: self.locationName, barcode: self.barcode!, value: self.productProfile, category: category)
+                
+                DataService.instance.saveProductFor(location: self.locationName, screenState: self.screenState, barcode: self.barcode!, value: self.productProfile, category: category)
+                
+                self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
             }
         }
     }

@@ -180,10 +180,12 @@ class GoogleMap: CustomVC, CLLocationManagerDelegate, GMSMapViewDelegate {
         let alertAdd = UIAlertAction(title: "Add", style: .destructive, handler: { (action) in
             
             // add to business database
-            DataService.instance.saveAddress(screenState: self.screenState, location: location, business: nil)
+            DataService.instance.saveAddress(screenState: self.screenState, location: location)
             
             // add to user business bucket list
-            DataService.instance.saveAddressTo(user: self.signedInUser, location: location, business: nil, screenState: self.screenState)
+            DataService.instance.saveAddressTo(user: self.signedInUser, location: location, screenState: self.screenState)
+            
+            self.dismiss(animated: true, completion: nil)
         })
         
         let alertCancel = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
@@ -222,12 +224,12 @@ class GoogleMap: CustomVC, CLLocationManagerDelegate, GMSMapViewDelegate {
                     location.locationName = "\(streetName) - Unit \(unitNumber)"
                     
                     // add to business database
-                    DataService.instance.saveAddress(screenState: self.screenState, location: location, business: nil)
+                    DataService.instance.saveAddress(screenState: self.screenState, location: location)
                     
                     // add to user business bucket list
-                    DataService.instance.saveAddressTo(user: self.signedInUser, location: location, business: nil, screenState: self.screenState)
+                    DataService.instance.saveAddressTo(user: self.signedInUser, location: location, screenState: self.screenState)
                     
-                    self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
+                    self.dismiss(animated: true, completion: nil)
                 }
             }
             else {

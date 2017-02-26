@@ -120,16 +120,17 @@
 		9235DFEC1E36B66A0041C0E6 /* LocationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9235DFEB1E36B66A0041C0E6 /* LocationCell.swift */; };
 		92367A201E16CD4A005B11F9 /* DataService - Delete.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92367A1F1E16CD4A005B11F9 /* DataService - Delete.swift */; };
 		924C00991E07AC1000C73C6A /* ColourView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924C00981E07AC1000C73C6A /* ColourView.swift */; };
+		9258316A1E627B4400807E6A /* SelectAddressVC - Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925831691E627B4400807E6A /* SelectAddressVC - Data.swift */; };
 		9262ECDA1E00FA8A005FD5AC /* FinalizedPaint.csv in Resources */ = {isa = PBXBuildFile; fileRef = 9262ECD81E00FA8A005FD5AC /* FinalizedPaint.csv */; };
 		9262ECDB1E00FA8A005FD5AC /* productlist.csv in Resources */ = {isa = PBXBuildFile; fileRef = 9262ECD91E00FA8A005FD5AC /* productlist.csv */; };
 		926F736C1E5799D400B8A2EC /* CategoryListBusiness.swift in Sources */ = {isa = PBXBuildFile; fileRef = 926F736B1E5799D400B8A2EC /* CategoryListBusiness.swift */; };
-		926F736E1E57B52200B8A2EC /* GoogleMap - Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 926F736D1E57B52200B8A2EC /* GoogleMap - Data.swift */; };
 		926F73701E5932E600B8A2EC /* BusinessPage - Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 926F736F1E5932E600B8A2EC /* BusinessPage - Data.swift */; };
 		9277E0B11DF64F0A001E0B9B /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9277E0B01DF64F0A001E0B9B /* FBSDKCoreKit.framework */; };
 		9277E0B31DF64F63001E0B9B /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9277E0B21DF64F63001E0B9B /* Bolts.framework */; };
 		9277E0BE1DFA7D94001E0B9B /* SearchAddressVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9277E0BD1DFA7D94001E0B9B /* SearchAddressVC.swift */; };
 		9277E0C01DFA8323001E0B9B /* AddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9277E0BF1DFA8323001E0B9B /* AddressView.swift */; };
 		92874DE11E0BB1E400A3D6BC /* UIColourExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92874DE01E0BB1E400A3D6BC /* UIColourExtension.swift */; };
+		928893381E632E5700224817 /* SearchAddress - Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 928893371E632E5700224817 /* SearchAddress - Data.swift */; };
 		929AD0031E03C56E00AB9C63 /* SelectAddressVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929AD0021E03C56E00AB9C63 /* SelectAddressVC.swift */; };
 		92A7D3EF1E15823800345D94 /* DataService - Save.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A7D3EE1E15823800345D94 /* DataService - Save.swift */; };
 		92B4A61B1DE8FD9300F35DED /* CSVViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B4A61A1DE8FD9300F35DED /* CSVViewController.swift */; };
@@ -278,10 +279,10 @@
 		9235DFEB1E36B66A0041C0E6 /* LocationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationCell.swift; sourceTree = "<group>"; };
 		92367A1F1E16CD4A005B11F9 /* DataService - Delete.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DataService - Delete.swift"; sourceTree = "<group>"; };
 		924C00981E07AC1000C73C6A /* ColourView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColourView.swift; sourceTree = "<group>"; };
+		925831691E627B4400807E6A /* SelectAddressVC - Data.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SelectAddressVC - Data.swift"; sourceTree = "<group>"; };
 		9262ECD81E00FA8A005FD5AC /* FinalizedPaint.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = FinalizedPaint.csv; sourceTree = "<group>"; };
 		9262ECD91E00FA8A005FD5AC /* productlist.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = productlist.csv; sourceTree = "<group>"; };
 		926F736B1E5799D400B8A2EC /* CategoryListBusiness.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryListBusiness.swift; sourceTree = "<group>"; };
-		926F736D1E57B52200B8A2EC /* GoogleMap - Data.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GoogleMap - Data.swift"; sourceTree = "<group>"; };
 		926F736F1E5932E600B8A2EC /* BusinessPage - Data.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "BusinessPage - Data.swift"; sourceTree = "<group>"; };
 		9277E0B01DF64F0A001E0B9B /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		9277E0B21DF64F63001E0B9B /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
@@ -289,6 +290,7 @@
 		9277E0BD1DFA7D94001E0B9B /* SearchAddressVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchAddressVC.swift; sourceTree = "<group>"; };
 		9277E0BF1DFA8323001E0B9B /* AddressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressView.swift; sourceTree = "<group>"; };
 		92874DE01E0BB1E400A3D6BC /* UIColourExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColourExtension.swift; sourceTree = "<group>"; };
+		928893371E632E5700224817 /* SearchAddress - Data.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SearchAddress - Data.swift"; sourceTree = "<group>"; };
 		929AD0021E03C56E00AB9C63 /* SelectAddressVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectAddressVC.swift; sourceTree = "<group>"; };
 		92A7D3EE1E15823800345D94 /* DataService - Save.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DataService - Save.swift"; sourceTree = "<group>"; };
 		92B4A61A1DE8FD9300F35DED /* CSVViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CSVViewController.swift; sourceTree = "<group>"; };
@@ -382,7 +384,6 @@
 				92FD3EAE1DE52D26009341C9 /* BarcodeScanner.swift */,
 				925106DE1E313B5D00C987B3 /* Database Config */,
 				92C65CCF1E4592F8006F1905 /* GoogleMap.swift */,
-				926F736D1E57B52200B8A2EC /* GoogleMap - Data.swift */,
 				9277E0B41DF75022001E0B9B /* PostScanVC.swift */,
 				92BDF7BA1E24130E00BE9673 /* ProductInfoView.swift */,
 				920B52731E0E03A8005D5B60 /* SearchControllers */,
@@ -401,6 +402,7 @@
 				926F736B1E5799D400B8A2EC /* CategoryListBusiness.swift */,
 				66CB81BB1E02175300190315 /* SearchViewController.swift */,
 				929AD0021E03C56E00AB9C63 /* SelectAddressVC.swift */,
+				925831691E627B4400807E6A /* SelectAddressVC - Data.swift */,
 				9224DA0D1E418FE60058AD02 /* SelectCategoryVC.swift */,
 				661A47FF1DF6AA3800B56028 /* SettingsVC.swift */,
 				665E63771DE8293A002BA868 /* SignUpViewController.swift */,
@@ -572,6 +574,7 @@
 				92CFEE2D1E00DF9A00F78C78 /* ChooseColourVC.swift */,
 				924C00981E07AC1000C73C6A /* ColourView.swift */,
 				9277E0BD1DFA7D94001E0B9B /* SearchAddressVC.swift */,
+				928893371E632E5700224817 /* SearchAddress - Data.swift */,
 				9277E0BF1DFA8323001E0B9B /* AddressView.swift */,
 				92F6B6F31E2352BE00643AD0 /* AddressItemsVC.swift */,
 				92F6B6F51E2354A100643AD0 /* ProductCell.swift */,
@@ -801,7 +804,6 @@
 				92F8D92C1E41A17700E26601 /* CategoryList - Data.swift in Sources */,
 				920B52721E0E0325005D5B60 /* SearchResultsTableVC.swift in Sources */,
 				665E636E1DE6B55C002BA868 /* IconView.swift in Sources */,
-				926F736E1E57B52200B8A2EC /* GoogleMap - Data.swift in Sources */,
 				66237F441E5CB8C60021527C /* ContractorItemCell.swift in Sources */,
 				92B4A6351DEBB8A100F35DED /* DataService.swift in Sources */,
 				926F736C1E5799D400B8A2EC /* CategoryListBusiness.swift in Sources */,
@@ -814,6 +816,8 @@
 				66242ADF1DF1123E000B651F /* ItemCell.swift in Sources */,
 				66242AE61DF46DD1000B651F /* CustomTextFieldContainer.swift in Sources */,
 				665E63701DE6B573002BA868 /* UIColours.swift in Sources */,
+				9258316A1E627B4400807E6A /* SelectAddressVC - Data.swift in Sources */,
+				928893381E632E5700224817 /* SearchAddress - Data.swift in Sources */,
 				92E9B5181E4C204F005DD4C5 /* ItemListAdd - Data.swift in Sources */,
 				66F942C41DF9241E00C01DAF /* ItemListEditVC.swift in Sources */,
 				665E63781DE8293A002BA868 /* SignUpViewController.swift in Sources */,

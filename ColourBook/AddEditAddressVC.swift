@@ -284,10 +284,10 @@ class AddEditAddressVC: CustomVC, MKMapViewDelegate, UISearchBarDelegate, CLLoca
         let alertCancel = UIAlertAction(title: "Add", style: .cancel, handler: { (action) in
             
             // add to business database
-            DataService.instance.saveAddress(screenState: self.screenState, location: location, business: nil)
+            DataService.instance.saveAddress(screenState: self.screenState, location: location)
             
             // add to user business bucket list
-            DataService.instance.saveAddressTo(user: self.signedInUser, location: location, business: nil, screenState: self.screenState)
+            DataService.instance.saveAddressTo(user: self.signedInUser, location: location, screenState: self.screenState)
         })
         alertView.addAction(alertAction)
         alertView.addAction(alertCancel)
@@ -319,10 +319,10 @@ class AddEditAddressVC: CustomVC, MKMapViewDelegate, UISearchBarDelegate, CLLoca
                     location.locationName = "\(streetName) - Unit \(unitNumber)"
                     
                     // add to business database
-                    DataService.instance.saveAddress(screenState: self.screenState, location: location, business: nil)
+                    DataService.instance.saveAddress(screenState: self.screenState, location: location)
                     
                     // add to user business bucket list
-                    DataService.instance.saveAddressTo(user: self.signedInUser, location: location, business: nil, screenState: self.screenState)
+                    DataService.instance.saveAddressTo(user: self.signedInUser, location: location, screenState: self.screenState)
                     
                     self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
                 }

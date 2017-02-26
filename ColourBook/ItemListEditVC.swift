@@ -97,20 +97,19 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
     }
  */
     
-    // selected location 
-    
+    // selected location
     var selectedLocation: Location? = nil
     var selectedCategory: String? = nil
     
     // paint products
-    
     var paintProducts = [Paint]()
     var selectedPaint = [Paint:String]()
     
     // products
-    
     var products = [ScannedProduct]()
     var selectedProducts = [Int:ScannedProduct]()
+    
+    var businessImages = [String:String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -156,16 +155,36 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         return self.products.count
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        
-        
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ItemCell", for: indexPath) as! ItemCell
-   //     let cell = tableView.dequeueReusableCell(withIdentifier: "ContactorItemCell", for: indexPath) as! ContractorItemCell
-        cell.selectionStyle = UITableViewCellSelectionStyle.none    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let product = self.products[indexPath.row]
-        cell.setViewFor(product: product)
-        return cell
+        
+        if product.addedBy != "" {
+            return 140
+        }
+        else {
+            return 92
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let product = self.products[indexPath.row]
+        
+        // check if business
+        if product.addedBy != "" {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "ContractorItemCell", for: indexPath) as! ContractorItemCell
+            cell.selectionStyle = UITableViewCellSelectionStyle.none
+            cell.businessImage = self.businessImages[product.addedBy!]
+            cell.setViewFor(product: product)
+            return cell
+        }
+        else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "ItemCell", for: indexPath) as! ItemCell
+            cell.selectionStyle = UITableViewCellSelectionStyle.none
+            cell.setViewFor(product: product)
+            return cell
+            
+        }
+//        return UITableViewCell()
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -192,19 +211,22 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
     //DELETE ROWS
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         
-        if editingStyle == .delete {
-            
-            let upcCode = self.products[indexPath.row].upcCode
-            
-            let location = self.selectedLocation
-            
-            // remove from database
-            DataService.instance.removeScannedProductFor(user: self.signedInUser, screenState: self.screenState, barcode: upcCode, location: location?.locationName, category: self.selectedCategory!)
-            
-            //remove from table view list
-            self.products.remove(at: (indexPath as NSIndexPath).row)
-            
-            tableView.deleteRows(at: [indexPath], with: .automatic)
+        let product = self.products[indexPath.row]
+        
+        if product.addedBy == "" {
+            if editingStyle == .delete {
+                let upcCode = self.products[indexPath.row].upcCode
+                
+                let location = self.selectedLocation
+                
+                // remove from database
+                DataService.instance.removeScannedProductFor(user: self.signedInUser, screenState: self.screenState, barcode: upcCode, location: location?.locationName, category: self.selectedCategory!)
+                
+                //remove from table view list
+                self.products.remove(at: (indexPath as NSIndexPath).row)
+                
+                tableView.deleteRows(at: [indexPath], with: .automatic)
+            }
         }
     }
  

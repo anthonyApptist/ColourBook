@@ -24,9 +24,13 @@ class CategoriesListVC: CustomVC, UICollectionViewDelegate, UICollectionViewData
     var categoriesItems = [String:[ScannedProduct]]()
     var categories = [String]()
     
+    // user and business items
+    var userLocationItems = [String:[ScannedProduct]]()
+    var databaseLocationItems = [String:[ScannedProduct]]()
+    
     // products with added by
-    var businessImages = [Business:String]()
-    var locationItems = [Location: [ScannedProduct]]()
+    var businessImages = [String:String]()
+    var locationItems = [String:[ScannedProduct]]()
     
     var paintProducts = [String:[Paint]]()
 
@@ -50,10 +54,10 @@ class CategoriesListVC: CustomVC, UICollectionViewDelegate, UICollectionViewData
     override func viewDidAppear(_ animated: Bool) {
         super.viewWillAppear(false)
         
-        categories = []
-        paintProducts = [:]
-        self.getCategoriesFor(screenState: self.screenState, user: self.signedInUser, location: selectedLocation)
-        self.showActivityIndicator()
+        if self.screenState == .personal || self.screenState == .searching {
+            self.getCategoriesFor(screenState: self.screenState, user: self.signedInUser, location: selectedLocation)
+            self.showActivityIndicator()
+        }
 
      //   app.window?.rootViewController = self
 
@@ -132,7 +136,6 @@ class CategoriesListVC: CustomVC, UICollectionViewDelegate, UICollectionViewData
                     editList.selectedCategory = category
                     editList.screenState = self.screenState
                     editList.selectedLocation = self.selectedLocation
-                    editList.paintProducts = self.paintProducts[category]!
                 }
             }
         }
@@ -146,7 +149,7 @@ class CategoriesListVC: CustomVC, UICollectionViewDelegate, UICollectionViewData
                     editList.selectedCategory = category
                     editList.screenState = self.screenState
                     editList.selectedLocation = self.selectedLocation
-                    editList.paintProducts = self.paintProducts[category]!
+                    editList.businessImages = self.businessImages
                 }
             }
         }

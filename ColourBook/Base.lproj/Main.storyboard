@@ -311,17 +311,17 @@
                                                             <rect key="frame" x="0.0" y="0.0" width="375" height="134.5"/>
                                                             <subviews>
                                                                 <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CIR-ku-acd">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="74.5"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="74"/>
                                                                     <subviews>
                                                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="8mw-a2-ld0">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="104" height="74.5"/>
+                                                                            <rect key="frame" x="0.0" y="0.0" width="104" height="74"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="height" constant="74" id="Acz-Xe-M2b"/>
                                                                                 <constraint firstAttribute="width" constant="104" id="p3e-hS-Rpa"/>
                                                                             </constraints>
                                                                         </imageView>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9fZ-1U-NQB">
-                                                                            <rect key="frame" x="104" y="0.0" width="221" height="74.5"/>
+                                                                            <rect key="frame" x="104" y="0.0" width="221" height="74"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="width" constant="221" id="bo7-5R-j1E"/>
                                                                             </constraints>
@@ -330,7 +330,7 @@
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
                                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SJq-JX-zuz">
-                                                                            <rect key="frame" x="325" y="0.0" width="50" height="74.5"/>
+                                                                            <rect key="frame" x="325" y="0.0" width="50" height="74"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="width" constant="50" id="bVh-rv-NTQ"/>
                                                                             </constraints>
@@ -351,9 +351,10 @@
                                                                     </constraints>
                                                                 </stackView>
                                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="QjM-A8-VLd">
-                                                                    <rect key="frame" x="0.0" y="74.5" width="375" height="60"/>
+                                                                    <rect key="frame" x="0.0" y="74" width="375" height="60.5"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="375" id="GbD-Za-9eF"/>
+                                                                        <constraint firstAttribute="height" constant="60.5" id="c9o-3G-aRk"/>
                                                                     </constraints>
                                                                 </imageView>
                                                             </subviews>
@@ -1277,7 +1278,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="90"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="list" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F21-Gd-3qI">
-                                                <rect key="frame" x="171" y="29" width="32.5" height="29"/>
+                                                <rect key="frame" x="171.5" y="29" width="32.5" height="29"/>
                                                 <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="24"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
@@ -1309,7 +1310,7 @@
                                         <rect key="frame" x="0.0" y="90" width="375" height="50"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="my addresses" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2yV-Nc-pLQ">
-                                                <rect key="frame" x="115" y="11.5" width="144.5" height="28.5"/>
+                                                <rect key="frame" x="115.5" y="11.5" width="144.5" height="28.5"/>
                                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="24"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
@@ -2074,6 +2075,7 @@
                     </view>
                     <connections>
                         <outlet property="imgView" destination="yxi-ij-92z" id="nEY-FB-VRm"/>
+                        <outlet property="locationTextField" destination="f3k-w0-711" id="i8T-yk-cN1"/>
                         <outlet property="nameTextField" destination="uh0-AN-kNw" id="35C-Sb-TOk"/>
                         <outlet property="phoneTextField" destination="kFh-IG-iT4" id="nem-xg-LxQ"/>
                         <outlet property="photoTitleLbl" destination="6xy-HW-DDH" id="fci-3j-TCy"/>
@@ -2189,8 +2191,8 @@
         <segue reference="2NH-Fi-qo3"/>
         <segue reference="ZiE-Dq-MKt"/>
         <segue reference="5FO-LH-Ars"/>
-        <segue reference="2Rt-b8-Nhr"/>
         <segue reference="72x-eM-pG5"/>
         <segue reference="uql-du-HUQ"/>
+        <segue reference="ZK5-XT-XXP"/>
     </inferredMetricsTieBreakers>
 </document>

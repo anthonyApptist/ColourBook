@@ -35,22 +35,26 @@ class ItemListAddVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
     }
     
     @IBAction func settingsBtnPressed(_ sender: AnyObject) {
-
         performSegue(withIdentifier: "ConnectToBusinessSettings", sender: self)
-        
     }
-    
-    // model
-    var locations = [Location]()
     
     // business data
     var businessImages = [String:String]()
     
-    // address data
-    var userLocationItems = [Location:[[String:[[ScannedProduct:String]]]]]()
-    var databaseLocations = [Location:[[String:[[ScannedProduct:String]]]]]()
+    // model
+    var locations = [Location]()
+    var allDatabaseLocation = [String]()
+    
+    // location data
+    var userLocationItems = [String:[ScannedProduct]]()
+    var databaseLocationItems = [String:[ScannedProduct]]()
+    
+    // address data (location name key)
+    var userLocations = [String:[String:[ScannedProduct]]]()
+    var databaseLocations = [String:[String:[ScannedProduct]]]()
     
     // list for category lists
+    var categories = [String]()
     var categoryItems = [String:[ScannedProduct]]()
     
     /*
@@ -112,7 +116,7 @@ class ItemListAddVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "ItemCell", for: indexPath) as! ItemCell
         
-        cell.titleLbl?.text = locations[indexPath.row].locationName
+        cell.titleLbl?.text = self.locations[indexPath.row].locationName
         
         return cell
     }
@@ -168,6 +172,43 @@ class ItemListAddVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
 
             if let detail = segue.destination as? CategoriesListVC {
                 detail.selectedLocation = selectedLocation
+                detail.screenState = self.screenState
+                
+                // model to send over
+                self.categories = []
+                self.categoryItems = [:]
+                
+                if self.allDatabaseLocation.contains(selectedLocation.locationName) {
+                    // add public items to location
+                    let databaseDictionaryOfItems = self.databaseLocations[selectedLocation.locationName]
+                    let userDictionaryOfItems = self.userLocations[selectedLocation.locationName]
+                    
+                    for category in (databaseDictionaryOfItems?.keys)! {
+                        let userCategoryArray = userDictionaryOfItems?[category]
+                        let databaseCategoryArray = databaseDictionaryOfItems?[category]
+                        
+                        let itemsArray: [ScannedProduct] = userCategoryArray! + databaseCategoryArray!
+                        
+                        self.categoryItems.updateValue(itemsArray, forKey: category)
+                        
+                        self.categories.append(category)
+                    }
+                    
+                    detail.userLocationItems = userDictionaryOfItems!
+                    detail.databaseLocationItems = databaseDictionaryOfItems!
+                    detail.categories = self.categories
+                    detail.categoriesItems = self.categoryItems
+                }
+                else {
+                    self.categoryItems = self.userLocations[selectedLocation.locationName]!
+                    
+                    for category in (self.categoryItems.keys) {
+                        self.categories.append(category)
+                    }
+                    
+                    detail.categories = self.categories
+                    detail.categoriesItems = self.categoryItems
+                }
         }
     }
         if segue.identifier == "ConnectToImageSettingsBusiness" {

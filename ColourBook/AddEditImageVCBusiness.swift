@@ -18,6 +18,8 @@ class AddEditImageVCBusiness: CustomVC, UIImagePickerControllerDelegate, UINavig
     
     @IBOutlet weak var nameTextField: UITextField?
     
+    @IBOutlet weak var locationTextField: UITextField!
+    
     @IBOutlet weak var siteTextField: UITextField!
     
     @IBOutlet weak var phoneTextField: UITextField!
@@ -123,11 +125,18 @@ class AddEditImageVCBusiness: CustomVC, UIImagePickerControllerDelegate, UINavig
     
     func saveBtnPressed(_ sender: Any?) {
         
-        let businessArray: [String] = [(self.nameTextField?.text!)!, "" ,self.phoneTextField!.text!, (self.siteTextField?.text!)!, (self.postalCodeTextField?.text!)!, self.image!]
-        
-        DataService.instance.saveBusinessProfile(profile: businessArray, user: self.signedInUser)
-        
-        self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
+        if (self.nameTextField?.text)! == "" || self.locationTextField.text == "" {
+            let alert = UIAlertController(title: "Must have name and location", message: "Enter them", preferredStyle: .alert)
+            let alertAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+            alert.addAction(alertAction)
+            self.present(alert, animated: true, completion: nil)
+        }
+        else {
+            let businessArray: [String] = [(self.nameTextField?.text!)!, self.locationTextField.text!, self.phoneTextField!.text!, (self.siteTextField?.text!)!, (self.postalCodeTextField?.text!)!, self.image!]
+            DataService.instance.saveBusinessProfile(profile: businessArray, user: self.signedInUser)
+            
+            self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
+        }
         
 //        performSegue(withIdentifier: "BackToItemEdit", sender: self) // change to back to ItemListAdd
         
@@ -148,6 +157,7 @@ class AddEditImageVCBusiness: CustomVC, UIImagePickerControllerDelegate, UINavig
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         nameTextField?.resignFirstResponder()
+        locationTextField?.resignFirstResponder()
         siteTextField.resignFirstResponder()
         phoneTextField.resignFirstResponder()
         postalCodeTextField.resignFirstResponder()

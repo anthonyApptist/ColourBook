@@ -44,10 +44,10 @@ extension DataService {
         // save to user businesss dashboard
         self.usersRef.child(user.uid).child(BusinessDashboard).child("Business").child("profile").setValue(newBusinessProfile)
         
-        let pubBusinessProfile = ["name": business.name, "phoneNumber": business.phoneNumber, "website": business.website, "postalCode": business.postalCode, "image": business.image]
+        let pubBusinessProfile = ["name": business.name, "location": business.location, "phoneNumber": business.phoneNumber, "website": business.website, "postalCode": business.postalCode, "image": business.image]
         
         // save to public entry
-        self.businessRef.child("businesses").child(business.location).setValue(pubBusinessProfile)
+        self.businessRef.child(business.location).setValue(pubBusinessProfile)
         
     }
     

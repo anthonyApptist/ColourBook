@@ -25,6 +25,9 @@ class SelectAddressVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
     var name: UILabel!
     var addButton: UIButton?
     
+    // business items add variables
+    var business: Business?
+    
     // products to be transferred
     var transferProducts = [Paint:String]()
     
@@ -160,6 +163,7 @@ class SelectAddressVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
             selectCategory.locationName = self.selectedLocation
             selectCategory.barcode = self.barcode
             selectCategory.productProfile = self.productProfile
+            selectCategory.business = self.business
             
             self.present(selectCategory, animated: true, completion: {
                 
@@ -192,94 +196,5 @@ class SelectAddressVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         }
         alert.addAction(action)
         self.present(alert, animated: true, completion: nil)
-    }
-
-
-    
-    // MARK: - Data
-    
-    func getLocationLists(screenState: ScreenState, user: User) {
-        
-        getLocationsRefFor(user: user, screenState: screenState)
-        
-        let locationsRef = DataService.instance.generalRef
-        
-        locationsRef?.observeSingleEvent(of: .value, with: { (snapshot) in
-            
-            if screenState == .business {
-                if snapshot.hasChild("BusinessProfile") {
-                    
-                    // add the business
-                
-                    if snapshot.hasChild("addresses") {
-                        
-                        for child in snapshot.childSnapshot(forPath: "addresses").children.allObjects {
-                            let addressProfile = child as! FIRDataSnapshot
-                            let profile = addressProfile.value as? NSDictionary
-                            let postalCode = profile?["postalCode"] as! String
-                            let image = profile?["image"] as? String
-                            let name = profile?["name"] as? String
-                            let locationName = addressProfile.key
-                            let location = Location(locationName: locationName, postalCode: postalCode)
-                            location.image = image
-                            location.name = name
-                            
-                            self.locations.append(location)
-                        }
-                        self.tableView.reloadData()
-                        self.hideActivityIndicator()
-                        
-                    }
-                    else {
-                        self.displayNoAddresses()
-                    }
-                }
-                else {
-                    self.displayNoBusinessPage()
-                }
-            }
-            if screenState == .homes || screenState == .transfer {
-                
-                if snapshot.hasChildren() {
-                    
-                    for child in snapshot.children.allObjects {
-                        let addressProfile = child as! FIRDataSnapshot
-                        let profile = addressProfile.value as? NSDictionary
-                        let locationName = addressProfile.key
-                        let postalCode = profile?["postalCode"] as! String
-                        let image = profile?["image"] as? String
-                        let name = profile?["name"] as? String
-                        let location = Location(locationName: locationName, postalCode: postalCode)
-                        
-                        location.image = image
-                        location.name = name
-                        
-                        self.locations.append(location)
-                    }
-                    self.tableView.reloadData()
-                    self.hideActivityIndicator()
-                    
-                }
-                else {
-                    self.displayNoAddresses()
-                }
-            }
-            
-            
-        }, withCancel: { (error) in
-            print(error.localizedDescription)
-            self.hideActivityIndicator()
-            self.displayNoAddresses()
-        })
-    }
-    
-    func getLocationsRefFor(user: User, screenState: ScreenState) {
-        
-        if screenState == .business {
-            DataService.instance.generalRef = DataService.instance.usersRef.child(user.uid).child(BusinessDashboard)
-        }
-        else if screenState == .homes || screenState == .transfer {
-            DataService.instance.generalRef = DataService.instance.usersRef.child(user.uid).child(AddressDashboard)
-        }
     }
 }
