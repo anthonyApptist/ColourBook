@@ -38,6 +38,33 @@ extension DataService {
         }
     }
     
+    // MARK: - Remove Product (Public List) 
+    func removeScannedProductForAddress(barcode: String, location: String?, category: String) {
+        let removeRef = self.addressRef.child(location!).child("businessAdded").child("categories").child(category).child("barcodes")
+        
+        removeRef.child(barcode).removeValue { (error, ref) in
+            if error != nil {
+                print(error?.localizedDescription ?? "")
+            }
+            else {
+                self.checkPath(reference: removeRef.parent!, category: category, location: location)
+            }
+        }
+    }
+    
+    func removeProduct(barcode: String, location: String?, category: String) {
+        let removeRef = self.addressRef.child(location!).child("categories").child(category).child("barcodes")
+        
+        removeRef.child(barcode).removeValue { (error, ref) in
+            if error != nil {
+                print(error?.localizedDescription ?? "")
+            }
+            else {
+                self.checkPath(reference: removeRef.parent!, category: category, location: location)
+            }
+        }
+    }
+    
     
     // MARK: - Remove Product
     

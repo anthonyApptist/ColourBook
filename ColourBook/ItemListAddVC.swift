@@ -40,6 +40,8 @@ class ItemListAddVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         performSegue(withIdentifier: "ConnectToBusinessSettings", sender: self)
     }
     
+    var ref: FIRDatabaseReference?
+    
     // business data
     var businessImages = [String:String]()
     
@@ -83,16 +85,13 @@ class ItemListAddVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         } else {
             self.settingsBtn.isHidden = false
         }
-    
-
+        self.ref = DataService.instance.mainRef
     }
- 
-    
+
     override func viewDidAppear(_ animated: Bool) {
         
         super.viewDidAppear(false)
         
-        locations = []
         self.getLocationLists(screenState: self.screenState, user: self.signedInUser)
         self.showActivityIndicator()
         
@@ -102,6 +101,12 @@ class ItemListAddVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
             self.subTitleLbl?.text = "my addresses"
         }
         titleLbl?.text = titleString
+    }
+    
+    override func backBtnPressed(_ sender: AnyObject) {
+        self.dismiss(animated: true) { 
+            self.ref?.removeAllObservers()
+        }
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -170,62 +175,37 @@ class ItemListAddVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         
         if segue.identifier == "ConnectToCategories" {
             let row = tableView?.indexPathForSelectedRow?.row
-            self.selectedLocation = locations[row!]
-
+            let selectedLocation = locations[row!]
+            
             if let detail = segue.destination as? CategoriesListVC {
-                detail.selectedLocation = self.selectedLocation
+                detail.selectedLocation = selectedLocation
                 detail.screenState = self.screenState
                 
                 // model to send over
                 self.categories = []
                 self.categoryItems = [:]
                 
-                if self.allDatabaseLocation.contains((self.selectedLocation?.locationName)!) {
-                    // add public items to location
-                    let databaseDictionaryOfItems = self.databaseLocations[(self.selectedLocation?.locationName)!]
-                    let userDictionaryOfItems = self.userLocations[(self.selectedLocation?.locationName)!]
+                let userDictionaryOfItems = self.userLocations[selectedLocation.locationName]
+                let databaseDictionaryOfItems = self.databaseLocations[selectedLocation.locationName]
+                
+                for category in (userDictionaryOfItems?.keys)! {
+                    let userCategoryArray = userDictionaryOfItems?[category]
                     
-                    for category in (databaseDictionaryOfItems?.keys)! {
-                        let userCategoryArray = userDictionaryOfItems?[category]
-                        let databaseCategoryArray = databaseDictionaryOfItems?[category]
-                        
-                        let itemsArray: [ScannedProduct] = userCategoryArray! + databaseCategoryArray!
-                        
+                    if let databaseCategoryArray = databaseDictionaryOfItems?[category] {
+                        let itemsArray: [ScannedProduct] = userCategoryArray! + databaseCategoryArray
                         self.categoryItems.updateValue(itemsArray, forKey: category)
-                        
                         self.categories.append(category)
                     }
-                    
-                    detail.userLocationItems = userDictionaryOfItems!
-                    detail.databaseLocationItems = databaseDictionaryOfItems!
-                    detail.categories = self.categories
-                    detail.categoriesItems = self.categoryItems
-                    detail.businessImages = self.businessImages
-                }
-                else {
-                    self.categoryItems = self.userLocations[(self.selectedLocation?.locationName)!]!
-                    
-                    for category in (self.categoryItems.keys) {
+                    else {
+                        self.categoryItems.updateValue(userCategoryArray!, forKey: category)
                         self.categories.append(category)
                     }
-                    
-                    detail.categories = self.categories
-                    detail.categoriesItems = self.categoryItems
                 }
-        }
-    }
-        if segue.identifier == "ConnectToImageSettingsBusiness" {
-            
-            if let detail = segue.destination as? AddEditImageVCBusiness {
-                
-                detail.selectedLocation = self.selectedLocation
-                detail.screenState = screenState
-                
+                detail.categories = self.categories
+                detail.categoriesItems = self.categoryItems
+                detail.businessImages = self.businessImages
             }
         }
 
-        
-    }
-
 }
-
+}

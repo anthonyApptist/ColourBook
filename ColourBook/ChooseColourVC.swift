@@ -71,6 +71,8 @@ class ChooseColourVC: CustomVC, UISearchBarDelegate {
             resultsUpdater.allColours = self.coloursArray
             self.hideActivityIndicator()
             self.searchColourButton.isUserInteractionEnabled = true
+            
+            self.searchColourButtonFunction()   
         })
         
         

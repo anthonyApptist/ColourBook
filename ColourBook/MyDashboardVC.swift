@@ -10,7 +10,7 @@
 import UIKit
 import MapKit
 
-class MyDashboardVC: CustomVC, UIScrollViewDelegate {
+class MyDashboardVC: CustomVC, UIScrollViewDelegate { // updating location here 
     
     let colours = UIColours(col: UIColor.clear)
     
