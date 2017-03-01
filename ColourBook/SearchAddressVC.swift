@@ -15,7 +15,7 @@ protocol AddressResult {
 
 class SearchAddressVC: CustomVC, UISearchBarDelegate {
     
-    var firstTime: Bool = false
+    var firstTime: Bool = true
     
     var addressSC: UISearchController?
 
@@ -117,8 +117,7 @@ class SearchAddressVC: CustomVC, UISearchBarDelegate {
         searchButton.isUserInteractionEnabled = false
         searchButton.addTarget(self, action: #selector(searchButtonFunction), for: .touchUpInside)
         
-        self.showActivityIndicator()
-        self.getDatabase()
+        view.bringSubview(toFront: self.backBtn)
         
         view.addSubview(resultTitleLabel)
         view.addSubview(locationResultView)
@@ -127,14 +126,16 @@ class SearchAddressVC: CustomVC, UISearchBarDelegate {
         view.addSubview(viewButton!)
     }
     
-    override func viewWillAppear(_ animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         self.allAddresses = []
         
         // update searchable addresses
         let resultsUpdater = self.addressSC?.searchResultsUpdater as! SearchResultsTableVC
         resultsUpdater.allAddresses = []
         
-        self.firstTime = false
+        self.showActivityIndicator()
+        self.getDatabase()
+        
         self.searchButton.isUserInteractionEnabled = false
     }
     

@@ -231,6 +231,7 @@ extension SearchAddressVC {
             
             if (self.firstTime) {
                 self.searchButtonFunction()
+                self.firstTime = false
             }
             self.searchButton.isUserInteractionEnabled = true
         })
