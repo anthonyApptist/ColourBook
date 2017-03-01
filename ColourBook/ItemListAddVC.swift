@@ -206,18 +206,6 @@ class ItemListAddVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
                 detail.businessImages = self.businessImages
             }
         }
-        if segue.identifier == "ConnectToImageSettingsBusiness" {
-            
-            if let detail = segue.destination as? AddEditImageVCBusiness {
-                
-                detail.selectedLocation = self.selectedLocation
-                detail.screenState = screenState
-                
-            }
-        }
-
-        
-    }
 
 }
-
+}

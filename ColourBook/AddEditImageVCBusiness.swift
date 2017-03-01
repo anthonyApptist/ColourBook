@@ -51,6 +51,7 @@ class AddEditImageVCBusiness: CustomVC, UIImagePickerControllerDelegate, UINavig
         siteTextField.delegate = self
         phoneTextField.delegate = self
         postalCodeTextField.delegate = self
+        locationTextField.delegate = self
         
         self.getBusinessInfo(user: self.signedInUser)
         
