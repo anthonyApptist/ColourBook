@@ -110,7 +110,7 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
     var selectedProducts = [Int:ScannedProduct]()
     
     var businessImages = [String:String]()
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -140,9 +140,8 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
             self.titleLbl?.text = self.selectedLocation?.locationName
             self.subTitleLbl?.text = self.selectedCategory
         }
-        else {
-            self.getInfo(user: self.signedInUser, screenState: self.screenState, location: self.selectedLocation?.locationName)
-            self.showActivityIndicator()
+        if self.screenState == .personal {
+            
         }
     }
 
@@ -155,34 +154,29 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         return self.products.count
     }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let product = self.products[indexPath.row]
-        
-        if product.addedBy != "" {
-            return 140
-        }
-        else {
-            return 92
-        }
-    }
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let product = self.products[indexPath.row]
-        
-        // check if business
-        if product.addedBy != "" {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "ContractorItemCell", for: indexPath) as! ContractorItemCell
-            cell.selectionStyle = UITableViewCellSelectionStyle.none
-            cell.businessImage = self.businessImages[product.addedBy!]
-            cell.setViewFor(product: product)
-            return cell
+        if self.screenState == .business || self.screenState == .homes {
+            // check if business
+            if product.addedBy != "" {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "ContractorItemCell", for: indexPath) as! ContractorItemCell
+                cell.selectionStyle = UITableViewCellSelectionStyle.none
+                cell.businessImage = self.businessImages[product.addedBy!]
+                cell.setViewFor(product: product)
+                return cell
+            }
+            else {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "ItemCell", for: indexPath) as! ItemCell
+                cell.selectionStyle = UITableViewCellSelectionStyle.none
+                cell.setViewFor(product: product)
+                return cell
+            }
         }
         else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "ItemCell", for: indexPath) as! ItemCell
             cell.selectionStyle = UITableViewCellSelectionStyle.none
             cell.setViewFor(product: product)
             return cell
-            
         }
 //        return UITableViewCell()
     }
@@ -211,37 +205,44 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
     //DELETE ROWS
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         
-        let product = self.products[indexPath.row]
-        
-        if product.addedBy == "" {
-            if editingStyle == .delete {
-                let upcCode = self.products[indexPath.row].upcCode
-                
-                let location = self.selectedLocation
-                
-                // remove from database
-                DataService.instance.removeScannedProductFor(user: self.signedInUser, screenState: self.screenState, barcode: upcCode, location: location?.locationName, category: self.selectedCategory!)
-                
-                //remove from table view list
-                self.products.remove(at: (indexPath as NSIndexPath).row)
-                
-                tableView.deleteRows(at: [indexPath], with: .automatic)
+        if editingStyle == .delete {
+            let upcCode = self.products[indexPath.row].upcCode
+            
+            let location = self.selectedLocation
+            
+            if self.screenState == .business {
+                DataService.instance.removeScannedProductForAddress(barcode: upcCode, location: location?.locationName, category: self.selectedCategory!)
             }
+            
+            if self.screenState == .homes {
+                DataService.instance.removeProduct(barcode: upcCode, location: location?.locationName, category: self.selectedCategory!)
+            }
+            
+            // remove from database
+            DataService.instance.removeScannedProductFor(user: self.signedInUser, screenState: self.screenState, barcode: upcCode, location: location?.locationName, category: self.selectedCategory!)
+            
+            //remove from table view list
+            self.products.remove(at: (indexPath as NSIndexPath).row)
+            
+            tableView.deleteRows(at: [indexPath], with: .automatic)
         }
     }
  
     //DELETE ROWS
 
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
-        
-        if (self.products.count) > 0 {
-            if(indexPath as NSIndexPath).row >= (self.products.count) {
-                return .insert
-            } else {
+        if self.screenState == .homes {
+            let product = self.products[indexPath.row]
+            if product.addedBy == "" {
                 return .delete
             }
+            else {
+                return .none
+            }
         }
-        return .none
+        else {
+            return .delete
+        }
     }
     
     // MARK: - Segue to Detail and Settings

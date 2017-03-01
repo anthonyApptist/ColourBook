@@ -34,6 +34,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         FIRApp.configure()
         
+        FIRDatabase.database().persistenceEnabled = true    
+        
         GMSServices.provideAPIKey("AIzaSyCG9tiEX9Kh8EmX3kN-o7IpOOvHm_rBSKM")
         
         GMSPlacesClient.provideAPIKey("AIzaSyCG9tiEX9Kh8EmX3kN-o7IpOOvHm_rBSKM")
@@ -83,11 +85,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     window?.makeKeyAndVisible()
                 }
             }
-    
         }
         
         return true
-
     }
 
     func applicationWillResignActive(_ application: UIApplication) {

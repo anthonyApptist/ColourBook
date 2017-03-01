@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import FirebaseDatabase
 
 class CategoriesListVC: CustomVC, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
@@ -19,14 +20,13 @@ class CategoriesListVC: CustomVC, UICollectionViewDelegate, UICollectionViewData
     
     @IBOutlet weak var bottomView: UIView!
     
+    // ref
+    var ref: FIRDatabaseReference?
+    
     // data
     var selectedLocation: Location? = nil
     var categoriesItems = [String:[ScannedProduct]]()
     var categories = [String]()
-    
-    // user and business items
-    var userLocationItems = [String:[ScannedProduct]]()
-    var databaseLocationItems = [String:[ScannedProduct]]()
     
     // products with added by
     var businessImages = [String:String]()
@@ -41,6 +41,8 @@ class CategoriesListVC: CustomVC, UICollectionViewDelegate, UICollectionViewData
         
         collectionView.delegate = self
         collectionView.dataSource = self
+        
+        self.getCategoriesFrom(user: self.signedInUser, screenState: screenState, location: selectedLocation)
     }
     
     @IBAction func scanBtnPressed(_ sender: AnyObject) {
@@ -59,13 +61,14 @@ class CategoriesListVC: CustomVC, UICollectionViewDelegate, UICollectionViewData
             self.showActivityIndicator()
         }
 
+        
      //   app.window?.rootViewController = self
 
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        let kWhateverHeightYouWant = 100
+        let kWhateverHeightYouWant = 85
         return CGSize(width: collectionView.bounds.size.width, height: CGFloat(kWhateverHeightYouWant))
     }
     
@@ -136,6 +139,7 @@ class CategoriesListVC: CustomVC, UICollectionViewDelegate, UICollectionViewData
                     editList.selectedCategory = category
                     editList.screenState = self.screenState
                     editList.selectedLocation = self.selectedLocation
+                    editList.businessImages = self.businessImages
                 }
             }
         }
