@@ -41,8 +41,6 @@ class CategoriesListVC: CustomVC, UICollectionViewDelegate, UICollectionViewData
         
         collectionView.delegate = self
         collectionView.dataSource = self
-        
-        self.getCategoriesFrom(user: self.signedInUser, screenState: screenState, location: selectedLocation)
     }
     
     @IBAction func scanBtnPressed(_ sender: AnyObject) {
@@ -56,7 +54,7 @@ class CategoriesListVC: CustomVC, UICollectionViewDelegate, UICollectionViewData
     override func viewDidAppear(_ animated: Bool) {
         super.viewWillAppear(false)
         
-        if self.screenState == .personal || self.screenState == .searching {
+        if self.screenState == .personal {
             self.getCategoriesFor(screenState: self.screenState, user: self.signedInUser, location: selectedLocation)
             self.showActivityIndicator()
         }
@@ -106,6 +104,7 @@ class CategoriesListVC: CustomVC, UICollectionViewDelegate, UICollectionViewData
             itemsList.products = self.categoriesItems[category!]!
             itemsList.selectedLocation = self.selectedLocation
             itemsList.screenState = self.screenState
+            itemsList.businessImages = self.businessImages
             self.present(itemsList, animated: true, completion: { 
                 
             })

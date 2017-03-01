@@ -128,8 +128,6 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         }
         
         self.transferItemBtn.isHidden = true
-        
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -156,9 +154,9 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let product = self.products[indexPath.row]
-        if self.screenState == .business || self.screenState == .homes {
+        if self.screenState == .business || self.screenState == .homes || self.screenState == .searching {
             // check if business
-            if product.addedBy != "" {
+            if product.addedBy != nil {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "ContractorItemCell", for: indexPath) as! ContractorItemCell
                 cell.selectionStyle = UITableViewCellSelectionStyle.none
                 cell.businessImage = self.businessImages[product.addedBy!]
@@ -239,6 +237,9 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
             else {
                 return .none
             }
+        }
+        if self.screenState == .searching {
+            return .none
         }
         else {
             return .delete

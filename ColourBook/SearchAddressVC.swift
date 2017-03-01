@@ -15,6 +15,8 @@ protocol AddressResult {
 
 class SearchAddressVC: CustomVC, UISearchBarDelegate {
     
+    var firstTime: Bool = false
+    
     var addressSC: UISearchController?
 
     var resultTitleLabel: UILabel!
@@ -25,15 +27,28 @@ class SearchAddressVC: CustomVC, UISearchBarDelegate {
     
     var viewButton: UIButton?
 
-    var addressDictionary: Dictionary<Location, String> = [:]
     var allAddresses = [Location]()
+    
+    var categories = [String]()
+    var categoryItems = [String:[ScannedProduct]]()
+    
+    var locationItems = [String:[String:[ScannedProduct]]]()
+    var databaseLocationItems = [String:[String:[ScannedProduct]]]()
+    
+    var businessImages = [String:String]()
+    
+    var addressDictionary = [String:String]()
+    
+    var businessLocations = [String]()
+    
+    var ref: FIRDatabaseReference?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.showActivityIndicator()
+        self.ref = DataService.instance.mainRef
         
-        getDatabase()
+        self.backButtonNeeded = true
         
         // Search Controller
         let resultsUpdater = SearchResultsTableVC()
@@ -66,8 +81,7 @@ class SearchAddressVC: CustomVC, UISearchBarDelegate {
         resultTitleLabel.textAlignment = .center
         resultTitleLabel.numberOfLines = 0
         resultTitleLabel.adjustsFontSizeToFitWidth = true
-        resultTitleLabel.text = "Press Search"
-        resultTitleLabel.textColor = UIColor.clear
+        resultTitleLabel.textColor = UIColor.white
         
         // results view
         
@@ -103,6 +117,9 @@ class SearchAddressVC: CustomVC, UISearchBarDelegate {
         searchButton.isUserInteractionEnabled = false
         searchButton.addTarget(self, action: #selector(searchButtonFunction), for: .touchUpInside)
         
+        self.showActivityIndicator()
+        self.getDatabase()
+        
         view.addSubview(resultTitleLabel)
         view.addSubview(locationResultView)
         view.addSubview(searchButton)
@@ -110,15 +127,51 @@ class SearchAddressVC: CustomVC, UISearchBarDelegate {
         view.addSubview(viewButton!)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        self.allAddresses = []
+        
+        // update searchable addresses
+        let resultsUpdater = self.addressSC?.searchResultsUpdater as! SearchResultsTableVC
+        resultsUpdater.allAddresses = []
+        
+        self.firstTime = false
+        self.searchButton.isUserInteractionEnabled = false
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        self.ref?.removeAllObservers()
+    }
+    
     // Mark: - Button Functions
     
     func viewButtonFunction() {
-        
         let categories = storyboard?.instantiateViewController(withIdentifier: "CategoriesListVC") as! CategoriesListVC
-        
         categories.screenState = .searching
-        
         categories.selectedLocation = self.currentLocation
+        
+        // model to send over
+        self.categories = []
+        self.categoryItems = [:]
+        
+        let userDictionaryOfItems = self.locationItems[(self.currentLocation?.locationName)!]
+        let databaseDictionaryOfItems = self.databaseLocationItems[(self.currentLocation?.locationName)!]
+        
+        for category in (userDictionaryOfItems?.keys)! {
+            let userCategoryArray = userDictionaryOfItems?[category]
+            
+            if let databaseCategoryArray = databaseDictionaryOfItems?[category] {
+                let itemsArray: [ScannedProduct] = userCategoryArray! + databaseCategoryArray
+                self.categoryItems.updateValue(itemsArray, forKey: category)
+                self.categories.append(category)
+            }
+            else {
+                self.categoryItems.updateValue(userCategoryArray!, forKey: category)
+                self.categories.append(category)
+            }
+        }
+        categories.categories = self.categories
+        categories.categoriesItems = self.categoryItems
+        categories.businessImages = self.businessImages
         
         self.present(categories, animated: true, completion: {
             
@@ -126,11 +179,7 @@ class SearchAddressVC: CustomVC, UISearchBarDelegate {
     }
     
     func searchButtonFunction() {
-        
-        self.present(self.addressSC!, animated: true) {
-            
-        }
-        
+        self.present(self.addressSC!, animated: true)
     }
     
 }
@@ -139,7 +188,7 @@ extension SearchAddressVC: AddressResult {
     func setResultsViewFor(location: Location) {
         
         // check location
-        let resultTitle = self.addressDictionary[location]
+        let resultTitle = self.addressDictionary[location.locationName]
         
         // set address or business result
         self.resultTitleLabel.text = resultTitle
@@ -168,8 +217,13 @@ extension SearchAddressVC: AddressResult {
         // add result view
         self.locationResultView.addSubview(addressVC)
         
-        // view button is active
-        self.viewButton?.isUserInteractionEnabled = true
+        if resultTitle == "Business" {
+            self.viewButton?.alpha = 0.0
+        }
+        if resultTitle == "Address" {
+            // view button is active
+            self.viewButton?.isUserInteractionEnabled = true
+        }
         
         // set current location
         self.currentLocation = location

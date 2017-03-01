@@ -207,7 +207,7 @@ class GoogleMap: CustomVC, CLLocationManagerDelegate, GMSMapViewDelegate {
         
         // unit number text field
         alertView.addTextField { (textfield) in
-            textfield.keyboardType = .numberPad
+            textfield.keyboardType = .namePhonePad
         }
         
         let alertAction = UIAlertAction(title: "Add", style: .destructive, handler: { (action) in

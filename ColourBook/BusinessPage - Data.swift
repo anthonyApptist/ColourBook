@@ -24,15 +24,16 @@ extension AddEditImageVCBusiness {
                 let businessProfile = snapshot.childSnapshot(forPath: "profile").value as? NSDictionary
                 
                 let name = businessProfile?["name"] as! String
-//                let location = businessProfile?["location"] as! String
+                let location = businessProfile?["location"] as! String
                 let phoneNumber = businessProfile?["phoneNumber"] as? String
                 let website = businessProfile?["website"] as? String
                 let postalCode = businessProfile?["postalCode"] as? String
                 let image = businessProfile?["image"] as? String
                 
-                let business = Business(name: name, location    : "", phoneNumber: phoneNumber, website: website, postalCode: postalCode, image: image)
+                let business = Business(name: name, location: location, phoneNumber: phoneNumber, website: website, postalCode: postalCode, image: image)
                 
                 self.nameTextField?.text = business.name
+                self.locationTextField?.text = business.location
                 self.siteTextField?.text = business.website
                 self.phoneTextField?.text = business.phoneNumber
                 self.postalCodeTextField.text = business.postalCode
@@ -47,6 +48,7 @@ extension AddEditImageVCBusiness {
             }
             else {
                 self.nameTextField?.text = ""
+                self.locationTextField?.text = ""
                 self.siteTextField?.text = ""
                 self.phoneTextField?.text = ""
                 self.postalCodeTextField.text = ""
@@ -56,9 +58,10 @@ extension AddEditImageVCBusiness {
             }
             
             
-    }, withCancel: { (error) in
+        }, withCancel: { (error) in
             // error
             self.nameTextField?.text = ""
+            self.locationTextField?.text = ""
             self.siteTextField?.text = ""
             self.phoneTextField?.text = ""
             self.postalCodeTextField.text = ""
