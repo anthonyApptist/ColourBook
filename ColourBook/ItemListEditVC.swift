@@ -25,6 +25,8 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
     
     var selectionOn: Bool = false
     
+    var deleteItem: Bool = false
+    
     @IBAction func transferItemsBtnPressed(_ sender: AnyObject) {
         
         if selectedProducts.isEmpty {
@@ -201,7 +203,14 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
             }
         }
     }
-
+    
+    override func backBtnPressed(_ sender: AnyObject) {
+        if(self.deleteItem) {
+            self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
+        } else {
+            dismiss(animated: false, completion: nil)
+        }
+    }
 
     //DELETE ROWS
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
@@ -217,7 +226,10 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
             
             if self.screenState == .homes {
                 DataService.instance.removeProduct(barcode: upcCode, location: location?.locationName, category: self.selectedCategory!)
+
             }
+            
+            self.deleteItem = true
             
             // remove from database
             DataService.instance.removeScannedProductFor(user: self.signedInUser, screenState: self.screenState, barcode: upcCode, location: location?.locationName, category: self.selectedCategory!)
@@ -226,6 +238,7 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
             self.products.remove(at: (indexPath as NSIndexPath).row)
             
             tableView.deleteRows(at: [indexPath], with: .automatic)
+      
         }
     }
  
