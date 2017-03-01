@@ -2177,11 +2177,11 @@
         <image name="settingsIcon" width="115" height="113"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="MRZ-gX-R33"/>
+        <segue reference="ydO-EM-FjA"/>
+        <segue reference="72x-eM-pG5"/>
         <segue reference="2NH-Fi-qo3"/>
         <segue reference="ZiE-Dq-MKt"/>
         <segue reference="5FO-LH-Ars"/>
-        <segue reference="72x-eM-pG5"/>
         <segue reference="uql-du-HUQ"/>
         <segue reference="ZK5-XT-XXP"/>
     </inferredMetricsTieBreakers>

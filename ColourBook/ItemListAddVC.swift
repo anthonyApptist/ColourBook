@@ -170,20 +170,20 @@ class ItemListAddVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         
         if segue.identifier == "ConnectToCategories" {
             let row = tableView?.indexPathForSelectedRow?.row
-            let selectedLocation = locations[row!]
+            self.selectedLocation = locations[row!]
 
             if let detail = segue.destination as? CategoriesListVC {
-                detail.selectedLocation = selectedLocation
+                detail.selectedLocation = self.selectedLocation
                 detail.screenState = self.screenState
                 
                 // model to send over
                 self.categories = []
                 self.categoryItems = [:]
                 
-                if self.allDatabaseLocation.contains(selectedLocation.locationName) {
+                if self.allDatabaseLocation.contains((self.selectedLocation?.locationName)!) {
                     // add public items to location
-                    let databaseDictionaryOfItems = self.databaseLocations[selectedLocation.locationName]
-                    let userDictionaryOfItems = self.userLocations[selectedLocation.locationName]
+                    let databaseDictionaryOfItems = self.databaseLocations[(self.selectedLocation?.locationName)!]
+                    let userDictionaryOfItems = self.userLocations[(self.selectedLocation?.locationName)!]
                     
                     for category in (databaseDictionaryOfItems?.keys)! {
                         let userCategoryArray = userDictionaryOfItems?[category]
@@ -203,7 +203,7 @@ class ItemListAddVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
                     detail.businessImages = self.businessImages
                 }
                 else {
-                    self.categoryItems = self.userLocations[selectedLocation.locationName]!
+                    self.categoryItems = self.userLocations[(self.selectedLocation?.locationName)!]!
                     
                     for category in (self.categoryItems.keys) {
                         self.categories.append(category)

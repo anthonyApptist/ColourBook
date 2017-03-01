@@ -155,16 +155,6 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         return self.products.count
     }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let product = self.products[indexPath.row]
-        
-        if product.addedBy != "" {
-            return 140
-        }
-        else {
-            return 92
-        }
-    }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let product = self.products[indexPath.row]
