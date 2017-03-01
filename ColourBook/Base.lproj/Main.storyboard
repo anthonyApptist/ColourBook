@@ -440,6 +440,7 @@
                     <connections>
                         <outlet property="bottomView" destination="QjO-yo-MSi" id="zLm-0g-2q6"/>
                         <outlet property="selectItemBtn" destination="T0G-1r-Eny" id="J4C-c0-4MH"/>
+                        <outlet property="settingsBtn" destination="5XL-qD-otj" id="iIX-g2-RrK"/>
                         <outlet property="subTitleLbl" destination="a5v-hM-FUp" id="Oqy-CX-Mxv"/>
                         <outlet property="tableView" destination="s3q-R9-cQ2" id="FKV-Dy-Nxk"/>
                         <outlet property="titleLbl" destination="Y6K-be-krh" id="Ts5-Ld-tP1"/>
@@ -2181,12 +2182,12 @@
         <image name="settingsIcon" width="115" height="113"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="uql-du-HUQ"/>
+        <segue reference="ydO-EM-FjA"/>
+        <segue reference="72x-eM-pG5"/>
         <segue reference="2NH-Fi-qo3"/>
         <segue reference="ZiE-Dq-MKt"/>
-        <segue reference="5FO-LH-Ars"/>
-        <segue reference="72x-eM-pG5"/>
-        <segue reference="ydO-EM-FjA"/>
+        <segue reference="N4L-tY-cc2"/>
         <segue reference="ZK5-XT-XXP"/>
-        <segue reference="uql-du-HUQ"/>
     </inferredMetricsTieBreakers>
 </document>

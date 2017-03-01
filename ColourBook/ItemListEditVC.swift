@@ -23,6 +23,8 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet var selectItemBtn: UIButton!
     
+    @IBOutlet var settingsBtn: UIButton!
+    
     var selectionOn: Bool = false
     
     var deleteItem: Bool = false
@@ -127,6 +129,12 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         else {
             selectItemBtn.isHidden = true
             selectItemBtn.isUserInteractionEnabled = false
+        }
+        
+        if self.screenState == .searching {
+            self.settingsBtn.isHidden = true
+        } else {
+            self.settingsBtn.isHidden = false
         }
         
         self.transferItemBtn.isHidden = true
