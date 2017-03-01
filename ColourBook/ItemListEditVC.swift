@@ -121,6 +121,10 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         tableView?.delegate = self
         tableView?.dataSource = self
         
+        if screenState == .searching {
+            
+        }
+        
         if screenState == .personal {
             selectItemBtn.isHidden = false
         }
