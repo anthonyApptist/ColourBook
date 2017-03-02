@@ -148,6 +148,8 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         
         super.viewWillAppear(false)
         
+        titleLbl?.adjustsFontSizeToFitWidth = true
+        
         if self.screenState == .searching {
             self.titleLbl?.text = self.selectedLocation?.locationName
             self.subTitleLbl?.text = self.selectedCategory
@@ -155,6 +157,9 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         if self.screenState == .personal {
             
         }
+        
+        titleLbl?.leadingAnchor.constraint(equalTo: self.backBtn.trailingAnchor, constant: 15).isActive = true
+
     }
 
     

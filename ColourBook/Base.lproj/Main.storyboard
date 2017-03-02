@@ -1186,9 +1186,8 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="g11-zp-tb2">
                                         <rect key="frame" x="0.0" y="589" width="375" height="78"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="D8X-QZ-g96">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="D8X-QZ-g96">
                                                 <rect key="frame" x="0.0" y="0.0" width="375" height="78"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="36"/>
                                                 <state key="normal" title="save">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1197,7 +1196,11 @@
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="D8X-QZ-g96" secondAttribute="trailing" id="6oB-xp-H9h"/>
+                                            <constraint firstItem="D8X-QZ-g96" firstAttribute="leading" secondItem="g11-zp-tb2" secondAttribute="leading" id="7Af-hb-aZV"/>
+                                            <constraint firstAttribute="bottom" secondItem="D8X-QZ-g96" secondAttribute="bottom" id="82f-dl-OFu"/>
                                             <constraint firstAttribute="width" secondItem="g11-zp-tb2" secondAttribute="height" multiplier="125:26" id="Lo6-Fa-r5q"/>
+                                            <constraint firstItem="D8X-QZ-g96" firstAttribute="top" secondItem="g11-zp-tb2" secondAttribute="top" id="MEp-XH-5sP"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -2183,11 +2186,11 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="uql-du-HUQ"/>
-        <segue reference="ydO-EM-FjA"/>
-        <segue reference="72x-eM-pG5"/>
-        <segue reference="2NH-Fi-qo3"/>
-        <segue reference="ZiE-Dq-MKt"/>
-        <segue reference="N4L-tY-cc2"/>
+        <segue reference="Com-EP-1Te"/>
         <segue reference="ZK5-XT-XXP"/>
+        <segue reference="N4L-tY-cc2"/>
+        <segue reference="ZiE-Dq-MKt"/>
+        <segue reference="2NH-Fi-qo3"/>
+        <segue reference="72x-eM-pG5"/>
     </inferredMetricsTieBreakers>
 </document>
