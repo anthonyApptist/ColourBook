@@ -27,7 +27,6 @@ class SwatchView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.alpha = 0.5
         
     }
     
@@ -42,14 +41,13 @@ class SwatchView: UIView {
             isExpanded = true
             self.animateToScale(scaleX: 1.0, scaleY: 15.0)
             UIView.animate(withDuration: 1.0, animations: { 
-                self.alpha = 1.0
             })
         } else if(isExpanded == true) {
             
             isExpanded = false
             self.animateToScale(scaleX: 1.0, scaleY: 1.0)
             UIView.animate(withDuration: 1.0, animations: {
-                self.alpha = 0.5
+                
             })
         }
         

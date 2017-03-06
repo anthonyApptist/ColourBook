@@ -85,9 +85,7 @@ class ItemListDetailVC: CustomVC {
         if detailItem?.manufacturer == "Sherwin Williams" {
             self.bannerImgView?.image = UIImage(named: "Sherwin Williams Photo")
         }
-        
     }
-
 }
 
 extension ItemListDetailVC: ReportDelegate {
