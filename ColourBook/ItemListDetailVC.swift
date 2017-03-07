@@ -30,9 +30,12 @@ class ItemListDetailVC: CustomVC {
     @IBOutlet var reportBtn: UIButton?
 
     @IBOutlet weak var colourSwatch: SwatchView!
-    
-    
+
     var detailItem: ScannedProduct?
+    
+    var currentLocation: String?
+    
+    var currentCategory: String?
     
     @IBAction func flagBtnPressed() {
         ReportHandler.sharedInstance.show(container: self)
@@ -92,6 +95,6 @@ class ItemListDetailVC: CustomVC {
 
 extension ItemListDetailVC: ReportDelegate {
     func didPressReport() {
-        DataService.instance.reportPressedFor(item: detailItem!, user: self.signedInUser)
+        DataService.instance.reportPressedFor(item: self.detailItem!, user: self.signedInUser, location: self.currentLocation!, category: self.currentCategory!)
     }
 }

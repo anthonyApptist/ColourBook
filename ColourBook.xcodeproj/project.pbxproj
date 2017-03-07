@@ -128,6 +128,7 @@
 		9277E0B31DF64F63001E0B9B /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9277E0B21DF64F63001E0B9B /* Bolts.framework */; };
 		9277E0BE1DFA7D94001E0B9B /* SearchAddressVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9277E0BD1DFA7D94001E0B9B /* SearchAddressVC.swift */; };
 		9277E0C01DFA8323001E0B9B /* AddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9277E0BF1DFA8323001E0B9B /* AddressView.swift */; };
+		927DE5D11E6DC3D1008F92BD /* SelectRetailerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927DE5D01E6DC3D1008F92BD /* SelectRetailerVC.swift */; };
 		92874DE11E0BB1E400A3D6BC /* UIColourExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92874DE01E0BB1E400A3D6BC /* UIColourExtension.swift */; };
 		928893381E632E5700224817 /* SearchAddress - Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 928893371E632E5700224817 /* SearchAddress - Data.swift */; };
 		929AD0031E03C56E00AB9C63 /* SelectAddressVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929AD0021E03C56E00AB9C63 /* SelectAddressVC.swift */; };
@@ -287,6 +288,7 @@
 		9277E0B41DF75022001E0B9B /* PostScanVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostScanVC.swift; sourceTree = "<group>"; };
 		9277E0BD1DFA7D94001E0B9B /* SearchAddressVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchAddressVC.swift; sourceTree = "<group>"; };
 		9277E0BF1DFA8323001E0B9B /* AddressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressView.swift; sourceTree = "<group>"; };
+		927DE5D01E6DC3D1008F92BD /* SelectRetailerVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectRetailerVC.swift; sourceTree = "<group>"; };
 		92874DE01E0BB1E400A3D6BC /* UIColourExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColourExtension.swift; sourceTree = "<group>"; };
 		928893371E632E5700224817 /* SearchAddress - Data.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SearchAddress - Data.swift"; sourceTree = "<group>"; };
 		929AD0021E03C56E00AB9C63 /* SelectAddressVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectAddressVC.swift; sourceTree = "<group>"; };
@@ -391,20 +393,18 @@
 				92E9B5171E4C204F005DD4C5 /* ItemListAdd - Data.swift */,
 				6692C3F71E4076FF00A18D07 /* CategoriesListVC.swift */,
 				92F8D92B1E41A17600E26601 /* CategoryList - Data.swift */,
-				661A47F91DF6A9B400B56028 /* AddEditAddressVC.swift */,
 				66F942C31DF9241E00C01DAF /* ItemListEditVC.swift */,
 				92E9B5151E4C19BA005DD4C5 /* ItemListEdit - Data.swift */,
 				661A47F51DF6A95700B56028 /* AddEditImageVC.swift */,
 				661A47F71DF6A97700B56028 /* ItemListDetailVC.swift */,
-				66F942C51DF92CA500C01DAF /* CustomVC.swift */,
 				66CB81BB1E02175300190315 /* SearchViewController.swift */,
 				929AD0021E03C56E00AB9C63 /* SelectAddressVC.swift */,
 				925831691E627B4400807E6A /* SelectAddressVC - Data.swift */,
 				9224DA0D1E418FE60058AD02 /* SelectCategoryVC.swift */,
 				661A47FF1DF6AA3800B56028 /* SettingsVC.swift */,
 				665E63771DE8293A002BA868 /* SignUpViewController.swift */,
-				6609E2C11E480DCA00F547A9 /* TransferToTableViewController.swift */,
-				6636465B1DE0C3EA00E6D719 /* TutorialVC.swift */,
+				927DE5D01E6DC3D1008F92BD /* SelectRetailerVC.swift */,
+				66F942C51DF92CA500C01DAF /* CustomVC.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -462,6 +462,7 @@
 				66242AE01DF24EBB000B651F /* Common */,
 				66242AD31DEF78AF000B651F /* Other */,
 				66242AD21DEF7524000B651F /* Controller */,
+				927DE5D21E6DC729008F92BD /* Dispose */,
 				66242AD11DEF7520000B651F /* View */,
 				66242AD01DEF751A000B651F /* Model */,
 			);
@@ -586,6 +587,16 @@
 				92B4A61A1DE8FD9300F35DED /* CSVViewController.swift */,
 			);
 			name = "Database Config";
+			sourceTree = "<group>";
+		};
+		927DE5D21E6DC729008F92BD /* Dispose */ = {
+			isa = PBXGroup;
+			children = (
+				6609E2C11E480DCA00F547A9 /* TransferToTableViewController.swift */,
+				6636465B1DE0C3EA00E6D719 /* TutorialVC.swift */,
+				661A47F91DF6A9B400B56028 /* AddEditAddressVC.swift */,
+			);
+			name = Dispose;
 			sourceTree = "<group>";
 		};
 		F29FF469050AE8777EE69F42 /* Pods */ = {
@@ -812,6 +823,7 @@
 				66242ADF1DF1123E000B651F /* ItemCell.swift in Sources */,
 				66242AE61DF46DD1000B651F /* CustomTextFieldContainer.swift in Sources */,
 				665E63701DE6B573002BA868 /* UIColours.swift in Sources */,
+				927DE5D11E6DC3D1008F92BD /* SelectRetailerVC.swift in Sources */,
 				9258316A1E627B4400807E6A /* SelectAddressVC - Data.swift in Sources */,
 				928893381E632E5700224817 /* SearchAddress - Data.swift in Sources */,
 				92E9B5181E4C204F005DD4C5 /* ItemListAdd - Data.swift in Sources */,
