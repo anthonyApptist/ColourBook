@@ -10,7 +10,7 @@
 import UIKit
 import MapKit
 
-class MyDashboardVC: CustomVC, UIScrollViewDelegate { // updating location here 
+class MyDashboardVC: CustomVC, UIScrollViewDelegate { // updating location here
     
     let colours = UIColours(col: UIColor.clear)
     
@@ -28,15 +28,18 @@ class MyDashboardVC: CustomVC, UIScrollViewDelegate { // updating location here
     
     @IBOutlet weak var descLbl: UILabel!
     
+    let logoImgView = UIImageView(image: UIImage(named: "darkgreen"))
+
+    
     var descString: String! = "my bucket list"
         
     @IBOutlet weak var viewBtn: UIButton!
-    
     
     @IBOutlet weak var scanBtn: UIButton!
     
     let locationManager = CLLocationManager()
     
+     let searchTextField = UITextField()
     
     @IBOutlet weak var pageCtrl: UIPageControl!
     
@@ -159,10 +162,27 @@ class MyDashboardVC: CustomVC, UIScrollViewDelegate { // updating location here
         pageThree.imageView = UIImageView(frame: CGRect(x: 33, y: 48, width: 66, height: 94))
         pageThree.imageView?.image = UIImage(named: "homeIcon")
         
-        
+       
         pageFour.frame.origin = CGPoint(x: pageThree.frame.origin.x + scrollViewWidth, y: scrollView.bounds.size.height/2 - pageFour.frame.height/2)
-        pageFour.imageView = UIImageView(frame: CGRect(x: 26, y: 56, width: 72, height: 81))
-        pageFour.imageView?.image = UIImage(named: "search")
+        
+   //     let textField = UITextField(frame: CGRect(x: 0, y: pageFour.frame.height/2 - pageFour.frame.height/2, width: UIScreen.main.bounds.width/2, height: pageFour.frame.height/2))
+       
+        searchTextField.translatesAutoresizingMaskIntoConstraints = false
+        searchTextField.borderRect(forBounds: searchTextField.bounds)
+        searchTextField.borderStyle = .roundedRect
+        searchTextField.layer.borderColor = UIColor.black.cgColor
+        searchTextField.textAlignment = .center
+        searchTextField.placeholder = "Search an address"
+        pageFour.addSubview(searchTextField)
+        searchTextField.centerXAnchor.constraint(equalTo: pageFour.centerXAnchor).isActive = true
+        searchTextField.centerYAnchor.constraint(equalTo: pageFour.centerYAnchor).isActive = true
+        searchTextField.widthAnchor.constraint(equalTo: pageFour.widthAnchor, multiplier: 2.0).isActive = true
+        searchTextField.heightAnchor.constraint(equalTo: pageFour.heightAnchor, multiplier: 0.2).isActive = true
+     //   pageFour.imageView = UIImageView(frame: CGRect(x: 26, y: 56, width: 72, height: 81))
+     //   pageFour.imageView?.image = UIImage(named: "search")
+ 
+        searchTextField.delegate = self
+        
         
         pageFive.frame.origin = CGPoint(x: pageFour.frame.origin.x + scrollViewWidth, y: scrollView.bounds.size.height/2 - pageFive.frame.height/2)
         pageFive.imageView = UIImageView(frame: CGRect(x: 12.2, y: 40, width: 106.6, height: 104.3))
@@ -183,7 +203,7 @@ class MyDashboardVC: CustomVC, UIScrollViewDelegate { // updating location here
 
         self.scrollView.addSubview(pageThree)
         
-        pageFour.addSubview(pageFour.imageView!)
+    //    pageFour.addSubview(pageFour.imageView!)
     
         self.scrollView.addSubview(pageFour)
         
@@ -202,6 +222,18 @@ class MyDashboardVC: CustomVC, UIScrollViewDelegate { // updating location here
         self.scanBtn.setSpacing(space: 4.0)
         
         
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        searchTextField.resignFirstResponder()
+    }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        searchTextField.resignFirstResponder()
     }
     
    
@@ -259,6 +291,7 @@ class MyDashboardVC: CustomVC, UIScrollViewDelegate { // updating location here
         let pageWidth = scrollView.frame.size.width
         let fractional = scrollView.contentOffset.x / pageWidth
         let page = lround(Double(fractional))
+
         
         self.pageCtrl.currentPage = page;
         
@@ -266,6 +299,11 @@ class MyDashboardVC: CustomVC, UIScrollViewDelegate { // updating location here
 
         
         if Int(page) == 0 {
+            
+            if logoImgView.isDescendant(of: self.titleLbl) {
+                logoImgView.removeFromSuperview()
+            }
+            
             self.titleString = "personal"
             self.titleLbl.text = self.titleString
             self.descString = "my bucket list"
@@ -283,6 +321,11 @@ class MyDashboardVC: CustomVC, UIScrollViewDelegate { // updating location here
             
             
         } else if Int(page) == 1 {
+            
+            if logoImgView.isDescendant(of: self.titleLbl) {
+                logoImgView.removeFromSuperview()
+            }
+            
             self.titleString = "business"
             self.titleLbl.text = self.titleString
             self.descString = "company bucket list"
@@ -299,6 +342,11 @@ class MyDashboardVC: CustomVC, UIScrollViewDelegate { // updating location here
             self.scanBtn.addTarget(self, action: #selector(MyDashboardVC.scanBtnPressed), for: .touchUpInside)
             
         } else if Int(page) == 2 {
+            
+            if logoImgView.isDescendant(of: self.titleLbl) {
+                logoImgView.removeFromSuperview()
+            }
+            
             self.titleString = "my homes"
             self.titleLbl.text = self.titleString
             self.descString = "home bucket list"
@@ -315,9 +363,11 @@ class MyDashboardVC: CustomVC, UIScrollViewDelegate { // updating location here
             self.scanBtn.addTarget(self, action: #selector(MyDashboardVC.scanBtnPressed), for: .touchUpInside)
 
         } else if Int(page) == 3 {
-            self.titleString = "search"
+            
+            
+            self.titleString = ""
             self.titleLbl.text = self.titleString
-            self.descString = "find any list in the world"
+            self.descString = ""
             self.descLbl.text = self.descString
             self.titleLbl.setSpacing(space: 4.0)
             self.screenState = .homes
@@ -330,7 +380,20 @@ class MyDashboardVC: CustomVC, UIScrollViewDelegate { // updating location here
             self.scanBtn.removeTarget(self, action: #selector(MyDashboardVC.logOut), for: .touchUpInside)
             self.scanBtn.addTarget(self, action: #selector(MyDashboardVC.scanBtnPressed), for: .touchUpInside)
             
+            logoImgView.contentMode = .scaleAspectFit
+            self.titleLbl.addSubview(logoImgView)
+            logoImgView.translatesAutoresizingMaskIntoConstraints = false
+            logoImgView.centerXAnchor.constraint(equalTo: self.titleLbl.centerXAnchor).isActive = true
+            logoImgView.centerYAnchor.constraint(equalTo: self.titleLbl.centerYAnchor, constant: 40).isActive = true
+            logoImgView.widthAnchor.constraint(equalTo: self.titleLbl.widthAnchor, multiplier: 0.6).isActive = true
+            logoImgView.heightAnchor.constraint(equalTo: self.titleLbl.heightAnchor, multiplier: 0.6).isActive = true
+            
         } else if Int(page) == 4 {
+            
+            if logoImgView.isDescendant(of: self.titleLbl) {
+                logoImgView.removeFromSuperview()
+            }
+            
             self.titleString = "my account"
             self.titleLbl.text = self.titleString
             self.descString = ""
@@ -341,6 +404,10 @@ class MyDashboardVC: CustomVC, UIScrollViewDelegate { // updating location here
             UIView.animate(withDuration: 1.0) {
                 self.viewBtn.alpha = 0.0
             }
+            
+ 
+            
+
             
             self.scanBtn.removeTarget(self, action: #selector(MyDashboardVC.scanBtnPressed), for: .touchUpInside)
             self.scanBtn.addTarget(self, action: #selector(MyDashboardVC.logOut), for: .touchUpInside)

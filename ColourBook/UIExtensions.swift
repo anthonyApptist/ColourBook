@@ -152,6 +152,17 @@ extension UIImageView {
     
 }
 
+extension UITextField {
+    
+    func makeRound() {
+        let radius = self.frame.width/8
+        self.layer.cornerRadius = radius
+        self.clipsToBounds = true
+
+    }
+    
+}
+
 
 extension UIButton {
     

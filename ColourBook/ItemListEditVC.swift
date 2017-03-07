@@ -23,6 +23,8 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet var selectItemBtn: UIButton!
     
+    @IBOutlet var settingsBtn: UIButton!
+    
     var selectionOn: Bool = false
     
     var deleteItem: Bool = false
@@ -133,12 +135,20 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
             selectItemBtn.isUserInteractionEnabled = false
         }
         
+        if self.screenState == .searching {
+            self.settingsBtn.isHidden = true
+        } else {
+            self.settingsBtn.isHidden = false
+        }
+        
         self.transferItemBtn.isHidden = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
         
         super.viewWillAppear(false)
+        
+        titleLbl?.adjustsFontSizeToFitWidth = true
         
         if self.screenState == .searching {
             self.titleLbl?.text = self.selectedLocation?.locationName
@@ -147,6 +157,9 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         if self.screenState == .personal {
             
         }
+        
+        titleLbl?.leadingAnchor.constraint(equalTo: self.backBtn.trailingAnchor, constant: 15).isActive = true
+
     }
 
     
