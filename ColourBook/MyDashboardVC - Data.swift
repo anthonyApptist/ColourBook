@@ -1,55 +1,68 @@
 //
-//  SearchAddress - Data.swift
+//  MyDashboardVC - Data.swift
 //  ColourBook
 //
-//  Created by Anthony Ma on 26/2/2017.
+//  Created by Anthony Ma on 7/3/2017.
 //  Copyright © 2017 Apptist. All rights reserved.
 //
 
 import Foundation
+import UIKit
 import FirebaseDatabase
 
-extension SearchAddressVC {
+extension MyDashboardVC {
     
-    func getDatabase() {
+    // Businesses
+    
+    func getBusinessAndImages() {
         
-        self.ref?.observe(.value, with: { (snapshot) in
+        self.scrollView.isScrollEnabled = false
+        self.showActivityIndicator()
+        
+        self.businessRef.observe(.value, with: { (snapshot) in
             
-            // Business images
-            for business in snapshot.childSnapshot(forPath: "businesses").children.allObjects {
+            for business in snapshot.children.allObjects {
                 let businessProfile = business as! FIRDataSnapshot
                 let businessData = businessProfile.value as? NSDictionary
                 
-                // location
+                // business
                 let name = businessData?["name"] as! String
                 let locationName = businessProfile.key
                 
-                let image = businessData?["image"] as? String
-                var postalCode = businessData?["postalCode"] as? String
                 let phoneNumber = businessData?["phoneNumber"] as? String
                 let website = businessData?["website"] as? String
+                let postalCode = businessData?["postalCode"] as? String
+                let image = businessData?["image"] as? String
                 
-                if postalCode == nil {
-                    postalCode = ""
-                }
-                let businessLocation = Location(locationName: locationName, postalCode: postalCode!)
+                let aBusiness = Business(name: name, location: locationName, phoneNumber: phoneNumber, website: website, postalCode: postalCode, image: image)
                 
-                businessLocation.image = image
-                businessLocation.name = name
-                
-                let newBusiness = Business(name: name, location: locationName, phoneNumber: phoneNumber, website: website, postalCode: postalCode, image: image)
-                
-                if image == "" || image == nil {
-                    self.businessImages.updateValue("", forKey: newBusiness.location)
-                }
-                else {
-                    self.businessImages.updateValue(image!, forKey: newBusiness.location)
-                }
-                self.businessLocations.append(businessLocation.locationName)
-                self.addressDictionary.updateValue("Business", forKey: businessLocation.locationName)
-                self.allAddresses.append(businessLocation)
+                self.businessImages.updateValue(image ?? "", forKey: locationName)
+                self.cbBusinesses.append(aBusiness)
             }
-            for address in snapshot.childSnapshot(forPath: "addresses").children.allObjects {
+            
+            self.viewBtn.isUserInteractionEnabled = true
+            
+            self.hideActivityIndicator()
+            
+        }) { (error) in
+            let alert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
+            let alertAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+            alert.addAction(alertAction)
+            self.present(alert, animated: true, completion: nil)
+        }
+    }
+    
+    func getPublicAddresses() {
+        
+        self.showActivityIndicator()
+        
+        // reset model
+        self.allAddress = []
+        self.locationItems = [:]
+        
+        self.addressRef.observeSingleEvent(of: .value, with: { (snapshot) in
+            
+            for address in snapshot.children.allObjects {
                 
                 let addressProfile = address as! FIRDataSnapshot
                 let addressData = addressProfile.value as? NSDictionary
@@ -66,9 +79,12 @@ extension SearchAddressVC {
                 location.image = image
                 location.name = name
                 
+                self.allAddress.append(location)
+                print(locationName)
+                
                 self.categoryItems = [:]
                 
-                for categoryProfile in snapshot.childSnapshot(forPath: "addresses").childSnapshot(forPath: locationName).childSnapshot(forPath: "categories").children.allObjects {
+                for categoryProfile in snapshot.childSnapshot(forPath: locationName).childSnapshot(forPath: "categories").children.allObjects {
                     
                     let categoryName = categoryProfile as! FIRDataSnapshot
                     let category = categoryName.key
@@ -79,7 +95,7 @@ extension SearchAddressVC {
                         
                         itemsArray.removeAll()
                         
-                        for item in categoryName.childSnapshot(forPath: Barcodes).children.allObjects {
+                        for item in categoryName.childSnapshot(forPath: "barcodes").children.allObjects {
                             
                             // default value
                             var addedBy = ""
@@ -134,21 +150,16 @@ extension SearchAddressVC {
                     else {
                         self.categoryItems.updateValue([], forKey: category)
                     }
+                    // location with items
+                    self.locationItems.updateValue(self.categoryItems, forKey: location.locationName)
                 }
-                // locations in database
-                self.allAddresses.append(location)
-                
-                self.addressDictionary.updateValue("Address", forKey: locationName)
-                
-                // location with items
-                self.locationItems.updateValue(self.categoryItems, forKey: location.locationName)
                 
                 // get public items
-                if snapshot.childSnapshot(forPath: "addresses").childSnapshot(forPath: locationName).hasChild("businessAdded") {
+                if snapshot.childSnapshot(forPath: locationName).hasChild("businessAdded") {
                     
                     self.categoryItems = [:]
                     
-                    for categoryProfile in snapshot.childSnapshot(forPath: "addresses").childSnapshot(forPath: locationName).childSnapshot(forPath: "businessAdded").childSnapshot(forPath: "categories").children.allObjects {
+                    for categoryProfile in snapshot.childSnapshot(forPath: locationName).childSnapshot(forPath: "businessAdded").childSnapshot(forPath: "categories").children.allObjects {
                         
                         let categoryName = categoryProfile as! FIRDataSnapshot
                         let category = categoryName.key
@@ -209,14 +220,35 @@ extension SearchAddressVC {
                                     itemsArray.append(product)
                                 }
                             }
-                            self.categoryItems.updateValue(itemsArray, forKey: category)
+                            // append items from user items
+                            
+                            let array = self.locationItems[location.locationName]?[category]
+                            
+                            if array != nil {
+                                let allItems = itemsArray + array!
+                                self.categoryItems.updateValue(allItems, forKey: category)
+                            }
+                            else {
+                                self.categoryItems.updateValue(itemsArray, forKey: category)
+                            }
                         }
                             // category has no children
                         else {
-                            self.categoryItems.updateValue([], forKey: category)
+                            
+                            // append items from user items
+                            
+                            let array = self.locationItems[location.locationName]?[category]
+                            
+                            if array != nil {
+                                let allItems = itemsArray + array!
+                                self.categoryItems.updateValue(allItems, forKey: category)
+                            }
+                            else {
+                                self.categoryItems.updateValue(itemsArray, forKey: category)
+                            }
                         }
                     }
-                    self.databaseLocationItems.updateValue(self.categoryItems, forKey: locationName)
+                    self.locationItems.updateValue(self.categoryItems, forKey: locationName)
                 }
                 else {
                     continue
@@ -226,15 +258,14 @@ extension SearchAddressVC {
             self.hideActivityIndicator()
             
             // update searchable addresses
-            let resultsUpdater = self.addressSC?.searchResultsUpdater as! SearchResultsTableVC
-            resultsUpdater.allAddresses = self.allAddresses
-            
-            if (self.firstTime) {
-                self.searchButtonFunction()
-                self.firstTime = false
-            }
-            self.searchButton.isUserInteractionEnabled = true
-        })
-    }
-}
+            self.resultsUpdater?.allAddresses = self.allAddress
 
+        }) { (error) in
+            let alert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
+            let alertAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+            alert.addAction(alertAction)
+            self.present(alert, animated: true, completion: nil)
+        }
+    }
+
+}

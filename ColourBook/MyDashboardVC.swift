@@ -10,6 +10,10 @@
 import UIKit
 import MapKit
 
+protocol SelectedSearchResult {
+    func showResult(location: Location)
+}
+
 class MyDashboardVC: CustomVC, UIScrollViewDelegate { // updating location here
     
     let colours = UIColours(col: UIColor.clear)
@@ -29,7 +33,6 @@ class MyDashboardVC: CustomVC, UIScrollViewDelegate { // updating location here
     @IBOutlet weak var descLbl: UILabel!
     
     let logoImgView = UIImageView(image: UIImage(named: "darkgreen"))
-
     
     var descString: String! = "my bucket list"
         
@@ -39,7 +42,7 @@ class MyDashboardVC: CustomVC, UIScrollViewDelegate { // updating location here
     
     let locationManager = CLLocationManager()
     
-     let searchTextField = UITextField()
+    let searchTextField = UITextField()
     
     @IBOutlet weak var pageCtrl: UIPageControl!
     
@@ -54,6 +57,21 @@ class MyDashboardVC: CustomVC, UIScrollViewDelegate { // updating location here
     let pageFour = IconView(frame: CGRect(x: 0, y: 0, width: 129, height: 183))
     
     let pageFive = IconView(frame: CGRect(x: 0, y: 0, width: 129, height: 183))
+    
+    // Business Data
+    let businessRef = DataService.instance.businessRef
+    var businessImages = [String:String]()
+    var cbBusinesses = [Business]()
+    
+    // Address Data
+    let addressRef = DataService.instance.addressRef
+    var categoryItems = [String:[ScannedProduct]]()
+    var locationItems = [String:[String:[ScannedProduct]]]()
+    
+    // Search Controller
+    var resultsUpdater: SearchResultsTableVC?
+    var addressSC: UISearchController?
+    var allAddress = [Location]()
     
     @IBAction func viewBtnPressed(_ sender: AnyObject?) {
         
@@ -74,13 +92,6 @@ class MyDashboardVC: CustomVC, UIScrollViewDelegate { // updating location here
             
             performSegue(withIdentifier: "ConnectToAddresses", sender: self)
         }
-        
-        if self.titleLbl.text == "search" {
-            
-            performSegue(withIdentifier: "ConnectToSearch", sender: self)
-        }
-        
-      
     }
     
     @IBAction func scanBtnPressed(_ sender: AnyObject?) {
@@ -122,8 +133,9 @@ class MyDashboardVC: CustomVC, UIScrollViewDelegate { // updating location here
   
     
     override func viewDidAppear(_ animated: Bool) {
-    
         super.viewDidAppear(false)
+        
+        self.getBusinessAndImages() 
     
         locationAuthStatus()
         
@@ -135,8 +147,25 @@ class MyDashboardVC: CustomVC, UIScrollViewDelegate { // updating location here
         
         self.viewBtn.addTarget(self, action: #selector(MyDashboardVC.viewBtnPressed), for: .touchUpInside)
         
-   
+        // search controller set up
+        resultsUpdater = SearchResultsTableVC()
+        resultsUpdater?.searchFor = .addresses
         
+        addressSC = UISearchController(searchResultsController: resultsUpdater)
+        addressSC?.searchResultsUpdater = resultsUpdater
+        
+        // set results updater delegate link
+        resultsUpdater?.dashboardDelegate = self
+        
+        let searchBar = addressSC?.searchBar
+        searchBar?.sizeToFit()
+        searchBar?.placeholder = "Search an address"
+        
+        addressSC?.hidesNavigationBarDuringPresentation = true
+        addressSC?.dimsBackgroundDuringPresentation = true
+        definesPresentationContext = true
+        searchBar?.backgroundColor = UIColor.black
+
         self.scrollView.isScrollEnabled = true
         self.scrollView.isPagingEnabled = true
         self.scrollView.showsHorizontalScrollIndicator = false
@@ -178,6 +207,7 @@ class MyDashboardVC: CustomVC, UIScrollViewDelegate { // updating location here
         searchTextField.centerYAnchor.constraint(equalTo: pageFour.centerYAnchor).isActive = true
         searchTextField.widthAnchor.constraint(equalTo: pageFour.widthAnchor, multiplier: 2.0).isActive = true
         searchTextField.heightAnchor.constraint(equalTo: pageFour.heightAnchor, multiplier: 0.2).isActive = true
+//        searchTextField.isUserInteractionEnabled = false
      //   pageFour.imageView = UIImageView(frame: CGRect(x: 26, y: 56, width: 72, height: 81))
      //   pageFour.imageView?.image = UIImage(named: "search")
  
@@ -221,19 +251,36 @@ class MyDashboardVC: CustomVC, UIScrollViewDelegate { // updating location here
         self.viewBtn.setSpacing(space: 4.0)
         self.scanBtn.setSpacing(space: 4.0)
         
+        self.screenState = .personal
+        
         
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
+        self.getPublicAddresses()
         
+        self.present(self.addressSC!, animated: true) {
+//            self.searchTextField.endEditing(true)
+        }
     }
     
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        searchTextField.resignFirstResponder()
-    }
-    
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        searchTextField.resignFirstResponder()
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // personal
+        if segue.identifier == "ConnectToCategories" {
+            let destination = segue.destination as! CategoriesListVC
+            destination.businessImages = self.businessImages
+            destination.screenState = .personal
+        }
+        // business
+        if segue.identifier == "ConnectToBusiness" {
+            let destination = segue.destination as! ItemListAddVC
+            destination.screenState = .business
+        }
+        // homes
+        if segue.identifier == "ConnectToAddresses" {
+            let destination = segue.destination as! ItemListAddVC
+            destination.screenState = .homes
+        }
     }
     
    
@@ -373,9 +420,11 @@ class MyDashboardVC: CustomVC, UIScrollViewDelegate { // updating location here
             self.screenState = .homes
             
             self.scanBtn.setTitle("scan", for: .normal)
+            /*
             UIView.animate(withDuration: 1.0) {
                 self.viewBtn.alpha = 1.0
             }
+             */
             
             self.scanBtn.removeTarget(self, action: #selector(MyDashboardVC.logOut), for: .touchUpInside)
             self.scanBtn.addTarget(self, action: #selector(MyDashboardVC.scanBtnPressed), for: .touchUpInside)
@@ -405,15 +454,30 @@ class MyDashboardVC: CustomVC, UIScrollViewDelegate { // updating location here
                 self.viewBtn.alpha = 0.0
             }
             
- 
-            
-
-            
             self.scanBtn.removeTarget(self, action: #selector(MyDashboardVC.scanBtnPressed), for: .touchUpInside)
             self.scanBtn.addTarget(self, action: #selector(MyDashboardVC.logOut), for: .touchUpInside)
 
         }
         
     }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        self.businessRef.removeAllObservers()
+    }
 
+}
+
+extension MyDashboardVC: SelectedSearchResult {
+    func showResult(location: Location) {
+        let searchAddressVC = storyboard?.instantiateViewController(withIdentifier: "SearchAddressVC") as! SearchAddressVC
+        searchAddressVC.allAddresses = self.allAddress
+        searchAddressVC.locationItems = self.locationItems
+        searchAddressVC.currentLocation = location
+        searchAddressVC.businessImages = self.businessImages
+        self.present(searchAddressVC, animated: true) {
+            searchAddressVC.setResultsViewFor(location: searchAddressVC.currentLocation!)
+        }
+    }
+    
+    
 }

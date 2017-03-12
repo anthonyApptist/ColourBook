@@ -176,7 +176,7 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         let product = self.products[indexPath.row]
         if self.screenState == .business || self.screenState == .homes || self.screenState == .searching {
             // check if business
-            if product.addedBy != nil {
+            if product.addedBy != "" {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "ContractorItemCell", for: indexPath) as! ContractorItemCell
                 cell.selectionStyle = UITableViewCellSelectionStyle.none
                 cell.businessImage = self.businessImages[product.addedBy!]
@@ -196,7 +196,6 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
             cell.setViewFor(product: product)
             return cell
         }
-//        return UITableViewCell()
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

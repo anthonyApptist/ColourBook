@@ -68,7 +68,8 @@ class ItemListDetailVC: CustomVC {
             hexCodeLbl?.text = "No colour added"
         
             productIdLbl?.text = ""
-            colourNameLbl?.text = ""
+            colourNameLbl?.text = "No colour added"
+            colourNameLbl?.adjustsFontSizeToFitWidth = true
         }
         
         self.imgView?.contentMode = .scaleAspectFill

@@ -18,8 +18,7 @@ class SearchAddressVC: CustomVC, UISearchBarDelegate {
     var firstTime: Bool = true
     
     var addressSC: UISearchController?
-
-    var resultTitleLabel: UILabel!
+    
     var locationResultView: UIView!
     var searchButton: UIButton!
 
@@ -33,26 +32,19 @@ class SearchAddressVC: CustomVC, UISearchBarDelegate {
     var categoryItems = [String:[ScannedProduct]]()
     
     var locationItems = [String:[String:[ScannedProduct]]]()
-    var databaseLocationItems = [String:[String:[ScannedProduct]]]()
     
     var businessImages = [String:String]()
     
-    var addressDictionary = [String:String]()
-    
-    var businessLocations = [String]()
-    
-    var ref: FIRDatabaseReference?
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.ref = DataService.instance.mainRef
         
         self.backButtonNeeded = true
         
         // Search Controller
         let resultsUpdater = SearchResultsTableVC()
         resultsUpdater.searchFor = .addresses
+        
+        resultsUpdater.allAddresses = self.allAddresses
         
         addressSC = UISearchController(searchResultsController: resultsUpdater)
         addressSC?.searchResultsUpdater = resultsUpdater
@@ -71,22 +63,10 @@ class SearchAddressVC: CustomVC, UISearchBarDelegate {
         
         // MARK: - View
         
-        // results title label
-        
-        let resultTitleOrigin = CGPoint(x: 0, y: self.backBtn.frame.maxY)
-        let resultTitleSize = CGSize(width: view.frame.width, height: view.frame.height * 0.10)
-        resultTitleLabel = UILabel(frame: CGRect(origin: resultTitleOrigin, size: resultTitleSize))
-        resultTitleLabel.backgroundColor = UIColor.black
-        resultTitleLabel.textColor = UIColor.white
-        resultTitleLabel.textAlignment = .center
-        resultTitleLabel.numberOfLines = 0
-        resultTitleLabel.adjustsFontSizeToFitWidth = true
-        resultTitleLabel.textColor = UIColor.white
-        
         // results view
         
-        let resultViewOrigin = CGPoint(x: 0, y: resultTitleLabel.frame.maxY)
-        let resultViewSize = CGSize(width: view.frame.width, height: view.frame.height - (3 * (view.frame.height * 0.10)) - 40)
+        let resultViewOrigin = CGPoint(x: 0, y: self.backBtn.frame.maxY)
+        let resultViewSize = CGSize(width: view.frame.width, height: view.frame.height - (2 * (view.frame.height * 0.10)) - 60)
         locationResultView = UIView(frame: CGRect(origin: resultViewOrigin, size: resultViewSize))
         
         // view button
@@ -102,7 +82,6 @@ class SearchAddressVC: CustomVC, UISearchBarDelegate {
         viewButton?.titleLabel?.numberOfLines = 0
         viewButton?.titleLabel?.alpha = 1.0
         self.viewButton?.addTarget(self, action: #selector(self.viewButtonFunction), for: .touchUpInside)
-        self.viewButton?.isUserInteractionEnabled = false
         
         // search button
         searchButton = UIButton(type: .system)
@@ -114,33 +93,14 @@ class SearchAddressVC: CustomVC, UISearchBarDelegate {
         searchButton.setTitleColor(UIColor.white, for: .normal)
         searchButton.titleLabel?.font = UIFont(name: "HelveticaNeue-Medium", size: searchButton.frame.height * 0.4)
         searchButton.titleLabel?.numberOfLines = 0
-        searchButton.isUserInteractionEnabled = false
         searchButton.addTarget(self, action: #selector(searchButtonFunction), for: .touchUpInside)
         
         view.bringSubview(toFront: self.backBtn)
         
-        view.addSubview(resultTitleLabel)
         view.addSubview(locationResultView)
         view.addSubview(searchButton)
         
         view.addSubview(viewButton!)
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        self.allAddresses = []
-        
-        // update searchable addresses
-        let resultsUpdater = self.addressSC?.searchResultsUpdater as! SearchResultsTableVC
-        resultsUpdater.allAddresses = []
-        
-        self.showActivityIndicator()
-        self.getDatabase()
-        
-        self.searchButton.isUserInteractionEnabled = false
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        self.ref?.removeAllObservers()
     }
     
     // Mark: - Button Functions
@@ -154,24 +114,14 @@ class SearchAddressVC: CustomVC, UISearchBarDelegate {
         self.categories = []
         self.categoryItems = [:]
         
-        let userDictionaryOfItems = self.locationItems[(self.currentLocation?.locationName)!]
-        let databaseDictionaryOfItems = self.databaseLocationItems[(self.currentLocation?.locationName)!]
+        let locationCategoryItems = self.locationItems[(self.currentLocation?.locationName)!]
         
-        for category in (userDictionaryOfItems?.keys)! {
-            let userCategoryArray = userDictionaryOfItems?[category]
-            
-            if let databaseCategoryArray = databaseDictionaryOfItems?[category] {
-                let itemsArray: [ScannedProduct] = userCategoryArray! + databaseCategoryArray
-                self.categoryItems.updateValue(itemsArray, forKey: category)
-                self.categories.append(category)
-            }
-            else {
-                self.categoryItems.updateValue(userCategoryArray!, forKey: category)
-                self.categories.append(category)
-            }
+        for category in (locationCategoryItems?.keys)! {
+            self.categories.append(category)
         }
+        
         categories.categories = self.categories
-        categories.categoriesItems = self.categoryItems
+        categories.categoriesItems = locationCategoryItems!
         categories.businessImages = self.businessImages
         
         self.present(categories, animated: true, completion: {
@@ -187,12 +137,6 @@ class SearchAddressVC: CustomVC, UISearchBarDelegate {
 
 extension SearchAddressVC: AddressResult {
     func setResultsViewFor(location: Location) {
-        
-        // check location
-        let resultTitle = self.addressDictionary[location.locationName]
-        
-        // set address or business result
-        self.resultTitleLabel.text = resultTitle
         
         // address result view
         let addressVC = AddressView(frame: self.locationResultView.bounds, location: location)
@@ -217,14 +161,6 @@ extension SearchAddressVC: AddressResult {
         
         // add result view
         self.locationResultView.addSubview(addressVC)
-        
-        if resultTitle == "Business" {
-            self.viewButton?.alpha = 0.0
-        }
-        if resultTitle == "Address" {
-            // view button is active
-            self.viewButton?.isUserInteractionEnabled = true
-        }
         
         // set current location
         self.currentLocation = location

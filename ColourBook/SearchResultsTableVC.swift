@@ -25,8 +25,8 @@ class SearchResultsTableVC: UITableViewController {
     // address search result delegate
     var addressResultDelegate: AddressResult?
     
-    // location search result delegate
-    
+    // dashboard search result delegate
+    var dashboardDelegate: SelectedSearchResult?
     
     // filtered data
     var filteredAddresses: [Location]?
@@ -34,7 +34,7 @@ class SearchResultsTableVC: UITableViewController {
     
     // all data
     var allColours: [Colour]?
-    var allAddresses: [Location]?
+    var allAddresses = [Location]()
     
     // google map data
     var allLocations: [String]?
@@ -53,11 +53,6 @@ class SearchResultsTableVC: UITableViewController {
             self.filteredAddresses = []
             self.tableView.register(LocationCell.self, forCellReuseIdentifier: "address")
         }
-        if searchFor == .mapSearch {
-            self.allLocations = []
-            self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "searchCell")
-        }
-        
     }
 
     // MARK: - Table view data source
@@ -125,7 +120,7 @@ class SearchResultsTableVC: UITableViewController {
             let selectedAddress = filteredAddresses?[indexPath.row]
             addressResultDelegate?.setResultsViewFor(location: selectedAddress!)
             dismiss(animated: true) {
-                
+                self.dashboardDelegate?.showResult(location: selectedAddress!)
             }
         }
     }
@@ -143,7 +138,7 @@ class SearchResultsTableVC: UITableViewController {
         }
         if searchFor == .addresses {
             
-            filteredAddresses = allAddresses!.filter { location in
+            filteredAddresses = allAddresses.filter { location in
                 let code = location.postalCode.lowercased()
                 let locationName = location.locationName.lowercased()
                 return locationName.contains(searchText) || code.contains(searchText)

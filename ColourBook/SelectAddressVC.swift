@@ -34,8 +34,6 @@ class SelectAddressVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.showActivityIndicator()
-        
         self.backButtonNeeded = true
         
         //MARK: View
