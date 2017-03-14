@@ -115,7 +115,7 @@ class FlagView: UIView {
 
         
         self.missingItemBtn = UIButton(frame: CGRect(x: 0, y: 0, width: 240, height: 40))
-        self.missingItemBtn.setTitle("Missing/Incorect Item", for: .normal)
+        self.missingItemBtn.setTitle("Missing/Incorrect Item", for: .normal)
         self.missingItemBtn.titleLabel?.font = UIFont.init(name: "HelvelticaNeue-Medium", size: 13)
         self.missingItemBtn.titleLabel?.numberOfLines = 0
         self.missingItemBtn.setTitleColor(UIColor.black, for: .normal)
