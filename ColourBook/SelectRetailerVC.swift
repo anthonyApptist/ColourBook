@@ -10,8 +10,9 @@ import Foundation
 import UIKit
 import FirebaseDatabase
 
-class SelectRetailerVC: CustomVC, UITableViewDataSource, UITableViewDelegate {
-        
+class SelectRetailerVC: CustomVC {//, UITableViewDataSource, UITableViewDelegate
+    
+    /*
     // product profiles
     var barcode: String?
     var productProfile: [String:Any] = [:]
@@ -190,5 +191,5 @@ class SelectRetailerVC: CustomVC, UITableViewDataSource, UITableViewDelegate {
             
         })
     }
-    
+    */
 }

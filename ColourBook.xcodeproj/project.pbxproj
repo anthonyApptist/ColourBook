@@ -123,6 +123,7 @@
 		9258316A1E627B4400807E6A /* SelectAddressVC - Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925831691E627B4400807E6A /* SelectAddressVC - Data.swift */; };
 		9262ECDA1E00FA8A005FD5AC /* FinalizedPaint.csv in Resources */ = {isa = PBXBuildFile; fileRef = 9262ECD81E00FA8A005FD5AC /* FinalizedPaint.csv */; };
 		9262ECDB1E00FA8A005FD5AC /* productlist.csv in Resources */ = {isa = PBXBuildFile; fileRef = 9262ECD91E00FA8A005FD5AC /* productlist.csv */; };
+		926A75031E80C834009F5D03 /* GoogleMap-Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 926A75021E80C834009F5D03 /* GoogleMap-Data.swift */; };
 		926F73701E5932E600B8A2EC /* BusinessPage - Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 926F736F1E5932E600B8A2EC /* BusinessPage - Data.swift */; };
 		9277E0B11DF64F0A001E0B9B /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9277E0B01DF64F0A001E0B9B /* FBSDKCoreKit.framework */; };
 		9277E0B31DF64F63001E0B9B /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9277E0B21DF64F63001E0B9B /* Bolts.framework */; };
@@ -283,6 +284,7 @@
 		925831691E627B4400807E6A /* SelectAddressVC - Data.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SelectAddressVC - Data.swift"; sourceTree = "<group>"; };
 		9262ECD81E00FA8A005FD5AC /* FinalizedPaint.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = FinalizedPaint.csv; sourceTree = "<group>"; };
 		9262ECD91E00FA8A005FD5AC /* productlist.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = productlist.csv; sourceTree = "<group>"; };
+		926A75021E80C834009F5D03 /* GoogleMap-Data.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GoogleMap-Data.swift"; sourceTree = "<group>"; };
 		926F736F1E5932E600B8A2EC /* BusinessPage - Data.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "BusinessPage - Data.swift"; sourceTree = "<group>"; };
 		9277E0B01DF64F0A001E0B9B /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		9277E0B21DF64F63001E0B9B /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
@@ -386,6 +388,7 @@
 				92FD3EAE1DE52D26009341C9 /* BarcodeScanner.swift */,
 				925106DE1E313B5D00C987B3 /* Database Config */,
 				92C65CCF1E4592F8006F1905 /* GoogleMap.swift */,
+				926A75021E80C834009F5D03 /* GoogleMap-Data.swift */,
 				9277E0B41DF75022001E0B9B /* PostScanVC.swift */,
 				92BDF7BA1E24130E00BE9673 /* ProductInfoView.swift */,
 				920B52731E0E03A8005D5B60 /* SearchControllers */,
@@ -871,6 +874,7 @@
 				920B52751E0F2478005D5B60 /* ScannedProduct.swift in Sources */,
 				92CFEE2E1E00DF9A00F78C78 /* ChooseColourVC.swift in Sources */,
 				661A47FA1DF6A9B400B56028 /* AddEditAddressVC.swift in Sources */,
+				926A75031E80C834009F5D03 /* GoogleMap-Data.swift in Sources */,
 				926F73701E5932E600B8A2EC /* BusinessPage - Data.swift in Sources */,
 				662D48DB1E4E27B400B715C9 /* AddEditImageVCBusiness.swift in Sources */,
 				661A48001DF6AA3800B56028 /* SettingsVC.swift in Sources */,

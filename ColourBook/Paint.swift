@@ -17,6 +17,9 @@ class Paint: NSObject {
     var upcCode: String
     var image: String
     var colour: Colour?
+    var timestamp: String?
+    var productType: String?
+    var uniqueID: String?
     
     init(manufacturer: String, productName: String, category: String, code: String, upcCode: String, image: String) {
         self.manufacturer = manufacturer

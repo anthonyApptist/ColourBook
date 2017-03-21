@@ -22,8 +22,7 @@ extension DataService {
         let locationRef = self.generalRef
         
         if screenState == .business {
-            let categories: [String:Any] = ["categories": newCategories ?? ""]
-            let locationProfile: [String:Any] = ["postalCode": location!.postalCode, "businessAdded": categories]
+            let locationProfile: [String:Any] = ["postalCode": location!.postalCode, "categories": newCategories ?? ""]
             locationRef?.updateChildValues(locationProfile)
         }
         if screenState == .homes {
@@ -73,15 +72,15 @@ extension DataService {
     
     // MARK: Save Paint Can to Location (Public)
     
-    func saveProductFor(location: String?, screenState: ScreenState, barcode: String, value: Dictionary<String, Any>, category: String) {
+    func saveProductFor(location: String?, screenState: ScreenState, value: Dictionary<String, Any>, category: String, uniqueID: String) {
         getPublicLocationCategoriesRef(screenState: screenState, location: location, category: category)
         let publicRef = self.generalRef
-        publicRef?.child(barcode).setValue(value)
+        publicRef?.child(uniqueID).setValue(value)
     }
     
     func getPublicLocationCategoriesRef(screenState: ScreenState, location: String?, category: String) {
         if screenState == .business {
-            self.generalRef = self.addressRef.child(location!).child("businessAdded").child("categories").child(category).child(Barcodes)
+            self.generalRef = self.addressRef.child(location!).child("categories").child(category).child(Barcodes)
         }
         if screenState == .homes {
             self.generalRef = self.addressRef.child(location!).child("categories").child(category).child(Barcodes)
@@ -90,11 +89,11 @@ extension DataService {
     
     // MARK: Save Paint Can to User Database (Personal)
     
-    func saveProductIn(user: String, screenState: ScreenState, location: String?, barcode: String, value: Dictionary<String, Any>, category: String) {
+    func saveProductIn(user: String, screenState: ScreenState, location: String?, value: Dictionary<String, Any>, category: String, uniqueID: String) {
         getDashboardRef(screenState: screenState, user: user, location: location, category: category)
         let infoRef = self.generalRef
         
-        infoRef?.child(barcode).setValue(value)
+        infoRef?.child(uniqueID).setValue(value)
     }
     
     func getDashboardRef(screenState: ScreenState, user: String, location: String?, category: String) {

@@ -12,7 +12,6 @@ import FirebaseDatabase
 class SelectAddressVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
     
     // product profiles
-    var barcode: String?
     var productProfile: [String:Any] = [:]
     
     // model
@@ -156,17 +155,32 @@ class SelectAddressVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
             self.displayNoAddressSelected()
         }
         else {
-            let selectCategory = SelectCategoryVC()
-            selectCategory.screenState = self.screenState
-            selectCategory.locationName = self.selectedLocation
-            selectCategory.barcode = self.barcode
-            selectCategory.productProfile = self.productProfile
-            selectCategory.business = self.business
-
-            
-            self.present(selectCategory, animated: true, completion: {
+            if self.screenState == .business {
+                // update productProfile for key "businessAdded", value dictionary of business variables
                 
-            })
+//                let businessInfo: [String:Any] = ["businessName": self.business?.name ?? "", "businessLocation": self.business?.location ?? "", "businessPhoneNumber": self.business?.phoneNumber ?? "", "businessWebsite": self.business?.website ?? "", "businessPostalCode": self.business?.postalCode ?? "", "businessImage": self.business?.image ?? ""]
+                
+                self.productProfile.updateValue((business?.name)!, forKey: "businessAdded")
+                
+                let selectCategory = SelectCategoryVC()
+                selectCategory.screenState = self.screenState
+                selectCategory.locationName = self.selectedLocation
+                selectCategory.productProfile = self.productProfile
+                
+                self.present(selectCategory, animated: true, completion: {
+                    
+                })
+            }
+            else {
+                let selectCategory = SelectCategoryVC()
+                selectCategory.screenState = self.screenState
+                selectCategory.locationName = self.selectedLocation
+                selectCategory.productProfile = self.productProfile
+            
+                self.present(selectCategory, animated: true, completion: {
+                    
+                })
+            }
         }
     }
     

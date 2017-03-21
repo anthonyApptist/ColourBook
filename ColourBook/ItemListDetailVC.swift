@@ -94,6 +94,6 @@ class ItemListDetailVC: CustomVC {
 
 extension ItemListDetailVC: ReportDelegate {
     func didPressReport() {
-        DataService.instance.reportPressedFor(item: self.detailItem!, user: self.signedInUser, location: self.currentLocation!, category: self.currentCategory!)
+        DataService.instance.reportPressedFor(item: self.detailItem!, user: self.signedInUser, location: self.currentLocation!, category: self.currentCategory!, uniqueID: self.detailItem!.uniqueID!)
     }
 }

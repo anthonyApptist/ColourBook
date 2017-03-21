@@ -20,6 +20,7 @@ class ScannedProduct: NSObject, NSCoding {
         case imageKey
         case colourKey
         case timeKey
+        case uniqueIDKey
         case businessKey
     }
     
@@ -34,9 +35,10 @@ class ScannedProduct: NSObject, NSCoding {
     let manufacturer: String
     let upcCode: String
     let image: String
-    let colour: Colour?
+    var colour: Colour?
     let timestamp: String
-    var addedBy: String?
+    var uniqueID: String?
+    var businessAdded: String?
     
     // MARK: - Initializers
     
@@ -58,7 +60,7 @@ class ScannedProduct: NSObject, NSCoding {
         image = aDecoder.decodeObject(forKey: CoderKeys.imageKey.rawValue) as! String
         colour = aDecoder.decodeObject(forKey: CoderKeys.colourKey.rawValue) as? Colour
         timestamp = aDecoder.decodeObject(forKey: CoderKeys.timeKey.rawValue) as! String
-        addedBy = aDecoder.decodeObject(forKey: CoderKeys.businessKey.rawValue) as? String
+        uniqueID = aDecoder.decodeObject(forKey: CoderKeys.uniqueIDKey.rawValue) as? String
     }
     
     func encode(with aCoder: NSCoder) {
@@ -68,7 +70,7 @@ class ScannedProduct: NSObject, NSCoding {
         aCoder.encode(image, forKey: CoderKeys.imageKey.rawValue)
         aCoder.encode(colour, forKey: CoderKeys.colourKey.rawValue)
         aCoder.encode(image, forKey: CoderKeys.timeKey.rawValue)
-        aCoder.encode(image, forKey: CoderKeys.businessKey.rawValue)
+        aCoder.encode(uniqueID, forKey: CoderKeys.uniqueIDKey.rawValue)
     }
     
 }

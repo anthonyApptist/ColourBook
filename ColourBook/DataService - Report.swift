@@ -10,8 +10,8 @@ import Foundation
 import FirebaseDatabase
 
 extension DataService {
-    func reportPressedFor(item: ScannedProduct, user: User, location: String, category: String) {
-        let addressRef = self.addressRef.child(location).child(item.upcCode).child("flagged")
+    func reportPressedFor(item: ScannedProduct, user: User, location: String, category: String, uniqueID: String) {
+        let addressRef = self.addressRef.child(location).child("categories").child(category).child("barcodes").child(uniqueID).child("flagged")
         
         addressRef.observeSingleEvent(of: .value, with: { (snapshot) in
             if snapshot.hasChild(user.uid) {

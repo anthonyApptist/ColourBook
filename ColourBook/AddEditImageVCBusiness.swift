@@ -126,8 +126,8 @@ class AddEditImageVCBusiness: CustomVC, UIImagePickerControllerDelegate, UINavig
     
     func saveBtnPressed(_ sender: Any?) {
         
-        if (self.nameTextField?.text)! == "" || self.locationTextField.text == "" {
-            let alert = UIAlertController(title: "Must have name and location", message: "Enter them", preferredStyle: .alert)
+        if (self.nameTextField?.text)! == "" || self.locationTextField.text! == "" || self.image == nil {
+            let alert = UIAlertController(title: "An empty field is present", message: "Enter all information fields", preferredStyle: .alert)
             let alertAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
             alert.addAction(alertAction)
             self.present(alert, animated: true, completion: nil)

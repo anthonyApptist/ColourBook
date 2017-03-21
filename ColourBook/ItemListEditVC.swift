@@ -42,6 +42,7 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
             for index in self.selectedProducts.keys {
                 let timestamp = self.selectedProducts[index]?.timestamp
                 let paint = self.paintProducts[index]
+                paint.uniqueID = self.selectedProducts[index]?.uniqueID
                 self.selectedPaint.updateValue(timestamp!, forKey: paint)
             }
             
@@ -114,7 +115,7 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
     var selectedProducts = [Int:ScannedProduct]()
     
     var businessImages = [String:String]()
-        
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -176,10 +177,11 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         let product = self.products[indexPath.row]
         if self.screenState == .business || self.screenState == .homes || self.screenState == .searching {
             // check if business
-            if product.addedBy != "" {
+            if let business = product.businessAdded {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "ContractorItemCell", for: indexPath) as! ContractorItemCell
                 cell.selectionStyle = UITableViewCellSelectionStyle.none
-                cell.businessImage = self.businessImages[product.addedBy!]
+                
+                cell.businessImage = businessImages[business]
                 cell.setViewFor(product: product)
                 return cell
             }
@@ -226,27 +228,27 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         }
     }
 
-    //DELETE ROWS
+    // delete action
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         
         if editingStyle == .delete {
-            let upcCode = self.products[indexPath.row].upcCode
+            let product = self.products[indexPath.row]
             
             let location = self.selectedLocation
             
             if self.screenState == .business {
-                DataService.instance.removeScannedProductForAddress(barcode: upcCode, location: location?.locationName, category: self.selectedCategory!)
+                DataService.instance.removeScannedProductForAddress(barcode: product.uniqueID!, location: location?.locationName, category: self.selectedCategory!)
             }
             
             if self.screenState == .homes {
-                DataService.instance.removeProduct(barcode: upcCode, location: location?.locationName, category: self.selectedCategory!)
+                DataService.instance.removeProduct(barcode: product.uniqueID!, location: location?.locationName, category: self.selectedCategory!)
 
             }
             
             self.deleteItem = true
             
             // remove from database
-            DataService.instance.removeScannedProductFor(user: self.signedInUser, screenState: self.screenState, barcode: upcCode, location: location?.locationName, category: self.selectedCategory!)
+            DataService.instance.removeScannedProductFor(user: self.signedInUser, screenState: self.screenState, barcode: product.uniqueID!, location: location?.locationName, category: self.selectedCategory!)
             
             //remove from table view list
             self.products.remove(at: (indexPath as NSIndexPath).row)
@@ -256,12 +258,12 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         }
     }
  
-    //DELETE ROWS
+    // cell editing style
 
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
         if self.screenState == .homes {
             let product = self.products[indexPath.row]
-            if product.addedBy == "" {
+            if product.businessAdded == nil {
                 return .delete
             }
             else {
@@ -296,6 +298,8 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
             if let detail = segue.destination as? ItemListDetailVC {
                 detail.detailItem = item
                 detail.screenState = screenState
+                detail.currentCategory = self.selectedCategory
+                detail.currentLocation = self.selectedLocation?.locationName
             }
         }
         if segue.identifier == "ConnectToMenuSettings" {

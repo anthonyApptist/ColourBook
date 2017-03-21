@@ -274,11 +274,13 @@ class MyDashboardVC: CustomVC, UIScrollViewDelegate { // updating location here
         // business
         if segue.identifier == "ConnectToBusiness" {
             let destination = segue.destination as! ItemListAddVC
+            destination.businessImages = self.businessImages
             destination.screenState = .business
         }
         // homes
         if segue.identifier == "ConnectToAddresses" {
             let destination = segue.destination as! ItemListAddVC
+            destination.businessImages = self.businessImages
             destination.screenState = .homes
         }
     }

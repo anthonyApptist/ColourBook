@@ -32,8 +32,6 @@ class ItemListAddVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         
         self.present(map, animated: true, completion: nil)
         
-//        performSegue(withIdentifier: "ConnectToNewItem", sender: self)
-        
     }
     
     @IBAction func settingsBtnPressed(_ sender: AnyObject) {
@@ -50,23 +48,16 @@ class ItemListAddVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
     var allDatabaseLocation = [String]()
     
     // location data
-    var userLocationItems = [String:[ScannedProduct]]()
-    var databaseLocationItems = [String:[ScannedProduct]]()
+    var locationItems = [String:[ScannedProduct]]()
+//    var databaseLocationItems = [String:[ScannedProduct]]()
     
     // address data (location name key)
     var userLocations = [String:[String:[ScannedProduct]]]()
-    var databaseLocations = [String:[String:[ScannedProduct]]]()
+//    var databaseLocations = [String:[String:[ScannedProduct]]]()
     
     // list for category lists
     var categories = [String]()
     var categoryItems = [String:[ScannedProduct]]()
-    
-    /*
-    override func backBtnPressed(_ sender: AnyObject) {
-        self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
-    }
-    
-    */
     
     @IBAction func scanBtnPressed(_ sender: AnyObject) {
         let scanView = storyboard?.instantiateViewController(withIdentifier: "BarcodeVC")
@@ -101,6 +92,10 @@ class ItemListAddVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
             self.subTitleLbl?.text = "my addresses"
         }
         titleLbl?.text = titleString
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        self.ref?.removeAllObservers()
     }
     
     override func backBtnPressed(_ sender: AnyObject) {
@@ -186,21 +181,13 @@ class ItemListAddVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
                 self.categoryItems = [:]
                 
                 let userDictionaryOfItems = self.userLocations[selectedLocation.locationName]
-                let databaseDictionaryOfItems = self.databaseLocations[selectedLocation.locationName]
                 
                 for category in (userDictionaryOfItems?.keys)! {
-                    let userCategoryArray = userDictionaryOfItems?[category]
-                    
-                    if let databaseCategoryArray = databaseDictionaryOfItems?[category] {
-                        let itemsArray: [ScannedProduct] = userCategoryArray! + databaseCategoryArray
-                        self.categoryItems.updateValue(itemsArray, forKey: category)
-                        self.categories.append(category)
-                    }
-                    else {
-                        self.categoryItems.updateValue(userCategoryArray!, forKey: category)
-                        self.categories.append(category)
-                    }
+                    self.categories.append(category)
                 }
+                
+                self.categoryItems = userDictionaryOfItems!
+                
                 detail.categories = self.categories
                 detail.categoriesItems = self.categoryItems
                 detail.businessImages = self.businessImages

@@ -10,7 +10,6 @@ import Foundation
 import FirebaseDatabase
 
 extension SelectAddressVC {
-    // MARK: - Data
     
     func getLocationLists(screenState: ScreenState, user: User) {
         
@@ -28,8 +27,12 @@ extension SelectAddressVC {
                     // get business location
                     let name = businessProfile?["name"] as! String
                     let businessLocation = businessProfile?["location"] as! String
+                    let businessPhoneNumber = businessProfile?["phoneNumber"] as? String
+                    let businessWebsite = businessProfile?["website"] as? String
+                    let businessPostalCode = businessProfile?["postalCode"] as? String
+                    let businessImage = businessProfile?["image"] as? String
                     
-                    let business = Business(name: name, location: businessLocation, phoneNumber: nil, website: nil, postalCode: nil, image: nil)
+                    let business = Business(name: name, location: businessLocation, phoneNumber: businessPhoneNumber, website: businessWebsite, postalCode: businessPostalCode, image: businessImage)
                     
                     self.business = business
                     

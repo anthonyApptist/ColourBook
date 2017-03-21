@@ -15,11 +15,14 @@ protocol ColourAdded {
 
 class PostScanViewController: CustomVC {
     
+    // barcode
     var barcode: String!
     
+    // view
     var productTypeLabel: UILabel!
     var productImageView: UIImageView!
 
+    // product detail labels view
     var productInfo: UIView!
     
     // buttons
@@ -31,6 +34,7 @@ class PostScanViewController: CustomVC {
     // scanned product
     var product: Any?
     
+    // colour for paint
     var colour: Colour?
 
     override func viewDidLoad() {
@@ -133,7 +137,7 @@ class PostScanViewController: CustomVC {
     
     // MARK: - Save to Lists
     
-    // personal
+    // Personal Dashboard
     
     func addToPersonalButtonFunction() {
         
@@ -146,14 +150,14 @@ class PostScanViewController: CustomVC {
             let timestamp = createTimestamp()
             
             let colourProfile: Dictionary<String, String> = ["productCode": colour.productCode, "colourName": colour.colourName, "manufacturer": colour.manufacturer, "manufacturerID": colour.manufacturerID, "hexcode": colour.colourHexCode]
-            let paintProfile: Dictionary<String, Any> = ["manufacturer": paint!.manufacturer, "productName": paint!.productName, "category": paint!.category, "code": paint!.code, "image": paint!.image, "product": "Paint", "colour": colourProfile, "timestamp": timestamp]
+            let paintProfile: Dictionary<String, Any> = ["manufacturer": paint!.manufacturer, "productName": paint!.productName, "category": paint!.category, "code": paint!.code, "image": paint!.image, "product": "Paint", "colour": colourProfile, "timestamp": timestamp, "barcode": self.barcode]
             
             self.goToSelectCategory(product: paintProfile, screenState: self.screenState)
         }
         else {
             let timestamp = createTimestamp()
             
-            let paintProfile: Dictionary<String, String> = ["manufacturer": paint!.manufacturer, "productName": paint!.productName, "category": paint!.category, "code": paint!.code, "image": paint!.image, "product": "Paint", "timestamp": timestamp]
+            let paintProfile: Dictionary<String, String> = ["manufacturer": paint!.manufacturer, "productName": paint!.productName, "category": paint!.category, "code": paint!.code, "image": paint!.image, "product": "Paint", "timestamp": timestamp, "barcode": self.barcode]
 
             self.goToSelectCategory(product: paintProfile, screenState: self.screenState)
         }
@@ -174,18 +178,17 @@ class PostScanViewController: CustomVC {
             let colourProfile: Dictionary<String, String> = ["productCode": colour.productCode, "colourName": colour.colourName, "manufacturer": colour.manufacturer, "manufacturerID": colour.manufacturerID, "hexcode": colour.colourHexCode]
             
             // paint profile
-            let paintProfile: Dictionary<String, Any> = ["manufacturer": paint!.manufacturer, "productName": paint!.productName, "category": paint!.category, "code": paint!.code, "image": paint!.image, "product": "Paint", "colour": colourProfile, "timestamp": timestamp]
+            let paintProfile: Dictionary<String, Any> = ["manufacturer": paint!.manufacturer, "productName": paint!.productName, "category": paint!.category, "code": paint!.code, "image": paint!.image, "product": "Paint", "colour": colourProfile, "timestamp": timestamp, "barcode": self.barcode]
          
             selectView.productProfile = paintProfile
         }
         else {
             let timestamp = createTimestamp()
             
-            let paintProfile: Dictionary<String, String> = ["manufacturer": paint!.manufacturer, "productName": paint!.productName, "category": paint!.category, "code": paint!.code, "image": paint!.image, "product": "Paint", "timestamp": timestamp]
+            let paintProfile: Dictionary<String, String> = ["manufacturer": paint!.manufacturer, "productName": paint!.productName, "category": paint!.category, "code": paint!.code, "image": paint!.image, "product": "Paint", "timestamp": timestamp, "barcode": self.barcode]
 
             selectView.productProfile = paintProfile
         }
-        selectView.barcode = self.barcode
         
         self.present(selectView, animated: true, completion: { (error) in
             
@@ -208,19 +211,17 @@ class PostScanViewController: CustomVC {
             let colourProfile: Dictionary<String, String> = ["productCode": colour.productCode, "colourName": colour.colourName, "manufacturer": colour.manufacturer, "manufacturerID": colour.manufacturerID, "hexcode": colour.colourHexCode]
             
             // paint profile
-            let paintProfile: Dictionary<String, Any> = ["manufacturer": paint!.manufacturer, "productName": paint!.productName, "category": paint!.category, "code": paint!.code, "image": paint!.image, "product": "Paint", "colour": colourProfile, "timestamp": timestamp]
+            let paintProfile: Dictionary<String, Any> = ["manufacturer": paint!.manufacturer, "productName": paint!.productName, "category": paint!.category, "code": paint!.code, "image": paint!.image, "product": "Paint", "colour": colourProfile, "timestamp": timestamp, "barcode": self.barcode]
             
             selectView.productProfile = paintProfile
         }
         else {
             let timestamp = createTimestamp()
             
-            let paintProfile: Dictionary<String, String> = ["manufacturer": paint!.manufacturer, "productName": paint!.productName, "category": paint!.category, "code": paint!.code, "image": paint!.image, "product": "Paint", "timestamp": timestamp]
+            let paintProfile: Dictionary<String, String> = ["manufacturer": paint!.manufacturer, "productName": paint!.productName, "category": paint!.category, "code": paint!.code, "image": paint!.image, "product": "Paint", "timestamp": timestamp, "barcode": self.barcode]
             
             selectView.productProfile = paintProfile
         }
-        
-        selectView.barcode = self.barcode
         
         self.present(selectView, animated: true, completion: { (error) in
             
@@ -308,7 +309,7 @@ class PostScanViewController: CustomVC {
         })
     }
     
-    // Check product
+    // Check product (take out)
     
     func check(product: String) {
         
@@ -344,21 +345,6 @@ class PostScanViewController: CustomVC {
             
         })
     }
-    
-    // MARK: - Select Address VC
-    
-    func goToSelectAddress(product: Dictionary<String, Any>, screenState: ScreenState) {
-        let selectAddressVC = SelectAddressVC()
-        
-        selectAddressVC.screenState = screenState
-        selectAddressVC.productProfile = product
-        selectAddressVC.barcode = self.barcode
-        
-        self.present(selectAddressVC, animated: true, completion: {
-            
-        })
-    }
-
     
     // show product image
     

@@ -31,7 +31,7 @@ extension DataService {
     
     func getAddressRefFor(user: User, screenState: ScreenState) {
         if screenState == .business {
-            self.generalRef = self.usersRef.child(user.uid).child(BusinessDashboard)
+            self.generalRef = self.usersRef.child(user.uid).child(BusinessDashboard).child("addresses")
         }
         if screenState == .homes {
             self.generalRef = self.usersRef.child(user.uid).child(AddressDashboard)
@@ -40,7 +40,7 @@ extension DataService {
     
     // MARK: - Remove Product (Public List) 
     func removeScannedProductForAddress(barcode: String, location: String?, category: String) {
-        let removeRef = self.addressRef.child(location!).child("businessAdded").child("categories").child(category).child("barcodes")
+        let removeRef = self.addressRef.child(location!).child("categories").child(category).child("barcodes")
         
         removeRef.child(barcode).removeValue { (error, ref) in
             if error != nil {

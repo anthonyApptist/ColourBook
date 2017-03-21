@@ -26,9 +26,6 @@ class SelectCategoryVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
     var name: UILabel!
     var addButton: UIButton?
     
-    // business location name
-    var business: Business?
-    
     // address name
     var locationName: String?
     
@@ -165,8 +162,11 @@ class SelectCategoryVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
                 // selected category
                 let category = self.saveCategory
                 
+                // create unique ID
+                let uniqueID = "\(NSUUID().uuidString)"
+                
                 // save to selected personal category
-                DataService.instance.saveProductIn(user: self.signedInUser.uid, screenState: self.screenState, location: self.locationName, barcode: self.barcode!, value: self.productProfile, category: category)
+                DataService.instance.saveProductIn(user: self.signedInUser.uid, screenState: self.screenState, location: self.locationName, value: self.productProfile, category: category, uniqueID: uniqueID)
                 
                 self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
             }
@@ -174,11 +174,14 @@ class SelectCategoryVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
                 // selected category
                 let category = self.saveCategory
                 
+                // create unique ID
+                let uniqueID = "\(NSUUID().uuidString)"
+                
                 // save to selected address category
-                DataService.instance.saveProductIn(user: self.signedInUser.uid, screenState: self.screenState, location: self.locationName, barcode: self.barcode!, value: self.productProfile, category: category)
+                DataService.instance.saveProductIn(user: self.signedInUser.uid, screenState: self.screenState, location: self.locationName, value: self.productProfile, category: category, uniqueID: uniqueID)
                 
                 // save to public address category
-                DataService.instance.saveProductFor(location: self.locationName, screenState: self.screenState, barcode: self.barcode!, value: self.productProfile, category: category)
+                DataService.instance.saveProductFor(location: self.locationName, screenState: self.screenState, value: self.productProfile, category: category, uniqueID: uniqueID)
                 
                 self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
 
@@ -186,11 +189,12 @@ class SelectCategoryVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
             if self.screenState == .business {
                 let category = self.saveCategory
                 
-                self.productProfile.updateValue(business?.location ?? "", forKey: "addedBy")
+                // create unique ID
+                let uniqueID = "\(NSUUID().uuidString)"
                 
-                DataService.instance.saveProductIn(user: self.signedInUser.uid, screenState: self.screenState, location: self.locationName, barcode: self.barcode!, value: self.productProfile, category: category)
+                DataService.instance.saveProductIn(user: self.signedInUser.uid, screenState: self.screenState, location: self.locationName, value: self.productProfile, category: category, uniqueID: uniqueID)
                 
-                DataService.instance.saveProductFor(location: self.locationName, screenState: self.screenState, barcode: self.barcode!, value: self.productProfile, category: category)
+                DataService.instance.saveProductFor(location: self.locationName, screenState: self.screenState, value: self.productProfile, category: category, uniqueID: uniqueID)
                 
                 self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
             }

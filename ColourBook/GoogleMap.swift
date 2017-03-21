@@ -25,30 +25,19 @@ class GoogleMap: CustomVC, CLLocationManagerDelegate, GMSMapViewDelegate {
     var marker: GMSMarker?
     
     var saveButton: UIButton?
+
+    // public data
+    var databaseAddresses = [String:[Paint]]()
     
-    // location name (key), location profile dictionary 
-    
-    // model (location name, category, array of paint and timestamp value)
-    var databaseAddresses = [String:[[String:[[Paint:String]]]]]()
-    
-    // data model
-    
-    // paint timestamp value
-    var paintTimestamp = [Paint:String]()
-    
-    // array paint timestamp value
-    var paintTimestampArray = [[Paint:String]]()
-    
-    // category and array paint timestamp value
-    var categoriesItems = [String:[[Paint:String]]]()
-    
-    // array category and array paint timestamp value
-    var categoriesItemsArray = [[String:[[Paint:String]]]]()
+    // address list
+    var locations = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.backButtonNeeded = true
+        
+        self.getPublicList()
         
         // Search Controller
         let resultsUpdater = SearchResultsTableVC()
@@ -85,12 +74,12 @@ class GoogleMap: CustomVC, CLLocationManagerDelegate, GMSMapViewDelegate {
         searchButton?.setImage(image, for: .normal)
         searchButton?.contentMode = .scaleAspectFit
         searchButton?.addTarget(self, action: #selector(searchButtonFunction), for: .touchUpInside)
+        searchButton?.isUserInteractionEnabled = false
         
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.startUpdatingLocation()
-        
+    
     }
     
     // MARK: - CLLocationManager Delegate
@@ -177,12 +166,14 @@ class GoogleMap: CustomVC, CLLocationManagerDelegate, GMSMapViewDelegate {
             
             self.displayAddUnitToApartment(location: location)
         })
-        let alertAdd = UIAlertAction(title: "Add", style: .destructive, handler: { (action) in
+        let alertAdd = UIAlertAction(title: "No (Add address)", style: .destructive, handler: { (action) in
             
-            // add to business database
-            DataService.instance.saveAddress(screenState: self.screenState, location: location)
+            if (!self.locations.contains(location.locationName)) {
+                // add to public address list
+                DataService.instance.saveAddress(screenState: self.screenState, location: location)
+            }
             
-            // add to user business bucket list
+            // add to user address list
             DataService.instance.saveAddressTo(user: self.signedInUser, location: location, screenState: self.screenState)
             
             self.dismiss(animated: true, completion: nil)
@@ -223,10 +214,12 @@ class GoogleMap: CustomVC, CLLocationManagerDelegate, GMSMapViewDelegate {
                     let streetName = location.locationName
                     location.locationName = "\(streetName) - Unit \(unitNumber)"
                     
-                    // add to business database
-                    DataService.instance.saveAddress(screenState: self.screenState, location: location)
+                    if (!self.locations.contains(location.locationName)) {
+                        // add to public address list
+                        DataService.instance.saveAddress(screenState: self.screenState, location: location)
+                    }
                     
-                    // add to user business bucket list
+                    // add to user address list
                     DataService.instance.saveAddressTo(user: self.signedInUser, location: location, screenState: self.screenState)
                     
                     self.dismiss(animated: true, completion: nil)
@@ -251,7 +244,7 @@ class GoogleMap: CustomVC, CLLocationManagerDelegate, GMSMapViewDelegate {
     func displayNoUnitNumber(location: Location) {
         let alertView = UIAlertController(title: "No unit number added for", message: location.locationName, preferredStyle: .alert)
         
-        let alertAction = UIAlertAction(title: "Add", style: .destructive, handler: { (action) in
+        let alertAction = UIAlertAction(title: "No", style: .destructive, handler: { (action) in
             self.displayAddUnitToApartment(location: location)
         })
         
