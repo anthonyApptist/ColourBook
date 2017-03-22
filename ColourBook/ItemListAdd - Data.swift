@@ -18,34 +18,6 @@ extension ItemListAddVC {
             // reset model
             self.locations = []
             
-            /*
-            self.businessImages = [:]
-            
-            // business images
-            for business in snapshot.childSnapshot(forPath: "businesses").children.allObjects {
-                let businessProfile = business as! FIRDvarSnapshot
-                let businessData = businessProfile.value as? NSDictionary
-                
-                // location
-                let name = businessData?["name"] as! String
-                let locationName = businessProfile.key
-                
-                let image = businessData?["image"] as? String
-                let postalCode = businessData?["postalCode"] as? String
-                let phoneNumber = businessData?["phoneNumber"] as? String
-                let website = businessData?["website"] as? String
-                
-                let newBusiness = Business(name: name, location: locationName, phoneNumber: phoneNumber, website: website, postalCode: postalCode, image: image)
-                
-                if newBusiness.image == "" || newBusiness.image == nil {
-                    self.businessImages.updateValue("", forKey: newBusiness.location)
-                }
-                else {
-                    self.businessImages.updateValue(newBusiness.image!, forKey: newBusiness.location)
-                }
-            }
-             */
-            
             if screenState == .homes {
                 
                 if snapshot.childSnapshot(forPath: "users").childSnapshot(forPath: user.uid).childSnapshot(forPath: AddressDashboard).exists() {

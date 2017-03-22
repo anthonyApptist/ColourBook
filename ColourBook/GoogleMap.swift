@@ -75,10 +75,6 @@ class GoogleMap: CustomVC, CLLocationManagerDelegate, GMSMapViewDelegate {
         searchButton?.contentMode = .scaleAspectFit
         searchButton?.addTarget(self, action: #selector(searchButtonFunction), for: .touchUpInside)
         searchButton?.isUserInteractionEnabled = false
-        
-        locationManager.delegate = self
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
     
     }
     
