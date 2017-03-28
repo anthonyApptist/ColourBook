@@ -36,7 +36,7 @@ extension MyDashboardVC {
                 
                 let aBusiness = Business(name: name, location: locationName, phoneNumber: phoneNumber, website: website, postalCode: postalCode, image: image)
                 
-                self.businessImages.updateValue(image ?? "", forKey: locationName)
+                self.businessImages.updateValue(image ?? "", forKey: name)
                 self.cbBusinesses.append(aBusiness)
             }
             
