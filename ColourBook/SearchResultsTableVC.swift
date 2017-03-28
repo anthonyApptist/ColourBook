@@ -162,6 +162,11 @@ class SearchResultsTableVC: UITableViewController {
             
         }
     }
+    
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let parent = self.parent as! UISearchController
+        parent.searchBar.resignFirstResponder()
+    }
 
     // String to UIImage
     
@@ -171,7 +176,12 @@ class SearchResultsTableVC: UITableViewController {
         let image = UIImage(data: imageData!)
         return image!
     }
+    
+    
 
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.resignFirstResponder() 
+    }
 }
 
 extension SearchResultsTableVC: UISearchResultsUpdating {

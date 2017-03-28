@@ -55,6 +55,31 @@ class ColourView: UIView {
         if colour.manufacturer == "Sherwin Williams" {
             
         }
+        if colour.manufacturer == "AFM Safecoat" {
+            manufacturerImageView.image = UIImage(named: "AFMSafeCoat.jpg")
+        }
+        if colour.manufacturer == "C2 Paint" {
+            manufacturerImageView.image = UIImage(named: "C2 Logo")
+        }
+        if colour.manufacturer == "Farrow & Ball" {
+            manufacturerImageView.image = UIImage(named: "Farrow and ball.jpg")
+        }
+        if colour.manufacturer == "PPG Pittsburgh Paints" {
+            manufacturerImageView.image = UIImage(named: "pittsburgh logo")
+        }
+        if colour.manufacturer == "Behr Paint" {
+            manufacturerImageView.image = UIImage(named: "Behr Paint")
+        }
+        if colour.manufacturer == "California Paint" {
+            manufacturerImageView.image = UIImage(named: "California Paint")
+        }
+        if colour.manufacturer == "Rodda Paint" {
+            manufacturerImageView.image = UIImage(named: "Rodda Paint.jpg")
+        }
+        if colour.manufacturer == "Cloverdale Paint" {
+            manufacturerImageView.image = UIImage(named: "Cloverdale Paint")
+        }
+
         
         // add to view
         addSubview(colourSwatch)

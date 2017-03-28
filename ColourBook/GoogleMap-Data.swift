@@ -23,17 +23,16 @@ extension GoogleMap {
                 let locationProfile = locationData.value as? NSDictionary
                 
                 let locationName = locationData.key
-                let postalCode = locationProfile?["postalCode"] as! String
                 
                 self.locations.append(locationName)
             }
-            print(self.locations)
             
-            // update UI and user location
+            // set location manager
             self.locationManager.delegate = self
             self.locationManager.requestWhenInUseAuthorization()
             self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
             
+            // update UI and user location
             self.locationManager.startUpdatingLocation()
             self.searchButton?.isUserInteractionEnabled = true
             self.hideActivityIndicator()

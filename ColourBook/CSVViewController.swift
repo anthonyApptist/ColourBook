@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CSVViewController: UIViewController {
+class CSVViewController: UIViewController { // Trim Characters Extension
     
     var paintData: String?
     
@@ -27,12 +27,11 @@ class CSVViewController: UIViewController {
         
         view.backgroundColor = UIColor.brown
     
-        
         //MARK: Paint Data
         
         do {
             
-            let csvPath = Bundle.main.path(forResource: "FinalizedPaint", ofType: ".csv")
+            let csvPath = Bundle.main.path(forResource: "Cloverdale Paint", ofType: ".csv")
             
             let csvPaintString = try NSString.init(contentsOfFile: csvPath!, encoding: String.Encoding.macOSRoman.rawValue)
 //            print(csvPaintString)
@@ -41,8 +40,6 @@ class CSVViewController: UIViewController {
         catch {
             print(error.localizedDescription)
         }
-        
-        DataService.instance.mainRef.child("test")
         
         csvPaintFileArray = []
         
@@ -58,6 +55,8 @@ class CSVViewController: UIViewController {
         
         var i = 0
         
+        var revisedColours = numberOfColours
+        
         while i < (numberOfColours) {
             
             i += 1
@@ -66,19 +65,14 @@ class CSVViewController: UIViewController {
             
             var manufacturerID = csvPaintFileArray?[0]
             
-            let productCode = csvPaintFileArray?[1]
+            var productCode = csvPaintFileArray?[1]
             
-            let productName = csvPaintFileArray?[2]
+            var productName = csvPaintFileArray?[2]
             
             var hexCode = csvPaintFileArray?[3]
             
-            let manufacturer: String
+            var manufacturer: String
             
-            // fix hex code syntax
-            
-            if (hexCode?.contains("\r"))! {
-                hexCode = hexCode?.replacingOccurrences(of: "\r", with: "")
-            }
             
             // manufacturer id check
             
@@ -92,10 +86,25 @@ class CSVViewController: UIViewController {
                 manufacturerID = manufacturerID?.replacingOccurrences(of: "\r", with: "")
             }
             
+            if (manufacturerID?.contains("\n"))! {
+                manufacturerID = manufacturerID?.replacingOccurrences(of: "\n", with: "")
+            }
+            
             // product code check
             
             if (productCode?.isEmpty)! {
                 print("row \(i), product code is empty")
+            }
+            
+            let firstProductCodeChar = productCode?.characters.first
+            
+            let lastProductCodeChar = productCode?.characters.last
+            
+            if (firstProductCodeChar == " ") {
+                productCode?.characters.removeFirst()
+            }
+            if (lastProductCodeChar == " ") {
+                productCode?.characters.removeLast()
             }
             
             if (productCode?.contains("+"))! || (productCode?.contains("E-"))! {
@@ -108,41 +117,76 @@ class CSVViewController: UIViewController {
                 print("row \(i), product name is empty")
             }
             
+            let firstChar = productName?.characters.first
+            
+            let lastChar = productName?.characters.last
+            
+            if (firstChar == " ") {
+                productName?.characters.removeFirst()
+            }
+            
+            if (lastChar == " ") {
+                productName?.characters.removeLast()
+            }
+            
+            if (productName?.contains(productCode!))! {
+                
+            }
+            
             if (productName?.contains(";"))! || (productCode?.contains("&"))! {
                 print("row \(i), product name is invalid")
+                csvPaintFileArray?.removeFirst(4)
+                revisedColours -= 1
+                continue
+            }
+            
+            if (productName?.contains("*"))! {
+                productName = productName?.replacingOccurrences(of: "*", with: "")
+            }
+            
+            if (productName?.contains("\n"))! {
+                productName = productName?.replacingOccurrences(of: "\n", with: "")
             }
             
             // hex code check
             
+            // fix hex code syntax
+            
+            if (hexCode?.contains("\r"))! {
+                hexCode = hexCode?.replacingOccurrences(of: "\r", with: "")
+            }
+            
+            if (hexCode?.contains("#"))! {
+                hexCode = hexCode?.replacingOccurrences(of: "#", with: "")
+            }
+            
             if (hexCode?.contains("."))! || (hexCode?.contains("+"))! {
                 print("row \(i), hex code is invalid")
+                csvPaintFileArray?.removeFirst(4)
+                revisedColours -= 1
+                continue
             }
             
             if (hexCode?.characters.count)! < 6 {
                 print("row \(i), hex code is less than 6")
             }
-             
-            else {
-//                print("nothing found")
+            
+            if (hexCode?.contains("\n"))! {
+                hexCode = hexCode?.replacingOccurrences(of: "\n", with: "")
             }
             
-            if productCode!.contains("SW") {
-                manufacturer = "Sherwin-Williams"
-            }
-            
-            else {
-                manufacturer = "Benjamin Moore"
-            }
+            // set manufacturer
+            manufacturer = "Cloverdale Paint"
             
             let colour = Colour(manufacturerID: manufacturerID!, productCode: productCode!, colourName: productName!, colourHexCode: hexCode!, manufacturer: manufacturer)
             
             coloursArray?.append(colour)
-
+            
             csvPaintFileArray?.removeFirst(4)
             
         }
         
-        if coloursArray?.count == numberOfColours {
+        if coloursArray?.count == revisedColours {
             print("complete colours")
         }
         else {
@@ -154,10 +198,11 @@ class CSVViewController: UIViewController {
         
         for colour in coloursArray! {
          
-            DataService.instance.savePaintData(manufacturerID: colour.manufacturerID, productCode: colour.productCode, colourName: colour.colourName, colourHexCode: colour.colourHexCode, manufacturer: colour.manufacturer)
+//            DataService.instance.savePaintData(manufacturerID: colour.manufacturerID, productCode: colour.productCode, colourName: colour.colourName, colourHexCode: colour.colourHexCode, manufacturer: colour.manufacturer)
          
         }
   
+        print("done")
 /*
  
         //MARK: Paint Cans
@@ -299,6 +344,10 @@ class CSVViewController: UIViewController {
         
          */
 
+    }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.dismiss(animated: true, completion: nil)
     }
  
 

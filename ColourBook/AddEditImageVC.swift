@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import FirebaseDatabase
+
 class AddEditImageVC: CustomVC, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     @IBOutlet weak var titleLbl: UILabel!
@@ -34,8 +36,12 @@ class AddEditImageVC: CustomVC, UIImagePickerControllerDelegate, UINavigationCon
     
     var resizedImg: UIImage?
     
+    var ref: FIRDatabaseReference?
+    
     override func viewDidLoad() {
 //        super.viewDidLoad()
+        
+        self.ref = DataService.instance.usersRef.child(self.signedInUser.uid)
         
         self.backButtonNeeded = true
         
@@ -69,8 +75,8 @@ class AddEditImageVC: CustomVC, UIImagePickerControllerDelegate, UINavigationCon
         }
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        
+    override func viewDidDisappear(_ animated: Bool) {
+        self.ref?.removeAllObservers()
     }
     
     // MARK: - ImagePicker Delegate

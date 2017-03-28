@@ -115,6 +115,20 @@
 		920B52721E0E0325005D5B60 /* SearchResultsTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920B52711E0E0325005D5B60 /* SearchResultsTableVC.swift */; };
 		920B52751E0F2478005D5B60 /* ScannedProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920B52741E0F2478005D5B60 /* ScannedProduct.swift */; };
 		920B527B1E109421005D5B60 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920B527A1E109421005D5B60 /* Location.swift */; };
+		9212EFAF1E8A0C360071A84D /* Behr -2nd.csv in Resources */ = {isa = PBXBuildFile; fileRef = 9212EFAE1E8A0C360071A84D /* Behr -2nd.csv */; };
+		9212EFB11E8A0C3E0071A84D /* Behr Paint.png in Resources */ = {isa = PBXBuildFile; fileRef = 9212EFB01E8A0C3E0071A84D /* Behr Paint.png */; };
+		9212EFB31E8A0EF20071A84D /* California Paint.png in Resources */ = {isa = PBXBuildFile; fileRef = 9212EFB21E8A0EF20071A84D /* California Paint.png */; };
+		9212EFB51E8A0F740071A84D /* California Paint.csv in Resources */ = {isa = PBXBuildFile; fileRef = 9212EFB41E8A0F740071A84D /* California Paint.csv */; };
+		9212EFB71E8A21530071A84D /* Rodda Paint.csv in Resources */ = {isa = PBXBuildFile; fileRef = 9212EFB61E8A21530071A84D /* Rodda Paint.csv */; };
+		9212EFB91E8A215A0071A84D /* Rodda Paint.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9212EFB81E8A215A0071A84D /* Rodda Paint.jpg */; };
+		9212EFBB1E8A277E0071A84D /* Cloverdale Paint.csv in Resources */ = {isa = PBXBuildFile; fileRef = 9212EFBA1E8A277E0071A84D /* Cloverdale Paint.csv */; };
+		9212EFBD1E8A27860071A84D /* Cloverdale Paint.png in Resources */ = {isa = PBXBuildFile; fileRef = 9212EFBC1E8A27860071A84D /* Cloverdale Paint.png */; };
+		9218971B1E84787300BE0F7D /* AFMSafeCoat.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9218971A1E84787300BE0F7D /* AFMSafeCoat.jpg */; };
+		9218971F1E8479F000BE0F7D /* AFM - Complete.csv in Resources */ = {isa = PBXBuildFile; fileRef = 9218971E1E8479F000BE0F7D /* AFM - Complete.csv */; };
+		921897251E847CC900BE0F7D /* C2 Logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 921897241E847CC900BE0F7D /* C2 Logo.png */; };
+		9218972A1E847D1300BE0F7D /* C2 - Complete.csv in Resources */ = {isa = PBXBuildFile; fileRef = 921897291E847D1300BE0F7D /* C2 - Complete.csv */; };
+		9218972E1E848EAA00BE0F7D /* PPG - New - comas.csv in Resources */ = {isa = PBXBuildFile; fileRef = 9218972D1E848EAA00BE0F7D /* PPG - New - comas.csv */; };
+		921897301E848F0F00BE0F7D /* pittsburgh logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 9218972F1E848F0F00BE0F7D /* pittsburgh logo.png */; };
 		9224DA0C1E416E7B0058AD02 /* BMoore.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9224DA0B1E416E7B0058AD02 /* BMoore.jpg */; };
 		9224DA0E1E418FE60058AD02 /* SelectCategoryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9224DA0D1E418FE60058AD02 /* SelectCategoryVC.swift */; };
 		9235DFEC1E36B66A0041C0E6 /* LocationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9235DFEB1E36B66A0041C0E6 /* LocationCell.swift */; };
@@ -150,9 +164,11 @@
 		92CFEE2E1E00DF9A00F78C78 /* ChooseColourVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92CFEE2D1E00DF9A00F78C78 /* ChooseColourVC.swift */; };
 		92E9B5121E4A8655005DD4C5 /* Business.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E9B5111E4A8655005DD4C5 /* Business.swift */; };
 		92E9B5141E4AA3A5005DD4C5 /* SaveBusinessProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E9B5131E4AA3A5005DD4C5 /* SaveBusinessProfile.swift */; };
-		92E9B5161E4C19BA005DD4C5 /* ItemListEdit - Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E9B5151E4C19BA005DD4C5 /* ItemListEdit - Data.swift */; };
 		92E9B5181E4C204F005DD4C5 /* ItemListAdd - Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E9B5171E4C204F005DD4C5 /* ItemListAdd - Data.swift */; };
 		92E9B51C1E4E2BC4005DD4C5 /* DataService - Transfer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E9B51B1E4E2BC4005DD4C5 /* DataService - Transfer.swift */; };
+		92EAFD851E855B1B00BDEFD7 /* Farrow and ball.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 92EAFD841E855B1B00BDEFD7 /* Farrow and ball.jpg */; };
+		92EAFD871E855B5100BDEFD7 /* Farrow & Ball - Complete.csv in Resources */ = {isa = PBXBuildFile; fileRef = 92EAFD861E855B5100BDEFD7 /* Farrow & Ball - Complete.csv */; };
+		92EAFD991E85C49300BDEFD7 /* AddEditImageVC - Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92EAFD981E85C49300BDEFD7 /* AddEditImageVC - Data.swift */; };
 		92F6B6F41E2352BE00643AD0 /* AddressItemsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92F6B6F31E2352BE00643AD0 /* AddressItemsVC.swift */; };
 		92F6B6F61E2354A100643AD0 /* ProductCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92F6B6F51E2354A100643AD0 /* ProductCell.swift */; };
 		92F8D92C1E41A17700E26601 /* CategoryList - Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92F8D92B1E41A17600E26601 /* CategoryList - Data.swift */; };
@@ -272,10 +288,23 @@
 		66F942BB1DF8BDBB00C01DAF /* purple.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = purple.jpg; sourceTree = "<group>"; };
 		66F942C31DF9241E00C01DAF /* ItemListEditVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemListEditVC.swift; sourceTree = "<group>"; };
 		66F942C51DF92CA500C01DAF /* CustomVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomVC.swift; sourceTree = "<group>"; };
-		9207D1041DF6184E00E90004 /* Facebook-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Facebook-Bridging-Header.h"; sourceTree = "<group>"; };
 		920B52711E0E0325005D5B60 /* SearchResultsTableVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultsTableVC.swift; sourceTree = "<group>"; };
 		920B52741E0F2478005D5B60 /* ScannedProduct.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScannedProduct.swift; sourceTree = "<group>"; };
 		920B527A1E109421005D5B60 /* Location.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
+		9212EFAE1E8A0C360071A84D /* Behr -2nd.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Behr -2nd.csv"; sourceTree = "<group>"; };
+		9212EFB01E8A0C3E0071A84D /* Behr Paint.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Behr Paint.png"; sourceTree = "<group>"; };
+		9212EFB21E8A0EF20071A84D /* California Paint.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "California Paint.png"; sourceTree = "<group>"; };
+		9212EFB41E8A0F740071A84D /* California Paint.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "California Paint.csv"; sourceTree = "<group>"; };
+		9212EFB61E8A21530071A84D /* Rodda Paint.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Rodda Paint.csv"; sourceTree = "<group>"; };
+		9212EFB81E8A215A0071A84D /* Rodda Paint.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Rodda Paint.jpg"; sourceTree = "<group>"; };
+		9212EFBA1E8A277E0071A84D /* Cloverdale Paint.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Cloverdale Paint.csv"; sourceTree = "<group>"; };
+		9212EFBC1E8A27860071A84D /* Cloverdale Paint.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Cloverdale Paint.png"; sourceTree = "<group>"; };
+		9218971A1E84787300BE0F7D /* AFMSafeCoat.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = AFMSafeCoat.jpg; sourceTree = "<group>"; };
+		9218971E1E8479F000BE0F7D /* AFM - Complete.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "AFM - Complete.csv"; sourceTree = "<group>"; };
+		921897241E847CC900BE0F7D /* C2 Logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "C2 Logo.png"; sourceTree = "<group>"; };
+		921897291E847D1300BE0F7D /* C2 - Complete.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "C2 - Complete.csv"; sourceTree = "<group>"; };
+		9218972D1E848EAA00BE0F7D /* PPG - New - comas.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "PPG - New - comas.csv"; sourceTree = "<group>"; };
+		9218972F1E848F0F00BE0F7D /* pittsburgh logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pittsburgh logo.png"; sourceTree = "<group>"; };
 		9224DA0B1E416E7B0058AD02 /* BMoore.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = BMoore.jpg; sourceTree = "<group>"; };
 		9224DA0D1E418FE60058AD02 /* SelectCategoryVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectCategoryVC.swift; sourceTree = "<group>"; };
 		9235DFEB1E36B66A0041C0E6 /* LocationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationCell.swift; sourceTree = "<group>"; };
@@ -312,9 +341,11 @@
 		92CFEE2D1E00DF9A00F78C78 /* ChooseColourVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseColourVC.swift; sourceTree = "<group>"; };
 		92E9B5111E4A8655005DD4C5 /* Business.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Business.swift; sourceTree = "<group>"; };
 		92E9B5131E4AA3A5005DD4C5 /* SaveBusinessProfile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SaveBusinessProfile.swift; sourceTree = "<group>"; };
-		92E9B5151E4C19BA005DD4C5 /* ItemListEdit - Data.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ItemListEdit - Data.swift"; sourceTree = "<group>"; };
 		92E9B5171E4C204F005DD4C5 /* ItemListAdd - Data.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ItemListAdd - Data.swift"; sourceTree = "<group>"; };
 		92E9B51B1E4E2BC4005DD4C5 /* DataService - Transfer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DataService - Transfer.swift"; sourceTree = "<group>"; };
+		92EAFD841E855B1B00BDEFD7 /* Farrow and ball.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Farrow and ball.jpg"; sourceTree = "<group>"; };
+		92EAFD861E855B5100BDEFD7 /* Farrow & Ball - Complete.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Farrow & Ball - Complete.csv"; sourceTree = "<group>"; };
+		92EAFD981E85C49300BDEFD7 /* AddEditImageVC - Data.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AddEditImageVC - Data.swift"; sourceTree = "<group>"; };
 		92F6B6F31E2352BE00643AD0 /* AddressItemsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressItemsVC.swift; sourceTree = "<group>"; };
 		92F6B6F51E2354A100643AD0 /* ProductCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductCell.swift; sourceTree = "<group>"; };
 		92F8D92B1E41A17600E26601 /* CategoryList - Data.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CategoryList - Data.swift"; sourceTree = "<group>"; };
@@ -400,8 +431,8 @@
 				6692C3F71E4076FF00A18D07 /* CategoriesListVC.swift */,
 				92F8D92B1E41A17600E26601 /* CategoryList - Data.swift */,
 				66F942C31DF9241E00C01DAF /* ItemListEditVC.swift */,
-				92E9B5151E4C19BA005DD4C5 /* ItemListEdit - Data.swift */,
 				661A47F51DF6A95700B56028 /* AddEditImageVC.swift */,
+				92EAFD981E85C49300BDEFD7 /* AddEditImageVC - Data.swift */,
 				661A47F71DF6A97700B56028 /* ItemListDetailVC.swift */,
 				66CB81BB1E02175300190315 /* SearchViewController.swift */,
 				929AD0021E03C56E00AB9C63 /* SelectAddressVC.swift */,
@@ -419,10 +450,8 @@
 			isa = PBXGroup;
 			children = (
 				663646591DE0C3EA00E6D719 /* AppDelegate.swift */,
-				9207D1041DF6184E00E90004 /* Facebook-Bridging-Header.h */,
-				92C65CD31E48392F006F1905 /* BenjaminMoorePhoto.jpg */,
-				92C65CD51E48393D006F1905 /* Sherwin Williams Photo.png */,
-				9262ECD81E00FA8A005FD5AC /* FinalizedPaint.csv */,
+				92EAFDB81E87259100BDEFD7 /* Paint Can Companies */,
+				921897191E8477A000BE0F7D /* Paint Companies */,
 				9262ECD91E00FA8A005FD5AC /* productlist.csv */,
 			);
 			name = Other;
@@ -573,7 +602,6 @@
 		920B52731E0E03A8005D5B60 /* SearchControllers */ = {
 			isa = PBXGroup;
 			children = (
-				9224DA0B1E416E7B0058AD02 /* BMoore.jpg */,
 				920B52711E0E0325005D5B60 /* SearchResultsTableVC.swift */,
 				92CFEE2D1E00DF9A00F78C78 /* ChooseColourVC.swift */,
 				924C00981E07AC1000C73C6A /* ColourView.swift */,
@@ -584,6 +612,31 @@
 				9235DFEB1E36B66A0041C0E6 /* LocationCell.swift */,
 			);
 			name = SearchControllers;
+			sourceTree = "<group>";
+		};
+		921897191E8477A000BE0F7D /* Paint Companies */ = {
+			isa = PBXGroup;
+			children = (
+				9218971A1E84787300BE0F7D /* AFMSafeCoat.jpg */,
+				9218971E1E8479F000BE0F7D /* AFM - Complete.csv */,
+				9224DA0B1E416E7B0058AD02 /* BMoore.jpg */,
+				9262ECD81E00FA8A005FD5AC /* FinalizedPaint.csv */,
+				921897241E847CC900BE0F7D /* C2 Logo.png */,
+				921897291E847D1300BE0F7D /* C2 - Complete.csv */,
+				9218972F1E848F0F00BE0F7D /* pittsburgh logo.png */,
+				9218972D1E848EAA00BE0F7D /* PPG - New - comas.csv */,
+				92EAFD841E855B1B00BDEFD7 /* Farrow and ball.jpg */,
+				92EAFD861E855B5100BDEFD7 /* Farrow & Ball - Complete.csv */,
+				9212EFB01E8A0C3E0071A84D /* Behr Paint.png */,
+				9212EFAE1E8A0C360071A84D /* Behr -2nd.csv */,
+				9212EFB21E8A0EF20071A84D /* California Paint.png */,
+				9212EFB41E8A0F740071A84D /* California Paint.csv */,
+				9212EFB81E8A215A0071A84D /* Rodda Paint.jpg */,
+				9212EFB61E8A21530071A84D /* Rodda Paint.csv */,
+				9212EFBC1E8A27860071A84D /* Cloverdale Paint.png */,
+				9212EFBA1E8A277E0071A84D /* Cloverdale Paint.csv */,
+			);
+			name = "Paint Companies";
 			sourceTree = "<group>";
 		};
 		925106DE1E313B5D00C987B3 /* Database Config */ = {
@@ -603,6 +656,15 @@
 				661A47F91DF6A9B400B56028 /* AddEditAddressVC.swift */,
 			);
 			name = Dispose;
+			sourceTree = "<group>";
+		};
+		92EAFDB81E87259100BDEFD7 /* Paint Can Companies */ = {
+			isa = PBXGroup;
+			children = (
+				92C65CD51E48393D006F1905 /* Sherwin Williams Photo.png */,
+				92C65CD31E48392F006F1905 /* BenjaminMoorePhoto.jpg */,
+			);
+			name = "Paint Can Companies";
 			sourceTree = "<group>";
 		};
 		F29FF469050AE8777EE69F42 /* Pods */ = {
@@ -688,16 +750,20 @@
 				663646641DE0C3EA00E6D719 /* LaunchScreen.storyboard in Resources */,
 				66C771571DE83EEF00E4810A /* settingsIcon@2x.png in Resources */,
 				665E63751DE82833002BA868 /* iconFacebook@2x.png in Resources */,
+				921897251E847CC900BE0F7D /* C2 Logo.png in Resources */,
 				66C7714C1DE83EB300E4810A /* homeIcon@3x.png in Resources */,
 				665E637C1DE82F99002BA868 /* arrowBack.png in Resources */,
 				663646701DE16A4300E6D719 /* effects@2x.png in Resources */,
 				66F942BE1DF8BDBB00C01DAF /* green.jpg in Resources */,
 				66CB81B91E0212D800190315 /* search@2x.png in Resources */,
 				66C7714E1DE83EB300E4810A /* moneyIcon@2x.png in Resources */,
+				9212EFB51E8A0F740071A84D /* California Paint.csv in Resources */,
 				668A4B1E1E45CE00004167BD /* listButton@3x.png in Resources */,
 				665E637E1DE82F99002BA868 /* arrowBack@3x.png in Resources */,
 				663646611DE0C3EA00E6D719 /* Assets.xcassets in Resources */,
 				66C7714F1DE83EB300E4810A /* moneyIcon@3x.png in Resources */,
+				9218972A1E847D1300BE0F7D /* C2 - Complete.csv in Resources */,
+				9212EFBB1E8A277E0071A84D /* Cloverdale Paint.csv in Resources */,
 				663646AC1DE4921F00E6D719 /* purpleCBlogo@2x.png in Resources */,
 				663646AD1DE4921F00E6D719 /* purpleCBlogo@3x.png in Resources */,
 				668A4B121E434DCD004167BD /* flag.png in Resources */,
@@ -708,6 +774,9 @@
 				66D783501DF4E3CE00BACC2C /* iconCheck@2x.png in Resources */,
 				9262ECDA1E00FA8A005FD5AC /* FinalizedPaint.csv in Resources */,
 				663646AB1DE4921F00E6D719 /* purpleCBlogo.png in Resources */,
+				9212EFB11E8A0C3E0071A84D /* Behr Paint.png in Resources */,
+				9218971B1E84787300BE0F7D /* AFMSafeCoat.jpg in Resources */,
+				9212EFB91E8A215A0071A84D /* Rodda Paint.jpg in Resources */,
 				92FD3EAB1DE52A71009341C9 /* GoogleService-Info.plist in Resources */,
 				66242ADB1DF0F302000B651F /* barcode.png in Resources */,
 				668A4B141E434DCD004167BD /* flag@3x.png in Resources */,
@@ -726,14 +795,21 @@
 				665E331C1E52744900299C06 /* logoBlack.png in Resources */,
 				663646A11DE4921F00E6D719 /* goldCBlogo@3x.png in Resources */,
 				663646A21DE4921F00E6D719 /* googleImg.png in Resources */,
+				92EAFD871E855B5100BDEFD7 /* Farrow & Ball - Complete.csv in Resources */,
 				66C771561DE83EEF00E4810A /* settingsIcon.png in Resources */,
 				66242ADC1DF0F302000B651F /* barcode@2x.png in Resources */,
 				66C7714A1DE83EB300E4810A /* homeIcon.png in Resources */,
 				665E637D1DE82F99002BA868 /* arrowBack@2x.png in Resources */,
+				9212EFAF1E8A0C360071A84D /* Behr -2nd.csv in Resources */,
+				9218971F1E8479F000BE0F7D /* AFM - Complete.csv in Resources */,
 				665E63741DE82833002BA868 /* iconFacebook.png in Resources */,
+				9212EFB71E8A21530071A84D /* Rodda Paint.csv in Resources */,
+				9212EFB31E8A0EF20071A84D /* California Paint.png in Resources */,
 				6636466F1DE16A4300E6D719 /* effects.png in Resources */,
+				921897301E848F0F00BE0F7D /* pittsburgh logo.png in Resources */,
 				663646A01DE4921F00E6D719 /* goldCBlogo@2x.png in Resources */,
 				66D7834F1DF4E3CE00BACC2C /* iconCheck.png in Resources */,
+				9212EFBD1E8A27860071A84D /* Cloverdale Paint.png in Resources */,
 				663646AA1DE4921F00E6D719 /* pinkCBLogo@3x.png in Resources */,
 				66C771521DE83EB300E4810A /* personalIcon@3x.png in Resources */,
 				6609E2C01E48061500F547A9 /* arrow@3x.png in Resources */,
@@ -743,6 +819,7 @@
 				6636469D1DE4921F00E6D719 /* facebookImg@2x.png in Resources */,
 				663646A71DE4921F00E6D719 /* greenCBlogo@3x.png in Resources */,
 				66D783491DF49B4F00BACC2C /* check.png in Resources */,
+				92EAFD851E855B1B00BDEFD7 /* Farrow and ball.jpg in Resources */,
 				6609E2BF1E48061500F547A9 /* arrow@2x.png in Resources */,
 				66242ADD1DF0F302000B651F /* barcode@3x.png in Resources */,
 				6636465F1DE0C3EA00E6D719 /* Main.storyboard in Resources */,
@@ -752,6 +829,7 @@
 				66F942BF1DF8BDBB00C01DAF /* lightblue.jpg in Resources */,
 				66F942BD1DF8BDBB00C01DAF /* darkred.jpg in Resources */,
 				668A4B1C1E45CE00004167BD /* listButton.png in Resources */,
+				9218972E1E848EAA00BE0F7D /* PPG - New - comas.csv in Resources */,
 				6609E2B81E46FCFB00F547A9 /* listButtonDark@3x.png in Resources */,
 				663646A61DE4921F00E6D719 /* greenCBlogo@2x.png in Resources */,
 				66C7714D1DE83EB300E4810A /* moneyIcon.png in Resources */,
@@ -822,7 +900,6 @@
 				92B4A6351DEBB8A100F35DED /* DataService.swift in Sources */,
 				661A47F61DF6A95700B56028 /* AddEditImageVC.swift in Sources */,
 				66F942C61DF92CA500C01DAF /* CustomVC.swift in Sources */,
-				92E9B5161E4C19BA005DD4C5 /* ItemListEdit - Data.swift in Sources */,
 				920B527B1E109421005D5B60 /* Location.swift in Sources */,
 				66D7834B1DF4DD2100BACC2C /* CustomAnimatedButton.swift in Sources */,
 				92E9B5141E4AA3A5005DD4C5 /* SaveBusinessProfile.swift in Sources */,
@@ -860,6 +937,7 @@
 				66242AE81DF46F30000B651F /* LabelCustomSpacing.swift in Sources */,
 				9277E0C01DFA8323001E0B9B /* AddressView.swift in Sources */,
 				66CB81BC1E02175300190315 /* SearchViewController.swift in Sources */,
+				92EAFD991E85C49300BDEFD7 /* AddEditImageVC - Data.swift in Sources */,
 				92C65CD01E4592F8006F1905 /* GoogleMap.swift in Sources */,
 				6692C3F81E4076FF00A18D07 /* CategoriesListVC.swift in Sources */,
 				92F6B6F41E2352BE00643AD0 /* AddressItemsVC.swift in Sources */,

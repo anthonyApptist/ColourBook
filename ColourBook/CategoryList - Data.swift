@@ -23,7 +23,19 @@ extension CategoriesListVC {
         self.collectionView.reloadData()
         
         categoriesRef?.observe(.value, with: { (snapshot) in
-            for child in snapshot.children.allObjects {
+            
+            // check personal name
+            if snapshot.hasChild("name") {
+                
+            }
+            
+            // check personal image
+            if snapshot.hasChild("image") {
+                
+            }
+            
+            // personal dashboard
+            for child in snapshot.childSnapshot(forPath: PersonalDashboard).children.allObjects {
                 let categoryName = child as! FIRDataSnapshot
                 let category = categoryName.key
                 
@@ -111,7 +123,7 @@ extension CategoriesListVC {
     
     func getCategoriesFrom(user: User, screenState: ScreenState, location: Location?) {
         if screenState == .personal {
-            DataService.instance.generalRef = DataService.instance.usersRef.child(user.uid).child(PersonalDashboard)
+            DataService.instance.generalRef = DataService.instance.usersRef.child(user.uid)
         }
         if screenState == .business {
             DataService.instance.generalRef = DataService.instance.usersRef.child(user.uid).child(BusinessDashboard).child("addresses").child((location?.locationName)!).child("categories")
@@ -122,7 +134,6 @@ extension CategoriesListVC {
         if screenState == .searching {
             DataService.instance.generalRef = DataService.instance.addressRef.child((location?.locationName)!).child("categories")
         }
-        
     }
     
 }

@@ -57,22 +57,29 @@ class ChooseColourVC: CustomVC, UISearchBarDelegate {
         
         DataService.instance.paintDataRef.observeSingleEvent(of: .value, with: { (snapshot) in
             
-            for productCode in snapshot.children.allObjects {
-                let colourProfile = productCode as? FIRDataSnapshot
-                let paintData = colourProfile?.value as? NSDictionary
-                let manufacturerID = paintData?["manufacturerID"] as! String
-                let manufacturer = paintData?["manufacturer"] as! String
-                let colourName = paintData?["colourName"] as! String
-                let colourHexCode = paintData?["hexcode"] as! String
-                let productCode = colourProfile?.key
-                let colour = Colour(manufacturerID: manufacturerID, productCode: productCode!, colourName: colourName, colourHexCode: colourHexCode, manufacturer: manufacturer)
-                self.coloursArray.append(colour)
+            for paintCompany in snapshot.children.allObjects {
+                
+                // paint company
+                let companyData = paintCompany as! FIRDataSnapshot
+                let companyName = companyData.key
+                
+                for productCode in snapshot.childSnapshot(forPath: companyName).children.allObjects {
+                    let colourProfile = productCode as? FIRDataSnapshot
+                    let paintData = colourProfile?.value as? NSDictionary
+                    let manufacturerID = paintData?["manufacturerID"] as! String
+                    let manufacturer = paintData?["manufacturer"] as! String
+                    let colourName = paintData?["colourName"] as! String
+                    let colourHexCode = paintData?["hexcode"] as! String
+                    let productCode = paintData?["productCode"] as! String
+                    let colour = Colour(manufacturerID: manufacturerID, productCode: productCode, colourName: colourName, colourHexCode: colourHexCode, manufacturer: manufacturer)
+                    self.coloursArray.append(colour)
+                }
             }
             resultsUpdater.allColours = self.coloursArray
             self.hideActivityIndicator()
             self.searchColourButton.isUserInteractionEnabled = true
             
-            self.searchColourButtonFunction()   
+            self.searchColourButtonFunction()
         })
         
         
@@ -141,7 +148,7 @@ extension ChooseColourVC: ColourResult {
         let colourView = ColourView(frame: self.searchResultView.bounds, colour: colour)
         
         self.hexcode = colour.colourHexCode
-        print(self.hexcode)
+        print(self.hexcode ?? "")
         
         // current colour
         self.selectedColour = colour

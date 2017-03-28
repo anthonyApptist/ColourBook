@@ -19,4 +19,5 @@ struct Colour {
     var colourHexCode: String
     
     var manufacturer: String
+
 }

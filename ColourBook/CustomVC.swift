@@ -84,6 +84,10 @@ class CustomVC: UIViewController, UITextFieldDelegate {
         textField.resignFirstResponder()
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.resignFirstResponder()
+    }
+    
    
     func backBtnPressed(_ sender: AnyObject) {
         

@@ -273,10 +273,6 @@ extension GoogleMap: GMSAutocompleteViewControllerDelegate {
     // Handle the user's selection.
     func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
         
-//        let cameraUpdate = GMSCameraUpdate.setTarget(place.coordinate, zoom: 17.5)
-        print("Place name: \(place.name)")
-        print("Place address: \(place.formattedAddress)")
-        print("Place attributions: \(place.attributions)")
         dismiss(animated: true) { 
             
             let coordinates = CLLocationCoordinate2DMake(place.coordinate.latitude, place.coordinate.longitude)

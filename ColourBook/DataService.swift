@@ -75,9 +75,20 @@ class DataService {
     
     func savePaintData(manufacturerID: String, productCode: String, colourName: String, colourHexCode: String, manufacturer: String) {
         
-        let paintProfile: Dictionary<String, String> = ["manufacturerID" : manufacturerID, "colourName" : colourName, "hexcode": colourHexCode, "manufacturer": manufacturer]
-        
-        paintDataRef.child(productCode).setValue(paintProfile)
+        if productCode.isEmpty {
+            let paintProfile: Dictionary<String, String> = ["manufacturerID" : manufacturerID, "colourName" : colourName, "hexcode": colourHexCode, "manufacturer": manufacturer, "productCode": productCode]
+            
+            let uniqueID = "\(NSUUID().uuidString)"
+            
+            paintDataRef.child(manufacturer).child(uniqueID).setValue(paintProfile)
+        }
+        else {
+            
+            let paintProfile: Dictionary<String, String> = ["manufacturerID" : manufacturerID, "colourName" : colourName, "hexcode": colourHexCode, "manufacturer": manufacturer, "productCode": productCode]
+            
+            paintDataRef.child(manufacturer).child(productCode).setValue(paintProfile)
+        }
+            
     }
     
     func savePaintCanData(manufacturer: String, productName: String, category: String, code: String, upcCode: String, image: String, colour: String) {

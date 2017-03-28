@@ -53,9 +53,6 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
             self.present(selectAddress, animated: true, completion: { 
                 
             })
-            /*
-            performSegue(withIdentifier: "ConnectToTransferPage", sender: nil)
-            */
         }
     }
     
