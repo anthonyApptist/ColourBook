@@ -96,9 +96,9 @@ class MyDashboardVC: CustomVC, UIScrollViewDelegate { // updating location here
     
     @IBAction func scanBtnPressed(_ sender: AnyObject?) {
         
-        let scanView = CSVViewController()//storyboard?.instantiateViewController(withIdentifier: "BarcodeVC")
+        let scanView = storyboard?.instantiateViewController(withIdentifier: "BarcodeVC")
         
-        present(scanView, animated: true, completion: nil)
+        present(scanView!, animated: true, completion: nil)
         
     }
     
