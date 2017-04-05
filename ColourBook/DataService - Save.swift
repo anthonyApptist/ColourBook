@@ -72,10 +72,38 @@ extension DataService {
     
     // MARK: Save Paint Can to Location (Public)
     
-    func saveProductFor(location: String?, screenState: ScreenState, value: Dictionary<String, Any>, category: String, uniqueID: String) {
+    func saveProductFor(location: String?, screenState: ScreenState, product: ScannedProduct, category: String) {
+        
         getPublicLocationCategoriesRef(screenState: screenState, location: location, category: category)
         let publicRef = self.generalRef
-        publicRef?.child(uniqueID).setValue(value)
+        
+        var value: [String:Any]? = [:]
+        
+        value?.updateValue(product.upcCode, forKey: "barcode")
+        value?.updateValue(product.productName, forKey: "productName")
+        value?.updateValue(product.productType, forKey: "product")
+        value?.updateValue(product.manufacturer, forKey: "manufacturer")
+        value?.updateValue(product.image, forKey: "image")
+        value?.updateValue(product.timestamp!, forKey: "timestamp")
+        
+        if let code = product.code {
+            value?.updateValue(code, forKey: "code")
+        }
+        if let category = product.category {
+            value?.updateValue(category, forKey: "category")
+        }
+        
+        // colour
+        if let colour = product.colour {
+            let colourProfile: [String:String] = ["productCode": colour.productCode, "colourName": colour.colourName, "manufacturer": colour.manufacturer, "manufacturerID": colour.manufacturerID, "hexcode": colour.colourHexCode]
+            
+            value?.updateValue(colourProfile, forKey: "colour")
+        }
+        if let businessAdded = product.businessAdded {
+            value?.updateValue(businessAdded, forKey: "businessAdded")
+        }
+        
+        publicRef?.child(product.uniqueID!).setValue(value)
     }
     
     func getPublicLocationCategoriesRef(screenState: ScreenState, location: String?, category: String) {
@@ -89,11 +117,39 @@ extension DataService {
     
     // MARK: Save Paint Can to User Database (Personal)
     
-    func saveProductIn(user: String, screenState: ScreenState, location: String?, value: Dictionary<String, Any>, category: String, uniqueID: String) {
+    func saveProductIn(user: String, screenState: ScreenState, location: String?, product: ScannedProduct, category: String) {
+        
         getDashboardRef(screenState: screenState, user: user, location: location, category: category)
         let infoRef = self.generalRef
         
-        infoRef?.child(uniqueID).setValue(value)
+        var value: [String:Any]? = [:]
+        
+        value?.updateValue(product.upcCode, forKey: "barcode")
+        value?.updateValue(product.productName, forKey: "productName")
+        value?.updateValue(product.productType, forKey: "product")
+        value?.updateValue(product.manufacturer, forKey: "manufacturer")
+        value?.updateValue(product.image, forKey: "image")
+        value?.updateValue(product.timestamp!, forKey: "timestamp")
+        
+        if let code = product.code {
+            value?.updateValue(code, forKey: "code")
+        }
+        if let category = product.category {
+            value?.updateValue(category, forKey: "category")
+        }
+        
+        // colour
+        if let colour = product.colour {
+            let colourProfile: [String:String] = ["productCode": colour.productCode, "colourName": colour.colourName, "manufacturer": colour.manufacturer, "manufacturerID": colour.manufacturerID, "hexcode": colour.colourHexCode]
+            
+            value?.updateValue(colourProfile, forKey: "colour")
+        }
+        
+        if let businessAdded = product.businessAdded {
+            value?.updateValue(businessAdded, forKey: "businessAdded")
+        }
+        
+        infoRef?.child(product.uniqueID!).setValue(value)
     }
     
     func getDashboardRef(screenState: ScreenState, user: String, location: String?, category: String) {

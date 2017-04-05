@@ -112,6 +112,15 @@
 		66F942C21DF8BDBB00C01DAF /* purple.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 66F942BB1DF8BDBB00C01DAF /* purple.jpg */; };
 		66F942C41DF9241E00C01DAF /* ItemListEditVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F942C31DF9241E00C01DAF /* ItemListEditVC.swift */; };
 		66F942C61DF92CA500C01DAF /* CustomVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F942C51DF92CA500C01DAF /* CustomVC.swift */; };
+		920A014A1E8C26D4005FD379 /* APILookUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920A01491E8C26D4005FD379 /* APILookUp.swift */; };
+		920A014C1E8DB2DE005FD379 /* Rustoleum Products.csv in Resources */ = {isa = PBXBuildFile; fileRef = 920A014B1E8DB2DE005FD379 /* Rustoleum Products.csv */; };
+		920A014E1E8DB939005FD379 /* Rustoleum.png in Resources */ = {isa = PBXBuildFile; fileRef = 920A014D1E8DB939005FD379 /* Rustoleum.png */; };
+		920A01501E930B94005FD379 /* CoronadoLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 920A014F1E930B93005FD379 /* CoronadoLogo.png */; };
+		920A01521E930D1E005FD379 /* logo_lenmar.png in Resources */ = {isa = PBXBuildFile; fileRef = 920A01511E930D1E005FD379 /* logo_lenmar.png */; };
+		920A01541E930D57005FD379 /* logo_insulx.png in Resources */ = {isa = PBXBuildFile; fileRef = 920A01531E930D57005FD379 /* logo_insulx.png */; };
+		920A01561E930DA5005FD379 /* logo_CorTech.png in Resources */ = {isa = PBXBuildFile; fileRef = 920A01551E930DA5005FD379 /* logo_CorTech.png */; };
+		920A01581E931392005FD379 /* Tremclad.csv in Resources */ = {isa = PBXBuildFile; fileRef = 920A01571E931392005FD379 /* Tremclad.csv */; };
+		920A015A1E93139A005FD379 /* Tremclad.png in Resources */ = {isa = PBXBuildFile; fileRef = 920A01591E93139A005FD379 /* Tremclad.png */; };
 		920B52721E0E0325005D5B60 /* SearchResultsTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920B52711E0E0325005D5B60 /* SearchResultsTableVC.swift */; };
 		920B52751E0F2478005D5B60 /* ScannedProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920B52741E0F2478005D5B60 /* ScannedProduct.swift */; };
 		920B527B1E109421005D5B60 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920B527A1E109421005D5B60 /* Location.swift */; };
@@ -151,7 +160,6 @@
 		92A7D3EF1E15823800345D94 /* DataService - Save.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A7D3EE1E15823800345D94 /* DataService - Save.swift */; };
 		92B4A61B1DE8FD9300F35DED /* CSVViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B4A61A1DE8FD9300F35DED /* CSVViewController.swift */; };
 		92B4A61D1DEA5B1C00F35DED /* Colour.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B4A61C1DEA5B1C00F35DED /* Colour.swift */; };
-		92B4A61F1DEA94D300F35DED /* Paint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B4A61E1DEA94D300F35DED /* Paint.swift */; };
 		92B4A6351DEBB8A100F35DED /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B4A6341DEBB8A100F35DED /* DataService.swift */; };
 		92B4A6371DEBB8B400F35DED /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B4A6361DEBB8B400F35DED /* AuthService.swift */; };
 		92B4A6391DEBB8E500F35DED /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B4A6381DEBB8E500F35DED /* User.swift */; };
@@ -288,6 +296,15 @@
 		66F942BB1DF8BDBB00C01DAF /* purple.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = purple.jpg; sourceTree = "<group>"; };
 		66F942C31DF9241E00C01DAF /* ItemListEditVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemListEditVC.swift; sourceTree = "<group>"; };
 		66F942C51DF92CA500C01DAF /* CustomVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomVC.swift; sourceTree = "<group>"; };
+		920A01491E8C26D4005FD379 /* APILookUp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APILookUp.swift; sourceTree = "<group>"; };
+		920A014B1E8DB2DE005FD379 /* Rustoleum Products.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Rustoleum Products.csv"; sourceTree = "<group>"; };
+		920A014D1E8DB939005FD379 /* Rustoleum.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Rustoleum.png; sourceTree = "<group>"; };
+		920A014F1E930B93005FD379 /* CoronadoLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CoronadoLogo.png; sourceTree = "<group>"; };
+		920A01511E930D1E005FD379 /* logo_lenmar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo_lenmar.png; sourceTree = "<group>"; };
+		920A01531E930D57005FD379 /* logo_insulx.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo_insulx.png; sourceTree = "<group>"; };
+		920A01551E930DA5005FD379 /* logo_CorTech.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo_CorTech.png; sourceTree = "<group>"; };
+		920A01571E931392005FD379 /* Tremclad.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Tremclad.csv; sourceTree = "<group>"; };
+		920A01591E93139A005FD379 /* Tremclad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Tremclad.png; sourceTree = "<group>"; };
 		920B52711E0E0325005D5B60 /* SearchResultsTableVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultsTableVC.swift; sourceTree = "<group>"; };
 		920B52741E0F2478005D5B60 /* ScannedProduct.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScannedProduct.swift; sourceTree = "<group>"; };
 		920B527A1E109421005D5B60 /* Location.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
@@ -328,7 +345,6 @@
 		92A7D3EE1E15823800345D94 /* DataService - Save.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DataService - Save.swift"; sourceTree = "<group>"; };
 		92B4A61A1DE8FD9300F35DED /* CSVViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CSVViewController.swift; sourceTree = "<group>"; };
 		92B4A61C1DEA5B1C00F35DED /* Colour.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colour.swift; sourceTree = "<group>"; };
-		92B4A61E1DEA94D300F35DED /* Paint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Paint.swift; sourceTree = "<group>"; };
 		92B4A6341DEBB8A100F35DED /* DataService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
 		92B4A6361DEBB8B400F35DED /* AuthService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		92B4A6381DEBB8E500F35DED /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -384,7 +400,6 @@
 				92367A1F1E16CD4A005B11F9 /* DataService - Delete.swift */,
 				92B4A6361DEBB8B400F35DED /* AuthService.swift */,
 				92B4A6381DEBB8E500F35DED /* User.swift */,
-				92B4A61E1DEA94D300F35DED /* Paint.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -421,6 +436,7 @@
 				92C65CCF1E4592F8006F1905 /* GoogleMap.swift */,
 				926A75021E80C834009F5D03 /* GoogleMap-Data.swift */,
 				9277E0B41DF75022001E0B9B /* PostScanVC.swift */,
+				920A01491E8C26D4005FD379 /* APILookUp.swift */,
 				92BDF7BA1E24130E00BE9673 /* ProductInfoView.swift */,
 				920B52731E0E03A8005D5B60 /* SearchControllers */,
 				663646881DE3E93A00E6D719 /* LogInViewController.swift */,
@@ -452,7 +468,6 @@
 				663646591DE0C3EA00E6D719 /* AppDelegate.swift */,
 				92EAFDB81E87259100BDEFD7 /* Paint Can Companies */,
 				921897191E8477A000BE0F7D /* Paint Companies */,
-				9262ECD91E00FA8A005FD5AC /* productlist.csv */,
 			);
 			name = Other;
 			sourceTree = "<group>";
@@ -663,6 +678,15 @@
 			children = (
 				92C65CD51E48393D006F1905 /* Sherwin Williams Photo.png */,
 				92C65CD31E48392F006F1905 /* BenjaminMoorePhoto.jpg */,
+				920A014F1E930B93005FD379 /* CoronadoLogo.png */,
+				920A01511E930D1E005FD379 /* logo_lenmar.png */,
+				920A01531E930D57005FD379 /* logo_insulx.png */,
+				920A01551E930DA5005FD379 /* logo_CorTech.png */,
+				9262ECD91E00FA8A005FD5AC /* productlist.csv */,
+				920A014D1E8DB939005FD379 /* Rustoleum.png */,
+				920A014B1E8DB2DE005FD379 /* Rustoleum Products.csv */,
+				920A01591E93139A005FD379 /* Tremclad.png */,
+				920A01571E931392005FD379 /* Tremclad.csv */,
 			);
 			name = "Paint Can Companies";
 			sourceTree = "<group>";
@@ -743,6 +767,7 @@
 				6609E2B71E46FCFB00F547A9 /* listButtonDark@2x.png in Resources */,
 				66D783511DF4E3CE00BACC2C /* iconCheck@3x.png in Resources */,
 				66C7714B1DE83EB300E4810A /* homeIcon@2x.png in Resources */,
+				920A01541E930D57005FD379 /* logo_insulx.png in Resources */,
 				663646711DE16A4300E6D719 /* effects@3x.png in Resources */,
 				66F942C01DF8BDBB00C01DAF /* lightred.jpg in Resources */,
 				663646A81DE4921F00E6D719 /* pinkCBLogo.png in Resources */,
@@ -777,6 +802,7 @@
 				9212EFB11E8A0C3E0071A84D /* Behr Paint.png in Resources */,
 				9218971B1E84787300BE0F7D /* AFMSafeCoat.jpg in Resources */,
 				9212EFB91E8A215A0071A84D /* Rodda Paint.jpg in Resources */,
+				920A015A1E93139A005FD379 /* Tremclad.png in Resources */,
 				92FD3EAB1DE52A71009341C9 /* GoogleService-Info.plist in Resources */,
 				66242ADB1DF0F302000B651F /* barcode.png in Resources */,
 				668A4B141E434DCD004167BD /* flag@3x.png in Resources */,
@@ -787,12 +813,14 @@
 				66CB81BA1E0212D800190315 /* search@3x.png in Resources */,
 				6636469C1DE4921F00E6D719 /* facebookImg.png in Resources */,
 				663646A31DE4921F00E6D719 /* googleImg@2x.png in Resources */,
+				920A014E1E8DB939005FD379 /* Rustoleum.png in Resources */,
 				663646A41DE4921F00E6D719 /* googleImg@3x.png in Resources */,
 				66F942C11DF8BDBB00C01DAF /* orange.jpg in Resources */,
 				663646A91DE4921F00E6D719 /* pinkCBLogo@2x.png in Resources */,
 				66C771501DE83EB300E4810A /* personalIcon.png in Resources */,
 				663646A51DE4921F00E6D719 /* greenCBlogo.png in Resources */,
 				665E331C1E52744900299C06 /* logoBlack.png in Resources */,
+				920A01521E930D1E005FD379 /* logo_lenmar.png in Resources */,
 				663646A11DE4921F00E6D719 /* goldCBlogo@3x.png in Resources */,
 				663646A21DE4921F00E6D719 /* googleImg.png in Resources */,
 				92EAFD871E855B5100BDEFD7 /* Farrow & Ball - Complete.csv in Resources */,
@@ -811,12 +839,16 @@
 				66D7834F1DF4E3CE00BACC2C /* iconCheck.png in Resources */,
 				9212EFBD1E8A27860071A84D /* Cloverdale Paint.png in Resources */,
 				663646AA1DE4921F00E6D719 /* pinkCBLogo@3x.png in Resources */,
+				920A01561E930DA5005FD379 /* logo_CorTech.png in Resources */,
 				66C771521DE83EB300E4810A /* personalIcon@3x.png in Resources */,
+				920A014C1E8DB2DE005FD379 /* Rustoleum Products.csv in Resources */,
 				6609E2C01E48061500F547A9 /* arrow@3x.png in Resources */,
+				920A01501E930B94005FD379 /* CoronadoLogo.png in Resources */,
 				66C771581DE83EEF00E4810A /* settingsIcon@3x.png in Resources */,
 				6609E2BE1E48061500F547A9 /* arrow.png in Resources */,
 				66C771511DE83EB300E4810A /* personalIcon@2x.png in Resources */,
 				6636469D1DE4921F00E6D719 /* facebookImg@2x.png in Resources */,
+				920A01581E931392005FD379 /* Tremclad.csv in Resources */,
 				663646A71DE4921F00E6D719 /* greenCBlogo@3x.png in Resources */,
 				66D783491DF49B4F00BACC2C /* check.png in Resources */,
 				92EAFD851E855B1B00BDEFD7 /* Farrow and ball.jpg in Resources */,
@@ -913,6 +945,7 @@
 				665E63781DE8293A002BA868 /* SignUpViewController.swift in Sources */,
 				663646891DE3E93A00E6D719 /* LogInViewController.swift in Sources */,
 				66242AD71DF0F0F4000B651F /* MessageView.swift in Sources */,
+				920A014A1E8C26D4005FD379 /* APILookUp.swift in Sources */,
 				663646731DE16C6800E6D719 /* UIExtensions.swift in Sources */,
 				92FD3EAF1DE52D26009341C9 /* BarcodeScanner.swift in Sources */,
 				92874DE11E0BB1E400A3D6BC /* UIColourExtension.swift in Sources */,
@@ -922,7 +955,6 @@
 				668A4B181E435B0D004167BD /* ReportHandler.swift in Sources */,
 				92B4A6391DEBB8E500F35DED /* User.swift in Sources */,
 				927DE5D41E6F1441008F92BD /* RetailerVC.swift in Sources */,
-				92B4A61F1DEA94D300F35DED /* Paint.swift in Sources */,
 				6667AC8C1E503299007D39CB /* SwatchView.swift in Sources */,
 				92F6B6F61E2354A100643AD0 /* ProductCell.swift in Sources */,
 				66242AE21DF24ED8000B651F /* Validator.swift in Sources */,

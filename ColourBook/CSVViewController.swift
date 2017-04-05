@@ -20,13 +20,14 @@ class CSVViewController: UIViewController { // Trim Characters Extension
     
     var coloursArray: [Colour]?
     
-    var paintCansArray: [Paint]?
+    var paintCansArray: [ScannedProduct]?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view.backgroundColor = UIColor.brown
     
+        /*
         //MARK: Paint Data
         
         do {
@@ -203,13 +204,13 @@ class CSVViewController: UIViewController { // Trim Characters Extension
         }
   
         print("done")
-/*
+*/
  
         //MARK: Paint Cans
         
         do {
             
-            let csvPath = Bundle.main.path(forResource: "productlist", ofType: ".csv")
+            let csvPath = Bundle.main.path(forResource: "Tremclad", ofType: ".csv")
             
             let csvPaintString = try NSString.init(contentsOfFile: csvPath!, encoding: String.Encoding.macOSRoman.rawValue)
             //            print(csvPaintString)
@@ -223,9 +224,9 @@ class CSVViewController: UIViewController { // Trim Characters Extension
         
         csvPaintCanFileArray = paintCanData?.components(separatedBy: ",")
         
-        csvPaintCanFileArray?.removeFirst(8)
+        csvPaintCanFileArray?.removeFirst(5)
         
-        let numberOfCans = Float((csvPaintCanFileArray?.count)!/7)
+        let numberOfCans = Float((csvPaintCanFileArray?.count)!/5)
         
         print(numberOfCans)
         
@@ -241,43 +242,47 @@ class CSVViewController: UIViewController { // Trim Characters Extension
          
 //            Manufacturer, Product Name, Category, Code, Product UPC, Image
          
-            let manufacturerCode = csvPaintCanFileArray?[0]
+            var manufacturer = csvPaintCanFileArray?[0]
          
-            let productName = csvPaintCanFileArray?[1]
+            var productName = csvPaintCanFileArray?[1]
          
-            let category = csvPaintCanFileArray?[2]
+            let category = ""
          
-            let code = csvPaintCanFileArray?[3]
+            let code = csvPaintCanFileArray?[2]
          
-            let upcCode = csvPaintCanFileArray?[4]
+            var upcCode = csvPaintCanFileArray?[4]
          
-            let paintCanImage = csvPaintCanFileArray?[5]
+            let paintCanImage = csvPaintCanFileArray?[3]
          
          
             // manufactuer code check
-         
-            if (manufacturerCode?.isEmpty)! {
-                print("row \(y), manufactuer code is empty")
+            if (manufacturer?.isEmpty)! {
+                print("row \(y), manufactuer is empty")
             }
-         
+            if (manufacturer?.contains("\r"))! {
+                manufacturer = manufacturer?.replacingOccurrences(of: "\r", with: "")
+            }
+
+            
             // product name check
-         
             if (productName?.isEmpty)! {
                 print("row \(y), product name is empty")
             }
+            if (productName?.contains("\r"))! {
+                productName = productName?.replacingOccurrences(of: "\r", with: "")
+            }
          
             // category check
-         
-            if (category?.isEmpty)! {
+            if (category.isEmpty) {
                 print("row \(y), category is empty")
+                
             }
          
             // code check
-         
             if (code?.isEmpty)! {
                 print("row \(y), code is empty")
             }
-         
+
             if (code?.characters.count)! < 5 {
                 print("row \(y), code is invalid")
             }
@@ -286,23 +291,20 @@ class CSVViewController: UIViewController { // Trim Characters Extension
          
             if (upcCode?.characters.count)! < 13 {
                 print("row \(y), upc code is invalid")
+                upcCode = "00" + upcCode!
+                print(upcCode)
             }
          
             else {
                 // print("nothing found")
             }
-         
-         
-            let paintCan = Paint(manufacturer: manufacturerCode!, productName: productName!, category: category!, code: code!, upcCode: upcCode!, image: paintCanImage!, colour: "")
-         
+            let product = ScannedProduct(productType: "Paint", productName: productName!, manufacturer: manufacturer!, upcCode: upcCode!, image: paintCanImage!)
+            product.code = code
+            
 //            print(paintCan.productName ?? "")
-         
-            paintCansArray?.append(paintCan)
-         
+            paintCansArray?.append(product)
 //            print(paintCansArray?.count ?? 0)
-         
-            csvPaintCanFileArray?.removeFirst(7)
-         
+            csvPaintCanFileArray?.removeFirst(5)
         }
 
         if paintCansArray?.count == Int(numberOfCans) {
@@ -313,37 +315,23 @@ class CSVViewController: UIViewController { // Trim Characters Extension
         }
 
         // add paint cans to firebase
-        
         for paintCan in paintCansArray! {
-         
             if paintCan.upcCode.characters.count < 13 {
                 print("upc code invalid skipped")
             }
-         
             else {
-         
                 let manufactuer = paintCan.manufacturer
-         
                 let productName = paintCan.productName
-         
-                let category = paintCan.category
-         
+//                let category = paintCan.category
                 let code = paintCan.code
-         
                 let upcCode = paintCan.upcCode
-         
                 let image = paintCan.image
+         
+                DataService.instance.savePaintCanData(manufacturer: manufactuer, productName: productName, category: nil, code: code, upcCode: upcCode, image: image)
                 
-                let colour = paintCan.colour
-         
-                DataService.instance.savePaintCanData(manufacturer: manufactuer, productName: productName, category: category, code: code, upcCode: upcCode, image: image, colour: colour)
-         
+//                DataService.instance.barcodeRef.child(upcCode).removeValue()
             }
-         
         }
-        
-         */
-
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {

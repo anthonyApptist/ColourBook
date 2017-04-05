@@ -182,63 +182,46 @@ class BarcodeScanner: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
         
         trimmedCodeAddZero = "0" + "\(trimmedCodeString)"
             
-        self.code = trimmedCodeAddZero
-        
+        self.code = trimmedCodeAddZero // 00 beginning
     }
     
     // swipe function
     
     func swipeDownGestureFunction() {
-        
         // dismiss camera view
-        
         self.dismiss(animated: true, completion: nil)
     }
     
     // tap to zoom
     
     func tapFunction() {
-
         let focusPoint: CGPoint = (self.previewLayer as  AVCaptureVideoPreviewLayer).captureDevicePointOfInterest(for: tapToFocus.location(in: self.view))
         
         print(focusPoint)
         
         do {
             try captureDevice?.lockForConfiguration()
-            
             if captureDevice.isFocusPointOfInterestSupported {
-                
                 captureDevice.focusPointOfInterest = focusPoint
-
                 captureDevice.focusMode = AVCaptureFocusMode.autoFocus
             }
-            
             if captureDevice.isExposurePointOfInterestSupported {
-                
                 captureDevice.exposurePointOfInterest = focusPoint
-                
-                captureDevice.exposureMode = AVCaptureExposureMode.autoExpose
+                captureDevice.exposureMode = AVCaptureExposureMode.autoExpose  
             }
-            
             captureDevice?.unlockForConfiguration()
-            
         } catch {
             //handle error
-            
             print(error.localizedDescription)
-            
             return
         }
-        
     }
-    
-    
     
     func goToPostScanView(code: String) {
         
         let postScanView = PostScanViewController()
         
-        postScanView.barcode = "0023906012809" //code
+        postScanView.barcode = "0063213021569" //"0020066203030" //code
 
         
         self.present(postScanView, animated: true)

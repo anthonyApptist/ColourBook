@@ -12,7 +12,7 @@ import FirebaseDatabase
 class SelectAddressVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
     
     // product profiles
-    var productProfile: [String:Any] = [:]
+    var productProfile: ScannedProduct?
     
     // model
     var locations = [Location]()
@@ -28,7 +28,7 @@ class SelectAddressVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
     var business: Business?
     
     // products to be transferred
-    var transferProducts = [Paint:String]()
+    var transferProducts = [ScannedProduct]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -138,7 +138,6 @@ class SelectAddressVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
             selectCategory.screenState = self.screenState
             selectCategory.locationName = self.selectedLocation
             selectCategory.selectedCategory = self.selectedCategory
-            
             selectCategory.transferProducts = self.transferProducts
             
             self.present(selectCategory, animated: true, completion: { 
@@ -155,12 +154,8 @@ class SelectAddressVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
             self.displayNoAddressSelected()
         }
         else {
-            if self.screenState == .business {
-                // update productProfile for key "businessAdded", value dictionary of business variables
-                
-//                let businessInfo: [String:Any] = ["businessName": self.business?.name ?? "", "businessLocation": self.business?.location ?? "", "businessPhoneNumber": self.business?.phoneNumber ?? "", "businessWebsite": self.business?.website ?? "", "businessPostalCode": self.business?.postalCode ?? "", "businessImage": self.business?.image ?? ""]
-                
-                self.productProfile.updateValue((business?.name)!, forKey: "businessAdded")
+            if self.screenState == .business {                
+                self.productProfile?.businessAdded = self.business?.name
                 
                 let selectCategory = SelectCategoryVC()
                 selectCategory.screenState = self.screenState

@@ -80,7 +80,6 @@ class ColourView: UIView {
             manufacturerImageView.image = UIImage(named: "Cloverdale Paint")
         }
 
-        
         // add to view
         addSubview(colourSwatch)
         addSubview(colourInfo)

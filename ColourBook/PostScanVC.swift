@@ -32,7 +32,7 @@ class PostScanViewController: CustomVC {
     var addToHomeButton: UIButton!
     
     // scanned product
-    var product: Any?
+    var product: ScannedProduct?
     
     // colour for paint
     var colour: Colour?
@@ -45,6 +45,8 @@ class PostScanViewController: CustomVC {
         self.showActivityIndicator()
         
         view.backgroundColor = UIColor.white
+        
+        self.apiLookUp()
         
         // MARK: - Buttons
         
@@ -98,6 +100,7 @@ class PostScanViewController: CustomVC {
         addColourButton.backgroundColor = UIColor.black
         addColourButton.titleLabel?.font = UIFont(name: "HelveticaNeue-Medium", size: addColourButton.frame.height * 0.4)
         addColourButton.alpha = 0.0
+        addColourButton.isUserInteractionEnabled = false
         
         // MARK: View
 
@@ -116,7 +119,6 @@ class PostScanViewController: CustomVC {
         let imageViewSize = CGSize(width: view.frame.width * 0.5, height: view.frame.width * 0.5)
         productImageView = UIImageView(frame: CGRect(origin: imageViewOrigin, size: imageViewSize))
 
-        
         // add to view
         
         view.addSubview(productTypeLabel)
@@ -132,7 +134,7 @@ class PostScanViewController: CustomVC {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        self.check(product: "Paint")
+        
     }
     
     // MARK: - Save to Lists
@@ -140,27 +142,21 @@ class PostScanViewController: CustomVC {
     // Personal Dashboard
     
     func addToPersonalButtonFunction() {
-        
-        // set to personal save
         self.screenState = .personal
-        
-        let paint = self.product as? Paint
+
+        let product = self.product
         
         if let colour = self.colour {
-            let timestamp = createTimestamp()
-            
-            let colourProfile: Dictionary<String, String> = ["productCode": colour.productCode, "colourName": colour.colourName, "manufacturer": colour.manufacturer, "manufacturerID": colour.manufacturerID, "hexcode": colour.colourHexCode]
-            let paintProfile: Dictionary<String, Any> = ["manufacturer": paint!.manufacturer, "productName": paint!.productName, "category": paint!.category, "code": paint!.code, "image": paint!.image, "product": "Paint", "colour": colourProfile, "timestamp": timestamp, "barcode": self.barcode]
-            
-            self.goToSelectCategory(product: paintProfile, screenState: self.screenState)
+            product?.colour = colour
         }
-        else {
-            let timestamp = createTimestamp()
-            
-            let paintProfile: Dictionary<String, String> = ["manufacturer": paint!.manufacturer, "productName": paint!.productName, "category": paint!.category, "code": paint!.code, "image": paint!.image, "product": "Paint", "timestamp": timestamp, "barcode": self.barcode]
-
-            self.goToSelectCategory(product: paintProfile, screenState: self.screenState)
-        }
+        let timestamp = createTimestamp()
+        product?.timestamp = timestamp
+        
+        let selectCategoryVC = SelectCategoryVC()
+        selectCategoryVC.productProfile = product
+        selectCategoryVC.screenState = self.screenState
+        
+        self.present(selectCategoryVC, animated: true, completion: nil)
     }
     
     // business (should check whether user branch BusinessDashboard has (Business Profile) child and then check if there are address else display alert
@@ -169,30 +165,18 @@ class PostScanViewController: CustomVC {
         let selectView = SelectAddressVC()
         selectView.screenState = .business
 
-        let paint = self.product as? Paint
+        let product = self.product
         
         if let colour = self.colour {
-            let timestamp = createTimestamp()
-            
-            // colour profile
-            let colourProfile: Dictionary<String, String> = ["productCode": colour.productCode, "colourName": colour.colourName, "manufacturer": colour.manufacturer, "manufacturerID": colour.manufacturerID, "hexcode": colour.colourHexCode]
-            
-            // paint profile
-            let paintProfile: Dictionary<String, Any> = ["manufacturer": paint!.manufacturer, "productName": paint!.productName, "category": paint!.category, "code": paint!.code, "image": paint!.image, "product": "Paint", "colour": colourProfile, "timestamp": timestamp, "barcode": self.barcode]
-         
-            selectView.productProfile = paintProfile
-        }
-        else {
-            let timestamp = createTimestamp()
-            
-            let paintProfile: Dictionary<String, String> = ["manufacturer": paint!.manufacturer, "productName": paint!.productName, "category": paint!.category, "code": paint!.code, "image": paint!.image, "product": "Paint", "timestamp": timestamp, "barcode": self.barcode]
-
-            selectView.productProfile = paintProfile
+            product?.colour = colour
         }
         
-        self.present(selectView, animated: true, completion: { (error) in
-            
-        })
+        let timestamp = createTimestamp()
+        product?.timestamp = timestamp
+        
+        selectView.productProfile = product
+        
+        self.present(selectView, animated: true, completion: nil)
         
     }
     
@@ -202,84 +186,103 @@ class PostScanViewController: CustomVC {
         let selectView = SelectAddressVC()
         selectView.screenState = .homes
         
-        let paint = self.product as? Paint
+        let product = self.product
         
         if let colour = self.colour {
-            let timestamp = createTimestamp()
-            
-            // colour profile
-            let colourProfile: Dictionary<String, String> = ["productCode": colour.productCode, "colourName": colour.colourName, "manufacturer": colour.manufacturer, "manufacturerID": colour.manufacturerID, "hexcode": colour.colourHexCode]
-            
-            // paint profile
-            let paintProfile: Dictionary<String, Any> = ["manufacturer": paint!.manufacturer, "productName": paint!.productName, "category": paint!.category, "code": paint!.code, "image": paint!.image, "product": "Paint", "colour": colourProfile, "timestamp": timestamp, "barcode": self.barcode]
-            
-            selectView.productProfile = paintProfile
-        }
-        else {
-            let timestamp = createTimestamp()
-            
-            let paintProfile: Dictionary<String, String> = ["manufacturer": paint!.manufacturer, "productName": paint!.productName, "category": paint!.category, "code": paint!.code, "image": paint!.image, "product": "Paint", "timestamp": timestamp, "barcode": self.barcode]
-            
-            selectView.productProfile = paintProfile
+            product?.colour = colour
         }
         
-        self.present(selectView, animated: true, completion: { (error) in
-            
-        })
+        let timestamp = createTimestamp()
+        product?.timestamp = timestamp
         
+        selectView.productProfile = product
+        
+        self.present(selectView, animated: true, completion: nil)
     }
     
+    // MARK: - Look up
     func lookup(barcode: String) {
-        
-        // get barcode information
-        
         DataService.instance.barcodeRef.observeSingleEvent(of: .value, with: { (snapshot) in
-            
             // get barcodes
-            
             if (snapshot.hasChild(self.barcode)) {
                 
                 // barcode database
-                
                 let barcodeDatabase = snapshot.value as? NSDictionary
                 let profile = barcodeDatabase?[self.barcode] as? NSDictionary
-                let paintCanProfile = profile?["profile"] as? NSDictionary
+                let itemProfile = profile?["profile"] as? NSDictionary
                 
-                let paint = Paint(manufacturer: paintCanProfile?["manufacturer"] as! String, productName: paintCanProfile?["productName"] as! String, category: paintCanProfile?["category"] as! String, code: paintCanProfile?["code"] as! String, upcCode: self.barcode, image: paintCanProfile?["image"] as! String)
-
-                self.product = paint
+                // get scanned product
+                let productType = itemProfile?["product"] as! String
+                let productName = itemProfile?["productName"] as! String
+                let manufacturer = itemProfile?["manufacturer"] as! String
+                let image = itemProfile?["image"] as! String
+                
+                let upcCode = self.barcode
+                
+                let product = ScannedProduct(productType: productType, productName: productName, manufacturer: manufacturer, upcCode: upcCode!, image: image)
+                
+                if let code = itemProfile?["code"] {
+                    product.code = code as? String
+                }
+                if let category = itemProfile?["category"] {
+                    product.category = category as? String
+                }
                 
                 // get product type
-                
-                self.productTypeLabel.text = paintCanProfile?["product"] as! String?
                 self.productTypeLabel.textAlignment = .center
                 
                 // product image
+                self.productImageView.image = self.showProductImage(url: image)
+                self.productImageView.contentMode = .scaleAspectFit
                 
-                let image = self.showProductImage(url: paint.image)
-                self.productImageView.image = image
-                self.productImageView.contentMode = .scaleAspectFill
-                
-                self.productInfo = UIView(frame: CGRect(x: 0, y: self.productImageView.frame.maxY, width: self.view.frame.width, height: self.view.frame.height - 60 - (self.view.frame.width * 0.5) - (self.view.frame.height * 0.1) - (self.view.frame.width * 0.1) - (self.view.frame.height * 0.1)))
+                self.productInfo = UIView(frame: CGRect(x: 0, y: self.productImageView.frame.maxY, width: self.view.frame.width, height: self.view.frame.height - self.productImageView.frame.height - (3 * (self.view.frame.height * 0.10)) - 60))
                 
                 self.view.addSubview(self.productInfo)
                 
                 let productView = ProductInfoView(frame: self.productInfo.bounds)
-                
                 self.productInfo.addSubview(productView)
                 
-                // manufacturer text
+                productView.productLabel.text = "\(manufacturer)\n\(productName)"
                 
-                productView.manufacturer.text = paint.manufacturer
-                productView.manufacturer.textAlignment = .center
-                productView.manufacturer.textColor = UIColor.black
+                if product.manufacturer == "Benjamin Moore" {
+                    productView.brandImgView.image = UIImage(named: "BenjaminMoorePhoto.jpg")
+                }
+                if product.manufacturer == "Coronado" {
+                    productView.brandImgView.image = UIImage(named: "CoronadoLogo")
+                }
+                if product.manufacturer == "Lenmar" {
+                    productView.brandImgView.image = UIImage(named: "logo_lenmar")
+                }
+                if product.manufacturer == "Insulx" {
+                    productView.brandImgView.image = UIImage(named: "logo_insulx")
+                }
+                if product.manufacturer == "CorTech" {
+                    productView.brandImgView.image = UIImage(named: "logo_CorTech")
+                }
+                if product.manufacturer == "Rust-Oleum" {
+                    productView.brandImgView.image = UIImage(named: "Rustoleum")
+                }
+                if product.manufacturer == "Tremclad" {
+                    productView.brandImgView.image = UIImage(named: "Tremclad")
+                }
+
                 
-                // product name
+                self.product = product
                 
-                productView.productName.text = paint.productName
-                productView.productName.adjustsFontSizeToFitWidth = true
-                productView.productName.textColor = UIColor.black
-                
+                /*
+                 // manufacturer text
+                 
+                 productView.manufacturer.text = manufacturer
+                 productView.manufacturer.textAlignment = .center
+                 productView.manufacturer.textColor = UIColor.black
+                 
+                 // product name
+                 
+                 productView.productName.text = productName
+                 productView.productName.textAlignment = .center
+                 productView.productName.adjustsFontSizeToFitWidth = true
+                 productView.productName.textColor = UIColor.black
+                 
                 // product code
                 
                 productView.code.text = paint.code
@@ -289,10 +292,11 @@ class PostScanViewController: CustomVC {
                 
                 productView.category.text = paint.category
                 productView.category.textColor = UIColor.black
+                */
                 
                 // check product type
                 
-                self.check(product: self.productTypeLabel.text!)
+                self.check(product: product)
                 
                 self.hideActivityIndicator()
             }
@@ -311,15 +315,21 @@ class PostScanViewController: CustomVC {
     
     // Check product (take out)
     
-    func check(product: String) {
+    func check(product: ScannedProduct) {
         
-        if product == "Paint" {
+        let paintCans = ["Benjamin Moore", "Coronado", "Lenmar", "Insulx", "CorTech"]
+        
+        if paintCans.contains(product.manufacturer) {
             UIView.animate(withDuration: 1.0, animations: {
                 self.addColourButton.alpha = 1.0
+                self.addColourButton.isUserInteractionEnabled = true
+                self.productTypeLabel.text = product.productType
             })
         }
         else {
-            
+            UIView.animate(withDuration: 1.0, animations: {
+                self.productTypeLabel.text = product.productType
+            })
         }
     }
 
@@ -331,21 +341,7 @@ class PostScanViewController: CustomVC {
         colourView.colourAddedDelegate = self
         self.present(colourView, animated: true, completion: nil)
     }
-    
-    // MARK: - Select Category VC
-    
-    func goToSelectCategory(product: Dictionary<String, Any>, screenState: ScreenState) {
-        let selectCategoryVC = SelectCategoryVC()
         
-        selectCategoryVC.screenState = screenState
-        selectCategoryVC.productProfile = product
-        selectCategoryVC.barcode = self.barcode
-        
-        self.present(selectCategoryVC, animated: true, completion: {
-            
-        })
-    }
-    
     // show product image
     
     func showProductImage(url: String?) -> UIImage {
@@ -355,8 +351,8 @@ class PostScanViewController: CustomVC {
         }
         else {
             let imageURL = NSURL(string: url!)
-            let imageData = NSData(contentsOf: imageURL as! URL)
-            let image = UIImage(data: imageData as! Data)
+            let imageData = NSData(contentsOf: imageURL! as URL)
+            let image = UIImage(data: imageData! as Data)
             return image!
         }
     }
@@ -370,6 +366,8 @@ extension PostScanViewController: ColourAdded {
     }
     func set(colour: Colour) {
         self.colour = colour
+        
+        // set dictionary
     }
 
 }

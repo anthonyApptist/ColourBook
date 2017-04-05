@@ -14,7 +14,7 @@ class SelectCategoryVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
     
     // product profiles
     var barcode: String?
-    var productProfile: [String:Any] = [:]
+    var productProfile: ScannedProduct?
     
     // model
     var categories = [String]()
@@ -29,7 +29,7 @@ class SelectCategoryVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
     // address name
     var locationName: String?
     
-    var transferProducts = [Paint:String]()
+    var transferProducts = [ScannedProduct]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,7 +51,6 @@ class SelectCategoryVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         if screenState == .business {
             name.text = "My businesses"
         }
-        
         if screenState == .homes {
             name.text = "My addresses"
         }
@@ -165,8 +164,10 @@ class SelectCategoryVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
                 // create unique ID
                 let uniqueID = "\(NSUUID().uuidString)"
                 
+                self.productProfile?.uniqueID = uniqueID
+                
                 // save to selected personal category
-                DataService.instance.saveProductIn(user: self.signedInUser.uid, screenState: self.screenState, location: self.locationName, value: self.productProfile, category: category, uniqueID: uniqueID)
+                DataService.instance.saveProductIn(user: self.signedInUser.uid, screenState: self.screenState, location: self.locationName, product: self.productProfile!, category: category)
                 
                 self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
             }
@@ -177,11 +178,13 @@ class SelectCategoryVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
                 // create unique ID
                 let uniqueID = "\(NSUUID().uuidString)"
                 
+                self.productProfile?.uniqueID = uniqueID
+                
                 // save to selected address category
-                DataService.instance.saveProductIn(user: self.signedInUser.uid, screenState: self.screenState, location: self.locationName, value: self.productProfile, category: category, uniqueID: uniqueID)
+                DataService.instance.saveProductIn(user: self.signedInUser.uid, screenState: self.screenState, location: self.locationName, product: self.productProfile!, category: category)
                 
                 // save to public address category
-                DataService.instance.saveProductFor(location: self.locationName, screenState: self.screenState, value: self.productProfile, category: category, uniqueID: uniqueID)
+                DataService.instance.saveProductFor(location: self.locationName, screenState: self.screenState, product: self.productProfile!, category: category)
                 
                 self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
 
@@ -192,9 +195,11 @@ class SelectCategoryVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
                 // create unique ID
                 let uniqueID = "\(NSUUID().uuidString)"
                 
-                DataService.instance.saveProductIn(user: self.signedInUser.uid, screenState: self.screenState, location: self.locationName, value: self.productProfile, category: category, uniqueID: uniqueID)
+                self.productProfile?.uniqueID = uniqueID
                 
-                DataService.instance.saveProductFor(location: self.locationName, screenState: self.screenState, value: self.productProfile, category: category, uniqueID: uniqueID)
+                DataService.instance.saveProductIn(user: self.signedInUser.uid, screenState: self.screenState, location: self.locationName, product: self.productProfile!, category: category)
+                
+                DataService.instance.saveProductFor(location: self.locationName, screenState: self.screenState, product: self.productProfile!, category: category)
                 
                 self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
             }
@@ -230,7 +235,7 @@ class SelectCategoryVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
     
     func getCategoriesFrom(user: User, screenState: ScreenState, location: String?) {
         if screenState == .personal {
-            DataService.instance.generalRef = DataService.instance.usersRef.child(user.uid).child(PersonalDashboard)
+            DataService.instance.generalRef = DataService.instance.usersRef.child(user.uid).child("personalDashboard")
         }
         if screenState == .business {
             DataService.instance.generalRef = DataService.instance.usersRef.child(user.uid).child(BusinessDashboard).child("addresses").child(locationName!).child("categories")

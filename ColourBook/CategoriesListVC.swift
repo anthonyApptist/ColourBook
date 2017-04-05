@@ -32,7 +32,7 @@ class CategoriesListVC: CustomVC, UICollectionViewDelegate, UICollectionViewData
     var businessImages = [String:String]()
     var locationItems = [String:[ScannedProduct]]()
     
-    var paintProducts = [String:[Paint]]()
+    var paintProducts = [String:[ScannedProduct]]()
 
     let app = UIApplication.shared.delegate as! AppDelegate
     
@@ -124,7 +124,6 @@ class CategoriesListVC: CustomVC, UICollectionViewDelegate, UICollectionViewData
                     editList.products = items!
                     editList.selectedCategory = category
                     editList.screenState = self.screenState
-                    editList.paintProducts = self.paintProducts[category]!
                 }
             }
         }

@@ -91,9 +91,9 @@ class DataService {
             
     }
     
-    func savePaintCanData(manufacturer: String, productName: String, category: String, code: String, upcCode: String, image: String, colour: String) {
+    func savePaintCanData(manufacturer: String, productName: String, category: String?, code: String?, upcCode: String, image: String) {
         
-        let paintCanProfile: Dictionary<String, AnyObject> = ["manufacturer": manufacturer as AnyObject, "productName": productName as AnyObject, "category": category as AnyObject, "code": code as AnyObject, "image": image as AnyObject, "colour": "" as AnyObject, "product": "Paint" as AnyObject]
+        let paintCanProfile: Dictionary<String, String> = ["manufacturer": manufacturer, "productName": productName, "image": image, "product": "Paint", "code": code!]
         
         barcodeRef.child(upcCode).child("profile").setValue(paintCanProfile)
         

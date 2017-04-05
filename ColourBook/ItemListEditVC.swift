@@ -35,18 +35,9 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
             displayNoItemSelected()
         }
         else {
-            
             let selectAddress = SelectAddressVC()
             selectAddress.screenState = .homes
-            
-            for index in self.selectedProducts.keys {
-                let timestamp = self.selectedProducts[index]?.timestamp
-                let paint = self.paintProducts[index]
-                paint.uniqueID = self.selectedProducts[index]?.uniqueID
-                self.selectedPaint.updateValue(timestamp!, forKey: paint)
-            }
-            
-            selectAddress.transferProducts = self.selectedPaint
+            selectAddress.transferProducts = self.selectedProducts
             selectAddress.screenState = .transfer
             selectAddress.selectedCategory = self.selectedCategory!
             
@@ -103,13 +94,9 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
     var selectedLocation: Location? = nil
     var selectedCategory: String? = nil
     
-    // paint products
-    var paintProducts = [Paint]()
-    var selectedPaint = [Paint:String]()
-    
     // products
     var products = [ScannedProduct]()
-    var selectedProducts = [Int:ScannedProduct]()
+    var selectedProducts = [ScannedProduct]()
     
     var businessImages = [String:String]()
     
@@ -208,11 +195,11 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
             if cell?.contentView.layer.borderWidth == 0 {
                 cell?.contentView.layer.borderWidth = 2.0
                 cell?.contentView.layer.borderColor = UIColor.blue.cgColor
-                self.selectedProducts.updateValue(product, forKey: indexPath.row)
+                self.selectedProducts.append(product)
             }
             else {
                 cell?.contentView.layer.borderWidth = 0.0
-                self.selectedProducts.removeValue(forKey: indexPath.row)
+                
             }
         }
     }

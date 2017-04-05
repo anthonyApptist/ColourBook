@@ -26,9 +26,6 @@ class GoogleMap: CustomVC, CLLocationManagerDelegate, GMSMapViewDelegate {
     
     var saveButton: UIButton?
 
-    // public data
-    var databaseAddresses = [String:[Paint]]()
-    
     // address list
     var locations = [String]()
     

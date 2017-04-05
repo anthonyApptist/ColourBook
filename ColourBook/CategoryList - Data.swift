@@ -13,12 +13,11 @@ extension CategoriesListVC {
     
     func getCategoriesFor(screenState: ScreenState, user: User, location: Location?) {
         
-        getCategoriesFrom(user: user, screenState: screenState, location: location)
+        getCategoriesRef(user: user, screenState: screenState, location: location)
         
         let categoriesRef = DataService.instance.generalRef
         
         self.categories = []
-        self.paintProducts = [:]
         
         self.collectionView.reloadData()
         
@@ -41,38 +40,61 @@ extension CategoriesListVC {
                 
                 self.categories.append(category)
                 
+                // temp arrays
+                var itemsArray: [ScannedProduct] = []
+                
                 if categoryName.hasChildren() {
-                    
-                    // temp arrays
-                    var itemsArray: [ScannedProduct] = []
-                    var paintArray: [Paint] = []
-                    
-                    for items in categoryName.childSnapshot(forPath: Barcodes).children.allObjects {
-                        let product = items as! FIRDataSnapshot
-                        let itemProfile = product.value as? NSDictionary
+                    for item in categoryName.childSnapshot(forPath: Barcodes).children.allObjects {
                         
-                        let productBarcode = itemProfile?["barcode"] as! String
-                        let productType = itemProfile?["productName"] as! String
-                        let manufacturer = itemProfile?["manufacturer"] as! String
-                        let productCategory = itemProfile?["category"] as! String
-                        let code = itemProfile?["code"] as! String
-                        let image = itemProfile?["image"] as! String
-                        let timestamp = itemProfile?["timestamp"] as! String
+                        let productData = item as! FIRDataSnapshot
+                        let itemProfile = productData.value as? NSDictionary
                         
-                        // unique ID is child key
-                        let productUniqueID = product.key
-                        
-                        /*
                         // check whether the product has been flagged more or equal to 5 times
-                        if product.hasChild("flagged") {
-                            if product.childSnapshot(forPath: "flagged").childrenCount >= 5 {
+                        if productData.hasChild("flagged") {
+                            if productData.childSnapshot(forPath: "flagged").childrenCount >= 5 {
                                 continue
                             }
                         }
-                        */
+                        
+                        // get scanned product
+                        let productType = itemProfile?["product"] as! String
+                        let productName = itemProfile?["productName"] as! String
+                        let manufacturer = itemProfile?["manufacturer"] as! String
+                        let upcCode = itemProfile?["barcode"] as! String
+                        let image = itemProfile?["image"] as! String
+                        let timestamp = itemProfile?["timestamp"] as! String
+                        
+                        let uniqueID = productData.key
+                        
+                        let product = ScannedProduct(productType: productType, productName: productName, manufacturer: manufacturer, upcCode: upcCode, image: image)
+                        
+                        product.timestamp = timestamp   
+                        product.uniqueID = uniqueID
+                        
+                        // check for business added item
+                        if productData.hasChild("businessAdded") {
+                            // set business property of product
+                            let businessName = itemProfile?["businessAdded"] as! String
+                            
+                            product.businessAdded = businessName
+                        }
+                        
+                        if productData.hasChild("category") {
+                            // set business property of product
+                            let category = itemProfile?["category"] as! String
+                            
+                            product.category = category
+                        }
+                        
+                        if productData.hasChild("code") {
+                            // set business property of product
+                            let code = itemProfile?["code"] as! String
+                            
+                            product.code = code
+                        }
                         
                         // check for colour
-                        if product.hasChild("colour") {
+                        if productData.hasChild("colour") {
                             let colourProfile = itemProfile?["colour"] as? NSDictionary
                             let colourName = colourProfile?["colourName"] as! String
                             let hexcode = colourProfile?["hexcode"] as! String
@@ -82,32 +104,15 @@ extension CategoriesListVC {
                             
                             let colour = Colour(manufacturerID: colourManufacturerID, productCode: productCode, colourName: colourName, colourHexCode: hexcode, manufacturer: colourManufacturer)
                             
-                            let product = ScannedProduct(productType: productType, manufacturer: manufacturer, upcCode: productBarcode, image: image, colour: colour, timestamp: timestamp)
-                            // set product unique ID
-                            product.uniqueID = productUniqueID
-                            
-                            let paint = Paint(manufacturer: manufacturer, productName: productType, category: productCategory, code: code, upcCode: productBarcode, image: image)
-                            paint.colour = colour
-                            
-                            paintArray.append(paint)
-                            itemsArray.append(product)
+                            product.colour = colour
                         }
-                        else {
-                            let product = ScannedProduct(productType: productType, manufacturer: manufacturer, upcCode: productBarcode, image: image, colour: nil, timestamp: timestamp)
-                            product.uniqueID = productUniqueID
-                            
-                            let paint = Paint(manufacturer: manufacturer, productName: productType, category: category, code: code, upcCode: productBarcode, image: image)
-                            
-                            paintArray.append(paint)
-                            itemsArray.append(product)
-                        }
+                        // add to temp array
+                        itemsArray.append(product)
                     }
-                    self.paintProducts.updateValue(paintArray, forKey: category)
                     self.categoriesItems.updateValue(itemsArray, forKey: category)
                 }
                 else {
                     self.categoriesItems.updateValue([], forKey: category)
-                    self.paintProducts.updateValue([], forKey: category)
                 }
             }
             
@@ -121,7 +126,7 @@ extension CategoriesListVC {
         })
     }
     
-    func getCategoriesFrom(user: User, screenState: ScreenState, location: Location?) {
+    func getCategoriesRef(user: User, screenState: ScreenState, location: Location?) {
         if screenState == .personal {
             DataService.instance.generalRef = DataService.instance.usersRef.child(user.uid)
         }
