@@ -80,7 +80,20 @@ class SearchResultsTableVC: UITableViewController {
             let colour = filteredColours?[indexPath.row]
             cell.box1?.text = colour?.colourName
             cell.box2?.text = colour?.productCode
-            cell.box3?.backgroundColor = UIColor(hexString: (colour?.colourHexCode)!)
+            
+            // hexcode
+            if (colour?.colourHexCode.contains("-"))! {
+                let rgb = colour?.colourHexCode.components(separatedBy: "-")
+                let red = Float((rgb?[0])!)
+                let green = Float((rgb?[1])!)
+                let blue = Float((rgb?[2])!)
+                
+                cell.box3?.backgroundColor = UIColor(colorLiteralRed: red!/255, green: green!/255, blue: blue!/255, alpha: 1.0)
+            }
+            else {
+                cell.box3?.backgroundColor = UIColor(hexString: (colour?.colourHexCode)!)
+            }
+            
             return cell
         }
         if searchFor == .addresses {

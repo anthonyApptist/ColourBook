@@ -27,12 +27,12 @@ class CSVViewController: UIViewController { // Trim Characters Extension
         
         view.backgroundColor = UIColor.brown
     
-        /*
+        
         //MARK: Paint Data
         
         do {
             
-            let csvPath = Bundle.main.path(forResource: "Cloverdale Paint", ofType: ".csv")
+            let csvPath = Bundle.main.path(forResource: "Farrell-Calhoun", ofType: ".csv")
             
             let csvPaintString = try NSString.init(contentsOfFile: csvPath!, encoding: String.Encoding.macOSRoman.rawValue)
 //            print(csvPaintString)
@@ -48,7 +48,7 @@ class CSVViewController: UIViewController { // Trim Characters Extension
         
         print(csvPaintFileArray?.count ?? nil ?? 0)
         
-        let numberOfColours = (csvPaintFileArray?.count)!/4
+        let numberOfColours = (csvPaintFileArray?.count)!/6
         
         print(numberOfColours)
         
@@ -70,15 +70,23 @@ class CSVViewController: UIViewController { // Trim Characters Extension
             
             var productName = csvPaintFileArray?[2]
             
-            var hexCode = csvPaintFileArray?[3]
+            let red: String = (csvPaintFileArray?[3])!
+            
+            let green: String = (csvPaintFileArray?[4])!
+            
+            let blue: String = (csvPaintFileArray?[5])!
+            
+            let hexCode = "\(red)-\(green)-\(blue)"
             
             var manufacturer: String
             
+            productName = productName?.capitalized
             
             // manufacturer id check
             
             if (manufacturerID?.isEmpty)! {
                 print("row \(i), manufacturerID is empty")
+                manufacturerID = ""
             }
             
             // fix manufacturer id
@@ -149,8 +157,10 @@ class CSVViewController: UIViewController { // Trim Characters Extension
                 productName = productName?.replacingOccurrences(of: "\n", with: "")
             }
             
-            // hex code check
+            // RGB Check
             
+            /*
+             // hex code check
             // fix hex code syntax
             
             if (hexCode?.contains("\r"))! {
@@ -175,15 +185,16 @@ class CSVViewController: UIViewController { // Trim Characters Extension
             if (hexCode?.contains("\n"))! {
                 hexCode = hexCode?.replacingOccurrences(of: "\n", with: "")
             }
+            */
             
             // set manufacturer
-            manufacturer = "Cloverdale Paint"
+            manufacturer = "Farrell Calhoun"
             
-            let colour = Colour(manufacturerID: manufacturerID!, productCode: productCode!, colourName: productName!, colourHexCode: hexCode!, manufacturer: manufacturer)
+            let colour = Colour(manufacturerID: manufacturerID!, productCode: productCode!, colourName: productName!, colourHexCode: hexCode, manufacturer: manufacturer)
             
             coloursArray?.append(colour)
             
-            csvPaintFileArray?.removeFirst(4)
+            csvPaintFileArray?.removeFirst(6)
             
         }
         
@@ -199,12 +210,13 @@ class CSVViewController: UIViewController { // Trim Characters Extension
         
         for colour in coloursArray! {
          
-//            DataService.instance.savePaintData(manufacturerID: colour.manufacturerID, productCode: colour.productCode, colourName: colour.colourName, colourHexCode: colour.colourHexCode, manufacturer: colour.manufacturer)
+            DataService.instance.savePaintData(manufacturerID: colour.manufacturerID, productCode: colour.productCode, colourName: colour.colourName, colourHexCode: colour.colourHexCode, manufacturer: colour.manufacturer)
          
         }
   
         print("done")
-*/
+        
+        /*
  
         //MARK: Paint Cans
         
@@ -327,11 +339,12 @@ class CSVViewController: UIViewController { // Trim Characters Extension
                 let upcCode = paintCan.upcCode
                 let image = paintCan.image
          
-                DataService.instance.savePaintCanData(manufacturer: manufactuer, productName: productName, category: nil, code: code, upcCode: upcCode, image: image)
+//                DataService.instance.savePaintCanData(manufacturer: manufactuer, productName: productName, category: nil, code: code, upcCode: upcCode, image: image)
                 
 //                DataService.instance.barcodeRef.child(upcCode).removeValue()
             }
         }
+         */
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {

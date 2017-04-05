@@ -121,6 +121,8 @@
 		920A01561E930DA5005FD379 /* logo_CorTech.png in Resources */ = {isa = PBXBuildFile; fileRef = 920A01551E930DA5005FD379 /* logo_CorTech.png */; };
 		920A01581E931392005FD379 /* Tremclad.csv in Resources */ = {isa = PBXBuildFile; fileRef = 920A01571E931392005FD379 /* Tremclad.csv */; };
 		920A015A1E93139A005FD379 /* Tremclad.png in Resources */ = {isa = PBXBuildFile; fileRef = 920A01591E93139A005FD379 /* Tremclad.png */; };
+		920A015C1E958F2A005FD379 /* Farrell-Calhoun.csv in Resources */ = {isa = PBXBuildFile; fileRef = 920A015B1E958F2A005FD379 /* Farrell-Calhoun.csv */; };
+		920A015E1E958F35005FD379 /* Farrell Calhoun.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 920A015D1E958F35005FD379 /* Farrell Calhoun.jpg */; };
 		920B52721E0E0325005D5B60 /* SearchResultsTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920B52711E0E0325005D5B60 /* SearchResultsTableVC.swift */; };
 		920B52751E0F2478005D5B60 /* ScannedProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920B52741E0F2478005D5B60 /* ScannedProduct.swift */; };
 		920B527B1E109421005D5B60 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920B527A1E109421005D5B60 /* Location.swift */; };
@@ -305,6 +307,8 @@
 		920A01551E930DA5005FD379 /* logo_CorTech.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo_CorTech.png; sourceTree = "<group>"; };
 		920A01571E931392005FD379 /* Tremclad.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Tremclad.csv; sourceTree = "<group>"; };
 		920A01591E93139A005FD379 /* Tremclad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Tremclad.png; sourceTree = "<group>"; };
+		920A015B1E958F2A005FD379 /* Farrell-Calhoun.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Farrell-Calhoun.csv"; sourceTree = "<group>"; };
+		920A015D1E958F35005FD379 /* Farrell Calhoun.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Farrell Calhoun.jpg"; sourceTree = "<group>"; };
 		920B52711E0E0325005D5B60 /* SearchResultsTableVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultsTableVC.swift; sourceTree = "<group>"; };
 		920B52741E0F2478005D5B60 /* ScannedProduct.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScannedProduct.swift; sourceTree = "<group>"; };
 		920B527A1E109421005D5B60 /* Location.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
@@ -650,6 +654,8 @@
 				9212EFB61E8A21530071A84D /* Rodda Paint.csv */,
 				9212EFBC1E8A27860071A84D /* Cloverdale Paint.png */,
 				9212EFBA1E8A277E0071A84D /* Cloverdale Paint.csv */,
+				920A015D1E958F35005FD379 /* Farrell Calhoun.jpg */,
+				920A015B1E958F2A005FD379 /* Farrell-Calhoun.csv */,
 			);
 			name = "Paint Companies";
 			sourceTree = "<group>";
@@ -807,6 +813,7 @@
 				66242ADB1DF0F302000B651F /* barcode.png in Resources */,
 				668A4B141E434DCD004167BD /* flag@3x.png in Resources */,
 				668A4B1D1E45CE00004167BD /* listButton@2x.png in Resources */,
+				920A015E1E958F35005FD379 /* Farrell Calhoun.jpg in Resources */,
 				66F942BC1DF8BDBB00C01DAF /* darkgreen.jpg in Resources */,
 				9224DA0C1E416E7B0058AD02 /* BMoore.jpg in Resources */,
 				92C65CD61E48393D006F1905 /* Sherwin Williams Photo.png in Resources */,
@@ -824,6 +831,7 @@
 				663646A11DE4921F00E6D719 /* goldCBlogo@3x.png in Resources */,
 				663646A21DE4921F00E6D719 /* googleImg.png in Resources */,
 				92EAFD871E855B5100BDEFD7 /* Farrow & Ball - Complete.csv in Resources */,
+				920A015C1E958F2A005FD379 /* Farrell-Calhoun.csv in Resources */,
 				66C771561DE83EEF00E4810A /* settingsIcon.png in Resources */,
 				66242ADC1DF0F302000B651F /* barcode@2x.png in Resources */,
 				66C7714A1DE83EB300E4810A /* homeIcon.png in Resources */,

@@ -43,13 +43,7 @@ extension DataService {
 
     }
     
-    // MARK: Saving Profile Infos
-    
-    // business profile
-    
-    // SaveBusinessProfile file
-    
-    // addresses
+    // Address item save
     
     func saveInfoFor(user: String, screenState: ScreenState, location: String?, image: String?, name: String?) {
         getSaveRef(screenState: screenState, user: user, location: location)

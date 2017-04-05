@@ -31,7 +31,18 @@ class ColourView: UIView {
         
         // colour swatch
         colourSwatch = UILabel(frame: colourLabel.frame)
-        colourSwatch.backgroundColor = UIColor(hexString: colour.colourHexCode)
+        
+        if (colour.colourHexCode.contains("-")) {
+            let rgb = colour.colourHexCode.components(separatedBy: "-")
+            let red = Float(rgb[0])
+            let green = Float(rgb[1])
+            let blue = Float(rgb[2])
+            
+            colourSwatch.backgroundColor = UIColor(colorLiteralRed: red!/255, green: green!/255, blue: blue!/255, alpha: 1.0)
+        }
+        else {
+            colourSwatch.backgroundColor = UIColor(hexString: colour.colourHexCode)
+        }
         
         // colour name label
         let colourInfoOrigin = CGPoint(x: firstQuarter.frame.minX + 20, y: firstQuarter.frame.minY)
@@ -78,6 +89,9 @@ class ColourView: UIView {
         }
         if colour.manufacturer == "Cloverdale Paint" {
             manufacturerImageView.image = UIImage(named: "Cloverdale Paint")
+        }
+        if colour.manufacturer == "Farrell Calhoun" {
+            manufacturerImageView.image = UIImage(named: "Farrell Calhoun.jpg")
         }
 
         // add to view
