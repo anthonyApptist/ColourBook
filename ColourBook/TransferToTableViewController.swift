@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TransferToTableViewController: CustomVC, UITableViewDelegate, UITableViewDataSource {
+class TransferToTableViewController: ColourBookVC, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet var tableView: UITableView?
     

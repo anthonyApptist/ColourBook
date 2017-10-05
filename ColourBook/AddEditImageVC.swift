@@ -9,39 +9,46 @@
 import UIKit
 import FirebaseDatabase
 
-class AddEditImageVC: CustomVC, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+// Profile Page for an address in both business and homes lists or a user profile page in personal
+class AddEditImageVC: ColourBookVC, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
+    // Properties
     @IBOutlet weak var titleLbl: UILabel!
-    
     @IBOutlet weak var photoTitleLbl: UILabel!
-    
     @IBOutlet weak var saveBtn: UIButton!
-    
     @IBOutlet weak var textField: UITextField?
-    
     @IBOutlet weak var imgView: UIImageView!
     
+    // MARK: - Add Picture Pressed
     @IBAction func addPicBtnPressed(_sender: UIButton!) {
-        
+        // image picker configure
         self.imagePicker.allowsEditing = true
         self.imagePicker.sourceType = .photoLibrary
         self.imagePicker.mediaTypes = UIImagePickerController.availableMediaTypes(for: .photoLibrary)!
         
-        present(self.imagePicker, animated: true, completion: nil)
+        // present imagepicker
+        self.present(self.imagePicker, animated: true, completion: nil)
     }
     
+    // Image Picker
     let imagePicker = UIImagePickerController()
     
-    var selectedLocation: Location?
+    // Model
+    var selectedLocation: Address?
+    var colourer: Colourer?
     
+    // Resized Image
     var resizedImg: UIImage?
+    var resizedData: Data?
     
-    var ref: FIRDatabaseReference?
+    // Database Reference
+    var ref: DatabaseReference?
     
+    // MARK: - View Controller Lifecycle
     override func viewDidLoad() {
-//        super.viewDidLoad()
+        super.viewDidLoad()
         
-        self.ref = DataService.instance.usersRef.child(self.signedInUser.uid)
+//        self.ref = DataService.instance.usersRef.child(self.signedInUser.uid)
         
         self.backButtonNeeded = true
         
@@ -51,6 +58,7 @@ class AddEditImageVC: CustomVC, UIImagePickerControllerDelegate, UINavigationCon
         
         self.saveBtn.addTarget(self, action: #selector(self.saveBtnPressed(_:)), for: .touchUpInside)
         
+        /*
         if screenState == .personal {
             self.textField?.text = self.signedInUser.name
             if self.signedInUser.image == "" || self.signedInUser.image == nil {
@@ -73,6 +81,20 @@ class AddEditImageVC: CustomVC, UIImagePickerControllerDelegate, UINavigationCon
                 self.imgView.image = locationImage
             }
         }
+         */
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        if self.screenState == .personal {
+            self.getPersonalInfo()
+        }
+        if self.screenState == .business {
+            
+        }
+        if self.screenState == .homes {
+            self.getAddressInfo()
+        }
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -80,7 +102,6 @@ class AddEditImageVC: CustomVC, UIImagePickerControllerDelegate, UINavigationCon
     }
     
     // MARK: - ImagePicker Delegate
-    
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         
         // chosen image
@@ -96,17 +117,9 @@ class AddEditImageVC: CustomVC, UIImagePickerControllerDelegate, UINavigationCon
         self.imgView.image = self.resizedImg
         self.imgView.contentMode = .scaleAspectFit
         
-        let resizedData: Data = UIImageJPEGRepresentation(resizedImg!, 0.9)!
-        let resizedDataString = resizedData.base64EncodedString()
+        self.resizedData = UIImageJPEGRepresentation(self.resizedImg!, 1.0)
         
-        if self.screenState == .personal {
-            self.signedInUser.image = resizedDataString
-        }
-        if self.screenState == .business || self.screenState == .homes {
-            self.selectedLocation?.image = resizedDataString
-        }
-        self.dismiss(animated: true, completion: nil)
-        
+        picker.dismiss(animated: true, completion: nil)
     }
     
     func resizeImage(image: UIImage, targetSize: CGSize) -> UIImage {
@@ -137,36 +150,51 @@ class AddEditImageVC: CustomVC, UIImagePickerControllerDelegate, UINavigationCon
     
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        dismiss(animated: true, completion: nil)
+        picker.dismiss(animated: true, completion: nil)
     }
     
-    // MARK: - Save Button
-    
+    // MARK: - Save Button Pressed
     func saveBtnPressed(_ sender: Any?) {
-        
-        if screenState == .personal {
-            DataService.instance.saveInfoFor(user: self.signedInUser.uid, screenState: self.screenState, location: "", image: self.signedInUser.image, name: self.signedInUser.name)
-            AuthService.instance.saveDisplay(name: self.signedInUser.name!)
+        if (textField?.text)! != "" || self.resizedData != nil {
+            if screenState == .personal {
+                let name = textField?.text!
+                if self.resizedData == nil {
+                    DataService.instance.saveNewUserName(name: name!)
+                }
+                else {
+                    StorageService.instance.storePersonalImage(name: name!, imageData: self.resizedData!)
+                }
+            }
+            if screenState == .business {
+                let name = textField?.text!
+                if self.resizedData == nil {
+                    DataService.instance.saveNewUserName(name: name!)
+                }
+                else {
+                    StorageService.instance.storeAddressImage(imageData: self.resizedData!, location: self.selectedLocation!.address!, name: name!)
+                }
+            }
+            if screenState == .homes {
+                let name = textField?.text!
+                if self.resizedData == nil {
+                    DataService.instance.saveNewAddressName(name: name!, location: self.selectedLocation!.address!, screenState: .homes)
+                }
+                else {
+                    StorageService.instance.storeAddressImage(imageData: self.resizedData!, location: self.selectedLocation!.address!, name: name!)
+                }
+            }
+            self.dismiss(animated: true, completion: nil)
+//            performSegue(withIdentifier: "BackToItemEdit", sender: self)
         }
-        if screenState == .business {
-            DataService.instance.saveInfoFor(user: self.signedInUser.uid, screenState: self.screenState, location: (self.selectedLocation?.locationName)!, image: self.selectedLocation?.image ?? "", name: self.selectedLocation?.name)
-            DataService.instance.businessRef.child((self.selectedLocation?.locationName)!).updateChildValues(["name" : self.selectedLocation?.name ?? "", "image" : self.selectedLocation?.image ?? ""])
+        else {
+            self.createAlertController(title: "Nothing new to save", message: "some empty fields or nothing to save")
         }
-        if screenState == .homes {
-            DataService.instance.saveInfoFor(user: self.signedInUser.uid, screenState: self.screenState, location: (self.selectedLocation?.locationName)!, image: self.selectedLocation?.image ?? "", name: self.selectedLocation?.name)
-            DataService.instance.addressRef.child((self.selectedLocation?.locationName)!).updateChildValues(["name" : self.selectedLocation?.name ?? "", "image" : self.selectedLocation?.image ?? ""])
-        }
-        
-        performSegue(withIdentifier: "BackToItemEdit", sender: self)
-        
     }
     
     
     // MARK: - Save Button Segue
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "BackToItemEdit" {
-            
             if let detail = segue.destination as? ItemListEditVC {
                 detail.screenState = self.screenState
                 detail.selectedLocation = self.selectedLocation
@@ -174,16 +202,9 @@ class AddEditImageVC: CustomVC, UIImagePickerControllerDelegate, UINavigationCon
         }
     }
 
+    // MARK: - Touches Ended
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         textField?.resignFirstResponder()
-        if self.screenState == .personal {
-            self.signedInUser.name = (self.textField?.text)!
-        }
-        if self.screenState == .business || self.screenState == .homes {
-            self.selectedLocation?.name = self.textField?.text
-        }
     }
-    
-    
     
 }

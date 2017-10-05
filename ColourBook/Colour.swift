@@ -8,16 +8,13 @@
 
 import UIKit
 
+// Colour added to a paint can
+// potential properties based on database and retailer info
+
 struct Colour {
-
-    var manufacturerID: String
-
-    var productCode: String
-    
-    var colourName: String
-    
-    var colourHexCode: String
-    
-    var manufacturer: String
-
+    var manufacturerID: String?
+    var productCode: String?
+    var name: String?
+    var hexCode: String?
+    var manufacturer: String?
 }

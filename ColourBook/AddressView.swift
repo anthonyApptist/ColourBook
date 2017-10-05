@@ -8,20 +8,19 @@
 
 import UIKit
 
+// Address View for SearchAddressVC
+
 class AddressView: UIView {
     
+    // Properties
     var addressImageView: UIImageView!
-    
     var addressName: UILabel!
-    
     var addressLocation: UILabel!
-    
     var latitude: UILabel!
-    
     var longitude: UILabel!
 
+    // Init
     init(frame: CGRect, location: Location) {
-        
         super.init(frame: frame)
 
         backgroundColor = UIColor.white
@@ -35,10 +34,9 @@ class AddressView: UIView {
         let remainingFrameA = UIView(frame: CGRect(x: 0, y: imageWrap.frame.maxY, width: frame.width, height: remainingHeight/2))
         
         let remainingFrameB = UIView(frame: CGRect(x: 0, y: remainingFrameA.frame.maxY, width: frame.width, height: remainingHeight/2))
-
-        // MARK: View
         
         // image view
+        addressImageView = UIImageView()
         
         let addressImageOrigin = CGPoint(x: imageWrap.frame.minX, y: imageWrap.frame.minY)
         let addressImageSize = CGSize(width: imageWrap.frame.width, height: imageWrap.frame.height)

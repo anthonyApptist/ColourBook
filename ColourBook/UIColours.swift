@@ -8,6 +8,7 @@
 
 import UIKit
 
+/*
 class UIColours {
     
     var colour: UIColor
@@ -41,3 +42,4 @@ class UIColours {
         return UIColor.init(red: 185/255, green: 209/255, blue: 207/255, alpha: 1.0)
     }
 }
+*/

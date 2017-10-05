@@ -8,19 +8,17 @@
 
 import Foundation
 
+// Transfer a set of products from personal list to an address
+
 extension DataService {
     
-    // transfer to a home in address list
-    
-    func transfer(products: [ScannedProduct], user: User, location: String?, category: String, destination: String) {
+    // MARK: - Transfer
+    func transfer(products: [PaintCan], location: String?, category: String, destination: String) {
         for item in products {
+            // remove from user list
+            self.removeScannedProductFor(screenState: .personal, uniqueID: item.uniqueID!, location: location, category: category)
             
-            self.removeScannedProductFor(user: user, screenState: .personal, barcode: item.uniqueID!, location: nil, category: category)
-            
-            self.saveProductIn(user: user.uid, screenState: .homes, location: location, product: item, category: destination)
-            
-            self.saveProductFor(location: location, screenState: .homes, product: item, category: destination)
+            self.savePaintCanToDashboard(screenState: .homes, location: location, product: item, category: destination)
         }
     }
-    
 }

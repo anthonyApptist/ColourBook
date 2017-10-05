@@ -15,6 +15,7 @@ enum ResultsFor {
     case mapSearch
 }
 
+// Table View for Search results in Search Controller
 class SearchResultsTableVC: UITableViewController {
     
     var searchFor: ResultsFor?
@@ -29,12 +30,12 @@ class SearchResultsTableVC: UITableViewController {
     var dashboardDelegate: SelectedSearchResult?
     
     // filtered data
-    var filteredAddresses: [Location]?
+    var filteredAddresses: [Address]?
     var filteredColours: [Colour]?
     
     // all data
     var allColours: [Colour]?
-    var allAddresses = [Location]()
+    var allAddresses = [Address]()
     
     // google map data
     var allLocations: [String]?
@@ -56,7 +57,6 @@ class SearchResultsTableVC: UITableViewController {
     }
 
     // MARK: - Table view data source
-
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -78,44 +78,44 @@ class SearchResultsTableVC: UITableViewController {
         if searchFor == .colours {
             let cell = tableView.dequeueReusableCell(withIdentifier: "colour") as! ProductCell
             let colour = filteredColours?[indexPath.row]
-            cell.box1?.text = colour?.colourName
+            cell.box1?.text = colour?.name
             cell.box2?.text = colour?.productCode
             
             // hexcode
-            if (colour?.colourHexCode.contains("-"))! {
-                let rgb = colour?.colourHexCode.components(separatedBy: "-")
+            if (colour?.hexCode?.contains("-"))! {
+                let rgb = colour?.hexCode?.components(separatedBy: "-")
                 let red = Float((rgb?[0])!)
                 let green = Float((rgb?[1])!)
                 let blue = Float((rgb?[2])!)
                 
-                cell.box3?.backgroundColor = UIColor(colorLiteralRed: red!/255, green: green!/255, blue: blue!/255, alpha: 1.0)
+                cell.box3?.backgroundColor = UIColor(red: CGFloat(red!/255), green: CGFloat(green!/255), blue: CGFloat(blue!/255), alpha: 1.0)
             }
             else {
-                cell.box3?.backgroundColor = UIColor(hexString: (colour?.colourHexCode)!)
+                cell.box3?.backgroundColor = UIColor(hexString: (colour?.hexCode)!)
             }
-            
             return cell
         }
         if searchFor == .addresses {
             let cell = tableView.dequeueReusableCell(withIdentifier: "address") as! LocationCell
             let location = filteredAddresses?[indexPath.row]
-            cell.box1?.text = location?.locationName
+            cell.box1?.text = location?.address
             cell.box2?.text = location?.postalCode
             // check custom image
-            if location?.image == nil || location?.image == "" {
+            if location?.image == nil {
                 cell.addressImageView?.image = UIImage(named: "homeIcon")
             }
             else {
-                cell.addressImageView?.image = self.stringToImage(imageName: (location?.image)!)
+                cell.addressImageView?.image = self.setImageFrom(urlString: (location?.image)!)
             }
             return cell
         }
+        /*
         if searchFor == .colours {
             let cell = tableView.dequeueReusableCell(withIdentifier: "searchCell")
             cell?.textLabel?.text = self.allLocations?[indexPath.row]
             return cell!
         }
-
+         */
         return UITableViewCell()
     }
     
@@ -143,18 +143,18 @@ class SearchResultsTableVC: UITableViewController {
         if searchFor == .colours {
             
             filteredColours = allColours!.filter { colour in
-                let productCode = colour.productCode.lowercased()
-                let colourName = colour.colourName.lowercased()
-                return productCode.contains(searchText) || colourName.contains(searchText)
+                let productCode = colour.productCode?.lowercased()
+                let colourName = colour.name?.lowercased()
+                return productCode!.contains(searchText) || colourName!.contains(searchText)
             }
             tableView.reloadData()
         }
         if searchFor == .addresses {
             
             filteredAddresses = allAddresses.filter { location in
-                let code = location.postalCode.lowercased()
-                let locationName = location.locationName.lowercased()
-                return locationName.contains(searchText) || code.contains(searchText)
+                let code = location.postalCode?.lowercased()
+                let locationName = location.address?.lowercased()
+                return locationName!.contains(searchText) || code!.contains(searchText)
             }
             tableView.reloadData()
         }
@@ -176,22 +176,13 @@ class SearchResultsTableVC: UITableViewController {
         }
     }
     
+    // MARK: - ScrollViewDidScroll
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let parent = self.parent as! UISearchController
         parent.searchBar.resignFirstResponder()
     }
 
-    // String to UIImage
-    
-    func stringToImage(imageName: String) -> UIImage { // add to extensions
-        let imageDataString = imageName
-        let imageData = Data(base64Encoded: imageDataString)
-        let image = UIImage(data: imageData!)
-        return image!
-    }
-    
-    
-
+    // MARK: - Touches Began
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.resignFirstResponder() 
     }

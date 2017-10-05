@@ -11,6 +11,7 @@ import UIKit
 
 class CustomTextFieldContainer: UIView, UITextFieldDelegate {
     
+    // Properties
     var iconCheck: UIImageView!
     var fieldLabel: UILabel!
     var underLine: UIView!
@@ -22,14 +23,14 @@ class CustomTextFieldContainer: UIView, UITextFieldDelegate {
     var isAnimated: Bool = false
     var validationError: String!
     
+    // Init
     override init(frame: CGRect) {
         super.init(frame:frame);
         initialSetup()
         
-        
-    
     }
     
+    // MARK: - Initial Setup
     func initialSetup() {
         iconCheck = UIImageView(frame: CGRect(x: 275, y: 18, width: 20, height: 21 ))
         iconCheck.image = UIImage.init(named: "iconCheck")

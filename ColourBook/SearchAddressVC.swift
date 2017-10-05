@@ -9,24 +9,27 @@
 import UIKit
 import FirebaseDatabase
 
+// Sets view
 protocol AddressResult {
-    func setResultsViewFor(location: Location)
+    func setResultsViewFor(location: Address)
 }
 
-class SearchAddressVC: CustomVC, UISearchBarDelegate {
+// Addressed view for an addressed search through search bar in dashboard
+class SearchAddressVC: ColourBookVC, UISearchBarDelegate {
     
-    var firstTime: Bool = true
+    // Properties
+    var firstTime: Bool = true // sets whether this was the first time in view
     
     var addressSC: UISearchController?
     
     var locationResultView: UIView!
     var searchButton: UIButton!
-
-    var currentLocation: Location?
+    
+    var currentLocation: Address?
     
     var viewButton: UIButton?
 
-    var allAddresses = [Location]()
+    var allAddresses = [Address]()
     
     var categories = [String]()
     var categoryItems = [String:[ScannedProduct]]()
@@ -112,21 +115,16 @@ class SearchAddressVC: CustomVC, UISearchBarDelegate {
         
         // model to send over
         self.categories = []
-        self.categoryItems = [:]
         
-        let locationCategoryItems = self.locationItems[(self.currentLocation?.locationName)!]
-        
-        for category in (locationCategoryItems?.keys)! {
+        for category in (self.currentLocation?.categoryItems?.keys)! {
             self.categories.append(category)
         }
         
         categories.categories = self.categories
-        categories.categoriesItems = locationCategoryItems!
+        categories.categoriesItems = (self.currentLocation?.categoryItems)!
         categories.businessImages = self.businessImages
         
-        self.present(categories, animated: true, completion: {
-            
-        })
+        self.present(categories, animated: true)
     }
     
     func searchButtonFunction() {
@@ -136,20 +134,19 @@ class SearchAddressVC: CustomVC, UISearchBarDelegate {
 }
 
 extension SearchAddressVC: AddressResult {
-    func setResultsViewFor(location: Location) {
-        
+    func setResultsViewFor(location: Address) {
         // address result view
         let addressVC = AddressView(frame: self.locationResultView.bounds, location: location)
         
         // check custom image
-        if location.image == nil || location.image == "" {
+        if location.image == nil {
             addressVC.addressImageView.image = UIImage(named: "homeIcon")
         }
         else {
-            addressVC.addressImageView.image = self.stringToImage(imageName: location.image!)
+            addressVC.addressImageView.image = self.setImageFrom(urlString: location.image!)
         }
         
-        addressVC.addressLocation.text = location.locationName
+        addressVC.addressLocation.text = location.address
         
         // check custom name
         if location.name == nil || location.name == "" {
@@ -164,5 +161,7 @@ extension SearchAddressVC: AddressResult {
         
         // set current location
         self.currentLocation = location
+
     }
+    
 }

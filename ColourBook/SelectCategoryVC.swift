@@ -10,14 +10,15 @@ import Foundation
 import UIKit
 import FirebaseDatabase
 
-class SelectCategoryVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
+// Select Category to add product to
+class SelectCategoryVC: ColourBookVC, UITableViewDelegate, UITableViewDataSource {
     
     // product profiles
     var barcode: String?
-    var productProfile: ScannedProduct?
+    var productProfile: PaintCan?
     
     // model
-    var categories = [String]()
+    var categories: [String] = []
     var selectedCategory: String = ""
     var saveCategory: String = ""
 
@@ -29,19 +30,17 @@ class SelectCategoryVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
     // address name
     var locationName: String?
     
-    var transferProducts = [ScannedProduct]()
+    var transferProducts = [PaintCan]()
     
+    // MARK: - View Controller Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.backButtonNeeded = true
         
-        //MARK: View
-        
         self.view.backgroundColor = UIColor.white
         
         // title label
-        
         name = UILabel(frame: CGRect(x: 0, y: 20, width: view.frame.width, height: 50))
         name.textColor = UIColor.black
         name.textAlignment = .center
@@ -88,16 +87,10 @@ class SelectCategoryVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         view.addSubview(tableView)
         view.addSubview(addButton!)
 
-        self.getCategoriesFor(screenState: self.screenState, user: self.signedInUser, location: self.locationName)
-            
+        self.getCategoriesFor(screenState: self.screenState, location: self.locationName)
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        
-    }
-    
-    //MARK: tableview datasource
-    
+    //MARK: Tableview DataSource
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -112,8 +105,7 @@ class SelectCategoryVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     
-    //MARK: tableview delegate
-    
+    // MARK: Tableview Delegate
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath)
         let category = cell?.textLabel?.text!
@@ -123,6 +115,7 @@ class SelectCategoryVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         self.saveCategory = category!
     }
     
+    // Deselect
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath)
         
@@ -131,6 +124,7 @@ class SelectCategoryVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         self.saveCategory = ""
     }
     
+    // MARK: - Transfer Function
     func transferFunction() {
         if self.saveCategory == "" {
             self.displayNoneSelected()
@@ -142,7 +136,7 @@ class SelectCategoryVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
                 let transferCategory = self.saveCategory
                 
                 // save to selected address category
-                DataService.instance.transfer(products: self.transferProducts, user: self.signedInUser, location: self.locationName, category: personalCategory, destination: transferCategory)
+                DataService.instance.transfer(products: self.transferProducts, location: self.locationName, category: personalCategory, destination: transferCategory)
                 
                 self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
             }
@@ -152,60 +146,52 @@ class SelectCategoryVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
     // MARK: - Add button function
     
     func addToSelectedRow() {
-        
         if self.saveCategory == "" {
             self.displayNoneSelected()
         }
         else {
             if self.screenState == .personal {
                 // selected category
-                let category = self.saveCategory
+//                let category = self.saveCategory
                 
-                // create unique ID
-                let uniqueID = "\(NSUUID().uuidString)"
-                
+                // unique id for new item
+                let uniqueID = DataService.instance.createUniqueID()
                 self.productProfile?.uniqueID = uniqueID
                 
                 // save to selected personal category
-                DataService.instance.saveProductIn(user: self.signedInUser.uid, screenState: self.screenState, location: self.locationName, product: self.productProfile!, category: category)
+                DataService.instance.savePaintCanToDashboard(screenState: self.screenState, location: self.locationName, product: self.productProfile!, category: self.saveCategory)
                 
                 self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
             }
             if self.screenState == .homes {
                 // selected category
-                let category = self.saveCategory
+//                let category = self.saveCategory
                 
                 // create unique ID
                 let uniqueID = "\(NSUUID().uuidString)"
-                
                 self.productProfile?.uniqueID = uniqueID
                 
                 // save to selected address category
-                DataService.instance.saveProductIn(user: self.signedInUser.uid, screenState: self.screenState, location: self.locationName, product: self.productProfile!, category: category)
-                
-                // save to public address category
-                DataService.instance.saveProductFor(location: self.locationName, screenState: self.screenState, product: self.productProfile!, category: category)
+                DataService.instance.savePaintCanToDashboard(screenState: self.screenState, location: self.locationName, product: self.productProfile!, category: self.saveCategory)
                 
                 self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
 
             }
             if self.screenState == .business {
-                let category = self.saveCategory
+//                let category = self.saveCategory
                 
                 // create unique ID
                 let uniqueID = "\(NSUUID().uuidString)"
-                
                 self.productProfile?.uniqueID = uniqueID
                 
-                DataService.instance.saveProductIn(user: self.signedInUser.uid, screenState: self.screenState, location: self.locationName, product: self.productProfile!, category: category)
-                
-                DataService.instance.saveProductFor(location: self.locationName, screenState: self.screenState, product: self.productProfile!, category: category)
+                DataService.instance.savePaintCanToDashboard(screenState: self.screenState, location: self.locationName, product: self.productProfile!, category: self.saveCategory)
                 
                 self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
             }
         }
     }
     
+    // MARK: - Display None Selected
     func displayNoneSelected() {
         let alert = UIAlertController(title: "No category selected", message: "select a category", preferredStyle: .alert)
         let action = UIAlertAction(title: "OK", style: .cancel, handler: nil)
@@ -213,19 +199,17 @@ class SelectCategoryVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         self.present(alert, animated: true, completion: nil)
     }
     
-    func getCategoriesFor(screenState: ScreenState, user: User, location: String?) {
+    func getCategoriesFor(screenState: ScreenState, location: String?) {
+        let ref = getCategoriesFrom(screenState: screenState, location: location)
         
-        getCategoriesFrom(user: user, screenState: screenState, location: location)
-        
-        let categoriesRef = DataService.instance.generalRef
-        
-        categoriesRef?.observeSingleEvent(of: .value, with: { (snapshot) in
+        ref.observeSingleEvent(of: .value, with: { (snapshot) in
             for child in snapshot.children.allObjects {
-                let categoryName = child as! FIRDataSnapshot
+                let categoryName = child as! DataSnapshot
                 let category = categoryName.key
                 
                 self.categories.append(category)
             }
+            // reload
             self.tableView.reloadData()
         }, withCancel: { (error) in
             print(error.localizedDescription)
@@ -233,17 +217,22 @@ class SelectCategoryVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         })
     }
     
-    func getCategoriesFrom(user: User, screenState: ScreenState, location: String?) {
+    func getCategoriesFrom(screenState: ScreenState, location: String?) -> DatabaseReference {
         if screenState == .personal {
-            DataService.instance.generalRef = DataService.instance.usersRef.child(user.uid).child("personalDashboard")
+            let personalID = standardUserDefaults.value(forKey: "personal") as! String
+            return DataService.instance.publicRef.child(kPersonalDashboard).child(personalID)
         }
         if screenState == .business {
-            DataService.instance.generalRef = DataService.instance.usersRef.child(user.uid).child(BusinessDashboard).child("addresses").child(locationName!).child("categories")
+            let businessID = standardUserDefaults.value(forKey: "business") as! String
+            return DataService.instance.publicRef.child(kBusinessDashboard).child(businessID).child(location!).child("categories")
         }
         else if screenState == .homes || screenState == .transfer {
-            DataService.instance.generalRef = DataService.instance.usersRef.child(user.uid).child(AddressDashboard).child(locationName!).child("categories")
+            let homeID = standardUserDefaults.value(forKey: "home") as! String
+            return DataService.instance.publicRef.child(kHomeDashboard).child(homeID).child(location!).child("categories")
         }
-        
+        else {
+            return DataService.instance.publicRef
+        }
     }
     
 }

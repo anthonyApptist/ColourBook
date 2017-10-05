@@ -12,39 +12,42 @@ import FirebaseDatabase
 
 extension AddEditImageVCBusiness {
     
-    func getBusinessInfo(user: User) {
+    // Get Business Info
+    func getBusinessInfo() {
         self.showActivityIndicator()
+        let userUID = standardUserDefaults.value(forKey: "uid") as! String
+        let userRef = DataService.instance.usersRef.child(userUID)
         
-        let userBusinessRef = DataService.instance.usersRef.child(user.uid).child(BusinessDashboard).child("Business")
-        
-        userBusinessRef.observeSingleEvent(of: .value, with: { (snapshot) in
-            
-            if snapshot.exists() {
+        userRef.observeSingleEvent(of: .value, with: { (snapshot) in
+            if snapshot.hasChild("businessCreated") {
+                let businessName = snapshot.childSnapshot(forPath: "businessCreated").value as! String
+                let businessRef = userRef.parent?.parent?.child("public").child("businesses").child(businessName)
                 
-                let businessProfile = snapshot.childSnapshot(forPath: "profile").value as? NSDictionary
-                
-                let name = businessProfile?["name"] as! String
-                let location = businessProfile?["location"] as! String
-                let phoneNumber = businessProfile?["phoneNumber"] as? String
-                let website = businessProfile?["website"] as? String
-                let postalCode = businessProfile?["postalCode"] as? String
-                let image = businessProfile?["image"] as? String
-                
-                let business = Business(name: name, location: location, phoneNumber: phoneNumber, website: website, postalCode: postalCode, image: image)
-                
-                self.nameTextField?.text = business.name
-                self.locationTextField?.text = business.location
-                self.siteTextField?.text = business.website
-                self.phoneTextField?.text = business.phoneNumber
-                self.postalCodeTextField.text = business.postalCode
-                
-                if business.image == "" || business.image == nil {
-                    self.imgView.image = UIImage(named: "darkgreen.jpg")
-                }
-                else {
-                    self.imgView.image = self.stringToImage(imageName: business.image!)
-                }
-                
+                businessRef?.observe(.value, with: { (snapshot) in
+                    for item in snapshot.children.allObjects {
+                        let businessProfile = snapshot.value as? NSDictionary
+                        
+                        let name = businessProfile?["name"] as! String
+                        let location = businessProfile?["address"] as! String
+                        let phoneNumber = businessProfile?["phoneNumber"] as? String
+                        let website = businessProfile?["website"] as? String
+                        let postalCode = businessProfile?["postalCode"] as? String
+                        let image = businessProfile?["image"] as? String
+                        
+                        // update ui with fields
+                        self.nameTextField?.text = name
+                        self.locationTextField?.text = location
+                        self.siteTextField?.text = website
+                        self.phoneTextField?.text = phoneNumber
+                        self.postalCodeTextField.text = postalCode
+                        
+                        // there is an image
+                        self.imgView.image = self.setImageFrom(urlString: image!)
+                    }
+                    self.hideActivityIndicator()
+                }, withCancel: { (error) in
+                    // error
+                })
             }
             else {
                 self.nameTextField?.text = ""
@@ -52,11 +55,10 @@ extension AddEditImageVCBusiness {
                 self.siteTextField?.text = ""
                 self.phoneTextField?.text = ""
                 self.postalCodeTextField.text = ""
-                self.imgView.image = UIImage(named: "darkgreen.jpg")
+                self.imgView.image = kDarkGreenLogo
                 
                 self.hideActivityIndicator()
             }
-            
             
         }, withCancel: { (error) in
             // error
@@ -65,10 +67,9 @@ extension AddEditImageVCBusiness {
             self.siteTextField?.text = ""
             self.phoneTextField?.text = ""
             self.postalCodeTextField.text = ""
-            self.imgView.image = UIImage(named: "darkgreen.jpg")
+            self.imgView.image = kDarkGreenLogo
             
             self.hideActivityIndicator()
         })
     }
-    
 }

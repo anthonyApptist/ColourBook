@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class AddressItemVC: CustomVC, UITableViewDataSource {
+class AddressItemVC: ColourBookVC, UITableViewDataSource {
     
     var titleLabel: UILabel!
     var tableView: UITableView!
@@ -57,7 +57,7 @@ class AddressItemVC: CustomVC, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "item") as! ProductCell
-        
+        /*
         let product = self.products[indexPath.row]
         
         cell.box1?.text = product.timestamp
@@ -72,7 +72,7 @@ class AddressItemVC: CustomVC, UITableViewDataSource {
         }
         
         cell.isUserInteractionEnabled = false
-        
+        */
         return cell
     }
 

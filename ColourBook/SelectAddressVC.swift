@@ -9,14 +9,15 @@
 import UIKit
 import FirebaseDatabase
 
-class SelectAddressVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
+// Select Addresses and add products to
+class SelectAddressVC: ColourBookVC, UITableViewDelegate, UITableViewDataSource {
     
     // product profiles
-    var productProfile: ScannedProduct?
+    var productProfile: PaintCan?
     
     // model
-    var locations = [Location]()
-    var selectedLocation: String = ""
+    var addresses: [Address]?
+    var selectedLocation: Address?
     var selectedCategory: String = ""
     
     // view
@@ -25,18 +26,31 @@ class SelectAddressVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
     var addButton: UIButton?
     
     // business items add variables
-    var business: Business?
+    var business: String?
     
     // products to be transferred
-    var transferProducts = [ScannedProduct]()
+    var transferProducts = [PaintCan]()
     
+    // selector
+    var selector: AddressSelector?
+    
+    // MARK: - Init
+    init(selector: AddressSelector) {
+        super.init(nibName: nil, bundle: nil)
+        
+        self.selector = selector
+        self.selector?.delegate = self
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: - View Controller Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.backButtonNeeded = true
-        
-        //MARK: View
-        
         self.view.backgroundColor = UIColor.white
         
         // title label
@@ -84,125 +98,121 @@ class SelectAddressVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         view.addSubview(name)
         view.addSubview(tableView)
         view.addSubview(addButton!)
-        
-        self.getLocationLists(screenState: self.screenState, user: self.signedInUser)
-        self.showActivityIndicator()
-    
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        
+        super.viewDidAppear(true)
+        self.selector?.retreive()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(true)
+        // remove observers
+        self.selector?.removeDatabaseObservers()
     }
 
     //MARK: tableview datasource
-
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.locations.count
+        if self.addresses == nil {
+            return 0
+        }
+        else {
+            return (self.addresses?.count)!
+        }
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .default, reuseIdentifier: "address")
-        let location = self.locations[indexPath.row]
-        cell.textLabel?.text = location.locationName
+        let location = self.addresses?[indexPath.row]
+        cell.textLabel?.text = location?.address
         return cell
     }
 
     //MARK: Tableview Delegate
-
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath)
-        let locationName = self.locations[indexPath.row].locationName
         cell?.accessoryType = UITableViewCellAccessoryType.checkmark
-        self.selectedLocation = locationName
+        self.selectedLocation = self.addresses?[indexPath.row]
     }
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath)
         cell?.accessoryType = UITableViewCellAccessoryType.none
-        self.selectedLocation = ""
+        self.selectedLocation = nil
     }
     
     // MARK: - Transfer function
-    
     func transferTo() {
-        
-        if self.selectedLocation == "" {
-            self.displayNoAddressSelected()
+        if self.selectedLocation == nil {
+            self.createAlertController(title: "No address selected", message: nil)
         }
         else {
             let selectCategory = SelectCategoryVC()
             selectCategory.screenState = self.screenState
-            selectCategory.locationName = self.selectedLocation
+            selectCategory.locationName = self.selectedLocation?.address
             selectCategory.selectedCategory = self.selectedCategory
             selectCategory.transferProducts = self.transferProducts
             
-            self.present(selectCategory, animated: true, completion: { 
-                
-            })
+            self.present(selectCategory, animated: true)
         }
     }
 
     // MARK: - Add button function
-
     func addToSelectedRow() {
-        
-        if self.selectedLocation == "" {
-            self.displayNoAddressSelected()
+        if self.selectedLocation == nil {
+            self.createAlertController(title: "No address selected", message: "select an address")
         }
         else {
+            // business state
             if self.screenState == .business {                
-                self.productProfile?.businessAdded = self.business?.name
+                self.productProfile?.businessAdded = self.business
                 
                 let selectCategory = SelectCategoryVC()
                 selectCategory.screenState = self.screenState
-                selectCategory.locationName = self.selectedLocation
+                selectCategory.locationName = self.selectedLocation?.address
                 selectCategory.productProfile = self.productProfile
                 
-                self.present(selectCategory, animated: true, completion: {
-                    
-                })
+                self.present(selectCategory, animated: true, completion: nil)
             }
+            // homes state
             else {
                 let selectCategory = SelectCategoryVC()
                 selectCategory.screenState = self.screenState
-                selectCategory.locationName = self.selectedLocation
+                selectCategory.locationName = self.selectedLocation?.address
                 selectCategory.productProfile = self.productProfile
             
-                self.present(selectCategory, animated: true, completion: {
-                    
-                })
+                self.present(selectCategory, animated: true, completion: nil)
             }
         }
+
+    }
+}
+
+extension SelectAddressVC: AddressSelect, ErrorLoading {
+    // MARK: - Error Loading
+    func loadError(_ error: Error) {
+        self.createAlertController(title: "Error", message: error.localizedDescription)
     }
     
-    // MARK: - Alerts
-    
-    func displayNoAddressSelected() {
-        let alert = UIAlertController(title: "No address selected", message: "select an address", preferredStyle: .alert)
-        let action = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-        alert.addAction(action)
-        self.present(alert, animated: true, completion: nil)
+    // MARK: - Address Select
+    func noBusinessProfile() {
+        self.createAlertWithDismiss(title: "No business profile", message: "please complete one in business list")
     }
     
-    func displayNoBusinessPage() {
-        let alert = UIAlertController(title: "No business added", message: "Please complete the business profile page", preferredStyle: .alert)
-        let action = UIAlertAction(title: "OK", style: .cancel) { (action) in
-            self.dismiss(animated: true, completion: nil)
-        }
-        alert.addAction(action)
-        self.present(alert, animated: true, completion: nil)
+    func noAddresses() {
+        self.createAlertWithDismiss(title: "No addresses added", message: "please add one in homes list")
     }
     
-    func displayNoAddresses() {
-        let alert = UIAlertController(title: "No addresses added", message: "Please add an address in business list", preferredStyle: .alert)
-        let action = UIAlertAction(title: "OK", style: .cancel) { (action) in
-            self.dismiss(animated: true, completion: nil)
-        }
-        alert.addAction(action)
-        self.present(alert, animated: true, completion: nil)
+    func updateAddresses(_ addresses: [Address]) {
+        self.addresses = addresses
+        self.tableView.reloadData()
+    }
+    
+    func updateBusiness(_ business: String) {
+        self.business = business
     }
 }

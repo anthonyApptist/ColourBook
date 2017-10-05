@@ -1,15 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="HelveticaNeue.ttc">
+            <string>HelveticaNeue-Bold</string>
+            <string>HelveticaNeue-Medium</string>
+        </array>
+        <array key="HelveticaNeueExtras.ttc">
+            <string>HelveticaNeue-CondensedBold</string>
+        </array>
+        <array key="HelveticaNeueLights.ttc">
+            <string>HelveticaNeue-Light</string>
+        </array>
+    </customFonts>
     <scenes>
         <!--My DashboardVC-->
         <scene sceneID="tne-QT-ifu">
@@ -248,7 +260,7 @@
                                                 <rect key="frame" x="0.0" y="28" width="375" height="92"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="BHQ-3w-4Cn" id="M3a-QN-wXD">
-                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="91"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="91.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="y9A-Z1-NlC">
@@ -304,7 +316,7 @@
                                                 <rect key="frame" x="0.0" y="120" width="375" height="92"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="3P9-rN-8cu" id="m9f-Nb-Z3E">
-                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="91"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="91.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="HnH-cK-Xh2">
@@ -457,10 +469,10 @@
             </objects>
             <point key="canvasLocation" x="888.79999999999995" y="859.52023988005999"/>
         </scene>
-        <!--Log In View Controller-->
+        <!--Log InVC-->
         <scene sceneID="ktm-Il-zue">
             <objects>
-                <viewController storyboardIdentifier="LogInVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="AvE-t7-eD9" customClass="LogInViewController" customModule="ColourBook" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LogInVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="AvE-t7-eD9" customClass="LogInVC" customModule="ColourBook" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="JPB-PH-xLW"/>
                         <viewControllerLayoutGuide type="bottom" id="KY6-dP-mn2"/>
@@ -609,10 +621,10 @@
             </objects>
             <point key="canvasLocation" x="888.79999999999995" y="151.57421289355324"/>
         </scene>
-        <!--Sign Up View Controller-->
+        <!--Sign UpVC-->
         <scene sceneID="ys5-db-KSp">
             <objects>
-                <viewController storyboardIdentifier="SignUpVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="PYb-MU-e06" customClass="SignUpViewController" customModule="ColourBook" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SignUpVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="PYb-MU-e06" customClass="SignUpVC" customModule="ColourBook" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="tan-YZ-vWJ"/>
                         <viewControllerLayoutGuide type="bottom" id="pti-tU-1c0"/>
@@ -742,11 +754,12 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="emailField" destination="UTq-MB-PCO" id="Vmb-Xp-pzp"/>
+                        <outlet property="emailField" destination="UTq-MB-PCO" id="wvy-yQ-aJ1"/>
                         <outlet property="facebookBtn" destination="Df1-Vi-z3O" id="0TM-GP-Dpa"/>
                         <outlet property="logInBtn" destination="YFX-Jo-EEC" id="Z5i-FO-VGj"/>
                         <outlet property="passwordField" destination="j89-PP-Kjn" id="LXl-RQ-g1Z"/>
                         <outlet property="signUpBtn" destination="QGz-tj-dCZ" id="ncf-sM-B1L"/>
+                        <outlet property="textfieldStack" destination="gkj-th-eo8" id="cz8-pf-Yzv"/>
                         <outlet property="titleLbl" destination="Atw-kM-YrQ" id="irA-gq-5Sk"/>
                         <outlet property="topBar" destination="cwo-6D-NeJ" id="T0N-1P-3UL"/>
                         <segue destination="BYZ-38-t0r" kind="show" identifier="SignInToConnect" id="kb9-hh-a3R"/>
@@ -774,7 +787,7 @@
                                 <rect key="frame" x="0.0" y="100" width="375" height="82"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="xF1-sN-Y1N" id="Rz5-w0-Bm9">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="81"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="81.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="tol-Q8-neR">
@@ -1323,14 +1336,12 @@
                                                 <rect key="frame" x="0.0" y="28" width="375" height="85"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Ho6-NW-JIH" id="pli-MR-EhN">
-                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="84"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="84.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6cO-uu-Jdc">
-                                                            <rect key="frame" x="0.0" y="0.0" width="375" height="84"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7AE-Ds-C80">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="84"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
@@ -1421,6 +1432,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="addressBtn" destination="yCg-1c-hqM" id="rc1-xV-aWY"/>
                         <outlet property="bottomView" destination="0C5-70-IVg" id="orU-9J-J3z"/>
                         <outlet property="settingsBtn" destination="chG-o1-bfc" id="Max-dn-F0y"/>
                         <outlet property="subTitleLbl" destination="2yV-Nc-pLQ" id="qV4-Mz-vZU"/>
@@ -1662,7 +1674,6 @@
         <!--Search AddressVC-->
         <scene sceneID="VXe-W7-uqC">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="kwK-Zo-EiV" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="SearchAddressVC" id="raJ-T6-crP" customClass="SearchAddressVC" customModule="ColourBook" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="m25-cB-RKB"/>
@@ -1674,6 +1685,7 @@
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="kwK-Zo-EiV" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-482.39999999999998" y="859.52023988005999"/>
         </scene>
@@ -1716,7 +1728,7 @@
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="1J0-vO-QKe">
-                                                                    <rect key="frame" x="8" y="8" width="134" height="134"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
                                                                     <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="21"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
@@ -2082,7 +2094,7 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Phone" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q4M-vs-2rG">
-                            <rect key="frame" x="0.0" y="0.0" width="45" height="30"/>
+                            <rect key="frame" x="0.0" y="0.0" width="44.5" height="30"/>
                             <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="15"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
@@ -2104,7 +2116,7 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Website" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2PH-4A-nAg">
-                            <rect key="frame" x="0.0" y="0.0" width="57" height="30"/>
+                            <rect key="frame" x="0.0" y="0.0" width="56.5" height="30"/>
                             <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="15"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
@@ -2126,7 +2138,7 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Website" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hPy-uT-gEI">
-                            <rect key="frame" x="0.0" y="0.0" width="57" height="30"/>
+                            <rect key="frame" x="0.0" y="0.0" width="56.5" height="30"/>
                             <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="15"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
@@ -2148,7 +2160,7 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Website" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Go2-sB-UHZ">
-                            <rect key="frame" x="0.0" y="0.0" width="57" height="30"/>
+                            <rect key="frame" x="0.0" y="0.0" width="56.5" height="30"/>
                             <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="15"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
@@ -2180,12 +2192,12 @@
         <image name="settingsIcon" width="115" height="113"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="ZiE-Dq-MKt"/>
-        <segue reference="N4L-tY-cc2"/>
+        <segue reference="2Rt-b8-Nhr"/>
         <segue reference="E3a-OA-ECU"/>
         <segue reference="2NH-Fi-qo3"/>
-        <segue reference="ydO-EM-FjA"/>
-        <segue reference="ZK5-XT-XXP"/>
-        <segue reference="UGF-Xx-hni"/>
+        <segue reference="uql-du-HUQ"/>
+        <segue reference="5FO-LH-Ars"/>
+        <segue reference="Com-EP-1Te"/>
+        <segue reference="kb9-hh-a3R"/>
     </inferredMetricsTieBreakers>
 </document>

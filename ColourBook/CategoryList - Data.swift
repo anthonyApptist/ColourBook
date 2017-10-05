@@ -10,18 +10,13 @@ import Foundation
 import FirebaseDatabase
 
 extension CategoriesListVC {
-    
-    func getCategoriesFor(screenState: ScreenState, user: User, location: Location?) {
+    func getCategoriesFor(screenState: ScreenState, location: Address?) {
+        let ref = getCategoriesRef(screenState: screenState, location: location)
         
-        getCategoriesRef(user: user, screenState: screenState, location: location)
-        
-        let categoriesRef = DataService.instance.generalRef
-        
-        self.categories = []
-        
-        self.collectionView.reloadData()
-        
-        categoriesRef?.observe(.value, with: { (snapshot) in
+        ref.observe(.value, with: { (snapshot) in
+            self.showActivityIndicator()
+            
+            self.categories = []
             
             // check personal name
             if snapshot.hasChild("name") {
@@ -34,19 +29,19 @@ extension CategoriesListVC {
             }
             
             // personal dashboard
-            for child in snapshot.childSnapshot(forPath: PersonalDashboard).children.allObjects {
-                let categoryName = child as! FIRDataSnapshot
+            for child in snapshot.children.allObjects {
+                let categoryName = child as! DataSnapshot
                 let category = categoryName.key
                 
                 self.categories.append(category)
                 
                 // temp arrays
-                var itemsArray: [ScannedProduct] = []
+                var itemsArray: [PaintCan] = []
                 
                 if categoryName.hasChildren() {
-                    for item in categoryName.childSnapshot(forPath: Barcodes).children.allObjects {
+                    for item in categoryName.children.allObjects {
                         
-                        let productData = item as! FIRDataSnapshot
+                        let productData = item as! DataSnapshot
                         let itemProfile = productData.value as? NSDictionary
                         
                         // check whether the product has been flagged more or equal to 5 times
@@ -57,8 +52,8 @@ extension CategoriesListVC {
                         }
                         
                         // get scanned product
-                        let productType = itemProfile?["product"] as! String
-                        let productName = itemProfile?["productName"] as! String
+                        let type = itemProfile?["type"] as! String
+                        let productName = itemProfile?["name"] as! String
                         let manufacturer = itemProfile?["manufacturer"] as! String
                         let upcCode = itemProfile?["barcode"] as! String
                         let image = itemProfile?["image"] as! String
@@ -66,48 +61,45 @@ extension CategoriesListVC {
                         
                         let uniqueID = productData.key
                         
-                        let product = ScannedProduct(productType: productType, productName: productName, manufacturer: manufacturer, upcCode: upcCode, image: image)
-                        
-                        product.timestamp = timestamp   
-                        product.uniqueID = uniqueID
+                        let aPaintCan = PaintCan()
+                        aPaintCan.type = type
+                        aPaintCan.name = productName
+                        aPaintCan.manufacturer = manufacturer
+                        aPaintCan.upcCode = upcCode
+                        aPaintCan.image = image
+                        aPaintCan.timestamp = timestamp
+                        aPaintCan.uniqueID = uniqueID
                         
                         // check for business added item
-                        if productData.hasChild("businessAdded") {
-                            // set business property of product
-                            let businessName = itemProfile?["businessAdded"] as! String
-                            
-                            product.businessAdded = businessName
-                        }
                         
-                        if productData.hasChild("category") {
-                            // set business property of product
-                            let category = itemProfile?["category"] as! String
-                            
-                            product.category = category
+                        // set business property of product
+                        if let businessName = itemProfile?["businessAdded"] as? String {
+                            aPaintCan.businessAdded = businessName
                         }
-                        
-                        if productData.hasChild("code") {
                             // set business property of product
-                            let code = itemProfile?["code"] as! String
-                            
-                            product.code = code
+                        if let category = itemProfile?["category"] as? String {
+                            aPaintCan.category = category
+                        }
+                        // set business property of product
+                        if let code = itemProfile?["code"] as? String {
+                            aPaintCan.code = code
                         }
                         
                         // check for colour
                         if productData.hasChild("colour") {
                             let colourProfile = itemProfile?["colour"] as? NSDictionary
-                            let colourName = colourProfile?["colourName"] as! String
+                            let colourName = colourProfile?["name"] as! String
                             let hexcode = colourProfile?["hexcode"] as! String
                             let colourManufacturerID = colourProfile?["manufacturerID"] as! String
                             let colourManufacturer = colourProfile?["manufacturer"] as! String
                             let productCode = colourProfile?["productCode"] as! String
                             
-                            let colour = Colour(manufacturerID: colourManufacturerID, productCode: productCode, colourName: colourName, colourHexCode: hexcode, manufacturer: colourManufacturer)
+                            let colour = Colour(manufacturerID: colourManufacturerID, productCode: productCode, name: colourName, hexCode: hexcode, manufacturer: colourManufacturer)
                             
-                            product.colour = colour
+                            aPaintCan.colour = colour
                         }
                         // add to temp array
-                        itemsArray.append(product)
+                        itemsArray.append(aPaintCan)
                     }
                     self.categoriesItems.updateValue(itemsArray, forKey: category)
                 }
@@ -126,20 +118,23 @@ extension CategoriesListVC {
         })
     }
     
-    func getCategoriesRef(user: User, screenState: ScreenState, location: Location?) {
+    func getCategoriesRef(screenState: ScreenState, location: Address?) -> DatabaseReference {
         if screenState == .personal {
-            DataService.instance.generalRef = DataService.instance.usersRef.child(user.uid)
+            let personalID = standardUserDefaults.value(forKey: "personal") as! String
+            return DataService.instance.personalDashboardRef.child(personalID)
         }
         if screenState == .business {
-            DataService.instance.generalRef = DataService.instance.usersRef.child(user.uid).child(BusinessDashboard).child("addresses").child((location?.locationName)!).child("categories")
+            let businessID = standardUserDefaults.value(forKey: "business") as! String
+            return DataService.instance.businessDashboardRef.child(businessID).child((location?.address)!).child("categories")
         }
         if screenState == .homes {
-            DataService.instance.generalRef = DataService.instance.usersRef.child(user.uid).child(AddressDashboard).child((location?.locationName)!).child("categories")
+            let homeID = standardUserDefaults.value(forKey: "home") as! String
+            return DataService.instance.homeDashboardRef.child(homeID).child((location?.address)!).child("categories")
         }
         if screenState == .searching {
-            DataService.instance.generalRef = DataService.instance.addressRef.child((location?.locationName)!).child("categories")
+            return DataService.instance.addressRef.child((location?.address)!).child("categories")
         }
+        return DataService.instance.publicRef
     }
-    
 }
 

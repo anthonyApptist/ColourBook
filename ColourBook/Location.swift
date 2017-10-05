@@ -1,5 +1,5 @@
 //
-//  Locations.swift
+//  Location.swift
 //  ColourBook
 //
 //  Created by Anthony Ma on 25/12/2016.
@@ -8,10 +8,22 @@
 
 import Foundation
 
-class Location: NSObject, NSCoding {
+// A location with address name and postal code
+
+class Location {
     
+    // Properties
+    var postalCode: String?
+    var address: String?
+    
+    // Init
+    init() {
+        self.postalCode = nil
+        self.address = nil
+    }
+    
+/*
     // MARK: - Types
-    
     enum CoderKeys: String {
         case locationNameKey
         case codeKey
@@ -27,7 +39,6 @@ class Location: NSObject, NSCoding {
     }
     
     // MARK: - Properties
-    
     var locationName: String
     var postalCode: String
     var image: String?
@@ -42,7 +53,6 @@ class Location: NSObject, NSCoding {
     }
     
     // MARK: - NSCoding
-    
     required init?(coder aDecoder: NSCoder) {
         locationName = aDecoder.decodeObject(forKey: CoderKeys.locationNameKey.rawValue) as! String
         postalCode = aDecoder.decodeObject(forKey: CoderKeys.codeKey.rawValue) as! String
@@ -58,5 +68,5 @@ class Location: NSObject, NSCoding {
         aCoder.encode(image, forKey: CoderKeys.nameKey.rawValue)
         aCoder.encode(items, forKey: CoderKeys.itemsKey.rawValue)
     }
-    
+*/
 }

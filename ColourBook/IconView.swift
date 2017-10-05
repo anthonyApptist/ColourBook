@@ -8,14 +8,17 @@
 
 import UIKit
 
+// Icons in the dashboard
+
 class IconView: UIView {
     
+    // Properties
     var imageView : UIImageView?
     
+    // Init
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        //  self.frame = CGRect(x: 0, y: 0, width: 129, height: 183)
         self.layer.cornerRadius = 16.0
         self.imageView?.contentMode = .scaleAspectFit
         self.layer.shadowColor = UIColor.black.cgColor

@@ -11,17 +11,19 @@ import FirebaseDatabase
 import CoreLocation
 
 extension GoogleMap {
+    
+    // Get Public List of Addresses
     func getPublicList() {
-        
+        self.showActivityIndicator()
         let addressRef = DataService.instance.addressRef
         
         addressRef.observe(.value, with: { (snapshot) in
             // for each location in user list (look at public list)
             for location in snapshot.children.allObjects {
                 
-                let locationData = location as! FIRDataSnapshot
-                let locationProfile = locationData.value as? NSDictionary
+                let locationData = location as! DataSnapshot
                 
+                // address name
                 let locationName = locationData.key
                 
                 self.locations.append(locationName)

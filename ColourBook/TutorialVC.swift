@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+/*
 class TutorialVC: UIViewController, UIScrollViewDelegate  {
     
     @IBOutlet weak var skipBtn: UIButton!
@@ -125,6 +125,6 @@ class TutorialVC: UIViewController, UIScrollViewDelegate  {
         
     }
 }
-
+*/
 
 

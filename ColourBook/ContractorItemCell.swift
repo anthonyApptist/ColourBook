@@ -11,9 +11,7 @@ import UIKit
 class ContractorItemCell: UITableViewCell {
 
     @IBOutlet weak var titleLbl: UILabel?
-    
     @IBOutlet weak var imgView: UIImageView?
-    
     @IBOutlet weak var logoImgView: UIImageView?
         
     var businessImage: String?
@@ -23,15 +21,15 @@ class ContractorItemCell: UITableViewCell {
         // Initialization code
     }
     
-    func setViewFor(product: ScannedProduct) {
-        
+    // MARK: - Set View
+    func setViewFor(product: PaintCan) {
         self.logoImgView?.contentMode = .scaleAspectFit
         
         if businessImage == "" || businessImage == nil {
             self.logoImgView?.image = UIImage(named: "darkgreen")
         }
         else {
-            self.logoImgView?.image = self.stringToImage(imageName: businessImage!)
+            self.logoImgView?.image = self.setImageFrom(urlString: businessImage!)
         }
         self.titleLbl?.text = product.timestamp
         
@@ -39,30 +37,16 @@ class ContractorItemCell: UITableViewCell {
             self.imgView?.image = UIImage(named: "darkgreen")
         }
         else {
-            self.imgView?.image = self.setImageFrom(urlString: product.image)
+            self.imgView?.image = self.setImageFrom(urlString: product.image!)
             self.imgView?.contentMode = .scaleAspectFit
         }
+        /*
         if let colour = product.colour {
-          //  self.swatchView?.backgroundColor = UIColor(hexString: colour.colourHexCode)
+            self.swatchView?.backgroundColor = UIColor(hexString: colour.hexCode)
         }
         else {
             
         }
+         */
     }
-    
-    func stringToImage(imageName: String) -> UIImage {
-        let imageDataString = imageName
-        let imageData = Data(base64Encoded: imageDataString)
-        let image = UIImage(data: imageData!)
-        return image!
-    }
-    
-    func setImageFrom(urlString: String) -> UIImage {
-        
-        let imageURL = NSURL(string: urlString)
-        let imageData = NSData(contentsOf: imageURL as! URL)
-        let image = UIImage(data: imageData as! Data)
-        return image!
-    }
-    
 }

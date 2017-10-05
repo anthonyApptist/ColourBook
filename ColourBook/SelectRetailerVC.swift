@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import FirebaseDatabase
 
-class SelectRetailerVC: CustomVC {//, UITableViewDataSource, UITableViewDelegate
+class SelectRetailerVC: ColourBookVC {//, UITableViewDataSource, UITableViewDelegate
     
     /*
     // product profiles

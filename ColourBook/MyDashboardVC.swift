@@ -10,141 +10,102 @@
 import UIKit
 import MapKit
 
+// show result for search result
 protocol SelectedSearchResult {
-    func showResult(location: Location)
+    func showResult(location: Address)
 }
 
-class MyDashboardVC: CustomVC, UIScrollViewDelegate { // updating location here
+// Home screen, dashboard, for user with five sections
+// 1 - Personal list
+// 2 - Business list
+// 3 - Home list
+// 4 - Search Addresses
+// 5 - Log out
+
+class MyDashboardVC: ColourBookVC, UIScrollViewDelegate {
     
-    let colours = UIColours(col: UIColor.clear)
-    
-    var btnPressed: Bool = false
-    
-    var iconsLoaded: Bool = false
-    
+    // Properties (storyboard)
     @IBOutlet weak var titleLbl: UILabel!
-    
     @IBOutlet weak var topView: UIView!
-    
     @IBOutlet weak var bottomView: UIView!
-    
     @IBOutlet weak var scrollView: UIScrollView!
-    
     @IBOutlet weak var descLbl: UILabel!
-    
-    let logoImgView = UIImageView(image: UIImage(named: "darkgreen"))
-    
-    var descString: String! = "my bucket list"
-        
     @IBOutlet weak var viewBtn: UIButton!
-    
     @IBOutlet weak var scanBtn: UIButton!
     
-    let locationManager = CLLocationManager()
-    
+    // logo img view for searching addresses w/ search bar in dashboard
+    let logoImgView = UIImageView(image: kDarkGreenLogo) // logo for search bar view
     let searchTextField = UITextField()
+    
+    var iconsLoaded: Bool = false
+    var descString: String! = "my bucket list"
     
     @IBOutlet weak var pageCtrl: UIPageControl!
     
     let app = UIApplication.shared.delegate as! AppDelegate
     
+    // cb dashboard
+    var cbDashboard: ColourBookDashboard?
+    
+    // personal, business, homes, search bar, log out
     let pageOne = IconView(frame: CGRect(x: 0, y: 0, width: 129, height: 183))
-    
     let pageTwo = IconView(frame: CGRect(x: 0, y: 0, width: 129, height: 183))
-    
     let pageThree = IconView(frame: CGRect(x: 0, y: 0, width: 129, height: 183))
-    
     let pageFour = IconView(frame: CGRect(x: 0, y: 0, width: 129, height: 183))
-    
     let pageFive = IconView(frame: CGRect(x: 0, y: 0, width: 129, height: 183))
-    
-    // Business Data
-    let businessRef = DataService.instance.businessRef
-    var businessImages = [String:String]()
-    var cbBusinesses = [Business]()
-    
-    // Address Data
-    let addressRef = DataService.instance.addressRef
-    var categoryItems = [String:[ScannedProduct]]()
-    var locationItems = [String:[String:[ScannedProduct]]]()
     
     // Search Controller
     var resultsUpdater: SearchResultsTableVC?
     var addressSC: UISearchController?
-    var allAddress = [Location]()
+    var allAddress = [Address]()
     
+    // MARK: - View Btn Pressed
     @IBAction func viewBtnPressed(_ sender: AnyObject?) {
-        
-        self.backButtonNeeded = true 
-        
         if self.titleLbl.text == "personal" {
-
             performSegue(withIdentifier: "ConnectToCategories", sender: self)
-            
         }
-        
         if self.titleLbl.text == "business" {
-            
             performSegue(withIdentifier: "ConnectToBusiness", sender: self)
         }
-        
         if self.titleLbl.text == "my homes" {
-            
             performSegue(withIdentifier: "ConnectToAddresses", sender: self)
         }
     }
     
+    // MARK: - Scan btn Pressed
     @IBAction func scanBtnPressed(_ sender: AnyObject?) {
-        
-        let scanView = ChooseColourVC()//storyboard?.instantiateViewController(withIdentifier: "BarcodeVC")
-        
-        present(scanView, animated: true, completion: nil)
-        
+        let scanView = storyboardInstantiate("BarcodeVC")
+        self.present(scanView, animated: true, completion: nil)
     }
     
+    // MARK: - Logout Fcn
     @IBAction func logOut() {
-        
         AuthService.instance.performSignOut()
-                
-        let logInView = storyboard?.instantiateViewController(withIdentifier: "LogInVC")
-        
-        present(logInView!, animated: false, completion: nil)
-        
-        
+        let logInView = storyboardInstantiate("LogInVC")
+        present(logInView, animated: false, completion: nil)
     }
-    
+
+    // MARK: - View Controller Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         self.backButtonNeeded = false
         self.screenState = .personal
         self.pageCtrl.currentPage = 0
 
+        // set window's root view controller to dashbaord
         app.window?.rootViewController = self
-
-    }
-    
-    func locationAuthStatus() {
-        if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
-//            map.showsUserLocation = true
-        } else {
-            locationManager.requestWhenInUseAuthorization()
-        }
+        
+        // get user and public info
+        
     }
   
-    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(false)
         
-        self.getBusinessAndImages() 
-    
-        locationAuthStatus()
-        
         self.backBtn.isHidden = true
-        
         app.window?.rootViewController = self
      
         self.scanBtn.addTarget(self, action: #selector(MyDashboardVC.scanBtnPressed), for: .touchUpInside)
-        
         self.viewBtn.addTarget(self, action: #selector(MyDashboardVC.viewBtnPressed), for: .touchUpInside)
         
         // search controller set up
@@ -164,8 +125,9 @@ class MyDashboardVC: CustomVC, UIScrollViewDelegate { // updating location here
         addressSC?.hidesNavigationBarDuringPresentation = true
         addressSC?.dimsBackgroundDuringPresentation = true
         definesPresentationContext = true
-        searchBar?.backgroundColor = UIColor.black
+//        searchBar?.backgroundColor = UIColor.black
 
+        // scroll view set up
         self.scrollView.isScrollEnabled = true
         self.scrollView.isPagingEnabled = true
         self.scrollView.showsHorizontalScrollIndicator = false
@@ -221,30 +183,28 @@ class MyDashboardVC: CustomVC, UIScrollViewDelegate { // updating location here
         
         if(iconsLoaded == false) {
             
-        pageOne.addSubview(pageOne.imageView!)
-        
-        self.scrollView.addSubview(pageOne)
-        
-        pageTwo.addSubview(pageTwo.imageView!)
-    
-        self.scrollView.addSubview(pageTwo)
-        
-        pageThree.addSubview(pageThree.imageView!)
-
-        self.scrollView.addSubview(pageThree)
-        
-    //    pageFour.addSubview(pageFour.imageView!)
-    
-        self.scrollView.addSubview(pageFour)
-        
-        pageFive.addSubview(pageFive.imageView!)
-        
-   
-        self.scrollView.addSubview(pageFive)
+            pageOne.addSubview(pageOne.imageView!)
             
-        iconsLoaded = true
- 
-
+            self.scrollView.addSubview(pageOne)
+            
+            pageTwo.addSubview(pageTwo.imageView!)
+            
+            self.scrollView.addSubview(pageTwo)
+            
+            pageThree.addSubview(pageThree.imageView!)
+            
+            self.scrollView.addSubview(pageThree)
+            
+            //    pageFour.addSubview(pageFour.imageView!)
+            
+            self.scrollView.addSubview(pageFour)
+            
+            pageFive.addSubview(pageFive.imageView!)
+            
+            self.scrollView.addSubview(pageFive)
+            
+            iconsLoaded = true
+            
         }
         
         self.titleLbl.setSpacing(space: 4.0)
@@ -252,40 +212,45 @@ class MyDashboardVC: CustomVC, UIScrollViewDelegate { // updating location here
         self.scanBtn.setSpacing(space: 4.0)
         
         self.screenState = .personal
-        
+        self.cbDashboard?.dashboardSetup()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
         
     }
     
+    // MARK: - Search Bar DidBeginEditing
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        self.getPublicAddresses()
+        self.cbDashboard?.getPublicAddresses()
         
         self.present(self.addressSC!, animated: true) {
-//            self.searchTextField.endEditing(true)
+            self.searchTextField.endEditing(true)
         }
     }
     
+    // MARK: - Segue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // personal
         if segue.identifier == "ConnectToCategories" {
             let destination = segue.destination as! CategoriesListVC
-            destination.businessImages = self.businessImages
+//            destination.businessImages = self.businessImages
             destination.screenState = .personal
         }
         // business
         if segue.identifier == "ConnectToBusiness" {
             let destination = segue.destination as! ItemListAddVC
-            destination.businessImages = self.businessImages
+            destination.businessImages = (self.cbDashboard?.businessImages)!
             destination.screenState = .business
         }
         // homes
         if segue.identifier == "ConnectToAddresses" {
             let destination = segue.destination as! ItemListAddVC
-            destination.businessImages = self.businessImages
+            destination.businessImages = (self.cbDashboard?.businessImages)!
             destination.screenState = .homes
         }
     }
     
-   
+    // MARK: - ScrollView DidEndScrolling
     func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
         let pageWidth:CGFloat = scrollView.frame.width
         let currentPage:CGFloat = floor((scrollView.contentOffset.x - pageWidth/2)/pageWidth)+1
@@ -334,6 +299,7 @@ class MyDashboardVC: CustomVC, UIScrollViewDelegate { // updating location here
         }
     }
     
+    // MARK: - Scroll ViewDidScroll
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         scrollView.contentOffset.y = 0.0
         
@@ -341,12 +307,11 @@ class MyDashboardVC: CustomVC, UIScrollViewDelegate { // updating location here
         let fractional = scrollView.contentOffset.x / pageWidth
         let page = lround(Double(fractional))
 
-        
         self.pageCtrl.currentPage = page;
         
         self.titleLbl.setSpacing(space: 4.0)
 
-        
+        // Determines next page
         if Int(page) == 0 {
             
             if logoImgView.isDescendant(of: self.titleLbl) {
@@ -455,31 +420,35 @@ class MyDashboardVC: CustomVC, UIScrollViewDelegate { // updating location here
             UIView.animate(withDuration: 1.0) {
                 self.viewBtn.alpha = 0.0
             }
-            
+    
             self.scanBtn.removeTarget(self, action: #selector(MyDashboardVC.scanBtnPressed), for: .touchUpInside)
             self.scanBtn.addTarget(self, action: #selector(MyDashboardVC.logOut), for: .touchUpInside)
-
         }
-        
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        self.businessRef.removeAllObservers()
     }
 
 }
 
-extension MyDashboardVC: SelectedSearchResult {
-    func showResult(location: Location) {
+extension MyDashboardVC: SelectedSearchResult, ErrorLoading, AddressLoadingComplete {
+    // show search result from search bar
+    func showResult(location: Address) {
         let searchAddressVC = storyboard?.instantiateViewController(withIdentifier: "SearchAddressVC") as! SearchAddressVC
         searchAddressVC.allAddresses = self.allAddress
-        searchAddressVC.locationItems = self.locationItems
         searchAddressVC.currentLocation = location
-        searchAddressVC.businessImages = self.businessImages
+        searchAddressVC.businessImages = (self.cbDashboard?.businessImages)!
         self.present(searchAddressVC, animated: true) {
             searchAddressVC.setResultsViewFor(location: searchAddressVC.currentLocation!)
         }
     }
     
+    // MARK: - Error Loading
+    func loadError(_ error: Error) {
+        self.createAlertController(title: "Error", message: error.localizedDescription)
+    }
+    
+    // MARK: - Address Loading Complete
+    func addressLoadingComplete(allAddresses: [Address]) {
+        self.allAddress = allAddresses
+        self.resultsUpdater?.allAddresses = allAddresses
+    }
     
 }

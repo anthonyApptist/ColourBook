@@ -12,28 +12,35 @@ import CoreLocation
 import GoogleMaps
 import GooglePlaces
 
-class GoogleMap: CustomVC, CLLocationManagerDelegate, GMSMapViewDelegate {
+// Google Maps for searching and adding addresses
+class GoogleMap: ColourBookVC, CLLocationManagerDelegate, GMSMapViewDelegate {
     
+    // Properties
     let locationManager = CLLocationManager()
     var location: CLLocationCoordinate2D? = nil
-    var currentLocation: Location?
+    var currentLocation: Address?
     
+    // Search
     var locationSC: UISearchController?
     var searchButton: UIButton?
     
+    // Google Map
     var map: GMSMapView?
     var marker: GMSMarker?
     
+    // Save
     var saveButton: UIButton?
 
     // address list
     var locations = [String]()
     
+    // MARK: - View Controller Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.backButtonNeeded = true
         
+        // get public list
         self.getPublicList()
         
         // Search Controller
@@ -73,10 +80,11 @@ class GoogleMap: CustomVC, CLLocationManagerDelegate, GMSMapViewDelegate {
         searchButton?.addTarget(self, action: #selector(searchButtonFunction), for: .touchUpInside)
         searchButton?.isUserInteractionEnabled = false
     
+        // check if screen state is business
+        
     }
     
     // MARK: - CLLocationManager Delegate
-    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         self.location = self.locationManager.location?.coordinate
         self.locationManager.stopUpdatingLocation()
@@ -85,26 +93,28 @@ class GoogleMap: CustomVC, CLLocationManagerDelegate, GMSMapViewDelegate {
         let location = CLLocation(latitude: (self.location?.latitude)!, longitude: (self.location?.longitude)!)
         
         geoCoder.reverseGeocodeCoordinate(self.location!) { (response, error) in
-            
+            // first result of geocoder
             let gmsAddress = response?.firstResult()
             
-            let currentLocation = Location(locationName: "", postalCode: "")
+            let address = Address()
             
+            // street name
             if let locationName = gmsAddress?.thoroughfare {
-                currentLocation.locationName = locationName
+                address.address = locationName
             }
+            // postal code
             if let postalCode = gmsAddress?.postalCode {
-                currentLocation.postalCode = postalCode
+                address.postalCode = postalCode
             }
             
-            self.currentLocation = currentLocation
+            self.currentLocation = address
             
             self.marker = GMSMarker()
             self.marker?.position = CLLocationCoordinate2DMake(location.coordinate.latitude, location.coordinate.longitude)
-            self.marker?.title = self.currentLocation?.locationName
+            self.marker?.title = self.currentLocation?.address
             self.marker?.snippet = self.currentLocation?.postalCode 
             
-            self.displayLocationAddAlertController(location: currentLocation)
+            self.displayLocationAddAlertController(location: address)
             
             let camera = GMSCameraPosition.camera(withTarget: self.location!, zoom: 17.5)
             let gMapView = GMSMapView.map(withFrame: self.view.frame, camera: camera)
@@ -119,7 +129,6 @@ class GoogleMap: CustomVC, CLLocationManagerDelegate, GMSMapViewDelegate {
             self.view.bringSubview(toFront: self.searchButton!)
             self.view.bringSubview(toFront: self.saveButton!)
         }
-        
     }
     
     // MARK: - Search Button Function
@@ -133,13 +142,11 @@ class GoogleMap: CustomVC, CLLocationManagerDelegate, GMSMapViewDelegate {
         self.present(autoComplete, animated: true, completion: nil)
     }
     
-    // MARK: - Alerts
-    
-    func displayLocationAddAlertController(location: Location) {
-        let alertView = UIAlertController(title: "Is this your current location", message: location.locationName, preferredStyle: .alert)
-        
+    // MARK: - Display Add Location
+    func displayLocationAddAlertController(location: Address) {
+        let alertView = UIAlertController(title: "Is this your current location", message: location.address!, preferredStyle: .alert)
+        // next ask if address is apartment
         let alertAction = UIAlertAction(title: "Next", style: .destructive, handler: { (action) in
-            
             // ask if apartment
             self.displayAddApartment(location: location)
         })
@@ -147,95 +154,82 @@ class GoogleMap: CustomVC, CLLocationManagerDelegate, GMSMapViewDelegate {
         alertView.addAction(alertAction)
         alertView.addAction(alertCancel)
         
-        self.present(alertView, animated: true) {
-
-        }
+        self.present(alertView, animated: true)
     }
     
-    func displayAddApartment(location: Location) {
-        let alertView = UIAlertController(title: "Is this an apartment?", message: location.locationName, preferredStyle: .alert)
-        
+    // MARK: - Display Add Apartment
+    func displayAddApartment(location: Address) {
+        let alertView = UIAlertController(title: "Is this an apartment?", message: location.address!, preferredStyle: .alert)
         let alertAction = UIAlertAction(title: "Yes", style: .destructive, handler: { (action) in
-            
             self.displayAddUnitToApartment(location: location)
         })
         let alertAdd = UIAlertAction(title: "No (Add address)", style: .destructive, handler: { (action) in
-            
-            if (!self.locations.contains(location.locationName)) {
-                // add to public address list
-                DataService.instance.saveAddress(screenState: self.screenState, location: location)
+            if (self.locations.contains(location.address!)) {
+                // add to user list only
+                DataService.instance.saveAddressToUserListOnly(location: location, screenState: self.screenState)
+                self.dismiss(animated: true, completion: nil)
+                return
             }
-            
-            // add to user address list
-            DataService.instance.saveAddressTo(user: self.signedInUser, location: location, screenState: self.screenState)
-            
+            DataService.instance.saveNewAddress(location: location, screenState: self.screenState)
             self.dismiss(animated: true, completion: nil)
         })
-        
         let alertCancel = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
-            self.currentLocation = nil
             self.saveButton?.animateViewToCoordinates(newX: self.view.center.x - ((self.view.frame.width*0.6)/2), newY: self.view.frame.height + 5)
         }
-        
         alertView.addAction(alertAction)
         alertView.addAction(alertAdd)
         alertView.addAction(alertCancel)
         
-        self.present(alertView, animated: true) {
-            
-        }
+        self.present(alertView, animated: true)
     }
     
-    func displayAddUnitToApartment(location: Location) {
-        let alertView = UIAlertController(title: "Type in unit number for", message: location.locationName, preferredStyle: .alert)
+    // MARK: - Add Unit Number
+    func displayAddUnitToApartment(location: Address) {
+        let alertView = UIAlertController(title: "Type in unit number for", message: location.address!, preferredStyle: .alert)
         
         // unit number text field
         alertView.addTextField { (textfield) in
             textfield.keyboardType = .namePhonePad
         }
-        
         let alertAction = UIAlertAction(title: "Add", style: .destructive, handler: { (action) in
             
             let unitTextfield = alertView.textFields?[0]
             
             if let unitNumber = unitTextfield?.text {
-                
                 if unitNumber == "" {
                     self.displayNoUnitNumber(location: location)
                 }
                 else {
-                    let streetName = location.locationName
-                    location.locationName = "\(streetName) - Unit \(unitNumber)"
+                    let streetName = location.address
+                    location.address = "\(streetName!) - Unit \(unitNumber)"
                     
-                    if (!self.locations.contains(location.locationName)) {
+                    if (self.locations.contains(location.address!)) {
                         // add to public address list
-                        DataService.instance.saveAddress(screenState: self.screenState, location: location)
+                        DataService.instance.saveAddressToUserListOnly(location: location, screenState: self.screenState)
+                        self.dismiss(animated: true, completion: nil)
+                        return
                     }
                     
                     // add to user address list
-                    DataService.instance.saveAddressTo(user: self.signedInUser, location: location, screenState: self.screenState)
-                    
+                    DataService.instance.saveNewAddress(location: location, screenState: self.screenState)
                     self.dismiss(animated: true, completion: nil)
                 }
             }
             else {
                 self.displayNoUnitNumber(location: location)
             }
-            
         })
         
         let alertCancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         alertView.addAction(alertAction)
         alertView.addAction(alertCancel)
         
-        self.present(alertView, animated: true) {
-            
-        }
-        
+        self.present(alertView, animated: true)
     }
     
-    func displayNoUnitNumber(location: Location) {
-        let alertView = UIAlertController(title: "No unit number added for", message: location.locationName, preferredStyle: .alert)
+    // MARK: - No Unit Number
+    func displayNoUnitNumber(location: Address) {
+        let alertView = UIAlertController(title: "No unit number added for", message: location.address!, preferredStyle: .alert)
         
         let alertAction = UIAlertAction(title: "No", style: .destructive, handler: { (action) in
             self.displayAddUnitToApartment(location: location)
@@ -252,7 +246,6 @@ class GoogleMap: CustomVC, CLLocationManagerDelegate, GMSMapViewDelegate {
     }
     
     // MARK: - GMSMapView Delegate
-    
     func mapView(_ mapView: GMSMapView, willMove gesture: Bool) {
         
     }
@@ -266,12 +259,9 @@ class GoogleMap: CustomVC, CLLocationManagerDelegate, GMSMapViewDelegate {
 
 
 extension GoogleMap: GMSAutocompleteViewControllerDelegate {
-    
-    // Handle the user's selection.
+    // Handle the user's selection
     func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
-        
-        dismiss(animated: true) { 
-            
+        dismiss(animated: true) {
             let coordinates = CLLocationCoordinate2DMake(place.coordinate.latitude, place.coordinate.longitude)
             let cameraUpdate = GMSCameraUpdate.setTarget(coordinates, zoom: 17.5)
             
@@ -279,26 +269,24 @@ extension GoogleMap: GMSAutocompleteViewControllerDelegate {
             
             self.marker?.position = CLLocationCoordinate2D(latitude: place.coordinate.latitude, longitude: place.coordinate.longitude)
             
-            let geocoder = GMSGeocoder()
+            // address object
+            let address = Address()
             
-            geocoder.reverseGeocodeCoordinate(place.coordinate, completionHandler: { (response, error) in
-                if error == nil {
-                    let gmsAddress = response?.firstResult()
-                    self.marker?.title = gmsAddress?.thoroughfare
-                    self.marker?.snippet = gmsAddress?.postalCode
-                    
-                    self.saveButton?.animateViewToCoordinates(newX: self.view.center.x - ((self.view.frame.width*0.6)/2), newY: (self.view.frame.height * 0.75) - ((self.view.frame.height * 0.10)/2))
-                    self.saveButton?.isUserInteractionEnabled = true
-                    
-                    self.searchButton?.alpha = 0.5
-                    
-                    let location = Location(locationName: (gmsAddress?.thoroughfare)!, postalCode: (gmsAddress?.postalCode)!)
-                    
-                    self.currentLocation = location
+            // gms place attributes
+            let name = place.name
+//            print(name)
+            address.address = name
+            
+            // get postal code
+            GMSGeocoder.init().reverseGeocodeCoordinate(place.coordinate, completionHandler: { (response, error) in
+                // check
+                if let postalCode = response?.firstResult()?.postalCode {
+                    address.postalCode = postalCode
                 }
                 else {
-                    // error
+                    address.postalCode = ""
                 }
+                self.displayAddApartment(location: address)
             })
         }
     }

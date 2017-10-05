@@ -15,6 +15,7 @@ class ColourView: UIView {
     var colourInfo: UILabel!
     var manufacturerImageView: UIImageView!
     
+    // Init
     init(frame: CGRect, colour: Colour) {
         super.init(frame: frame)
         
@@ -32,8 +33,8 @@ class ColourView: UIView {
         // colour swatch
         colourSwatch = UILabel(frame: colourLabel.frame)
         
-        if (colour.colourHexCode.contains("-")) {
-            let rgb = colour.colourHexCode.components(separatedBy: "-")
+        if (colour.hexCode!.contains("-")) {
+            let rgb = colour.hexCode!.components(separatedBy: "-")
             let red = Float(rgb[0])
             let green = Float(rgb[1])
             let blue = Float(rgb[2])
@@ -41,7 +42,7 @@ class ColourView: UIView {
             colourSwatch.backgroundColor = UIColor(colorLiteralRed: red!/255, green: green!/255, blue: blue!/255, alpha: 1.0)
         }
         else {
-            colourSwatch.backgroundColor = UIColor(hexString: colour.colourHexCode)
+            colourSwatch.backgroundColor = UIColor(hexString: colour.hexCode!)
         }
         
         // colour name label
@@ -52,14 +53,15 @@ class ColourView: UIView {
         colourInfo.textColor = UIColor.black
         colourInfo.textAlignment = .left
         colourInfo.numberOfLines = 0
-        let colourName: String = colour.colourName
-        let productCode: String = colour.productCode
+        let colourName: String = colour.name!
+        let productCode: String = colour.productCode!
         colourInfo.text = "\(colourName)\n\(productCode)"
         
         let imageViewOrigin = CGPoint(x: rest.frame.minX, y: rest.frame.minY)
         let imageVIewSize = CGSize(width: rest.frame.width, height: rest.frame.height)
         manufacturerImageView = UIImageView(frame: CGRect(origin: imageViewOrigin, size: imageVIewSize))
         manufacturerImageView.contentMode = .scaleAspectFit
+        
         if colour.manufacturer == "Benjamin Moore" {
             manufacturerImageView.image = UIImage(named: "BMoore.jpg")
         }

@@ -8,11 +8,26 @@
 
 import Foundation
 
-class ScannedProduct: NSObject, NSCoding {
+// Model for a scanned product
+class ScannedProduct: NSObject {
     
+    // Properties
+    var upcCode: String?
+    var image: String?
+    var name: String?
+    var type: String?
     
-    // MARK: - Types 
+    // Init
+    override init() {
+        super.init()
+        self.upcCode = nil
+        self.image = nil
+        self.name = nil
+        self.type = nil
+    }
     
+    /*
+    // MARK: - Types
     enum CoderKeys: String {
         case typeKey
         case nameKey
@@ -40,9 +55,8 @@ class ScannedProduct: NSObject, NSCoding {
     var timestamp: String?
     var colour: Colour?
     var businessAdded: String?
-    
+ 
     // MARK: - Initializers
-    
     init(productType: String, productName: String, manufacturer: String, upcCode: String, image: String) {
         self.productType = productType
         self.productName = productName
@@ -50,9 +64,8 @@ class ScannedProduct: NSObject, NSCoding {
         self.upcCode = upcCode
         self.image = image
     }
-    
+     
     // MARK: - NSCoding
-    
     required init?(coder aDecoder: NSCoder) {
         productType = aDecoder.decodeObject(forKey: CoderKeys.typeKey.rawValue) as! String
         productName = aDecoder.decodeObject(forKey: CoderKeys.nameKey.rawValue) as! String
@@ -72,5 +85,5 @@ class ScannedProduct: NSObject, NSCoding {
         aCoder.encode(image, forKey: CoderKeys.timeKey.rawValue)
         aCoder.encode(uniqueID, forKey: CoderKeys.uniqueIDKey.rawValue)
     }
-    
+    */
 }

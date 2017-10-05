@@ -9,7 +9,8 @@
 import UIKit
 import MapKit
 
-class AddEditAddressVC: CustomVC, MKMapViewDelegate, UISearchBarDelegate, CLLocationManagerDelegate {
+/*
+class AddEditAddressVC: ColourBookVC, MKMapViewDelegate, UISearchBarDelegate, CLLocationManagerDelegate {
     
     var mapSC: UISearchController?
     
@@ -360,3 +361,4 @@ class AddEditAddressVC: CustomVC, MKMapViewDelegate, UISearchBarDelegate, CLLoca
         }
     }
 }
+*/

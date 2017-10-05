@@ -10,20 +10,25 @@ import Foundation
 import FirebaseDatabase
 
 extension DataService {
-    func reportPressedFor(item: ScannedProduct, user: User, location: String, category: String, uniqueID: String) {
-        let addressRef = self.addressRef.child(location).child("categories").child(category).child("barcodes").child(uniqueID).child("flagged")
+    
+    // MARK: - Report
+    func reportPressedFor(user: String, location: String, category: String, uniqueID: String) {
+        // report only public lists
+        let addressRef = self.addressRef.child(location).child("categories").child(category).child(uniqueID).child("flagged")
         
         addressRef.observeSingleEvent(of: .value, with: { (snapshot) in
-            if snapshot.hasChild(user.uid) {
+            if snapshot.hasChild(user) {
                 // do nothing
+                // already flagged
             }
             else {
-                addressRef.setValue([user.uid:"flag"])
+                addressRef.setValue([user:"flag"])
             }
             
         }) { (error) in
             // error
         }
+        
     }
 
 }

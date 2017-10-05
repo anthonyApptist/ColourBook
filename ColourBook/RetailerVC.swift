@@ -9,8 +9,11 @@
 import Foundation
 import UIKit
 
-class RetailerVC: CustomVC {
+// Unused
+// A view that shows a searched business
+class RetailerVC: ColourBookVC {
     
+    // Properties
     var businessImageView: UIImageView!
     var nameLabel: UILabel!
     var locationLabel: UILabel!
@@ -18,8 +21,10 @@ class RetailerVC: CustomVC {
     var websiteLabel: UILabel!
     var postalCodeLabel: UILabel!
     
+    // Model
     var business: Business?
 
+    // MARK: - View Controller Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -42,8 +47,9 @@ class RetailerVC: CustomVC {
         self.setBusinessInfo()
     }
     
+    // MARK: - Set Business Info
     func setBusinessInfo() {
-        
+        /*
         if let image = business?.image {
             if image == "" {
                 self.businessImageView.image = UIImage(named: "darkgreen")
@@ -67,7 +73,7 @@ class RetailerVC: CustomVC {
 
         self.postalCodeLabel.text = self.business?.postalCode
         self.postalCodeLabel.textAlignment = .center
-
+         */
     }
     
 }

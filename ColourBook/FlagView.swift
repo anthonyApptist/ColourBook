@@ -8,25 +8,22 @@
 
 import UIKit
 
+// Flag View for flagging items
 class FlagView: UIView {
     
+    // Properties
+    
+    // report delegate
     var reportDelegate: ReportDelegate?
     
+    // view
     var titleContent: LabelCustomSpacing!
-    
     var messageContent: LabelCustomSpacing!
-    
     var innapropriateContentBtn: UIButton!
-    
     var missingItemBtn: UIButton!
-    
     var cancelBtn: UIButton!
-    
     var margins : UILayoutGuide!
-
-    
     var startPositionY: CGFloat = 0.0
-    
     var messageShow = false
     
     var viewArray: [UIView] = []
@@ -35,7 +32,7 @@ class FlagView: UIView {
     var blurEffect = UIBlurEffect()
     var blurEffectView = UIVisualEffectView()
 
-    
+    // MARK: - Report Btn Pressed
     @IBAction func reportbtnPressed(_ sender: AnyObject) {
         
        UIView.animate(withDuration: 1.0, animations: {
@@ -53,12 +50,8 @@ class FlagView: UIView {
     }
     
     @IBAction func hideView(_ sender: AnyObject) {
-        
-    
             self.animateViewToCoordinates(newX: self.frame.origin.x, newY: self.frame.origin.y - UIScreen.main.bounds.height)
             self.blurEffectView.removeFromSuperview()
-        
-        
     }
     
     private func createDoneView() {
@@ -211,14 +204,12 @@ class FlagView: UIView {
     }
     
     func showView() {
-        
         self.animateToScale(scale: 1.0)
         self.missingItemBtn.isHidden = false
         self.titleContent.isHidden = false
         self.cancelBtn.isHidden = false
         self.innapropriateContentBtn.isHidden = false
-        self.animateViewToCoordinates(newX: self.frame.origin.x, newY: self.frame.origin.y + UIScreen.main.bounds.height)
-        
+        self.animateViewToCoordinates(newX: self.center.x - self.frame.width/2 + 40, newY: self.frame.origin.y + UIScreen.main.bounds.height)
     }
     
   

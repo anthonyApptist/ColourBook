@@ -10,15 +10,14 @@ import UIKit
 
 class User {
     
-    var uid: String
-    var email: String
-    var name: String?
-    var image: String?
+    // Properties
+    var uid: String?
+    var email: String?
     
-    init(uid: String, email: String) {
-        self.uid = uid
-        self.email = email
+    // Init
+    init() {
+        self.uid = nil
+        self.email = nil
     }
-
 
 }

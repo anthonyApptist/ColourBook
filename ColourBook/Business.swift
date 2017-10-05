@@ -8,10 +8,24 @@
 
 import Foundation
 
-class Business: NSObject, NSCoding {
+class Business: Location {
     
+    // Properties
+    var name: String?
+    var phoneNumber: String?
+    var website: String?
+    var image: String?
+    
+    override init() {
+        super.init()
+        self.name = nil
+        self.phoneNumber = nil
+        self.website = nil
+        self.image = nil
+    }
+    
+/*
     // MARK: - Types
-    
     enum CoderKeys: String {
         case nameKey
         case locationKey
@@ -22,7 +36,6 @@ class Business: NSObject, NSCoding {
     }
     
     // MARK: - Properties
-    
     var name: String
     var location: String
     var phoneNumber: String?
@@ -31,7 +44,6 @@ class Business: NSObject, NSCoding {
     var image: String?
     
     // MARK: - Initializers
-    
     init(name: String, location: String, phoneNumber: String?, website: String?, postalCode: String?, image: String?) {
         self.name = name
         self.location = location
@@ -42,7 +54,6 @@ class Business: NSObject, NSCoding {
     }
     
     // MARK: - NSCoding
-    
     required init?(coder aDecoder: NSCoder) {
         name = aDecoder.decodeObject(forKey: CoderKeys.nameKey.rawValue) as! String
         location = aDecoder.decodeObject(forKey: CoderKeys.locationKey.rawValue) as! String
@@ -60,6 +71,6 @@ class Business: NSObject, NSCoding {
         aCoder.encode(postalCode, forKey: CoderKeys.postalCodeKey.rawValue)
         aCoder.encode(image, forKey: CoderKeys.imageKey.rawValue)
     }
-
+*/
     
 }

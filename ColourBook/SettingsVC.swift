@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+/*
 class SettingsVC: CustomVC {
  
     var selectedLocation: Location?
@@ -51,3 +51,4 @@ class SettingsVC: CustomVC {
     }
     
 }
+*/

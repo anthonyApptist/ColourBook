@@ -7,48 +7,44 @@
 //
 import UIKit
 
-class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
+// Lists items such as paint cans for a particular category
+class ItemListEditVC: ColourBookVC, UITableViewDelegate, UITableViewDataSource {
     
+    // Properties
     @IBOutlet weak var tableView: UITableView?
-    
     @IBOutlet var topView: UIView?
-    
     @IBOutlet var bottomView: UIView?
-    
     @IBOutlet var titleLbl: UILabel?
-    
     @IBOutlet var subTitleLbl: UILabel?
-    
     @IBOutlet var transferItemBtn: UIButton!
-    
     @IBOutlet var selectItemBtn: UIButton!
-    
     @IBOutlet var settingsBtn: UIButton!
     
     var selectionOn: Bool = false
-    
     var deleteItem: Bool = false
     
+    // MARK: - Transfer Items Btn Function
     @IBAction func transferItemsBtnPressed(_ sender: AnyObject) {
-        
         if selectedProducts.isEmpty {
-            displayNoItemSelected()
+            self.createAlertController(title: "No items selected", message: "select at least one item")
         }
         else {
-            let selectAddress = SelectAddressVC()
+            // select address to transfer products to
+            let selector = AddressSelector(screenState: .homes)
+            let selectAddress = SelectAddressVC(selector: selector)
+            selectAddress.selector?.delegate = selectAddress
             selectAddress.screenState = .homes
             selectAddress.transferProducts = self.selectedProducts
             selectAddress.screenState = .transfer
             selectAddress.selectedCategory = self.selectedCategory!
             
-            self.present(selectAddress, animated: true, completion: { 
-                
-            })
+            self.present(selectAddress, animated: true, completion: nil)
         }
+ 
     }
     
+    // MARK: - Select Item Btn Pressed
     @IBAction func selectItemBtnPressed(_ sender: AnyObject) {
-        
         if(!selectionOn) {
         selectionOn = true
         self.transferItemBtn.isHidden = false
@@ -58,10 +54,19 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
             selectionOn = false
             self.transferItemBtn.isHidden = true
             self.selectItemBtn.isSelected = false
+            /*
+            for item in self.selectedProducts {
+                let index = self.products.index(of: item)!
+                let indexPath = IndexPath(row: index, section: 1)
+                let cell = self.tableView?.cellForRow(at: indexPath)
+                cell?.layer.borderWidth = 0.0
+            }
+             */
         }
         
     }
     
+    // MARK: - Settings Btn Pressed
     @IBAction func settingsBtnPressed(_ sender: AnyObject) {
         
         if screenState == ScreenState.personal {
@@ -74,7 +79,7 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         
     }
     
-    
+    // MARK: - Scan Btn Pressed
     @IBAction func scanBtnPressed(_ sender: AnyObject) {
         
         let scanView = storyboard?.instantiateViewController(withIdentifier: "BarcodeVC")
@@ -82,24 +87,25 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         present(scanView!, animated: true, completion: nil)
         
     }
+    
     /*    override func backBtnPressed(_ sender: AnyObject) {
-        
-        
+     
         self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
-        
     }
  */
     
     // selected location
-    var selectedLocation: Location? = nil
+    var selectedLocation: Address? = nil
     var selectedCategory: String? = nil
     
     // products
-    var products = [ScannedProduct]()
-    var selectedProducts = [ScannedProduct]()
+    var products = [PaintCan]()
+    var selectedProducts = [PaintCan]()
     
+    // business images
     var businessImages = [String:String]()
     
+    // MARK: - View Controller Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -130,13 +136,12 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        
         super.viewWillAppear(false)
         
         titleLbl?.adjustsFontSizeToFitWidth = true
         
         if self.screenState == .searching {
-            self.titleLbl?.text = self.selectedLocation?.locationName
+//            self.titleLbl?.text = self.selectedLocation?.locationName
             self.subTitleLbl?.text = self.selectedCategory
         }
         if self.screenState == .personal {
@@ -144,10 +149,9 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         }
         
         titleLbl?.leadingAnchor.constraint(equalTo: self.backBtn.trailingAnchor, constant: 15).isActive = true
-
     }
 
-    
+    // MARK: - TableView DataSource
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -164,7 +168,6 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
             if let business = product.businessAdded {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "ContractorItemCell", for: indexPath) as! ContractorItemCell
                 cell.selectionStyle = UITableViewCellSelectionStyle.none
-                
                 cell.businessImage = businessImages[business]
                 cell.setViewFor(product: product)
                 return cell
@@ -184,8 +187,8 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         }
     }
     
+    // MARK: - TableView Delegate
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-
         if(!selectionOn) {
             performSegue(withIdentifier: "ShowListDetail", sender: nil)
         } else {
@@ -204,46 +207,7 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
         }
     }
     
-    override func backBtnPressed(_ sender: AnyObject) {
-        if(self.deleteItem) {
-            self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
-        } else {
-            dismiss(animated: false, completion: nil)
-        }
-    }
-
-    // delete action
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        
-        if editingStyle == .delete {
-            let product = self.products[indexPath.row]
-            
-            let location = self.selectedLocation
-            
-            if self.screenState == .business {
-                DataService.instance.removeScannedProductForAddress(barcode: product.uniqueID!, location: location?.locationName, category: self.selectedCategory!)
-            }
-            
-            if self.screenState == .homes {
-                DataService.instance.removeProduct(barcode: product.uniqueID!, location: location?.locationName, category: self.selectedCategory!)
-
-            }
-            
-            self.deleteItem = true
-            
-            // remove from database
-            DataService.instance.removeScannedProductFor(user: self.signedInUser, screenState: self.screenState, barcode: product.uniqueID!, location: location?.locationName, category: self.selectedCategory!)
-            
-            //remove from table view list
-            self.products.remove(at: (indexPath as NSIndexPath).row)
-            
-            tableView.deleteRows(at: [indexPath], with: .automatic)
-      
-        }
-    }
- 
     // cell editing style
-
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
         if self.screenState == .homes {
             let product = self.products[indexPath.row]
@@ -261,21 +225,53 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
             return .delete
         }
     }
+
+    
+    // delete action
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            let product = self.products[indexPath.row]
+            
+            let location = self.selectedLocation
+            
+            if self.screenState == .business {
+                DataService.instance.removeScannedProductFor(screenState: self.screenState, uniqueID: product.uniqueID!, location: location?.address, category: self.selectedCategory!)
+            }
+            
+            if self.screenState == .homes {
+                DataService.instance.removeScannedProductFor(screenState: self.screenState, uniqueID: product.uniqueID!, location: location?.address, category: self.selectedCategory!)
+            }
+            
+            self.deleteItem = true
+            
+            //remove from table view list
+            self.products.remove(at: (indexPath as NSIndexPath).row)
+            
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+        }
+    }
+    
+    // MARK: - Back Btn Pressed
+    override func backBtnPressed(_ sender: AnyObject) {
+        if(self.deleteItem) {
+            self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
+        } else {
+            dismiss(animated: false, completion: nil)
+        }
+    }
     
     // MARK: - Segue to Detail and Settings
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         super.prepare(for: segue, sender: nil)
-        
         /*
         if segue.identifier == "ConnectToTransferPage" {
             if let detail = segue.destination as? TransferToTableViewController {
                 
             }
         }
- */
+         */
         if segue.identifier == "ShowListDetail" {
-            var item: ScannedProduct
+            var item: PaintCan
             let row = tableView?.indexPathForSelectedRow?.row
             item = self.products[row!]
             
@@ -283,42 +279,30 @@ class ItemListEditVC: CustomVC, UITableViewDelegate, UITableViewDataSource {
                 detail.detailItem = item
                 detail.screenState = screenState
                 detail.currentCategory = self.selectedCategory
-                detail.currentLocation = self.selectedLocation?.locationName
+                detail.currentLocation = self.selectedLocation?.address
             }
         }
+        /*
         if segue.identifier == "ConnectToMenuSettings" {
             if let detail = segue.destination as? SettingsVC {
                 detail.selectedLocation = self.selectedLocation
                 detail.screenState = screenState
             }
         }
+         */
         if segue.identifier == "ConnectToImageSettings" {
             if let detail = segue.destination as? AddEditImageVC {
                 detail.selectedLocation = self.selectedLocation
                 detail.screenState = screenState
-                detail.signedInUser = self.signedInUser
             }
         }
         if segue.identifier == "ConnectToImageSettingsBusiness" {
-            
             if let detail = segue.destination as? AddEditImageVCBusiness {
-                
                 detail.selectedLocation = self.selectedLocation
                 detail.screenState = screenState
-                
             }
         }
     }
-    
-    func displayNoItemSelected() {
-        let alert = UIAlertController(title: "No item selected", message: "select at least one item", preferredStyle: .alert)
-        let action = UIAlertAction(title: "OK", style: .cancel) { (action) in
-            
-        }
-        alert.addAction(action)
-        self.present(alert, animated: true, completion: nil)
-    }
-
 }
 
 

@@ -9,18 +9,18 @@
 import UIKit
 import FirebaseDatabase
 
+// set colour for product view
 protocol ColourResult {
     func setResultFor(colour: Colour)
 }
 
-class ChooseColourVC: CustomVC, UISearchBarDelegate {
+// Choose Colour for Paint Can
+class ChooseColourVC: ColourBookVC, UISearchBarDelegate {
     
+    // Properties
     var colourAddedDelegate: ColourAdded?
-    
     var colourSC: UISearchController?
-    
     var selectedColour: Colour?
-    
     var hexcode: String?
     
     // view variables
@@ -34,6 +34,7 @@ class ChooseColourVC: CustomVC, UISearchBarDelegate {
         super.viewDidLoad()
         
         self.showActivityIndicator()
+        
         view.backgroundColor = UIColor.white
         
         // Search Controller
@@ -53,25 +54,23 @@ class ChooseColourVC: CustomVC, UISearchBarDelegate {
         colourSC?.hidesNavigationBarDuringPresentation = true
         colourSC?.dimsBackgroundDuringPresentation = true
         definesPresentationContext = true
-        searchBar?.backgroundColor = UIColor.black
+//        searchBar?.tintColor = UIColor.black
         
         DataService.instance.paintDataRef.observeSingleEvent(of: .value, with: { (snapshot) in
-            
             for paintCompany in snapshot.children.allObjects {
-                
                 // paint company
-                let companyData = paintCompany as! FIRDataSnapshot
+                let companyData = paintCompany as! DataSnapshot
                 let companyName = companyData.key
                 
                 for productCode in snapshot.childSnapshot(forPath: companyName).children.allObjects {
-                    let colourProfile = productCode as? FIRDataSnapshot
+                    let colourProfile = productCode as? DataSnapshot
                     let paintData = colourProfile?.value as? NSDictionary
                     let manufacturerID = paintData?["manufacturerID"] as! String
                     let manufacturer = paintData?["manufacturer"] as! String
-                    let colourName = paintData?["colourName"] as! String
+                    let colourName = paintData?["name"] as! String
                     let colourHexCode = paintData?["hexcode"] as! String
                     let productCode = paintData?["productCode"] as! String
-                    let colour = Colour(manufacturerID: manufacturerID, productCode: productCode, colourName: colourName, colourHexCode: colourHexCode, manufacturer: manufacturer)
+                    let colour = Colour(manufacturerID: manufacturerID, productCode: productCode, name: colourName, hexCode: colourHexCode, manufacturer: manufacturer)
                     self.coloursArray.append(colour)
                 }
             }
@@ -82,15 +81,10 @@ class ChooseColourVC: CustomVC, UISearchBarDelegate {
             self.searchColourButtonFunction()
         })
         
-        
-        //MARK: View
-        
         // search results view
-        
         searchResultView = UIView(frame: CGRect(x: 0, y: self.backBtn.frame.maxY, width: view.frame.width, height: view.frame.height - (2 * (view.frame.height * 0.10)) - 65))
     
         // search colour button
-        
         addToPaintButton = UIButton(type: .system)
         addToPaintButton.frame = CGRect(x: 0, y: view.frame.maxY - (view.frame.height * 0.10) - (view.frame.height * 0.10), width: view.frame.width, height: view.frame.height * 0.10)
         addToPaintButton.setTitle("Add To Paint", for: .normal)
@@ -111,7 +105,6 @@ class ChooseColourVC: CustomVC, UISearchBarDelegate {
         searchColourButton.backgroundColor = UIColor.black
         
         // add to view
-    
         view.addSubview(searchResultView)
         view.addSubview(searchColourButton)
         view.addSubview(addToPaintButton)
@@ -119,7 +112,6 @@ class ChooseColourVC: CustomVC, UISearchBarDelegate {
     }
     
     // Search
-    
     func searchColourButtonFunction() {
         present(self.colourSC!, animated: true) {
             
@@ -127,7 +119,6 @@ class ChooseColourVC: CustomVC, UISearchBarDelegate {
     }
     
     // MARK: Add to Paint
-    
     func addToPaintFunction() {
         
         // sets label in post scan VC
@@ -138,6 +129,7 @@ class ChooseColourVC: CustomVC, UISearchBarDelegate {
         dismiss(animated: true, completion: nil)
     }
 
+    // MARK: - Touches Ended
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         
     }
@@ -147,7 +139,7 @@ extension ChooseColourVC: ColourResult {
     func setResultFor(colour: Colour) {
         let colourView = ColourView(frame: self.searchResultView.bounds, colour: colour)
         
-        self.hexcode = colour.colourHexCode
+        self.hexcode = colour.hexCode
         print(self.hexcode ?? "")
         
         // current colour
@@ -155,7 +147,6 @@ extension ChooseColourVC: ColourResult {
         self.searchResultView.addSubview(colourView)
         
         // add to paint button
-        
         UIView.animate(withDuration: 1.0, animations: {
             self.addToPaintButton.titleLabel?.alpha = 1.0
             self.addToPaintButton.addTarget(self, action: #selector(self.addToPaintFunction), for: .touchUpInside)

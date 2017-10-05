@@ -6,94 +6,40 @@
 //  Copyright © 2016 Anthony Ma. All rights reserved.
 //
 
-// constants
-
-//let Business = "business"
-//let Address = "address"
-
-let PersonalDashboard = "personalDashboard"
-let BusinessDashboard = "businessDashboard"
-let AddressDashboard = "addressDashboard"
-
-let Barcodes = "barcodes"
-
 import Foundation
 import FirebaseDatabase
 
+protocol BusinessProfileDelegate {
+    func noBusinessProfile()
+    func businessEntryCreated()
+}
 
-class DataService {
+// Database Functions for Firebase
+class DataService: DataBase {
     private static let _instance = DataService()
     
     // public instance
-    
     static var instance: DataService {
         return _instance
     }
     
-    var generalRef: FIRDatabaseReference?
+    var businessDelegate: BusinessProfileDelegate?
     
-    //MARK: - Database References
-    
-    var mainRef: FIRDatabaseReference {
-        return FIRDatabase.database().reference()
-    }
-    
-    // users reference
-    
-    var usersRef: FIRDatabaseReference {
-        return mainRef.child("users")
-    }
-    
-    
-    // Public List Properties
-    
-    // businesses
-    
-    var businessRef: FIRDatabaseReference {
-        return mainRef.child("businesses")
-    }
-    
-    // addresses
-    
-    var addressRef: FIRDatabaseReference {
-        return mainRef.child("addresses")
-    }
-    
-    // barcodes
-    
-    var barcodeRef: FIRDatabaseReference {
-        return mainRef.child("barcodes")
-    }
-    
-    // colours
-    
-    var paintDataRef: FIRDatabaseReference {
-        return mainRef.child("colours")
-    }
-    
-    // MARK: - Database Config
-    
-    func savePaintData(manufacturerID: String, productCode: String, colourName: String, colourHexCode: String, manufacturer: String) {
-        /*
-        let uniqueID = "\(NSUUID().uuidString)"
-        paintDataRef.child(manufacturer).child(uniqueID).setValue(paintProfile)
-        */
-        
+    // MARK: - Save Paint Colour Data (database)
+    func savePaintDataForDatabase(manufacturerID: String, productCode: String, colourName: String, colourHexCode: String, manufacturer: String) {
         var paintProfile: [String:String] = ["colourName" : colourName, "hexcode": colourHexCode, "manufacturer": manufacturer, "productCode": productCode]
         
         if !(manufacturerID.isEmpty) {
             paintProfile.updateValue(manufacturerID, forKey: "manufacturerID")
         }
-            
         paintDataRef.child(manufacturer).child(productCode).setValue(paintProfile)
     }
     
-    func savePaintCanData(manufacturer: String, productName: String, category: String?, code: String?, upcCode: String, image: String) {
+    // MARK: - Save Paint Can Data (database)
+    func savePaintCanDataForDatabase(manufacturer: String, productName: String, category: String?, code: String?, upcCode: String, image: String) {
         
         let paintCanProfile: Dictionary<String, String> = ["manufacturer": manufacturer, "productName": productName, "image": image, "product": "Paint", "code": code!]
-        
         barcodeRef.child(upcCode).child("profile").setValue(paintCanProfile)
-        
     }
     
 }

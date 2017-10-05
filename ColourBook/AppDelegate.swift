@@ -14,77 +14,60 @@ import GooglePlaces
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
-    private static let _instance = AppDelegate()
-    
-    // public instance
-    
-    static var instance: AppDelegate {
-        return _instance
-    }
-
-
+    // window
     var window: UIWindow?
-    
-    let userDefaults = UserDefaults.standard
-    
-    let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
-        FIRApp.configure()
+        // Firebase
+        FirebaseApp.configure()
         
+        // Google Maps
         GMSServices.provideAPIKey("AIzaSyCG9tiEX9Kh8EmX3kN-o7IpOOvHm_rBSKM")
-        
         GMSPlacesClient.provideAPIKey("AIzaSyCG9tiEX9Kh8EmX3kN-o7IpOOvHm_rBSKM")
         
-        window = UIWindow.init(frame: UIScreen.main.bounds)
-      
-        if userDefaults.bool(forKey: "skipTutorial") == false {
+        // window init
+        window = UIWindow(frame: UIScreen.main.bounds)
         
-        let initialView = storyboard.instantiateViewController(withIdentifier: "TutorialVC")
+        // resets
+//        AuthService.instance.performSignOut()
+//        self.resetUserDefaults()
         
-        window?.rootViewController = initialView
+        // check if user signed in
+        if AuthService.instance.checkSignedIn() {
+            if AuthService.instance.checkSignedInRecord() {
+                let cbDashboard = ColourBookDashboard(screenState: .none)
+                let initialView = storyboardInstantiate("MyDashboardVC") as! MyDashboardVC
+                initialView.cbDashboard = cbDashboard
+                initialView.cbDashboard?.errorDelegate = initialView
+                initialView.cbDashboard?.loadAddressDelegate = initialView
+                window?.rootViewController = initialView
+            }
+            else {
+                // else signed in from before new method
+                // sign out and go to sign up
+                AuthService.instance.performSignOut()
+                let initialView = storyboardInstantiate("SignUpVC")
+                window?.rootViewController = initialView
+            }
+        }
+        else {
+            // check if user has signed in before
+            if AuthService.instance.checkSignedInRecord() {
+                // if user signed in before, go to login
+                let initialView = storyboardInstantiate("LogInVC")
+                window?.rootViewController = initialView
+            }
+            else {
+                // if user never signed in
+                let initialView = storyboardInstantiate("SignUpVC")
+                window?.rootViewController = initialView
+            }
+        }
+//        window?.rootViewController = DatabaseVC()
+        
         window?.makeKeyAndVisible()
-
-            
-        }
-        if userDefaults.bool(forKey: "skipTutorial") == true {
-            
-            if userDefaults.bool(forKey: "userJoined") == false {
-                
-                let initialView = storyboard.instantiateViewController(withIdentifier: "SignUpVC")
-                
-                window?.rootViewController = initialView
-                window?.makeKeyAndVisible()
-                
-            }
-            
-            if userDefaults.bool(forKey: "userJoined") == true  {
-                
-                let initialView = storyboard.instantiateViewController(withIdentifier: "MyDashboardVC")
-                
-                window?.rootViewController = initialView
-                window?.makeKeyAndVisible()
-                
-                if userDefaults.bool(forKey: "userLoggedIn") == true {
-                    
-                    let initialView = storyboard.instantiateViewController(withIdentifier: "MyDashboardVC")
-                    
-                    window?.rootViewController = initialView
-                    window?.makeKeyAndVisible()
-                }
-                
-                if userDefaults.bool(forKey: "userLoggedIn") == false {
-                    
-                    let initialView = storyboard.instantiateViewController(withIdentifier: "LogInVC")
-                    
-                    window?.rootViewController = initialView
-                    window?.makeKeyAndVisible()
-                }
-            }
-        }
-        
         return true
     }
 

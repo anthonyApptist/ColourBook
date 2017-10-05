@@ -3,13 +3,13 @@
     {
       "size" : "20x20",
       "idiom" : "iphone",
-      "filename" : "Icon-App-20x20@3x-1.png",
+      "filename" : "AppIcon20x20@2x-1.png",
       "scale" : "2x"
     },
     {
       "size" : "20x20",
       "idiom" : "iphone",
-      "filename" : "Icon-App-20x20@3x.png",
+      "filename" : "AppIcon20x20@3x-1.png",
       "scale" : "3x"
     },
     {
@@ -101,6 +101,12 @@
       "idiom" : "ipad",
       "filename" : "Icon-App-83.5x83.5@2x.png",
       "scale" : "2x"
+    },
+    {
+      "size" : "1024x1024",
+      "idiom" : "ios-marketing",
+      "filename" : "MarketingIcon1024x1024.png",
+      "scale" : "1x"
     }
   ],
   "info" : {

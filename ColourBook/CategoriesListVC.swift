@@ -10,62 +10,73 @@ import Foundation
 import UIKit
 import FirebaseDatabase
 
-class CategoriesListVC: CustomVC, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+// Categories list before every item list view, with abiltiy to add new category to personal list
+class CategoriesListVC: ColourBookVC, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
+    // Properties
     @IBOutlet weak var collectionView: UICollectionView!
-    
     @IBOutlet weak var titleLbl: UILabel!
-    
     @IBOutlet weak var topView: UIView!
-    
     @IBOutlet weak var bottomView: UIView!
     
-    // ref
-    var ref: FIRDatabaseReference?
+    // MARK: - Scan Btn Pressed
+    @IBAction func scanBtnPressed(_ sender: AnyObject) {
+        let scanView = storyboard?.instantiateViewController(withIdentifier: "BarcodeVC")
+        present(scanView!, animated: true, completion: nil)
+    }
+    
+    // database ref
+    var ref: DatabaseReference?
     
     // data
-    var selectedLocation: Location? = nil
-    var categoriesItems = [String:[ScannedProduct]]()
+    var selectedLocation: Address? = nil
+    var categoriesItems = [String:[PaintCan]]()
     var categories = [String]()
     
     // products with added by
     var businessImages = [String:String]()
-    var locationItems = [String:[ScannedProduct]]()
+    var locationItems = [String:[PaintCan]]()
     
-    var paintProducts = [String:[ScannedProduct]]()
+    var paintProducts = [String:[PaintCan]]()
 
     let app = UIApplication.shared.delegate as! AppDelegate
+    
+    var addNewBtn: UIButton?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         collectionView.delegate = self
         collectionView.dataSource = self
-    }
-    
-    @IBAction func scanBtnPressed(_ sender: AnyObject) {
         
-        let scanView = storyboard?.instantiateViewController(withIdentifier: "BarcodeVC")
-        
-        present(scanView!, animated: true, completion: nil)
-        
+        addNewBtn = UIButton(type: .system)
+        addNewBtn?.setTitle("+", for: .normal)
+        addNewBtn?.titleLabel?.adjustsFontSizeToFitWidth = true
+        addNewBtn?.isHidden = true
+        addNewBtn?.titleLabel?.font = UIFont(name: "HelveticaNeue-Medium", size: 17.0)
+        addNewBtn?.addTarget(self, action: #selector(self.addBtnPressed), for: .touchUpInside)
+        self.view.addSubview(addNewBtn!)
+        addNewBtn?.translatesAutoresizingMaskIntoConstraints = false
+        addNewBtn?.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20).isActive = true
+        addNewBtn?.topAnchor.constraint(equalTo: self.view.topAnchor, constant: titleLbl.frame.minY).isActive = true
+        addNewBtn?.widthAnchor.constraint(equalTo: titleLbl.heightAnchor, multiplier: 1).isActive = true
+        addNewBtn?.heightAnchor.constraint(equalTo: titleLbl.heightAnchor, multiplier: 1).isActive = true
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewWillAppear(false)
         
         if self.screenState == .personal {
-            self.getCategoriesFor(screenState: self.screenState, user: self.signedInUser, location: selectedLocation)
-            self.showActivityIndicator()
+            self.getCategoriesFor(screenState: self.screenState, location: selectedLocation)
+            self.addNewBtn?.isHidden = false
         }
-
-        
-     //   app.window?.rootViewController = self
-
+        if self.screenState == .searching {
+            self.addNewBtn?.isHidden = true
+        }
+        //   app.window?.rootViewController = self
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
         let kWhateverHeightYouWant = 50
         return CGSize(width: collectionView.bounds.size.width, height: CGFloat(kWhateverHeightYouWant))
     }
@@ -77,8 +88,6 @@ class CategoriesListVC: CustomVC, UICollectionViewDelegate, UICollectionViewData
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
       return self.categories.count
     }
-    
-    
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CategoryItemCell", for: indexPath) as! CategoryItemCell
@@ -127,7 +136,6 @@ class CategoriesListVC: CustomVC, UICollectionViewDelegate, UICollectionViewData
                 }
             }
         }
-        
         if self.screenState == .business {
             if let categoryItemCell = sender as? CategoryItemCell {
                 if segue.destination is ItemListEditVC {
@@ -157,7 +165,14 @@ class CategoriesListVC: CustomVC, UICollectionViewDelegate, UICollectionViewData
             }
         }
     }
+    
+    // MARK: - Add Button Pressed
+    func addBtnPressed() {
+        let newCategory = NewCategoryVC()
+        self.present(newCategory, animated: true, completion: nil)
+    }
 
+    // MARK: - Display Error Message
     func displayErrorMessage(error: Error) {
         let alert = UIAlertController(title: "Error", message: "\(error.localizedDescription)", preferredStyle: .alert)
         let action = UIAlertAction(title: "OK", style: .cancel) { (action) in
