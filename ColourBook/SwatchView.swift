@@ -30,18 +30,25 @@ class SwatchView: UIView {
     
     // Touches Began
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if (isExpanded == false) { // if swatch is not expanded, spring the swatch bar up
-            isExpanded = true
+        
+        switch isExpanded {
+        case false:
+            // if swatch is not expanded, spring the swatch bar up
             self.animateToScale(scaleX: 1.0, scaleY: self.frame.height)
             UIView.animate(withDuration: 1.0, animations: {
-                
+                self.isExpanded = true
             })
-        }
-        if (isExpanded == true) { // if swatch is expanded collapse view
-            isExpanded = false
+            break
+        
+        case true:
+            // if swatch is expanded collapse view
             self.animateToScale(scaleX: 1.0, scaleY: 1.0)
             UIView.animate(withDuration: 1.0, animations: {
+                self.isExpanded = false
             })
+            break
+        default:
+            break
         }
         
     }
